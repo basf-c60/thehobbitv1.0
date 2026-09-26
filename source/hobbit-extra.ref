@@ -1,0 +1,162 @@
+[Bug:printjump:PRINT without a printer jumps into the middle of an instruction]
+In #R$805D, if no ZX Printer is attached, a relative jump lands on $8069, the second byte of LD ($B5E3),A. The processor executes the bytes $E3 and $B5 as EX (SP),HL and OR L. In my emulator tests nothing visibly went wrong afterwards, but it is clearly not what was intended; the jump should have gone to #R$806B.
+
+[Bug:thorinline:Thorin never says "get us out of this one, thief!"]
+In #R$A550 the message 'get us out of this one, thief!' ($AFC7) is guarded by a JP Z that follows a JP NC on the same comparison (CP 3). A value of 3 has already been sent elsewhere by the JP NC, so the JP Z is never taken and the line is never said. Presumably a different comparison was intended.
+
+[Bug:bardsave:Bard's remembered order is only partly saved]
+#R$A79F stores Bard's current order in four bytes of his behaviour program ($C8D1-$C8D4: instruction, action, target, instrument). SAVE and LOAD copy only the first three of them (#R$8284, #R$8209), so the instrument of the order (for example the arrow he should shoot with) is not saved; after a LOAD it is whatever it was in the game being played before.
+
+[Bug:goblinB:The "another goblin" announcement uses an unset register]
+When a dead goblin is sent back into play (#R$A36A), the game checks whether Bilbo is in the room it has been moved to, to announce '- another goblin'. But it compares Bilbo's room with register B, which the routine never loads; B still holds a value left over from the attack routine. The new room had just been loaded into A, so B was presumably meant to hold it.
+
+[Bug:webstrength:The mended spider web's strength overflows]
+Each time the spiders mend their web (#R$A950), its strength (byte 5 of its record) is doubled with SLA. It starts at 64, so after one mending it is 128 and after a second it is 0, because the bit shifted out is simply lost. The idea was presumably that the web gets tougher each time.
+
+[Bug:breakcarry:Breaking something can break the tool for no reason]
+When something is struck (#R$9257), the instrument's own chance of breaking is worked out with the same faulty overflow test as the fight code (#R$917D): whenever the random adjustment is negative, the total is set to 255 and the instrument breaks. In the emulator, 'break door with bow' against the heavy rock door broke the bow 5 times in 40 tries, although its defence (16 plus at most 21) could never honestly reach the door's 144.
+
+[Bug:inin:"you are in in a clearing with two stone trolls"]
+When the trolls turn to stone (#R$A865), the trolls' clearing is given the description 'in a clearing with two stone trolls'. But the room description routine (#R$958E) always prints 'you are' plus the room's preposition ('in') first, so the game says 'you are in in a clearing with two stone trolls'. Seen in the emulator.
+
+[Bug:sameplace:Two things shut in different containers are "together"]
+#R$9DC8 answers 0 for anything shut inside a closed container, without saying which container, and #R$9D92 then treats two objects that both get the answer 0 as being in the same place, without comparing their rooms. So if Bilbo is shut in the barrel, anything else shut away anywhere in the game counts as within reach. In the emulator, with Bilbo in the closed barrel in the Elvenking's cellar and the sword locked in the closed wooden chest at Bag End, 'take sword' gave 'you take the short strong sword.' With the barrel open, it gave 'I do not see the sword here'.
+
+[Bug:loadroute:A loaded game can lose its hidden route]
+The hidden route closed at the start of a game (#R$970B) is recorded in two places: the blanked-out exit in the room table, which SAVE and LOAD preserve, and the address of the route's entry, which is written into the instruction at $A6C3 in Elrond's map routine (#R$A6B8) and is not saved. If a game is loaded in a later session, the room table closes the old route but Elrond's routine points at the route chosen for the new session. When he reads the map he reopens (and names) the wrong exit, and the loaded game's closed route stays closed. (This follows from the code; it was not tried in the emulator.)
+
+[Bug:doword:Typing DO makes the game run wild]
+DO is a word in the dictionary, in the same class as ALL, IT, HELP and SAVE, and it comes just before DOOR - so any abbreviation of two letters, such as 'op do', matches DO and not DOOR. But DO is the only word of that class with no entry in the table at #R$8029, and the 'not in the table' path of #R$8009 jumps back into the parser without restoring the DE it pushed. Two bytes are left on the stack, so when the parser returns it takes that pushed value as its return address and jumps into the middle of the game's code.
+<br><br>
+What the player sees is a stray 'what ?', then a fatal blow with nobody named - 'with one well placed blow you cleave his skull' - and then the rivers, the water and other objects 'evaporating' one after another, as the runaway code works through the object table. Nothing has really been attacked: the Z80 is executing whatever it finds.
+<br><br>
+Traced in the emulator: entering the parser SP is $5EFD, and after DO has been rejected it is $5EFB. 'do', 'op do' and 'attack do' all do it; 'open door', with the noun spelled out to at least three letters, is fine.
+
+[Bug:barreljump:Approaching the barrel the wrong way can crash the game]
+#R$A91B lets the player climb into or jump onto the barrel from an adjoining room, provided the only route there is DOWN - the way the book's escape works. When an exit is found but its direction is anything else, the handler means to print 'you cannot jump onto the barrel from here.' by loading its address into HL and printing it (exactly as the case above it does), but the instruction actually used is a direct JP NZ to that same address, so the Z80 jumps straight into the message's own bytecode and starts executing it as instructions. In the emulator this sends the program off through a string of unrelated addresses and into an infinite loop inside the routine that saves an unfinished command, freezing the game.
+<br><br>
+It is reachable in the finished game: standing in the Elvenking's great halls (room 30) or the dark dungeon (room 31) and typing 'climb into barrel' or 'jump onto barrel' while the barrel is in the cellar reaches this path, since both rooms have an exit to the cellar that is not DOWN.
+
+[Fact:wine:Drinking the wine makes the game slur its words]
+Drinking the wine in the Elvenking's cellar runs a routine attached to the wine's object record (#R$A9ED), which sets the flag at $B5F1 and starts timer 7. While the flag is set, the character printer (#R$7580) follows every S with an H, so everything the game says comes out slurred: 'you drink shome wine. gandalf goesh easht. thorin shitsh down and shtartsh shinging about gold.' Five turns later timer 7 expires (#R$A9FF) and Bilbo sobers up.
+
+[Fact:articles:Articles are stored in the word references]
+Nouns do not have fixed articles in the dictionary. Instead, the flag bits of each word reference say whether the word takes 'a', 'an', 'some' or 'the' (#R$7436), and names such as Thorin have a flag that suppresses the article and capitalises them. The same noun can therefore be 'a key' in one place and 'the key' in another.
+
+[Fact:capitals:There are no capital letters in the game's text]
+Every word is stored in the dictionary in five-bit form, without case. Capitals are added only by the printer (#R$7694): the first letter after a full stop or a new line, and the first letter of a name.
+
+[Fact:autowait:The game plays on if you do not type]
+If the player does not type anything for 20-25 seconds, #R$7240 types WAIT on their behalf and the other characters carry on with their business. This is one of the things that made The Hobbit feel alive in 1982, and one reason players were so often killed while thinking.
+
+[Fact:repeat:@ repeats the last command]
+Pressing SYMBOL SHIFT + 2 (@) as the first key of a line repeats the previous command without retyping it (#R$6E71): the parser simply works through the old tokens again.
+
+[Fact:selfmod:The game modifies its own code]
+In several places The Hobbit rewrites its own instructions to save space. #R$8869 pokes either a JR NZ or a JR Z opcode into two jumps before executing them; #R$9E71 and #R$9E76 change the offset in an LD A,(IX+n) instruction to search the exits of a room either by the door they pass through or by their destination; and #R$93CD and #R$93ED poke a SET or RES instruction so that LOCK and UNLOCK can share code.
+
+[Fact:gluttony:Eating makes Bilbo stronger - up to a point]
+Each time Bilbo eats, his strength (the value used in fights, #R$90DB) goes up by 10 (#R$9206). Starting at 64, a few meals make him noticeably more dangerous. But the game will not let strength reach 128: the meal that would take it there kills him instead, with the message 'your foul gluttony has killed you'.
+
+[Fact:sting:The sword glows in the dark]
+The darkness check (#R$954D) looks at one object only: the short strong sword. If Bilbo has it and it is 'on' and not broken, dark places are lit. In the emulator, walking east from room 41 into the smooth straight passage gives 'it is dark.' without the sword and a full description with it. In the book, Bilbo's sword Sting glows blue when orcs are near.
+
+[Fact:route:One route is closed at random in every game]
+At the start of each game (#R$970B) one of five exits is removed at random. The way through only opens when Elrond reads the curious map (#R$A6B8), which is also when he tells you where to go: 'go north from beorns house to get to the great river', for example. This is why the map matters, and why the route through Wilderland changes from game to game.
+
+[Fact:capture:Who catches you decides where you wake up]
+When a character captures Bilbo (#R$A316), he is taken to a dungeon. The wood elf and the butler take him to room 31 in the Elvenking's halls; anyone else (the goblins) take him to room 13 in the goblins' dungeon.
+
+[Fact:goblins:Dead goblins do not stay dead]
+The six goblins share a handler (#R$A36A) that brings a dead goblin back to life somewhere else with a new adjective, after it 'falls down a hole and vanishes'. The game's supply of goblins is effectively endless.
+
+[Fact:singing:Why Thorin sits down and sings about gold]
+Thorin's famous habit comes from #R$A550: each time his behaviour program runs this routine there is a 1 in 9 chance (a random number of exactly 0) that he 'sits down and starts singing about gold'. The rest of the time he waits, says 'hurry up', or does nothing.
+
+[Fact:riddles:Gollum's riddles]
+Gollum asks one of two riddles, chosen at the start of the game (#R$970B). One is the 'dark' riddle from the book ('it cannot be seen, cannot be felt, cannot be heard, cannot be smelt...'), for which the game wants the answer NIGHT. The other is not from The Hobbit at all: it is the riddle of the Sphinx ('which is the animal that has four feet in the morning, two at midday and three in the evening?'), answer MAN. Each is stored twice in a four-entry table (#R$C6EB), so they are equally likely. A wrong answer, or none, gets 'someone strangles you from behind.'
+
+[Fact:dawn:The trolls' picture changes at dawn]
+The picture of the trolls' clearing is drawn at night, in black, until the trolls are turned to stone (#R$A865). Then its first two bytes - the border and background colours - are changed to cyan, and from then on the same line drawing appears in daylight. The start-up code resets them to black for every new game.
+
+[Fact:winning:How to win]
+The game is won (#R$A8CA) when the valuable treasure is in the wooden chest - that is, when Bilbo brings the dragon's treasure home and puts it away. Nothing else is required; the check is made at the end of every turn.
+
+[Fact:dragon:Stealing the treasure while the dragon lives]
+Once the treasure has left the dragon's lair, the dragon's program (#R$A5D5) runs every turn, with roughly a 1 in 6 chance each turn of 'the dragon descends and in a terrific spout of flames burns you to a crisp'. The HELP message in room 41 says it all: 'a living dragon is deadly, look to bard'. Bard, who repeats the last order he was given every turn (#R$A79F), is the answer.
+
+[Fact:thrainskey:Thorin's key dies with him]
+The small curious key belonged to Thrain, Thorin's father ('this was thrains key', says Thorin when he finds it). If Thorin is killed, a handler attached to him (#R$A631) makes the key shatter - so killing Thorin can make the game impossible to finish.
+
+[Fact:sharedpics:Two pictures borrow other pictures]
+The goblins' dungeon (room 13) and the trolls' clearing (room 5) have tiny pictures of their own - 29 and 93 bytes - which end not with an end marker but with a 'move' command. The two bytes it reads as coordinates are really the colour bytes at the start of the next picture in memory, and drawing simply carries on through that picture: the dungeon borrows the Elvenking's dungeon (room 31), and the trolls' clearing borrows room 28. The borrowed drawing comes out in the borrower's colours, so the two pairs do not look like the same picture at first glance.
+
+[Fact:vector:The pictures are line drawings with fills]
+Every location picture is drawn at run time from a list of commands (#R$8985): lines with fixed slopes, moves, flood fills and blocks of colour. The 22 pictures contain over 3,000 line segments and take up about 10K; as bitmaps they would have needed about 60K, more than the whole Spectrum. Drawing them takes long enough to watch, which is why the game waits for a key afterwards.
+
+[Fact:score:Most of the score comes from sightseeing]
+Three quarters of the score is simply for visiting places: the first time Bilbo enters one of fourteen rooms, its points are added (#R$8CEA), from 2.5% for the lonelands to 20% for the lower halls of the Lonely Mountain. Being thrown into the goblins' dungeon is worth 7.5%.
+
+[Fact:darkmove:Moving in the dark is dangerous]
+In a dark place Bilbo cannot choose his way: any movement command sends him in a random direction (#R$8D19). If there is no exit that way, he falls and hits his head, which halves his strength; do it often enough and 'you fall and smash your skull'. With the glowing sword (#R$954D) none of this happens.
+
+[Fact:randommem:The random numbers come from the program itself]
+The Hobbit has no random number table. The routine at #R$9BFD walks a counter through memory and mixes the bytes it finds - program code, messages, the ROM - with the previous result. Only the starting point is really random: it is taken from the Z80's R register at the moment the player presses the first key.
+
+[Fact:verbs:How "you attack" becomes "thorin attacks"]
+The dictionary stores each verb once, but three bits in each verb say which ending it takes in the third person: S, ES, IES, D, ING, or IES after rubbing out the last letter (#R$74B8, #R$B60F). The message printer adds the ending whenever the subject is not 'you', so a single message serves both 'you attack thorin' and 'thorin attacks you', and 'you carry' and 'gandalf carries'.
+
+[Fact:someone:Seeing only half of what happens]
+When a character opens or closes a door from the far side, Bilbo can see the door but not the character. The game handles this (#R$9921) by reporting the action with the actor replaced by 'someone': 'someone opens the round green door.'
+
+[Fact:ringtheft:The ring makes Bilbo a real burglar]
+Normally, trying to take something a character is holding gets 'gandalf is carrying the curious map.' But the check (#R$9686) only applies while Bilbo is visible. With the ring on he is not, and he can simply take things out of other characters' hands. In the emulator, with the sword given to Gandalf, 'take sword' is refused normally, but with Bilbo invisible gives 'you take the short strong sword.' - and Thorin asks 'where's the thief?'.
+
+[Fact:dormant:Some characters sleep until you get near]
+The butler, the dragon and Bard are not active at the start of the game: their slots in the character table (#R$C9BA) are empty. The butler is switched on when Bilbo first enters Beorn's house (#R$C693); the dragon and Bard when he enters the Elvenking's cellar (#R$C6AF). Until then they simply lie where they are, which is why the dragon never comes looking for Bilbo early in the game.
+
+[Fact:barrelonly:The forest river kills anyone not in a barrel]
+Room 33, the forest river below the Elvenking's trap door, has an entry handler (#R$C6D9) that kills Bilbo - 'you are swept forcefully against the portcullis' - unless he arrives inside the barrel.
+
+[Fact:sidedoor:The side door only appears one turn in five]
+Once Bilbo has been in the Elvenking's cellar, timer 9 makes the side door of the Lonely Mountain appear with 'a loud crack' for one turn (#R$A985) and then vanish again (#R$A968), every five turns, unless it has been opened in the meantime. Closing it again hides it and restarts the cycle (#R$A996). The HELP message there is simply 'wait a while.'
+
+[Fact:ring:The ring has a price]
+Wearing the golden ring (#R$A2C0) makes Bilbo invisible, but it also divides his strength by 4 - not the moment to pick a fight. It comes off by itself after a random 2 to 10 turns (timer 6, #R$A9D4), and taking it off multiplies his strength by 4 again (#R$A2EC). Because the division throws away the remainder, each use can cost him up to 3 points of strength for good.
+
+[Fact:bard:Only Bard can kill the dragon]
+SHOOT (#R$8FE0) treats Bard specially: his arrows never miss, while anyone else's always miss the dragon. A hit kills any living thing outright. So Bilbo must bring Bard (who wakes up when Bilbo reaches the Elvenking's cellar, #R$C6AF) the bow and arrow and tell him to shoot the dragon; Bard then keeps obeying that order every turn (#R$A79F).
+
+[Fact:blackriver:The enchanted river]
+Swimming in the fast black river (#R$A240) or drinking its black water (#R$A258) makes the drinker fall asleep and die, as in the book, where Bombur falls into the enchanted stream in Mirkwood and sleeps for days. Ordinary water is harmless (#R$A174).
+
+[Fact:window:A window needs friends]
+The goblins' dungeon has a window that Bilbo cannot reach on his own (#R$A678). He has to be carried - by giving orders to a character strong enough to carry him - which is what the HELP message there means: 'a window should be no obstacle to a thief with friends'.
+
+[Fact:boat:Crossing the enchanted river]
+The wooden boat on the enchanted river is reached with the rope (#R$A708): throw it across, and if the boat is already moored on the far bank there is a 1-in-4 chance it lands cleanly in the boat, tying the two together; otherwise the throw falls short or slips out again. Once the rope has caught, PULL brings the boat over: 'the boat glides across the river and lands on this side' (#R$A76A). Swimming across instead is fatal (#R$A240). The HELP message at the river is 'boats can help. look carefully.'
+
+[Fact:capture2:Bilbo cannot capture anyone]
+There is a CAPTURE action (action 48, #R$A316), and the rules would let Bilbo capture a goblin. But in the dictionary CAPTURE is a synonym for ATTACK (#R$6040), so the tokeniser (#R$6E8E) turns 'capture goblin' into 'attack goblin' before the parser sees it, and action 48 can never be reached from the keyboard - not even by ordering another character, because orders are typed too. Only the characters' own behaviour programs (#R$C71C), which use action numbers directly, ever capture anyone. In the emulator, 'capture goblin' gives 'you attack the disgusting goblin.' - and the goblin captures Bilbo instead.
+
+[Fact:goldenkey:The golden key opens nothing]
+A golden key lies at the end of a dead-end path in the deep misty valley (room 79). The key check (#R$A26A) only recognises the small curious key, the large key and the red key, and no object has a handler that accepts the golden key, so it opens nothing at all. The front door of Bag End cannot be locked or unlocked with any key either: its handler always replies 'the key does not fit this lock'.
+
+[Fact:cache:The small curious key is buried three deep]
+In the goblins' dungeon, the small curious key is inside the goblins' cache, which is under a trap door, which is buried in the sand. Digging opens the sand (#R$8FCF); the trap door is locked, and no key fits it (#R$A26A), so it has to be broken open (#R$9257).
+
+[Fact:unuseddesc:An unused room description]
+Among the messages is 'a bewitched gloomy place surrounded by thick trees' ($B4EF), a full description for room 25. Nothing in the game refers to it: the room record's description pointer is 0, so the room is described just by its three name words ('you are in a bewitched gloomy place').
+
+[Fact:verified:Checked in the emulator]
+The following were confirmed by running the game: the fight results and the random-number bug; the pale bulbous eyes (wait twice, move on the third turn); the slurred speech after drinking the wine; the sword lighting dark places; the random hidden route and Gollum's riddle choice; stealing while wearing the ring; the ring dividing strength by 4, losing the remainder, and wearing off after a random number of turns; the deep bog killing at the end of the first turn; the spiders' place allowing the turn of arrival and three more; the trolls eating Bilbo if he stays after they have spoken, and dawn three turns later ('you are in in a clearing with two stone trolls'); the side door appearing for one turn in five after Bilbo has been in the Elvenking's cellar, and the dragon and Bard being switched on there; tools breaking when used to break things; 'capture' being treated as 'attack'. A scripted opening - taking the large key after dawn, unlocking the trolls' cave, taking the sword and rope, and giving the map to Elrond - played exactly as the code predicts, ending with 'elrond examines the curious map. elrond says "go east from the forest gate to get to the bewitched gloomy place"'.
+
+[Fact:allies:Hitting a friend makes an enemy for good]
+Characters on the same side never attack each other (#R$90B4). Bilbo can still attack Thorin, Gandalf, Elrond or Bard, but doing so permanently clears their 'Bilbo's side' bit, so from then on they will fight him - and anyone else - like any other character.
+
+[Fact:score75:The best possible score is 75%]
+The score (at $B5E8, in tenths of a percent) is set to 0 at the start of a game and changed in exactly one place: the movement routine, when Bilbo first enters one of the fourteen rooms in the points table (#R$8CEA), which add up to 75.0%. Nothing else scores - not killing the dragon, not finding the treasure, not even winning. A perfect game ends with 'you have mastered 75.0% of this adventure'.
+
+[Fact:ringbrawl:Why Thorin and Gandalf fight when an invisible Bilbo hits Thorin]
+Three rules combine. Hitting Thorin clears his 'Bilbo's side' bit for good (#R$90B4), so he no longer shares a side with Gandalf. Being attacked switches Thorin to the general fight-back program (#R$C71C, at $C94D), whose first instruction is simply 'attack', leaving the game to choose the target as it does for the player (#R$8405). And the choice only considers things Thorin can see (#R$9D92, which needs bit 7 of the candidate's flags): with the ring on, Bilbo is invisible, so the only candidate is Gandalf. Once Gandalf has been attacked he switches to the same fight-back program, and since Thorin is no longer on his side he can attack Thorin - and they carry on until one of them dies. In the emulator, with the ring kept on and Gandalf held in the room, 'hit thorin' was followed by 'thorin attacks gandalf. gandalf attacks thorin...' every time, ending in one case with 'with one well placed blow gandalf cleaves his skull. thorin is dead.'
+

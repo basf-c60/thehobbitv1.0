@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Characters</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="skoolkit.css" />
+</head>
+<body class="Characters">
+<table class="header">
+<tr>
+<td class="logo"><a href="index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Characters</td>
+</tr>
+</table>
+<p>The starting values of everything that can act. They come from each character's object record (<a href="asm/49163.html">C00B</a>) and its entry in the character table (<a href="asm/51642.html">C9BA</a>).</p>
+<table>
+<tr><th>No.</th><th>Character</th><th>Size</th><th>Carrying capacity / weight</th><th>Strength</th><th>Defence</th><th>Side</th><th>Refuses orders</th><th>Starts in</th><th>Active from</th></tr>
+<tr><td>0</td><td>Bilbo (you)</td><td>16</td><td>64</td><td>64</td><td>64</td><td>1</td><td>-</td><td>1 tunnel-like hall</td><td>start</td></tr>
+<tr><td>62</td><td>Gandalf</td><td>21</td><td>96</td><td>112</td><td>136</td><td>1</td><td>1 in 8 (5)</td><td>1 tunnel-like hall</td><td>start</td></tr>
+<tr><td>63</td><td>Thorin</td><td>29</td><td>80</td><td>104</td><td>120</td><td>1</td><td>1 in 8 (6)</td><td>1 tunnel-like hall</td><td>start</td></tr>
+<tr><td>65</td><td>Elrond</td><td>32</td><td>48</td><td>64</td><td>64</td><td>1 and 4</td><td>1 in 8 (5)</td><td>9 Rivendell</td><td>start</td></tr>
+<tr><td>70</td><td>Bard</td><td>48</td><td>16</td><td>96</td><td>96</td><td>1</td><td>1 in 4 (3)</td><td>35 lake town</td><td>entering the Elvenking's cellar (<a href="asm/50863.html">C6AF</a>)</td></tr>
+<tr><td>64</td><td>Wood elf</td><td>112</td><td>255</td><td>64</td><td>48</td><td>4</td><td>1 in 2 (1)</td><td>28 levelled elvish clearing</td><td>start</td></tr>
+<tr><td>66</td><td>Butler</td><td>48</td><td>48</td><td>32</td><td>112</td><td>4</td><td>1 in 2 (1)</td><td>32 Elvenking's cellar (invisible)</td><td>entering Beorn's house (<a href="asm/50835.html">C693</a>)</td></tr>
+<tr><td>68</td><td>Gollum</td><td>5</td><td>5</td><td>32</td><td>64</td><td>2</td><td>1 in 4 (3)</td><td>17 deep dark lake</td><td>start</td></tr>
+<tr><td>61, 69, 73-76</td><td>The six goblins</td><td>64</td><td>48</td><td>72</td><td>96</td><td>2</td><td>never (0)</td><td>rooms 15, 58, 18, 56, 64, 16</td><td>start</td></tr>
+<tr><td>67</td><td>Vicious warg</td><td>48</td><td>48</td><td>55</td><td>55</td><td>none</td><td>never (0)</td><td>21 treeless opening</td><td>start</td></tr>
+<tr><td>71, 72</td><td>The two trolls</td><td>144</td><td>144</td><td>160</td><td>160</td><td>none</td><td>1 in 2 (1)</td><td>5 trolls' clearing</td><td>start</td></tr>
+<tr><td>60</td><td>Red golden dragon</td><td>192</td><td>96</td><td>192</td><td>192</td><td>none</td><td>never (0)</td><td>41 lower halls</td><td>entering the Elvenking's cellar (<a href="asm/50863.html">C6AF</a>)</td></tr>
+</table>
+<h2>What the numbers mean</h2>
+<p><b>Size</b> (byte 2 of the record) is how much room the character takes up: it must be no bigger than a door or window to pass through it (<a href="asm/36121.html">8D19</a>), and must fit inside a barrel, chest or boat to climb into it (<a href="asm/42118.html">A486</a>). Gollum, at 5, is the smallest thing in the game; the wood elf, at 112, is too big for most doorways.</p>
+<p><b>Carrying capacity / weight</b> (byte 3) does two jobs. It is how much weight the character can carry (<a href="asm/35974.html">8C86</a>), and it is also the character's own weight when someone else tries to carry them. So Bilbo weighs 64: Gandalf (96) and Thorin (80) can lift him, which matters for reaching the window in the goblins' dungeon (<a href="asm/42616.html">A678</a>), but Elrond (48) cannot. Bard can carry only 16 - enough for the bow and arrow.</p>
+<p><b>Strength</b> and <b>defence</b> (bytes 5 and 6) decide fights (<a href="asm/37083.html">90DB</a>) and breaking things (<a href="asm/37463.html">9257</a>). Strength also changes during play: eating adds 10 (<a href="asm/37382.html">9206</a>), the ring divides it by 4 while worn (<a href="asm/41664.html">A2C0</a>), falling in the dark halves it (<a href="asm/36121.html">8D19</a>), and wounds reduce both.</p>
+<p><b>Side</b> (bits 4-6 of byte 4) decides who can capture whom (<a href="asm/41750.html">A316</a>): a capture is only possible if the two characters have no side bits in common. Bilbo and his friends are side 1, the goblins and Gollum side 2, the wood elf and the butler side 4. Elrond has bits for both side 1 and side 4, so neither the elves nor Bilbo's party can capture him. The dragon, the warg and the trolls have no side at all, so anyone can capture them and they can capture anyone.</p>
+<p><b>Refuses orders</b> is the chance of a SAY TO being answered with "no" (<a href="asm/36766.html">8F9E</a>), from byte 6 of the character-table entry (shown in brackets). Higher values mean fewer refusals; 0 means the character always obeys - so the goblins, the warg and even the dragon will do what they are told.</p>
+<p><b>Active from</b>: the butler, Bard and the dragon have empty slots in the character table until Bilbo reaches the places shown; until then they do nothing at all.</p>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

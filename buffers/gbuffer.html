@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Game status buffer</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="GameStatusBuffer">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Game status buffer</td>
+</tr>
+</table>
+<div class="map-intro"></div>
+<table class="map">
+<tr>
+<th>Address</th>
+<th class="map-length">Length</th>
+<th>Description</th>
+</tr>
+<tr>
+<td class="map-g"><span id="46539"></span><a href="../asm/46539.html">B5CB</a></td>
+<td class="map-length">68</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/46539.html">Game variables</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Working variables. Those identified so far:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>$B5CB - address of the current word in the input line (for error messages)</li>
+<li>$B5DA - object number of the weapon/instrument in the current command, or $FF</li>
+<li>$B5DB - the current actor: 0 when the player is acting, otherwise the object number of the character</li>
+<li>$B5E1 - set when a timer has expired this turn (<a href="../asm/38417.html">9611</a>)</li>
+<li>$B5E4 - the room in which the eyes timer was started (<a href="../asm/50892.html">C6CC</a>)</li>
+<li>$B5EB - 1 when commands should really be carried out, 0 during a dry run (<a href="../asm/40089.html">9C99</a>)</li>
+<li>$B5F3 - output enable flag</li>
+<li>$B5F8 - address of the target's object record</li>
+<li>$B5FA - address of the weapon's object record</li>
+<li>$B5FC - address of the actor's object record</li>
+<li>$B5FE - random number seed (<a href="../asm/39933.html">9BFD</a>)</li>
+</ul>
+</div>
+<div class="paragraph">
+The 28 bytes from $B5DC are backed up to $5F00 at start-up and restored when the game restarts.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

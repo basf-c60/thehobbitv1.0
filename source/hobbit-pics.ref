@@ -1,0 +1,68 @@
+[Page:Pictures]
+PageContent=#INCLUDE(PicturesText)
+
+[PageHeaders]
+Pictures=Location pictures
+
+[Links]
+Pictures=Location pictures
+
+[Index:Reference:Reference]
+HowItWorks
+Map
+Pictures
+Characters
+Objects
+Facts
+Bugs
+Pokes
+Glossary
+
+[PicturesText]
+<p>The 22 location pictures, rendered by running the game's own drawing routine (#R$8985) on each picture's data in a Z80 emulator. Click an address to see the picture's commands decoded one by one.</p>
+<h3>Room 1: ? (#R$CC43)</h3>
+<p><img src="images/pictures/room01.png" alt="room 1"></p>
+<h3>Room 4: ? (#R$E3FE)</h3>
+<p><img src="images/pictures/room04.png" alt="room 4"></p>
+<h3>Room 5: ? (#R$E142)</h3>
+<p><img src="images/pictures/room05.png" alt="room 5"></p>
+<p>By day (after the trolls have turned to stone):</p>
+<p><img src="images/pictures/room05_day.png" alt="room 5 by day"></p>
+<h3>Room 6: ? (#R$CFB2)</h3>
+<p><img src="images/pictures/room06.png" alt="room 6"></p>
+<h3>Room 7: ? (#R$D92A)</h3>
+<p><img src="images/pictures/room07.png" alt="room 7"></p>
+<h3>Room 8: ? (#R$EC3E)</h3>
+<p><img src="images/pictures/room08.png" alt="room 8"></p>
+<h3>Room 11: ? (#R$D24E)</h3>
+<p><img src="images/pictures/room11.png" alt="room 11"></p>
+<h3>Room 13: ? (#R$E02C)</h3>
+<p><img src="images/pictures/room13.png" alt="room 13"></p>
+<h3>Room 16: ? (#R$E6E4)</h3>
+<p><img src="images/pictures/room16.png" alt="room 16"></p>
+<h3>Room 24: ? (#R$DBA8)</h3>
+<p><img src="images/pictures/room24.png" alt="room 24"></p>
+<h3>Room 25: ? (#R$E9EE)</h3>
+<p><img src="images/pictures/room25.png" alt="room 25"></p>
+<h3>Room 26: ? (#R$F001)</h3>
+<p><img src="images/pictures/room26.png" alt="room 26"></p>
+<h3>Room 28: ? (#R$E19F)</h3>
+<p><img src="images/pictures/room28.png" alt="room 28"></p>
+<h3>Room 31: ? (#R$E049)</h3>
+<p><img src="images/pictures/room31.png" alt="room 31"></p>
+<h3>Room 32: ? (#R$E47A)</h3>
+<p><img src="images/pictures/room32.png" alt="room 32"></p>
+<h3>Room 35: ? (#R$DD79)</h3>
+<p><img src="images/pictures/room35.png" alt="room 35"></p>
+<h3>Room 37: ? (#R$D367)</h3>
+<p><img src="images/pictures/room37.png" alt="room 37"></p>
+<h3>Room 38: ? (#R$D713)</h3>
+<p><img src="images/pictures/room38.png" alt="room 38"></p>
+<h3>Room 39: ? (#R$F1E6)</h3>
+<p><img src="images/pictures/room39.png" alt="room 39"></p>
+<h3>Room 41: ? (#R$EE43)</h3>
+<p><img src="images/pictures/room41.png" alt="room 41"></p>
+<h3>Room 43: ? (#R$D5B5)</h3>
+<p><img src="images/pictures/room43.png" alt="room 43"></p>
+<h3>Room 49: ? (#R$CE77)</h3>
+<p><img src="images/pictures/room49.png" alt="room 49"></p>

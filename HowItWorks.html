@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): HowItWorks</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="skoolkit.css" />
+</head>
+<body class="HowItWorks">
+<table class="header">
+<tr>
+<td class="logo"><a href="index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">HowItWorks</td>
+</tr>
+</table>
+<h2>About this disassembly</h2>
+<p>This is a complete annotated disassembly of the main code block of the original 1982 release (v1.0) of <i>The Hobbit</i> by Veronika Megler and Philip Mitchell, published by Melbourne House. The block is 37,888 bytes long, loads at 24576 ($6000) and is started by <tt>RANDOMIZE USR 27648</tt>. Reassembling the disassembly with SkoolKit gives back the original block byte for byte.</p>
+<p>The code and data were identified by running the game in a Z80 emulator, by tracing every table and pointer, and by hand. Many descriptions were confirmed by playing the relevant scene in the emulator; the Trivia page lists what was checked this way. Everything else is a careful reading of the code.</p>
+<p>Besides the routine and data pages, see: <a href="Map.html">the map of Wilderland</a>, <a href="Pictures.html">the location pictures</a>, <a href="Characters.html">the characters</a>, <a href="Objects.html">the objects</a>, <a href="reference/facts.html">trivia</a> and <a href="reference/bugs.html">bugs</a>.</p>
+
+<h2>Memory map</h2>
+<table>
+<tr><th>Address</th><th>Contents</th></tr>
+<tr><td><a href="asm/24576.html">$6000</a></td><td>Dictionary letter index, main dictionary (the words the player can type, with their classes and synonyms) and message dictionary</td></tr>
+<tr><td><a href="asm/27648.html">$6C00</a></td><td>Start-up, main loop, keyboard and line input, tokeniser, message interpreter, text output, 6-pixel font (<a href="asm/30741.html">7815</a>)</td></tr>
+<tr><td><a href="asm/31823.html">$7C4F</a></td><td>Parser, game commands (HELP, SCORE, SAVE, LOAD, PRINT...), command execution</td></tr>
+<tr><td><a href="asm/35173.html">$8965</a></td><td>Picture drawing</td></tr>
+<tr><td><a href="asm/35885.html">$8C2D</a></td><td>Action handlers: LOOK, TAKE, DROP, movement, fights, eating, doors and containers...</td></tr>
+<tr><td><a href="asm/38417.html">$9611</a></td><td>End of turn: timers and the independent characters; object and room utilities</td></tr>
+<tr><td><a href="asm/41332.html">$A174</a></td><td>Special handlers for particular objects, characters, rooms and timers</td></tr>
+<tr><td><a href="asm/43591.html">$AA47</a></td><td>The action table (the 59 things that can be done)</td></tr>
+<tr><td><a href="asm/44081.html">$AC31</a></td><td>Message abbreviations and the messages</td></tr>
+<tr><td><a href="asm/46539.html">$B5CB</a></td><td>Game variables, verb endings, orders buffer and command frames</td></tr>
+<tr><td><a href="asm/47312.html">$B8D0</a></td><td>Room pointers and room records</td></tr>
+<tr><td><a href="asm/48979.html">$BF53</a></td><td>Object index and object records (everything, including Bilbo and the characters)</td></tr>
+<tr><td><a href="asm/50719.html">$C61F</a></td><td>Default action handlers, room-entry handlers, riddles, hidden routes, behaviour programs, timers, character table</td></tr>
+<tr><td><a href="asm/52224.html">$CC00</a></td><td>Location pictures</td></tr>
+</table>
+
+<h2>A turn</h2>
+<p>The main loop (<a href="asm/27914.html">6D0A</a>) reads a line of typing (<a href="asm/28109.html">6DCD</a>). If the player does nothing for about 20 seconds the game types WAIT itself (<a href="asm/29248.html">7240</a>), so the world goes on without him. The tokeniser (<a href="asm/28302.html">6E8E</a>) looks each word up in the dictionary, allowing abbreviations and replacing synonyms (HIT, KILL and CAPTURE all become ATTACK). The parser (<a href="asm/31823.html">7C4F</a>) builds command frames: a verb, a particle and two noun phrases each, several per line, with AND, THEN, ALL, EXCEPT, IT and quoted orders to other characters.</p>
+<p>Each frame is matched against the action table (<a href="asm/34191.html">858F</a>) and the objects that fit its words are tried one by one in silent 'dry runs' until one works (<a href="asm/33797.html">8405</a>); if that is ambiguous the game asks 'which key?' and lets the reply finish the command. The action is then performed (<a href="asm/37999.html">946F</a>) by the object's own handler if it has one, or by a default handler, and reported ('you open the door.', 'thorin attacks you.'). Then the turn ends (<a href="asm/38417.html">9611</a>): every other character acts (<a href="asm/38764.html">976C</a>) and the ten timers tick (<a href="asm/51571.html">C973</a>).</p>
+
+<h2>The world</h2>
+<p>Everything that exists is an object with a 16-byte header (<a href="asm/49163.html">C00B</a>): Bilbo is object 0, and characters, doors, rivers and swords all share the same format - size, weight, strength, defence, side, flags, four words, locations, and a list of its own action handlers. Being inside, on, tied to or carried by something is just a matter of whose number is in the 'held by' byte. The 79 rooms (<a href="asm/47482.html">B97A</a>) have a name, an optional description, a preposition, light, and exits that may pass through doors (see the <a href="Map.html">map</a>). All of it - objects, rooms, variables, timers, characters - is copied aside at start-up and copied back to restart the game, and exactly those areas are what SAVE writes to tape.</p>
+
+<h2>The characters</h2>
+<p>Each character runs a little program of its own (<a href="asm/50972.html">C71C</a>): do an action, move, call a special routine, jump, react to what is done to it. They use the same action routines as the player, which is why the game can say 'gandalf opens the round green door' or 'thorin sits down and starts singing about gold' with the same code that handles Bilbo. They can be given orders with SAY TO, which they may refuse (<a href="asm/36766.html">8F9E</a>). Some are asleep until Bilbo gets near: the butler, Bard and the dragon (<a href="asm/50835.html">C693</a>, <a href="asm/50863.html">C6AF</a>).</p>
+
+<h2>Text</h2>
+<p>Messages are programs (<a href="asm/29396.html">72D4</a>): dictionary words, one-byte abbreviations for common words, and control codes for 'the actor', 'his or your', 'is or are', jumps and sub-messages. Verbs get their endings automatically when the subject is not 'you' (<a href="asm/29880.html">74B8</a>), articles come from flags in each word reference (<a href="asm/29750.html">7436</a>), and capital letters are added only by the printer (<a href="asm/30356.html">7694</a>), which also wraps words and slows down long bursts of text. The story window uses a 6-pixel font (<a href="asm/30652.html">77BC</a>), and the input window the ROM font.</p>
+
+<h2>Pictures</h2>
+<p>The 22 location pictures (<a href="asm/52224.html">CC00</a>) are drawn at run time from a tiny vector language - moves, lines with fixed slopes, flood fills and blocks of colour - by <a href="asm/35205.html">8985</a>. Two of them borrow the drawing of another picture by running on into it.</p>
+
+<h2>Chance</h2>
+<p>The random number generator (<a href="asm/39933.html">9BFD</a>) takes its seed from the R register when the first key is pressed and then reads bytes of the program itself; its way of folding numbers into a range skews them towards the high end. Chance decides fights, which route is closed and which riddle Gollum asks, whether characters obey, and much of what they do.</p>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

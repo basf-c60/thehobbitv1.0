@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Trivia</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Facts">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Trivia</td>
+</tr>
+</table>
+<ul class="contents">
+<li><a href="#eyes">The pale bulbous eyes</a></li>
+<li><a href="#fight">How a fight is decided</a></li>
+<li><a href="#characters">Independent characters</a></li>
+<li><a href="#wine">Drinking the wine makes the game slur its words</a></li>
+<li><a href="#articles">Articles are stored in the word references</a></li>
+<li><a href="#capitals">There are no capital letters in the game's text</a></li>
+<li><a href="#autowait">The game plays on if you do not type</a></li>
+<li><a href="#repeat">@ repeats the last command</a></li>
+<li><a href="#selfmod">The game modifies its own code</a></li>
+<li><a href="#gluttony">Eating makes Bilbo stronger - up to a point</a></li>
+<li><a href="#sting">The sword glows in the dark</a></li>
+<li><a href="#route">One route is closed at random in every game</a></li>
+<li><a href="#capture">Who catches you decides where you wake up</a></li>
+<li><a href="#goblins">Dead goblins do not stay dead</a></li>
+<li><a href="#singing">Why Thorin sits down and sings about gold</a></li>
+<li><a href="#riddles">Gollum's riddles</a></li>
+<li><a href="#dawn">The trolls' picture changes at dawn</a></li>
+<li><a href="#winning">How to win</a></li>
+<li><a href="#dragon">Stealing the treasure while the dragon lives</a></li>
+<li><a href="#thrainskey">Thorin's key dies with him</a></li>
+<li><a href="#sharedpics">Two pictures borrow other pictures</a></li>
+<li><a href="#vector">The pictures are line drawings with fills</a></li>
+<li><a href="#score">Most of the score comes from sightseeing</a></li>
+<li><a href="#darkmove">Moving in the dark is dangerous</a></li>
+<li><a href="#randommem">The random numbers come from the program itself</a></li>
+<li><a href="#verbs">How "you attack" becomes "thorin attacks"</a></li>
+<li><a href="#someone">Seeing only half of what happens</a></li>
+<li><a href="#ringtheft">The ring makes Bilbo a real burglar</a></li>
+<li><a href="#dormant">Some characters sleep until you get near</a></li>
+<li><a href="#barrelonly">The forest river kills anyone not in a barrel</a></li>
+<li><a href="#sidedoor">The side door only appears one turn in five</a></li>
+<li><a href="#ring">The ring has a price</a></li>
+<li><a href="#bard">Only Bard can kill the dragon</a></li>
+<li><a href="#blackriver">The enchanted river</a></li>
+<li><a href="#window">A window needs friends</a></li>
+<li><a href="#boat">Crossing the enchanted river</a></li>
+<li><a href="#capture2">Bilbo cannot capture anyone</a></li>
+<li><a href="#goldenkey">The golden key opens nothing</a></li>
+<li><a href="#cache">The small curious key is buried three deep</a></li>
+<li><a href="#unuseddesc">An unused room description</a></li>
+<li><a href="#verified">Checked in the emulator</a></li>
+<li><a href="#allies">Hitting a friend makes an enemy for good</a></li>
+<li><a href="#score75">The best possible score is 75%</a></li>
+<li><a href="#ringbrawl">Why Thorin and Gandalf fight when an invisible Bilbo hits Thorin</a></li>
+</ul>
+<div><span id="eyes"></span></div>
+<div class="box box-1">
+<div class="box-title">The pale bulbous eyes</div>
+<div class="paragraph">
+Entering the forest road (room 2) or the forest (room 3) runs the room-entry handler <a href="../asm/50892.html">C6CC</a>, which starts timer 8 (<a href="../asm/51571.html">C973</a>) at 4 and remembers the room.
+<br><br>
+At the end of each turn the count goes down by one. While it is 3, 2 or 1 the tick routine <a href="../asm/43539.html">AA13</a> prints 'you see some pale bulbous eyes staring at you' and checks that Bilbo is still in the room he entered; if he has left (other than to the other forest room) something drops from above and stings him to death. When it reaches 0 the expire routine <a href="../asm/43566.html">AA2E</a> kills Bilbo if he is still in room 2 or 3, and does nothing if he has gone.
+<br><br>
+So on entering, the count drops to 3 at the end of that turn; two WAITs take it to 2 and then 1; and moving on the third turn takes it to 0 with Bilbo already gone. Any command that uses a turn counts as a wait. Walking back and forth between rooms 2 and 3 simply restarts the timer.
+</div>
+</div>
+<div><span id="fight"></span></div>
+<div class="box box-2">
+<div class="box-title">How a fight is decided</div>
+<div class="paragraph">
+The attack value is the attacker's strength (object byte 5) plus the weapon's strength, capped at 255; the defence is the target's byte 6. Both are randomised by <a href="../asm/37245.html">917D</a>. If the defence is at least the attack, the blow is wasted; if the attack wins by more than 16, the target is killed; otherwise it is wounded, with a message chosen by the margin (<a href="../asm/37264.html">9190</a>) and some loss of strength and defence. See <a href="../asm/37083.html">90DB</a> for the details.
+<br><br>
+With the original sword (strength 64) Bilbo attacks at 128 against Thorin's defence of 120, so most blows wound him. Bare-handed Bilbo attacks at 64 and almost never gets through, except when the bug in <a href="../asm/37245.html">917D</a> reduces Thorin's defence to 0. Thorin's own attack (104) against Bilbo's defence (64) is nearly always fatal.
+</div>
+</div>
+<div><span id="characters"></span></div>
+<div class="box box-1">
+<div class="box-title">Independent characters</div>
+<div class="paragraph">
+The characters in the table at <a href="../asm/51642.html">C9BA</a> act on their own every turn (<a href="../asm/38764.html">976C</a>), using the very same routines as the player, which is why messages read 'thorin attacks you' or 'gandalf opens the round green door'. Their behaviour involves random choices, so every game is different - and Thorin's habit of sitting down and singing about gold comes from this system.
+</div>
+</div>
+<div><span id="wine"></span></div>
+<div class="box box-2">
+<div class="box-title">Drinking the wine makes the game slur its words</div>
+<div class="paragraph">
+Drinking the wine in the Elvenking's cellar runs a routine attached to the wine's object record (<a href="../asm/43501.html">A9ED</a>), which sets the flag at $B5F1 and starts timer 7. While the flag is set, the character printer (<a href="../asm/30080.html">7580</a>) follows every S with an H, so everything the game says comes out slurred: 'you drink shome wine. gandalf goesh easht. thorin shitsh down and shtartsh shinging about gold.' Five turns later timer 7 expires (<a href="../asm/43519.html">A9FF</a>) and Bilbo sobers up.
+</div>
+</div>
+<div><span id="articles"></span></div>
+<div class="box box-1">
+<div class="box-title">Articles are stored in the word references</div>
+<div class="paragraph">
+Nouns do not have fixed articles in the dictionary. Instead, the flag bits of each word reference say whether the word takes 'a', 'an', 'some' or 'the' (<a href="../asm/29750.html">7436</a>), and names such as Thorin have a flag that suppresses the article and capitalises them. The same noun can therefore be 'a key' in one place and 'the key' in another.
+</div>
+</div>
+<div><span id="capitals"></span></div>
+<div class="box box-2">
+<div class="box-title">There are no capital letters in the game's text</div>
+<div class="paragraph">
+Every word is stored in the dictionary in five-bit form, without case. Capitals are added only by the printer (<a href="../asm/30356.html">7694</a>): the first letter after a full stop or a new line, and the first letter of a name.
+</div>
+</div>
+<div><span id="autowait"></span></div>
+<div class="box box-1">
+<div class="box-title">The game plays on if you do not type</div>
+<div class="paragraph">
+If the player does not type anything for 20-25 seconds, <a href="../asm/29248.html">7240</a> types WAIT on their behalf and the other characters carry on with their business. This is one of the things that made The Hobbit feel alive in 1982, and one reason players were so often killed while thinking.
+</div>
+</div>
+<div><span id="repeat"></span></div>
+<div class="box box-2">
+<div class="box-title">@ repeats the last command</div>
+<div class="paragraph">
+Pressing SYMBOL SHIFT + 2 (@) as the first key of a line repeats the previous command without retyping it (<a href="../asm/28273.html">6E71</a>): the parser simply works through the old tokens again.
+</div>
+</div>
+<div><span id="selfmod"></span></div>
+<div class="box box-1">
+<div class="box-title">The game modifies its own code</div>
+<div class="paragraph">
+In several places The Hobbit rewrites its own instructions to save space. <a href="../asm/34921.html">8869</a> pokes either a JR NZ or a JR Z opcode into two jumps before executing them; <a href="../asm/40561.html">9E71</a> and <a href="../asm/40566.html">9E76</a> change the offset in an LD A,(IX+n) instruction to search the exits of a room either by the door they pass through or by their destination; and <a href="../asm/37837.html">93CD</a> and <a href="../asm/37869.html">93ED</a> poke a SET or RES instruction so that LOCK and UNLOCK can share code.
+</div>
+</div>
+<div><span id="gluttony"></span></div>
+<div class="box box-2">
+<div class="box-title">Eating makes Bilbo stronger - up to a point</div>
+<div class="paragraph">
+Each time Bilbo eats, his strength (the value used in fights, <a href="../asm/37083.html">90DB</a>) goes up by 10 (<a href="../asm/37382.html">9206</a>). Starting at 64, a few meals make him noticeably more dangerous. But the game will not let strength reach 128: the meal that would take it there kills him instead, with the message 'your foul gluttony has killed you'.
+</div>
+</div>
+<div><span id="sting"></span></div>
+<div class="box box-1">
+<div class="box-title">The sword glows in the dark</div>
+<div class="paragraph">
+The darkness check (<a href="../asm/38221.html">954D</a>) looks at one object only: the short strong sword. If Bilbo has it and it is 'on' and not broken, dark places are lit. In the emulator, walking east from room 41 into the smooth straight passage gives 'it is dark.' without the sword and a full description with it. In the book, Bilbo's sword Sting glows blue when orcs are near.
+</div>
+</div>
+<div><span id="route"></span></div>
+<div class="box box-2">
+<div class="box-title">One route is closed at random in every game</div>
+<div class="paragraph">
+At the start of each game (<a href="../asm/38667.html">970B</a>) one of five exits is removed at random. The way through only opens when Elrond reads the curious map (<a href="../asm/42680.html">A6B8</a>), which is also when he tells you where to go: 'go north from beorns house to get to the great river', for example. This is why the map matters, and why the route through Wilderland changes from game to game.
+</div>
+</div>
+<div><span id="capture"></span></div>
+<div class="box box-1">
+<div class="box-title">Who catches you decides where you wake up</div>
+<div class="paragraph">
+When a character captures Bilbo (<a href="../asm/41750.html">A316</a>), he is taken to a dungeon. The wood elf and the butler take him to room 31 in the Elvenking's halls; anyone else (the goblins) take him to room 13 in the goblins' dungeon.
+</div>
+</div>
+<div><span id="goblins"></span></div>
+<div class="box box-2">
+<div class="box-title">Dead goblins do not stay dead</div>
+<div class="paragraph">
+The six goblins share a handler (<a href="../asm/41834.html">A36A</a>) that brings a dead goblin back to life somewhere else with a new adjective, after it 'falls down a hole and vanishes'. The game's supply of goblins is effectively endless.
+</div>
+</div>
+<div><span id="singing"></span></div>
+<div class="box box-1">
+<div class="box-title">Why Thorin sits down and sings about gold</div>
+<div class="paragraph">
+Thorin's famous habit comes from <a href="../asm/42320.html">A550</a>: each time his behaviour program runs this routine there is a 1 in 9 chance (a random number of exactly 0) that he 'sits down and starts singing about gold'. The rest of the time he waits, says 'hurry up', or does nothing.
+</div>
+</div>
+<div><span id="riddles"></span></div>
+<div class="box box-2">
+<div class="box-title">Gollum's riddles</div>
+<div class="paragraph">
+Gollum asks one of two riddles, chosen at the start of the game (<a href="../asm/38667.html">970B</a>). One is the 'dark' riddle from the book ('it cannot be seen, cannot be felt, cannot be heard, cannot be smelt...'), for which the game wants the answer NIGHT. The other is not from The Hobbit at all: it is the riddle of the Sphinx ('which is the animal that has four feet in the morning, two at midday and three in the evening?'), answer MAN. Each is stored twice in a four-entry table (<a href="../asm/50923.html">C6EB</a>), so they are equally likely. A wrong answer, or none, gets 'someone strangles you from behind.'
+</div>
+</div>
+<div><span id="dawn"></span></div>
+<div class="box box-1">
+<div class="box-title">The trolls' picture changes at dawn</div>
+<div class="paragraph">
+The picture of the trolls' clearing is drawn at night, in black, until the trolls are turned to stone (<a href="../asm/43109.html">A865</a>). Then its first two bytes - the border and background colours - are changed to cyan, and from then on the same line drawing appears in daylight. The start-up code resets them to black for every new game.
+</div>
+</div>
+<div><span id="winning"></span></div>
+<div class="box box-2">
+<div class="box-title">How to win</div>
+<div class="paragraph">
+The game is won (<a href="../asm/43210.html">A8CA</a>) when the valuable treasure is in the wooden chest - that is, when Bilbo brings the dragon's treasure home and puts it away. Nothing else is required; the check is made at the end of every turn.
+</div>
+</div>
+<div><span id="dragon"></span></div>
+<div class="box box-1">
+<div class="box-title">Stealing the treasure while the dragon lives</div>
+<div class="paragraph">
+Once the treasure has left the dragon's lair, the dragon's program (<a href="../asm/42453.html">A5D5</a>) runs every turn, with roughly a 1 in 6 chance each turn of 'the dragon descends and in a terrific spout of flames burns you to a crisp'. The HELP message in room 41 says it all: 'a living dragon is deadly, look to bard'. Bard, who repeats the last order he was given every turn (<a href="../asm/42911.html">A79F</a>), is the answer.
+</div>
+</div>
+<div><span id="thrainskey"></span></div>
+<div class="box box-2">
+<div class="box-title">Thorin's key dies with him</div>
+<div class="paragraph">
+The small curious key belonged to Thrain, Thorin's father ('this was thrains key', says Thorin when he finds it). If Thorin is killed, a handler attached to him (<a href="../asm/42545.html">A631</a>) makes the key shatter - so killing Thorin can make the game impossible to finish.
+</div>
+</div>
+<div><span id="sharedpics"></span></div>
+<div class="box box-1">
+<div class="box-title">Two pictures borrow other pictures</div>
+<div class="paragraph">
+The goblins' dungeon (room 13) and the trolls' clearing (room 5) have tiny pictures of their own - 29 and 93 bytes - which end not with an end marker but with a 'move' command. The two bytes it reads as coordinates are really the colour bytes at the start of the next picture in memory, and drawing simply carries on through that picture: the dungeon borrows the Elvenking's dungeon (room 31), and the trolls' clearing borrows room 28. The borrowed drawing comes out in the borrower's colours, so the two pairs do not look like the same picture at first glance.
+</div>
+</div>
+<div><span id="vector"></span></div>
+<div class="box box-2">
+<div class="box-title">The pictures are line drawings with fills</div>
+<div class="paragraph">
+Every location picture is drawn at run time from a list of commands (<a href="../asm/35205.html">8985</a>): lines with fixed slopes, moves, flood fills and blocks of colour. The 22 pictures contain over 3,000 line segments and take up about 10K; as bitmaps they would have needed about 60K, more than the whole Spectrum. Drawing them takes long enough to watch, which is why the game waits for a key afterwards.
+</div>
+</div>
+<div><span id="score"></span></div>
+<div class="box box-1">
+<div class="box-title">Most of the score comes from sightseeing</div>
+<div class="paragraph">
+Three quarters of the score is simply for visiting places: the first time Bilbo enters one of fourteen rooms, its points are added (<a href="../asm/36074.html">8CEA</a>), from 2.5% for the lonelands to 20% for the lower halls of the Lonely Mountain. Being thrown into the goblins' dungeon is worth 7.5%.
+</div>
+</div>
+<div><span id="darkmove"></span></div>
+<div class="box box-2">
+<div class="box-title">Moving in the dark is dangerous</div>
+<div class="paragraph">
+In a dark place Bilbo cannot choose his way: any movement command sends him in a random direction (<a href="../asm/36121.html">8D19</a>). If there is no exit that way, he falls and hits his head, which halves his strength; do it often enough and 'you fall and smash your skull'. With the glowing sword (<a href="../asm/38221.html">954D</a>) none of this happens.
+</div>
+</div>
+<div><span id="randommem"></span></div>
+<div class="box box-1">
+<div class="box-title">The random numbers come from the program itself</div>
+<div class="paragraph">
+The Hobbit has no random number table. The routine at <a href="../asm/39933.html">9BFD</a> walks a counter through memory and mixes the bytes it finds - program code, messages, the ROM - with the previous result. Only the starting point is really random: it is taken from the Z80's R register at the moment the player presses the first key.
+</div>
+</div>
+<div><span id="verbs"></span></div>
+<div class="box box-2">
+<div class="box-title">How "you attack" becomes "thorin attacks"</div>
+<div class="paragraph">
+The dictionary stores each verb once, but three bits in each verb say which ending it takes in the third person: S, ES, IES, D, ING, or IES after rubbing out the last letter (<a href="../asm/29880.html">74B8</a>, <a href="../asm/46607.html">B60F</a>). The message printer adds the ending whenever the subject is not 'you', so a single message serves both 'you attack thorin' and 'thorin attacks you', and 'you carry' and 'gandalf carries'.
+</div>
+</div>
+<div><span id="someone"></span></div>
+<div class="box box-1">
+<div class="box-title">Seeing only half of what happens</div>
+<div class="paragraph">
+When a character opens or closes a door from the far side, Bilbo can see the door but not the character. The game handles this (<a href="../asm/39201.html">9921</a>) by reporting the action with the actor replaced by 'someone': 'someone opens the round green door.'
+</div>
+</div>
+<div><span id="ringtheft"></span></div>
+<div class="box box-2">
+<div class="box-title">The ring makes Bilbo a real burglar</div>
+<div class="paragraph">
+Normally, trying to take something a character is holding gets 'gandalf is carrying the curious map.' But the check (<a href="../asm/38534.html">9686</a>) only applies while Bilbo is visible. With the ring on he is not, and he can simply take things out of other characters' hands. In the emulator, with the sword given to Gandalf, 'take sword' is refused normally, but with Bilbo invisible gives 'you take the short strong sword.' - and Thorin asks 'where's the thief?'.
+</div>
+</div>
+<div><span id="dormant"></span></div>
+<div class="box box-1">
+<div class="box-title">Some characters sleep until you get near</div>
+<div class="paragraph">
+The butler, the dragon and Bard are not active at the start of the game: their slots in the character table (<a href="../asm/51642.html">C9BA</a>) are empty. The butler is switched on when Bilbo first enters Beorn's house (<a href="../asm/50835.html">C693</a>); the dragon and Bard when he enters the Elvenking's cellar (<a href="../asm/50863.html">C6AF</a>). Until then they simply lie where they are, which is why the dragon never comes looking for Bilbo early in the game.
+</div>
+</div>
+<div><span id="barrelonly"></span></div>
+<div class="box box-2">
+<div class="box-title">The forest river kills anyone not in a barrel</div>
+<div class="paragraph">
+Room 33, the forest river below the Elvenking's trap door, has an entry handler (<a href="../asm/50905.html">C6D9</a>) that kills Bilbo - 'you are swept forcefully against the portcullis' - unless he arrives inside the barrel.
+</div>
+</div>
+<div><span id="sidedoor"></span></div>
+<div class="box box-1">
+<div class="box-title">The side door only appears one turn in five</div>
+<div class="paragraph">
+Once Bilbo has been in the Elvenking's cellar, timer 9 makes the side door of the Lonely Mountain appear with 'a loud crack' for one turn (<a href="../asm/43397.html">A985</a>) and then vanish again (<a href="../asm/43368.html">A968</a>), every five turns, unless it has been opened in the meantime. Closing it again hides it and restarts the cycle (<a href="../asm/43414.html">A996</a>). The HELP message there is simply 'wait a while.'
+</div>
+</div>
+<div><span id="ring"></span></div>
+<div class="box box-2">
+<div class="box-title">The ring has a price</div>
+<div class="paragraph">
+Wearing the golden ring (<a href="../asm/41664.html">A2C0</a>) makes Bilbo invisible, but it also divides his strength by 4 - not the moment to pick a fight. It comes off by itself after a random 2 to 10 turns (timer 6, <a href="../asm/43476.html">A9D4</a>), and taking it off multiplies his strength by 4 again (<a href="../asm/41708.html">A2EC</a>). Because the division throws away the remainder, each use can cost him up to 3 points of strength for good.
+</div>
+</div>
+<div><span id="bard"></span></div>
+<div class="box box-1">
+<div class="box-title">Only Bard can kill the dragon</div>
+<div class="paragraph">
+SHOOT (<a href="../asm/36832.html">8FE0</a>) treats Bard specially: his arrows never miss, while anyone else's always miss the dragon. A hit kills any living thing outright. So Bilbo must bring Bard (who wakes up when Bilbo reaches the Elvenking's cellar, <a href="../asm/50863.html">C6AF</a>) the bow and arrow and tell him to shoot the dragon; Bard then keeps obeying that order every turn (<a href="../asm/42911.html">A79F</a>).
+</div>
+</div>
+<div><span id="blackriver"></span></div>
+<div class="box box-2">
+<div class="box-title">The enchanted river</div>
+<div class="paragraph">
+Swimming in the fast black river (<a href="../asm/41536.html">A240</a>) or drinking its black water (<a href="../asm/41560.html">A258</a>) makes the drinker fall asleep and die, as in the book, where Bombur falls into the enchanted stream in Mirkwood and sleeps for days. Ordinary water is harmless (<a href="../asm/41332.html">A174</a>).
+</div>
+</div>
+<div><span id="window"></span></div>
+<div class="box box-1">
+<div class="box-title">A window needs friends</div>
+<div class="paragraph">
+The goblins' dungeon has a window that Bilbo cannot reach on his own (<a href="../asm/42616.html">A678</a>). He has to be carried - by giving orders to a character strong enough to carry him - which is what the HELP message there means: 'a window should be no obstacle to a thief with friends'.
+</div>
+</div>
+<div><span id="boat"></span></div>
+<div class="box box-2">
+<div class="box-title">Crossing the enchanted river</div>
+<div class="paragraph">
+The wooden boat on the enchanted river is reached with the rope (<a href="../asm/42760.html">A708</a>): throw it across, and if the boat is already moored on the far bank there is a 1-in-4 chance it lands cleanly in the boat, tying the two together; otherwise the throw falls short or slips out again. Once the rope has caught, PULL brings the boat over: 'the boat glides across the river and lands on this side' (<a href="../asm/42858.html">A76A</a>). Swimming across instead is fatal (<a href="../asm/41536.html">A240</a>). The HELP message at the river is 'boats can help. look carefully.'
+</div>
+</div>
+<div><span id="capture2"></span></div>
+<div class="box box-1">
+<div class="box-title">Bilbo cannot capture anyone</div>
+<div class="paragraph">
+There is a CAPTURE action (action 48, <a href="../asm/41750.html">A316</a>), and the rules would let Bilbo capture a goblin. But in the dictionary CAPTURE is a synonym for ATTACK (<a href="../asm/24640.html">6040</a>), so the tokeniser (<a href="../asm/28302.html">6E8E</a>) turns 'capture goblin' into 'attack goblin' before the parser sees it, and action 48 can never be reached from the keyboard - not even by ordering another character, because orders are typed too. Only the characters' own behaviour programs (<a href="../asm/50972.html">C71C</a>), which use action numbers directly, ever capture anyone. In the emulator, 'capture goblin' gives 'you attack the disgusting goblin.' - and the goblin captures Bilbo instead.
+</div>
+</div>
+<div><span id="goldenkey"></span></div>
+<div class="box box-2">
+<div class="box-title">The golden key opens nothing</div>
+<div class="paragraph">
+A golden key lies at the end of a dead-end path in the deep misty valley (room 79). The key check (<a href="../asm/41578.html">A26A</a>) only recognises the small curious key, the large key and the red key, and no object has a handler that accepts the golden key, so it opens nothing at all. The front door of Bag End cannot be locked or unlocked with any key either: its handler always replies 'the key does not fit this lock'.
+</div>
+</div>
+<div><span id="cache"></span></div>
+<div class="box box-1">
+<div class="box-title">The small curious key is buried three deep</div>
+<div class="paragraph">
+In the goblins' dungeon, the small curious key is inside the goblins' cache, which is under a trap door, which is buried in the sand. Digging opens the sand (<a href="../asm/36815.html">8FCF</a>); the trap door is locked, and no key fits it (<a href="../asm/41578.html">A26A</a>), so it has to be broken open (<a href="../asm/37463.html">9257</a>).
+</div>
+</div>
+<div><span id="unuseddesc"></span></div>
+<div class="box box-2">
+<div class="box-title">An unused room description</div>
+<div class="paragraph">
+Among the messages is 'a bewitched gloomy place surrounded by thick trees' ($B4EF), a full description for room 25. Nothing in the game refers to it: the room record's description pointer is 0, so the room is described just by its three name words ('you are in a bewitched gloomy place').
+</div>
+</div>
+<div><span id="verified"></span></div>
+<div class="box box-1">
+<div class="box-title">Checked in the emulator</div>
+<div class="paragraph">
+The following were confirmed by running the game: the fight results and the random-number bug; the pale bulbous eyes (wait twice, move on the third turn); the slurred speech after drinking the wine; the sword lighting dark places; the random hidden route and Gollum's riddle choice; stealing while wearing the ring; the ring dividing strength by 4, losing the remainder, and wearing off after a random number of turns; the deep bog killing at the end of the first turn; the spiders' place allowing the turn of arrival and three more; the trolls eating Bilbo if he stays after they have spoken, and dawn three turns later ('you are in in a clearing with two stone trolls'); the side door appearing for one turn in five after Bilbo has been in the Elvenking's cellar, and the dragon and Bard being switched on there; tools breaking when used to break things; 'capture' being treated as 'attack'. A scripted opening - taking the large key after dawn, unlocking the trolls' cave, taking the sword and rope, and giving the map to Elrond - played exactly as the code predicts, ending with 'elrond examines the curious map. elrond says "go east from the forest gate to get to the bewitched gloomy place"'.
+</div>
+</div>
+<div><span id="allies"></span></div>
+<div class="box box-2">
+<div class="box-title">Hitting a friend makes an enemy for good</div>
+<div class="paragraph">
+Characters on the same side never attack each other (<a href="../asm/37044.html">90B4</a>). Bilbo can still attack Thorin, Gandalf, Elrond or Bard, but doing so permanently clears their 'Bilbo's side' bit, so from then on they will fight him - and anyone else - like any other character.
+</div>
+</div>
+<div><span id="score75"></span></div>
+<div class="box box-1">
+<div class="box-title">The best possible score is 75%</div>
+<div class="paragraph">
+The score (at $B5E8, in tenths of a percent) is set to 0 at the start of a game and changed in exactly one place: the movement routine, when Bilbo first enters one of the fourteen rooms in the points table (<a href="../asm/36074.html">8CEA</a>), which add up to 75.0%. Nothing else scores - not killing the dragon, not finding the treasure, not even winning. A perfect game ends with 'you have mastered 75.0% of this adventure'.
+</div>
+</div>
+<div><span id="ringbrawl"></span></div>
+<div class="box box-2">
+<div class="box-title">Why Thorin and Gandalf fight when an invisible Bilbo hits Thorin</div>
+<div class="paragraph">
+Three rules combine. Hitting Thorin clears his 'Bilbo's side' bit for good (<a href="../asm/37044.html">90B4</a>), so he no longer shares a side with Gandalf. Being attacked switches Thorin to the general fight-back program (<a href="../asm/50972.html">C71C</a>, at $C94D), whose first instruction is simply 'attack', leaving the game to choose the target as it does for the player (<a href="../asm/33797.html">8405</a>). And the choice only considers things Thorin can see (<a href="../asm/40338.html">9D92</a>, which needs bit 7 of the candidate's flags): with the ring on, Bilbo is invisible, so the only candidate is Gandalf. Once Gandalf has been attacked he switches to the same fight-back program, and since Thorin is no longer on his side he can attack Thorin - and they carry on until one of them dies. In the emulator, with the ring kept on and Gandalf held in the room, 'hit thorin' was followed by 'thorin attacks gandalf. gandalf attacks thorin...' every time, ending in one case with 'with one well placed blow gandalf cleaves his skull. thorin is dead.'
+</div>
+</div>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>
