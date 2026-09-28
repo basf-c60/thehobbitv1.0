@@ -18,13 +18,13 @@ this on GitHub Pages).
 
 | Page | What it is |
 |---|---|
-| [How the game works](HowItWorks.html) | The overview: the turn cycle, the parser, objects and rooms, characters, text, pictures and chance. Start here. |
-| [Map of Wilderland](Map.html) | All 79 locations and their exits, drawn from the game's own data: doors, dark rooms, one-way exits and the five randomly hidden routes. |
-| [Location pictures](Pictures.html) | All 22 pictures, rendered by running the game's own drawing routine. The format (a small vector language with flood fills) is decoded command by command. |
-| [Characters](Characters.html) | Starting strength, defence, size, side and how obedient each character is, with an explanation of what the numbers mean. |
-| [Objects](Objects.html) | Every object, where it starts, its stats and the actions it has special handling for. |
-| [Bugs](reference/bugs.html) | 14 bugs in the original program, each explained, with a note of whether it was reproduced in an emulator. |
-| [Trivia](reference/facts.html) | 45 findings: how Thorin's singing works, why the wine slurs your speech, why the best score is 75%, and more. |
+| [How the game works](https://basf-c60.github.io/thehobbitv1.0/HowItWorks.html) | The overview: the turn cycle, the parser, objects and rooms, characters, text, pictures and chance. Start here. |
+| [Map of Wilderland](https://basf-c60.github.io/thehobbitv1.0/Map.html) | All 79 locations and their exits, drawn from the game's own data: doors, dark rooms, one-way exits and the five randomly hidden routes. |
+| [Location pictures](https://basf-c60.github.io/thehobbitv1.0/Pictures.html) | All 22 pictures, rendered by running the game's own drawing routine. The format (a small vector language with flood fills) is decoded command by command. |
+| [Characters](https://basf-c60.github.io/thehobbitv1.0/Characters.html) | Starting strength, defence, size, side and how obedient each character is, with an explanation of what the numbers mean. |
+| [Objects](https://basf-c60.github.io/thehobbitv1.0/Objects.html) | Every object, where it starts, its stats and the actions it has special handling for. |
+| [Bugs](https://basf-c60.github.io/thehobbitv1.0/reference/bugs.html) | 14 bugs in the original program, each explained, with a note of whether it was reproduced in an emulator. |
+| [Trivia](https://basf-c60.github.io/thehobbitv1.0/reference/facts.html) | 45 findings: how Thorin's singing works, why the wine slurs your speech, why the best score is 75%, and more. |
 | [Routines and data](asm/) | The disassembly itself: 369 routines and every data table, all named and explained. |
 
 ## Things worth knowing about the game
@@ -43,7 +43,7 @@ A few of the things this work turned up, each explained in detail on the pages a
   fights towards the high end.
 - **Bugs.** Typing `DO` (including the abbreviation in `op do`) makes the game run wild;
   negative random adjustments in fights become zero; the missing wound message; a jump into
-  message data in the barrel handler; and more. See the [Bugs page](reference/bugs.html).
+  message data in the barrel handler; and more. See the [Bugs page](https://basf-c60.github.io/thehobbitv1.0/reference/bugs.html).
 
 ## Repository layout
 
