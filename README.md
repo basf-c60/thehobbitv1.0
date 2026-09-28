@@ -11,7 +11,7 @@ open?", "the actor's own record") rather than restating the instruction or quoti
 address. Addresses in the text are links, so you can follow the code the way you would
 follow a story.
 
-**Browse it: open [`index.html`](index.html)** (or the published site, if you are reading
+**Browse it: open [`https://basf-c60.github.io/thehobbitv1.0/index.html`](index.html)** (or the published site, if you are reading
 this on GitHub Pages).
 
 ## What you will find
