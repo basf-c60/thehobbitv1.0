@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at AA13</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43524.html">AA04</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43539">Map</a></td>
+<td class="next">
+Next: <a href="43566.html">AA2E</a>
+</td>
+</tr>
+</table>
+<div class="description">AA13: Pale bulbous eyes: tick routine</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called by <a href="38417.html">9611</a> on each turn that the eyes timer (entry at <a href="51571.html#51627">C9AB</a>) is counting down and at or below its threshold of 3. It prints 'you see some pale bulbous eyes staring at you' (<a href="44145.html#45571">B203</a>).
+</div>
+<div class="paragraph">
+It then checks whether Bilbo has moved. $C01B is Bilbo's location (the first location byte of object 0, see <a href="49163.html">C00B</a>) and $B5E4 is the room he was in when the timer was started. If he is still in the same room, all is well. If he has moved to the other 'eyes' room (from 2 to 3 or from 3 to 2), all is also well. Otherwise he has left too early: execution falls into <a href="43566.html#43582">AA3E</a>, which prints 'some thing drops from above and stings' (<a href="44145.html#45585">B211</a>) and kills him (<a href="36924.html">903C</a>).
+</div>
+<div class="paragraph">
+In practice the room-2/room-3 exception is never needed, because entering either room restarts the timer anyway (see <a href="50892.html">C6CC</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43539"></span>AA13</td>
+<td class="instruction">LD HL,$B203</td>
+<td class="comment-1" rowspan="1">Print the eyes message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43542"></span>AA16</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the message at HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43545"></span>AA19</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="1">C = Bilbo's current room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43548"></span>AA1C</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43549"></span>AA1D</td>
+<td class="instruction">LD HL,$B5E4</td>
+<td class="comment-1" rowspan="1">HL = the address of the room where the eyes timer started</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43552"></span>AA20</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Still in the same room: fine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43553"></span>AA21</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43554"></span>AA22</td>
+<td class="instruction">LD B,(HL)</td>
+<td class="comment-1" rowspan="1">B = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43555"></span>AA23</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1">A = the other eyes room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43557"></span>AA25</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Compare with B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43558"></span>AA26</td>
+<td class="instruction">JR NZ,$AA2A</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="43539.html#43562">AA2A</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43560"></span>AA28</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="1">A = 3</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43562"></span>AA2A</td>
+<td class="instruction">CP C</td>
+<td class="comment-1" rowspan="1">Moved to the other eyes room: fine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43563"></span>AA2B</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43564"></span>AA2C</td>
+<td class="instruction">JR <a href="43566.html#43582">$AA3E</a></td>
+<td class="comment-1" rowspan="1">Otherwise: stung to death</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43524.html">AA04</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43539">Map</a></td>
+<td class="next">
+Next: <a href="43566.html">AA2E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

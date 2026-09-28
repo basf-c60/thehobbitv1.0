@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A5BB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42385.html">A591</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42427">Map</a></td>
+<td class="next">
+Next: <a href="42453.html">A5D5</a>
+</td>
+</tr>
+</table>
+<div class="description">A5BB: Character routine: the dragon speaks</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the dragon and Bilbo are in the same room: 'well thief your cunning has failed you this time. prepare to die', or, if Bilbo is invisible (he is wearing the ring: bit 7 of his flags at $C012 is clear), 'I may not be able to see you thief but I can still burn you. prepare to die'. The dragon's next instruction is BURN.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42427"></span>A5BB</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="3">Is Bilbo in the room where the dragon started its turn?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42430"></span>A5BE</td>
+<td class="instruction">LD HL,$B5E7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42433"></span>A5C1</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42434"></span>A5C2</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing to say</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42435"></span>A5C3</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: this would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42438"></span>A5C6</td>
+<td class="instruction">LD A,($C012)</td>
+<td class="comment-1" rowspan="2">Is Bilbo visible (bit 7 of his flags; clear while he wears the ring)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42441"></span>A5C9</td>
+<td class="instruction">AND $80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42443"></span>A5CB</td>
+<td class="instruction">LD HL,$B070</td>
+<td class="comment-1" rowspan="1">"I may not be able to see you thief but I can still burn you. prepare to die"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42446"></span>A5CE</td>
+<td class="instruction">JR Z,$A5D3</td>
+<td class="comment-1" rowspan="1">Invisible: say that</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42448"></span>A5D0</td>
+<td class="instruction">LD HL,$B04F</td>
+<td class="comment-1" rowspan="1">"well thief your cunning has failed you this time. prepare to die"</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42451"></span>A5D3</td>
+<td class="instruction">JR <a href="42385.html#42423">$A5B7</a></td>
+<td class="comment-1" rowspan="1">Print it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42385.html">A591</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42427">Map</a></td>
+<td class="next">
+Next: <a href="42453.html">A5D5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

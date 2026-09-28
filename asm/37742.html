@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 936E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37700.html">9344</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37742">Map</a></td>
+<td class="next">
+Next: <a href="37778.html">9392</a>
+</td>
+</tr>
+</table>
+<div class="description">936E: EMPTY</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The barrel's EMPTY handler. It must be open ('the barrel is closed') and have something in it ('the barrel is empty'). Its contents are tipped out where it stands (<a href="40101.html">9CA5</a>) and it is no longer full.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37742"></span>936E</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37746"></span>9372</td>
+<td class="instruction">CALL <a href="42179.html">$A4C3</a></td>
+<td class="comment-1" rowspan="1">Is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37749"></span>9375</td>
+<td class="instruction">JP Z,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No: "the X is closed."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37752"></span>9378</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37755"></span>937B</td>
+<td class="instruction">CALL <a href="40172.html">$9CEC</a></td>
+<td class="comment-1" rowspan="2">Does it hold anything visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37758"></span>937E</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37760"></span>9380</td>
+<td class="instruction">JR Z,$938D</td>
+<td class="comment-1" rowspan="1">No: it is already empty, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37762"></span>9382</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37765"></span>9385</td>
+<td class="instruction">CALL <a href="40101.html">$9CA5</a></td>
+<td class="comment-1" rowspan="1">Tip everything it holds out, into its own place</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37768"></span>9388</td>
+<td class="instruction">RES 2,(IX+$07)</td>
+<td class="comment-1" rowspan="2">It is no longer full</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37772"></span>938C</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37773"></span>938D</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1">A = the state code for FULL/EMPTY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37775"></span>938F</td>
+<td class="instruction">JP <a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">"the X is empty."</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37700.html">9344</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37742">Map</a></td>
+<td class="next">
+Next: <a href="37778.html">9392</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

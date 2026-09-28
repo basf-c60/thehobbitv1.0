@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A91B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43225.html">A8D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43291">Map</a></td>
+<td class="next">
+Next: <a href="43344.html">A950</a>
+</td>
+</tr>
+</table>
+<div class="description">A91B: Handler for the barrel: JUMP ONTO / CLIMB INTO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+An actor can get into the barrel only from a room with an exit leading to where the barrel is, and only if that exit goes down (direction 10). Otherwise 'you cannot jump onto the barrel from here.' The actor then becomes held by the barrel (and so moves with it, <a href="39736.html">9B38</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43291"></span>A91B</td>
+<td class="instruction">LD IY,($B5F8)</td>
+<td class="comment-1" rowspan="1">IY = the barrel's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43295"></span>A91F</td>
+<td class="instruction">LD A,(IY+$10)</td>
+<td class="comment-1" rowspan="2">B = the room the barrel is in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43298"></span>A922</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43299"></span>A923</td>
+<td class="instruction">CALL <a href="40566.html">$9E76</a></td>
+<td class="comment-1" rowspan="2">Find an exit from the actor's own room that leads there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43302"></span>A926</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43304"></span>A928</td>
+<td class="instruction">LD HL,$B1F3</td>
+<td class="comment-1" rowspan="1">"you cannot jump onto the barrel from here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43307"></span>A92B</td>
+<td class="instruction">JP Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">No such exit: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43310"></span>A92E</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = that exit's own direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43313"></span>A931</td>
+<td class="instruction">CP $0A</td>
+<td class="comment-1" rowspan="1">Is it DOWN?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43315"></span>A933</td>
+<td class="instruction">JP NZ,$B1F3</td>
+<td class="comment-1" rowspan="1">No: jump to the message text itself, rather than through the printer - see the bug note</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43318"></span>A936</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43321"></span>A939</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">The actor becomes held by the barrel...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43324"></span>A93C</td>
+<td class="instruction">LD IX,($B5FC)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43328"></span>A940</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43331"></span>A943</td>
+<td class="instruction">CALL <a href="39736.html">$9B38</a></td>
+<td class="comment-1" rowspan="1">...and moves wherever the barrel goes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43334"></span>A946</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43337"></span>A949</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43339"></span>A94B</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing more to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43340"></span>A94C</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Yes: describe the room the barrel is now in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43341"></span>A94D</td>
+<td class="instruction">JP <a href="38286.html">$958E</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43225.html">A8D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43291">Map</a></td>
+<td class="next">
+Next: <a href="43344.html">A950</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8569</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34132.html">8554</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34153">Map</a></td>
+<td class="next">
+Next: <a href="34191.html">858F</a>
+</td>
+</tr>
+</table>
+<div class="description">8569: Decode the flags of the action</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Turns the flag nibbles of the action table entry (see <a href="28906.html">70EA</a>) into separate variables: $B601 (bit 6 of $B60E: the action is allowed in the dark), $B5FF (bit 0 of $B60D: the objects need not be within reach), $B5EF (bit 7: the target is a room rather than an object) and $B5F0 (bit 6: the instrument is a room).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34153"></span>8569</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="1">A = the action's second set of flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34156"></span>856C</td>
+<td class="instruction">AND $40</td>
+<td class="comment-1" rowspan="2">Is it allowed in the dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34158"></span>856E</td>
+<td class="instruction">LD ($B601),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34161"></span>8571</td>
+<td class="instruction">LD A,($B60D)</td>
+<td class="comment-1" rowspan="2">A = the action's main flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34164"></span>8574</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34165"></span>8575</td>
+<td class="instruction">AND $01</td>
+<td class="comment-1" rowspan="3">Do the objects need not be within reach?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34167"></span>8577</td>
+<td class="instruction">LD ($B5FF),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34170"></span>857A</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34171"></span>857B</td>
+<td class="instruction">AND $80</td>
+<td class="comment-1" rowspan="4">Is the target actually a room, rather than an object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34173"></span>857D</td>
+<td class="instruction">JR Z,$8581</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34175"></span>857F</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34177"></span>8581</td>
+<td class="instruction">LD ($B5EF),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34180"></span>8584</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="6">Is the instrument actually a room too?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34181"></span>8585</td>
+<td class="instruction">AND $40</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34183"></span>8587</td>
+<td class="instruction">JR Z,$858B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34185"></span>8589</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34187"></span>858B</td>
+<td class="instruction">LD ($B5F0),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34190"></span>858E</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34132.html">8554</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34153">Map</a></td>
+<td class="next">
+Next: <a href="34191.html">858F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

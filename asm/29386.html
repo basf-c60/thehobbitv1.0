@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 72CA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29381.html">72C5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29386">Map</a></td>
+<td class="next">
+Next: <a href="29396.html">72D4</a>
+</td>
+</tr>
+</table>
+<div class="description">72CA: Print a message, suppressing actions inside a quotation</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the parser is inside a quotation ($B60B set), the 'really do it' flag $B5EB is cleared first, so that commands being passed to another character are only tried, not carried out. Execution continues into <a href="29396.html">72D4</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29386"></span>72CA</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="2">Are we in the middle of a quotation (an order being given to a character)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29389"></span>72CD</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29390"></span>72CE</td>
+<td class="instruction">JR Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">No: print the message as normal</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29392"></span>72D0</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">Yes: make sure this only counts as a trial, not something that really happens to the world...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29393"></span>72D1</td>
+<td class="instruction">LD ($B5EB),A</td>
+<td class="comment-1" rowspan="1">...then fall into the ordinary message printer</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29381.html">72C5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29386">Map</a></td>
+<td class="next">
+Next: <a href="29396.html">72D4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

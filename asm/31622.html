@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7B86</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31604.html">7B74</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31622">Map</a></td>
+<td class="next">
+Next: <a href="31726.html">7BEE</a>
+</td>
+</tr>
+</table>
+<div class="description">7B86: Read a key</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Scans the keyboard directly through port $FE (the game does not use the ROM keyboard routine or interrupts) and returns the ASCII code of a key that has just been pressed, or 0 if no new key has been pressed. Holding a key down does not repeat it.
+</div>
+<div class="paragraph">
+The routine first waits a few milliseconds (<a href="31595.html">7B6B</a>), then reads each of the eight half-rows in turn, starting with port $FEFE (CAPS SHIFT to V) and rotating the high byte of the port address to reach the next row. Each reading is ORed with that row's mask from <a href="31604.html">7B74</a>. A key counts as newly pressed if its bit is 0 now but was 1 in the previous reading kept at $7B7E; the row and bits of such a key are saved at $7B7C.
+</div>
+<div class="paragraph">
+If a new key was found, its row and bit are turned into a number from 0 to 39 (row x 5 + bit, $7BC0-$7BCE). Then the shift keys are checked directly: if CAPS SHIFT is held, or SYMBOL SHIFT is not, the normal table at <a href="31726.html">7BEE</a> is used; if SYMBOL SHIFT is held (and CAPS SHIFT is not), the symbol table at <a href="31766.html">7C16</a> is used. The table entry is returned in A.
+</div>
+<div class="paragraph">
+In my emulator I replaced this routine with one that fed typed commands to the game.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">ASCII code of the key, or 0</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31622"></span>7B86</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31623"></span>7B87</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31625"></span>7B89</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Save BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31626"></span>7B8A</td>
+<td class="instruction">CALL <a href="31595.html">$7B6B</a></td>
+<td class="comment-1" rowspan="1">Short delay; clear the new-key record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31629"></span>7B8D</td>
+<td class="instruction">LD ($7B7C),BC</td>
+<td class="comment-1" rowspan="1">Store BC in the new key record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31633"></span>7B91</td>
+<td class="instruction">LD HL,$7B7E</td>
+<td class="comment-1" rowspan="1">HL = $7B7E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31636"></span>7B94</td>
+<td class="instruction">LD IX,$7B74</td>
+<td class="comment-1" rowspan="1">IX = Keyboard scan state (<a href="31604.html">7B74</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31640"></span>7B98</td>
+<td class="instruction">LD BC,$FEFE</td>
+<td class="comment-1" rowspan="1">Start with the CAPS SHIFT-V half-row</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31643"></span>7B9B</td>
+<td class="instruction">IN A,(C)</td>
+<td class="comment-1" rowspan="1">Read it and hide the ignored keys</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31645"></span>7B9D</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31647"></span>7B9F</td>
+<td class="instruction">OR (IX+$00)</td>
+<td class="comment-1" rowspan="1">Combine with (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31650"></span>7BA2</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31651"></span>7BA3</td>
+<td class="instruction">CPL</td>
+<td class="comment-1" rowspan="1">Any key down now that was up before?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31652"></span>7BA4</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-1" rowspan="1">Keep only the bits of (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31653"></span>7BA5</td>
+<td class="instruction">CPL</td>
+<td class="comment-1" rowspan="1">A = NOT A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31654"></span>7BA6</td>
+<td class="instruction">JR Z,$7BAF</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="31622.html#31663">7BAF</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31656"></span>7BA8</td>
+<td class="instruction">LD ($7B7C),BC</td>
+<td class="comment-1" rowspan="1">Yes: remember the row and the bits</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31660"></span>7BAC</td>
+<td class="instruction">LD ($7B7C),A</td>
+<td class="comment-1" rowspan="1">Store A in the new key record</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31663"></span>7BAF</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31664"></span>7BB0</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Save this reading for next time</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31665"></span>7BB1</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31666"></span>7BB2</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increment IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31668"></span>7BB4</td>
+<td class="instruction">RLC B</td>
+<td class="comment-1" rowspan="1">Next half-row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31670"></span>7BB6</td>
+<td class="instruction">JR C,$7B9B</td>
+<td class="comment-1" rowspan="1">If carry is set, go to <a href="31622.html#31643">7B9B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31672"></span>7BB8</td>
+<td class="instruction">LD BC,($7B7C)</td>
+<td class="comment-1" rowspan="1">Was a new key found?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31676"></span>7BBC</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31677"></span>7BBD</td>
+<td class="instruction">OR C</td>
+<td class="comment-1" rowspan="1">Combine with C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31678"></span>7BBE</td>
+<td class="instruction">JR Z,$7BE9</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="31622.html#31721">7BE9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31680"></span>7BC0</td>
+<td class="instruction">LD A,$FB</td>
+<td class="comment-1" rowspan="1">Work out its number: 5 x row...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31682"></span>7BC2</td>
+<td class="instruction">ADD A,$05</td>
+<td class="comment-1" rowspan="1">Add A,$05</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31684"></span>7BC4</td>
+<td class="instruction">RRC B</td>
+<td class="comment-1" rowspan="1">Shift/rotate B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31686"></span>7BC6</td>
+<td class="instruction">JR C,$7BC2</td>
+<td class="comment-1" rowspan="1">If carry set, go to <a href="31622.html#31682">7BC2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31688"></span>7BC8</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrement A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31689"></span>7BC9</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31690"></span>7BCA</td>
+<td class="instruction">RRC C</td>
+<td class="comment-1" rowspan="1">...+ bit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31692"></span>7BCC</td>
+<td class="instruction">JR C,$7BC9</td>
+<td class="comment-1" rowspan="1">If carry set, go to <a href="31622.html#31689">7BC9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31694"></span>7BCE</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31695"></span>7BCF</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1">B = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31697"></span>7BD1</td>
+<td class="instruction">LD HL,$7BEE</td>
+<td class="comment-1" rowspan="1">Use the normal table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31700"></span>7BD4</td>
+<td class="instruction">LD A,$FE</td>
+<td class="comment-1" rowspan="1">...if CAPS SHIFT is pressed...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31702"></span>7BD6</td>
+<td class="instruction">IN A,($FE)</td>
+<td class="comment-1" rowspan="1">Read the keyboard/port</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31704"></span>7BD8</td>
+<td class="instruction">AND $01</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31706"></span>7BDA</td>
+<td class="instruction">JR Z,$7BE4</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="31622.html#31716">7BE4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31708"></span>7BDC</td>
+<td class="instruction">LD A,$7F</td>
+<td class="comment-1" rowspan="1">...or SYMBOL SHIFT is not</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31710"></span>7BDE</td>
+<td class="instruction">IN A,($FE)</td>
+<td class="comment-1" rowspan="1">Read the keyboard/port</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31712"></span>7BE0</td>
+<td class="instruction">AND $02</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31714"></span>7BE2</td>
+<td class="instruction">JR NZ,$7BE7</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="31622.html#31719">7BE7</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="31716"></span>7BE4</td>
+<td class="instruction">LD HL,$7C16</td>
+<td class="comment-1" rowspan="1">Otherwise use the SYMBOL SHIFT table</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31719"></span>7BE7</td>
+<td class="instruction">ADD HL,BC</td>
+<td class="comment-1" rowspan="1">Look up the key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31720"></span>7BE8</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = (HL)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31721"></span>7BE9</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31722"></span>7BEA</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31724"></span>7BEC</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31725"></span>7BED</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31604.html">7B74</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31622">Map</a></td>
+<td class="next">
+Next: <a href="31726.html">7BEE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

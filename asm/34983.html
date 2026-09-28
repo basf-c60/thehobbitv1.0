@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 88A7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34965.html">8895</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34983">Map</a></td>
+<td class="next">
+Next: <a href="35052.html">88EC</a>
+</td>
+</tr>
+</table>
+<div class="description">88A7: Address the orders to a character</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+After SAY TO someone "...", the commands inside the quotation are waiting in the orders buffer (<a href="46632.html">B628</a>), each in a slot marked $FF. This routine gives the first A of them to the character being spoken to, by writing the character's object number ($B5D9) into the slots' first bytes. Any further waiting orders (more than the character will accept) are thrown away by setting their first byte to 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34983"></span>88A7</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34984"></span>88A8</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34986"></span>88AA</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34987"></span>88AB</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the number of orders the character will take</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34988"></span>88AC</td>
+<td class="instruction">LD A,($B627)</td>
+<td class="comment-1" rowspan="2">C = the number of orders waiting</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34991"></span>88AF</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34992"></span>88B0</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="2">More wanted than there are?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34993"></span>88B1</td>
+<td class="instruction">JR NC,$88B4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34995"></span>88B3</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Then take them all</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34996"></span>88B4</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">C = the number left over</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34997"></span>88B5</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34998"></span>88B6</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34999"></span>88B7</td>
+<td class="instruction">LD IX,$B60F</td>
+<td class="comment-1" rowspan="1">IX = one slot before the orders buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35003"></span>88BB</td>
+<td class="instruction">LD DE,$0019</td>
+<td class="comment-1" rowspan="1">25 bytes per slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35006"></span>88BE</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Any to hand over?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35007"></span>88BF</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35008"></span>88C0</td>
+<td class="instruction">JR Z,$88D3</td>
+<td class="comment-1" rowspan="1">No</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35010"></span>88C2</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="4">Find the next waiting order (marked $FF)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35012"></span>88C4</td>
+<td class="instruction">LD A,(IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35015"></span>88C7</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35017"></span>88C9</td>
+<td class="instruction">JR NZ,$88C2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35019"></span>88CB</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Address it to the character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35022"></span>88CE</td>
+<td class="instruction">LD (IX+$00),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35025"></span>88D1</td>
+<td class="instruction">DJNZ $88C2</td>
+<td class="comment-1" rowspan="1">Next</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35027"></span>88D3</td>
+<td class="instruction">LD B,C</td>
+<td class="comment-1" rowspan="3">Now the left-over orders:</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35028"></span>88D4</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35029"></span>88D5</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35030"></span>88D6</td>
+<td class="instruction">JR Z,$88E7</td>
+<td class="comment-1" rowspan="1">None</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35032"></span>88D8</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="4">find each one...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35034"></span>88DA</td>
+<td class="instruction">LD A,(IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35037"></span>88DD</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35039"></span>88DF</td>
+<td class="instruction">JR NZ,$88D8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35041"></span>88E1</td>
+<td class="instruction">LD (IX+$00),$00</td>
+<td class="comment-1" rowspan="6">...and throw it away</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35045"></span>88E5</td>
+<td class="instruction">DJNZ $88D8</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35047"></span>88E7</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35048"></span>88E8</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35050"></span>88EA</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35051"></span>88EB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34965.html">8895</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34983">Map</a></td>
+<td class="next">
+Next: <a href="35052.html">88EC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

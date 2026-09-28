@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9611</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38406.html">9606</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38417">Map</a></td>
+<td class="next">
+Next: <a href="38534.html">9686</a>
+</td>
+</tr>
+</table>
+<div class="description">9611: End of turn: run the timers</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called once per turn after the player's command. First <a href="43210.html">A8CA</a> and <a href="38764.html">976C</a> (via $9618 and $961B) let the other characters take their turns, then the timer table at <a href="51571.html">C973</a> is processed.
+</div>
+<div class="paragraph">
+Each 7-byte timer entry has: a reload value, the current count, the address of an 'expire' routine, a threshold, and the address of a 'tick' routine. A count of 0 means the timer is not running. For each running timer the count is decremented ($963B). If it has just reached 0, the expire routine is called ($9657). If it is still above 0 but at or below the threshold, the tick routine is called instead ($966E).
+</div>
+<div class="paragraph">
+Only one timer is allowed to expire per turn: the flag at $B5E1 records that one has already fired, and any other timer that reaches 0 in the same turn is given a count of 1 so that it fires next turn instead.
+</div>
+<div class="paragraph">
+Timers are started by setting their count to their reload value, which various event routines do by copying byte 0 of the entry to byte 1 (for example <a href="50892.html">C6CC</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38417"></span>9611</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="5">Save the registers: the end of the turn must not disturb the caller</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38418"></span>9612</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38420"></span>9614</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38422"></span>9616</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38423"></span>9617</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38424"></span>9618</td>
+<td class="instruction">CALL <a href="43210.html">$A8CA</a></td>
+<td class="comment-1" rowspan="1">Has the game been won (treasure in the chest)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38427"></span>961B</td>
+<td class="instruction">CALL <a href="38764.html">$976C</a></td>
+<td class="comment-1" rowspan="1">Let every other character take its turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38430"></span>961E</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">No timer has expired yet this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38431"></span>961F</td>
+<td class="instruction">LD ($B5E1),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38434"></span>9622</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">From now on things really happen: set the "would work"...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38435"></span>9623</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38438"></span>9626</td>
+<td class="instruction">LD ($B5EB),A</td>
+<td class="comment-1" rowspan="1">...and "really do it" flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38441"></span>9629</td>
+<td class="instruction">LD IY,$C973</td>
+<td class="comment-1" rowspan="1">IY = the first timer entry</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38445"></span>962D</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">Fetch its reload value</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38448"></span>9630</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">$FF marks the end of the table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38450"></span>9632</td>
+<td class="instruction">JR Z,$9679</td>
+<td class="comment-1" rowspan="1">All timers done: finish</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38452"></span>9634</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="1">A = the timer's count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38455"></span>9637</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1">Is the timer running?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38457"></span>9639</td>
+<td class="instruction">JR Z,$9671</td>
+<td class="comment-1" rowspan="1">No: next timer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38459"></span>963B</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Count down one turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38460"></span>963C</td>
+<td class="instruction">LD (IY+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38463"></span>963F</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1">Has it reached 0?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38465"></span>9641</td>
+<td class="instruction">JR NZ,$965C</td>
+<td class="comment-1" rowspan="1">Not yet: see whether it is time for the tick routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38467"></span>9643</td>
+<td class="instruction">LD A,($B5E1)</td>
+<td class="comment-1" rowspan="2">It has expired. Has another timer already expired this turn?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38470"></span>9646</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38472"></span>9648</td>
+<td class="instruction">LD (IY+$01),A</td>
+<td class="comment-1" rowspan="1">Set the count to 1 if so (so it fires next turn) or leave it at 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38475"></span>964B</td>
+<td class="instruction">JR Z,$965C</td>
+<td class="comment-1" rowspan="1">Another timer has fired: wait until next turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38477"></span>964D</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">This is the first: note that a timer has fired this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38478"></span>964E</td>
+<td class="instruction">LD ($B5E1),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38481"></span>9651</td>
+<td class="instruction">LD L,(IY+$02)</td>
+<td class="comment-1" rowspan="2">HL = the expire routine...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38484"></span>9654</td>
+<td class="instruction">LD H,(IY+$03)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38487"></span>9657</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+<td class="comment-1" rowspan="1">...and run it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38490"></span>965A</td>
+<td class="instruction">JR $9671</td>
+<td class="comment-1" rowspan="1">Next timer</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38492"></span>965C</td>
+<td class="instruction">LD A,(IY+$04)</td>
+<td class="comment-1" rowspan="1">A = the threshold for the tick routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38495"></span>965F</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1">Is there one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38497"></span>9661</td>
+<td class="instruction">JR Z,$9671</td>
+<td class="comment-1" rowspan="1">No: next timer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38499"></span>9663</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">Is the count at or below the threshold?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38502"></span>9666</td>
+<td class="instruction">JR C,$9671</td>
+<td class="comment-1" rowspan="1">No: next timer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38504"></span>9668</td>
+<td class="instruction">LD L,(IY+$05)</td>
+<td class="comment-1" rowspan="2">HL = the tick routine...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38507"></span>966B</td>
+<td class="instruction">LD H,(IY+$06)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38510"></span>966E</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+<td class="comment-1" rowspan="1">...and run it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38513"></span>9671</td>
+<td class="instruction">LD DE,$0007</td>
+<td class="comment-1" rowspan="2">Move on to the next 7-byte entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38516"></span>9674</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38518"></span>9676</td>
+<td class="instruction">JP $962D</td>
+<td class="comment-1" rowspan="1">Loop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38521"></span>9679</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Turn output back on for the player</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38523"></span>967B</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38526"></span>967E</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="6">Restore the registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38527"></span>967F</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38528"></span>9680</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38530"></span>9682</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38532"></span>9684</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38533"></span>9685</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38406.html">9606</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38417">Map</a></td>
+<td class="next">
+Next: <a href="38534.html">9686</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

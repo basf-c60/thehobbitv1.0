@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7B6B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31509.html">7B15</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31595">Map</a></td>
+<td class="next">
+Next: <a href="31604.html">7B74</a>
+</td>
+</tr>
+</table>
+<div class="description">7B6B: Short delay</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Counts BC down from 1000. This takes about 26,000 T-states, a little over 7 ms, and slows the keyboard scan in <a href="31622.html">7B86</a> down enough to debounce the keys. It also sets the pace of the idle timer in <a href="29248.html">7240</a>. BC is 0 on return.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31595"></span>7B6B</td>
+<td class="instruction">LD BC,$03E8</td>
+<td class="comment-1" rowspan="1">BC = 1000</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31598"></span>7B6E</td>
+<td class="instruction">DEC BC</td>
+<td class="comment-1" rowspan="3">Count down...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31599"></span>7B6F</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31600"></span>7B70</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31601"></span>7B71</td>
+<td class="instruction">JR NZ,$7B6E</td>
+<td class="comment-1" rowspan="2">...to zero, taking a little over 7ms</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31603"></span>7B73</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31509.html">7B15</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31595">Map</a></td>
+<td class="next">
+Next: <a href="31604.html">7B74</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

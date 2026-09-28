@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 84AB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33938.html">8492</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33963">Map</a></td>
+<td class="next">
+Next: <a href="33981.html">84BD</a>
+</td>
+</tr>
+</table>
+<div class="description">84AB: Start the search for instruments</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+As <a href="33938.html">8492</a>, for the instrument: the position is kept at $8341.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33963"></span>84AB</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="1">A = the action's second set of flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33966"></span>84AE</td>
+<td class="instruction">CALL <a href="33981.html">$84BD</a></td>
+<td class="comment-1" rowspan="1">Choose the object index, or the character-only/object-only index</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33969"></span>84B1</td>
+<td class="instruction">LD A,($B5F0)</td>
+<td class="comment-1" rowspan="2">Is the instrument actually meant to be a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33972"></span>84B4</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33973"></span>84B5</td>
+<td class="instruction">CALL NZ,<a href="40414.html">$9DDE</a></td>
+<td class="comment-1" rowspan="1">If so, search the actor's own room's exits instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33976"></span>84B8</td>
+<td class="instruction">LD ($8341),IX</td>
+<td class="comment-1" rowspan="2">Remember where the search has got to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33980"></span>84BC</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33938.html">8492</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33963">Map</a></td>
+<td class="next">
+Next: <a href="33981.html">84BD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

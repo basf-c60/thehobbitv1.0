@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7403</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29694.html">73FE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29699">Map</a></td>
+<td class="next">
+Next: <a href="29724.html">741C</a>
+</td>
+</tr>
+</table>
+<div class="description">7403: Message code $10: "you are" or "thorin is"</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the actor's name (<a href="29823.html">747F</a>) and then returns ARE if the actor is Bilbo and IS otherwise, for the interpreter to print. Code $11 (<a href="29724.html">741C</a>) does the same for the target, and code $13 (<a href="29732.html">7424</a>) for an object pushed on the stack.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29699"></span>7403</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = whose name to print - the actor here, or, via the entry points below, the target or a pushed object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29702"></span>7406</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Keep it safely out of the way while the name is printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29703"></span>7407</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">No article for a name</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29704"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29724.html">741C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29704"></span>7408</td>
+<td class="instruction">LD ($B5F4),A</td>
+<td class="comment-1" rowspan="1">}</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29707"></span>740B</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">A = the object again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29708"></span>740C</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save it once more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29709"></span>740D</td>
+<td class="instruction">CALL <a href="29823.html">$747F</a></td>
+<td class="comment-1" rowspan="1">Print the name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29712"></span>7410</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">A = the object once more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29713"></span>7411</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is it Bilbo (0)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29714"></span>7412</td>
+<td class="instruction">LD DE,$039F</td>
+<td class="comment-1" rowspan="1">DE = ARE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29717"></span>7415</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Not Bilbo: ARE is right, and Z is already reset, so it gets printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29718"></span>7416</td>
+<td class="instruction">LD DE,$0065</td>
+<td class="comment-1" rowspan="1">Bilbo: DE = IS instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29721"></span>7419</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29723"></span>741B</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...so IS gets printed</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29694.html">73FE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29699">Map</a></td>
+<td class="next">
+Next: <a href="29724.html">741C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

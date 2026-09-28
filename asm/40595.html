@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9E93</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40566.html">9E76</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40595">Map</a></td>
+<td class="next">
+Next: <a href="40639.html">9EBF</a>
+</td>
+</tr>
+</table>
+<div class="description">9E93: Run a handler with target and instrument swapped</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Exchanges the target and the instrument (their numbers and record addresses), calls the handler at HL, and swaps them back. This lets one handler serve two ways of saying the same thing: FILL THE BOTTLE WITH WATER becomes PUT THE WATER IN THE BOTTLE (<a href="36563.html">8ED3</a>), and THROW THE SWORD AT THORIN becomes ATTACK THORIN WITH THE SWORD (<a href="36703.html">8F5F</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40595"></span>9E93</td>
+<td class="instruction">LD DE,($B5F8)</td>
+<td class="comment-1" rowspan="1">DE = the target's own record address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40599"></span>9E97</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's own record address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40603"></span>9E9B</td>
+<td class="instruction">LD ($B5F8),IY</td>
+<td class="comment-1" rowspan="1">The instrument's record becomes the new "target"...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40607"></span>9E9F</td>
+<td class="instruction">LD ($B5FA),DE</td>
+<td class="comment-1" rowspan="1">...and the target's record becomes the new "instrument"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40611"></span>9EA3</td>
+<td class="instruction">LD BC,($B5D9)</td>
+<td class="comment-1" rowspan="1">BC = the current target and instrument object numbers (C=target, B=instrument)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40615"></span>9EA7</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = the instrument's number...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40616"></span>9EA8</td>
+<td class="instruction">LD ($B5D9),A</td>
+<td class="comment-1" rowspan="1">...which becomes the new target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40619"></span>9EAB</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">A = the (old) target's number...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40620"></span>9EAC</td>
+<td class="instruction">LD ($B5DA),A</td>
+<td class="comment-1" rowspan="1">...which becomes the new instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40623"></span>9EAF</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+<td class="comment-1" rowspan="1">Run the handler, with the two swapped over as far as it can tell</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40626"></span>9EB2</td>
+<td class="instruction">LD ($B5D9),BC</td>
+<td class="comment-1" rowspan="1">Put the target and instrument numbers back exactly as they were</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40630"></span>9EB6</td>
+<td class="instruction">LD ($B5F8),DE</td>
+<td class="comment-1" rowspan="3">Put the target and instrument records back too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40634"></span>9EBA</td>
+<td class="instruction">LD ($B5FA),IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40638"></span>9EBE</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40566.html">9E76</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40595">Map</a></td>
+<td class="next">
+Next: <a href="40639.html">9EBF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

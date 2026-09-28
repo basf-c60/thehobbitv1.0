@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8765</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34652.html">875C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34661">Map</a></td>
+<td class="next">
+Next: <a href="34676.html">8774</a>
+</td>
+</tr>
+</table>
+<div class="description">8765: Leave the command unfinished</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Saves the current frame at <a href="46632.html#47288">B8B8</a> and stores A in $B60A, so that the next thing the player types is used to complete this command. Used after 'which key?' and '... what?'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34661"></span>8765</td>
+<td class="instruction">LD ($B60A),A</td>
+<td class="comment-1" rowspan="1">Remember which situation this is (which key?/what with?/...), for <a href="33617.html">8351</a> to recognise next time</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34664"></span>8768</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">HL = the current frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34666"></span>876A</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34667"></span>876B</td>
+<td class="instruction">LD DE,$B8B8</td>
+<td class="comment-1" rowspan="2">Save the whole 24-byte frame at <a href="46632.html#47288">B8B8</a> permanently...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34670"></span>876E</td>
+<td class="instruction">LD BC,$0018</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34673"></span>8771</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="2">...so the next thing the player types can be merged into it (<a href="31936.html">7CC0</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34675"></span>8773</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34652.html">875C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34661">Map</a></td>
+<td class="next">
+Next: <a href="34676.html">8774</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

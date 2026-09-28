@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 99B4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39201.html">9921</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39348">Map</a></td>
+<td class="next">
+Next: <a href="39392.html">99E0</a>
+</td>
+</tr>
+</table>
+<div class="description">99B4: Choose a behaviour at random</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Picks a random entry (<a href="39924.html">9BF4</a>) from the character's reaction table (the address at offset 4 of its table entry) and makes it the character's current behaviour program. The range is the smaller of byte 1 of the instruction and byte 1 of the character's table entry. The entry at $99C3 selects entry E instead.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39348"></span>99B4</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = the range given in the instruction...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39351"></span>99B7</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="3">...but no more than the character's own limit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39354"></span>99BA</td>
+<td class="instruction">JR C,$99BF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39356"></span>99BC</td>
+<td class="instruction">LD A,(IY+$01)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39359"></span>99BF</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+<td class="comment-1" rowspan="2">Pick a random entry number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39362"></span>99C2</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="39363"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="38764.html">976C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39363"></span>99C3</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="4">(Entry point with E already set) Make sure it is within the limit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39366"></span>99C6</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39367"></span>99C7</td>
+<td class="instruction">JR NC,$99CA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39369"></span>99C9</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39370"></span>99CA</td>
+<td class="instruction">LD L,(IY+$04)</td>
+<td class="comment-1" rowspan="3">HL = the reaction table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39373"></span>99CD</td>
+<td class="instruction">LD H,(IY+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39376"></span>99D0</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39378"></span>99D2</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="3">Three bytes per entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39379"></span>99D3</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39380"></span>99D4</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39381"></span>99D5</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Skip the action byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39382"></span>99D6</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3">DE = the program address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39383"></span>99D7</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39384"></span>99D8</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39385"></span>99D9</td>
+<td class="instruction">LD (IY+$02),E</td>
+<td class="comment-1" rowspan="3">Make it the character's program</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39388"></span>99DC</td>
+<td class="instruction">LD (IY+$03),D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39391"></span>99DF</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39201.html">9921</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39348">Map</a></td>
+<td class="next">
+Next: <a href="39392.html">99E0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

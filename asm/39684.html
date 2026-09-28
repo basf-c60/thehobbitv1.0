@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9B04</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39662.html">9AEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39684">Map</a></td>
+<td class="next">
+Next: <a href="39692.html">9B0C</a>
+</td>
+</tr>
+</table>
+<div class="description">9B04: Get the next object</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+As <a href="39662.html">9AEE</a>, but preserving B.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39684"></span>9B04</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Save the caller's own B (and pass the incoming A through it)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39685"></span>9B05</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39686"></span>9B06</td>
+<td class="instruction">CALL <a href="39662.html">$9AEE</a></td>
+<td class="comment-1" rowspan="1">Step to the next entry, exactly as <a href="39662.html">9AEE</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="39689"></span>9B09</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">Restore A to what it was before the call (so the caller's own "target" or "actor" number survives)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39690"></span>9B0A</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore the caller's B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39691"></span>9B0B</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39662.html">9AEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39684">Map</a></td>
+<td class="next">
+Next: <a href="39692.html">9B0C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

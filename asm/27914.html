@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6D0A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="27687.html">6C27</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#27914">Map</a></td>
+<td class="next">
+Next: <a href="28099.html">6DC3</a>
+</td>
+</tr>
+</table>
+<div class="description">6D0A: Main command loop</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+This is the heart of the game. Each pass round the loop is one line of input from the player:
+</div>
+<div class="paragraph">
+1. <a href="28109.html">6DCD</a> prints the '&gt;' prompt and reads a line of text into the input buffer at <a href="28656.html">6FF0</a>. If the player types nothing for a while, <a href="29248.html">7240</a> types WAIT on their behalf, so time passes in The Hobbit even if you do not.
+</div>
+<div class="paragraph">
+2. The token buffer at <a href="28819.html">7093</a> is cleared (<a href="28889.html">70D9</a>), and then <a href="28302.html">6E8E</a> is called repeatedly to turn the line into tokens, one per word. Each token is two bytes, stored high byte first: the high byte is the word's class (see <a href="24640.html">6040</a>) in its top four bits plus the top four bits of the word's 12-bit dictionary offset; the low byte is the bottom eight bits of the offset.
+</div>
+<div class="paragraph">
+3. Double quotes get special treatment (from $6D2F). A quote comes back from <a href="28302.html">6E8E</a> as class $90 with an offset of 0. The flag at $B60B records whether we are inside a quotation. At an opening quote the flag is set. At a closing quote the flag is cleared and, unless the previous token was already a comma ($A0) or full stop ($B0), a full-stop token is inserted before the quote token, so that whatever was said to a character ends like a complete sentence.
+</div>
+<div class="paragraph">
+4. Tokens are stored until the end-of-line token ($C0). A token of class $D0 means the word was not in the dictionary: the game jumps to $6D99, which prints a message saying it does not know the word and quotes the word back from the input line (up to the next space or quote, using the pointer at $B5CB). If the line ends with a quotation still open, <a href="32761.html">7FF9</a> is called to complain and the line is thrown away.
+</div>
+<div class="paragraph">
+5. <a href="31823.html">7C4F</a> parses the tokens into an action, and <a href="33617.html">8351</a> executes it and lets the rest of the world take its turn. If the line contained more than one command (separated by AND, THEN, commas or full stops), the loop at $6D8D goes back into the parser for the next one while the flag at $B5F6 is set.
+</div>
+<div class="paragraph">
+The main loop can also be entered at $6D17 with the Z flag set, from the '@' key (see <a href="28273.html">6E71</a>), which re-parses the tokens left over from the previous line: in other words, it repeats the last command.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="27914"></span>6D0A</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">A = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27916"></span>6D0C</td>
+<td class="instruction">LD ($B5F6),A</td>
+<td class="comment-1" rowspan="1">Store A in the "more commands" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27919"></span>6D0F</td>
+<td class="instruction">LD A,$09</td>
+<td class="comment-1" rowspan="1">A = 9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27921"></span>6D11</td>
+<td class="instruction">LD ($B606),A</td>
+<td class="comment-1" rowspan="1">Store A in the lines left before pausing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27924"></span>6D14</td>
+<td class="instruction">CALL <a href="28109.html">$6DCD</a></td>
+<td class="comment-1" rowspan="1">Read a line of input</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27927"></span>6D17</td>
+<td class="instruction">JR Z,$6D81</td>
+<td class="comment-1" rowspan="1">Z set: repeat the previous command</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="27929"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="27687.html">6C27</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="27929"></span>6D19</td>
+<td class="instruction">LD HL,$7093</td>
+<td class="comment-1" rowspan="1">HL = Token buffer (<a href="28819.html">7093</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27932"></span>6D1C</td>
+<td class="instruction">LD B,$40</td>
+<td class="comment-1" rowspan="1">B = 64</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27934"></span>6D1E</td>
+<td class="instruction">CALL <a href="28889.html">$70D9</a></td>
+<td class="comment-1" rowspan="1">Clear the token buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27937"></span>6D21</td>
+<td class="instruction">LD HL,$6FF0</td>
+<td class="comment-1" rowspan="1">HL = Input buffer (<a href="28656.html">6FF0</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27940"></span>6D24</td>
+<td class="instruction">LD IY,$7093</td>
+<td class="comment-1" rowspan="1">IY = Token buffer (<a href="28819.html">7093</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="27944"></span>6D28</td>
+<td class="instruction">CALL <a href="28302.html">$6E8E</a></td>
+<td class="comment-1" rowspan="1">Turn the next word into a token</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27947"></span>6D2B</td>
+<td class="instruction">CP $D0</td>
+<td class="comment-1" rowspan="1">End of line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27949"></span>6D2D</td>
+<td class="instruction">JR Z,$6D99</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="27914.html#28057">6D99</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27951"></span>6D2F</td>
+<td class="instruction">CP $90</td>
+<td class="comment-1" rowspan="1">A quote?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27953"></span>6D31</td>
+<td class="instruction">JR NZ,$6D63</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="27914.html#28003">6D63</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27955"></span>6D33</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27956"></span>6D34</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27958"></span>6D36</td>
+<td class="instruction">OR C</td>
+<td class="comment-1" rowspan="1">Combine with C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27959"></span>6D37</td>
+<td class="instruction">JR NZ,$6D63</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="27914.html#28003">6D63</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27961"></span>6D39</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="1">Opening or closing quote?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27964"></span>6D3C</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27965"></span>6D3D</td>
+<td class="instruction">JR NZ,$6D45</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="27914.html#27973">6D45</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27967"></span>6D3F</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27968"></span>6D40</td>
+<td class="instruction">LD ($B60B),A</td>
+<td class="comment-1" rowspan="1">Store A in the quotation level</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27971"></span>6D43</td>
+<td class="instruction">JR $6D63</td>
+<td class="comment-1" rowspan="1">Continue at <a href="27914.html#28003">6D63</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="27973"></span>6D45</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Decrement A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27974"></span>6D46</td>
+<td class="instruction">LD ($B60B),A</td>
+<td class="comment-1" rowspan="1">Store A in the quotation level</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27977"></span>6D49</td>
+<td class="instruction">LD A,(IY-$02)</td>
+<td class="comment-1" rowspan="1">Closing quote: was the previous token a comma or full stop?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27980"></span>6D4C</td>
+<td class="instruction">AND $F0</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $F0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27982"></span>6D4E</td>
+<td class="instruction">CP $B0</td>
+<td class="comment-1" rowspan="1">Compare with 176</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27984"></span>6D50</td>
+<td class="instruction">JR Z,$6D63</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="27914.html#28003">6D63</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27986"></span>6D52</td>
+<td class="instruction">CP $A0</td>
+<td class="comment-1" rowspan="1">Compare with 160</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27988"></span>6D54</td>
+<td class="instruction">JR Z,$6D63</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="27914.html#28003">6D63</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="27990"></span>6D56</td>
+<td class="instruction">LD A,$B0</td>
+<td class="comment-1" rowspan="1">No: insert a full stop token</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27992"></span>6D58</td>
+<td class="instruction">LD (IY+$00),A</td>
+<td class="comment-1" rowspan="1">Store A at (IY+0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27995"></span>6D5B</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27996"></span>6D5C</td>
+<td class="instruction">LD (IY+$01),A</td>
+<td class="comment-1" rowspan="1">Store A at (IY+1)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27999"></span>6D5F</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28001"></span>6D61</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28003"></span>6D63</td>
+<td class="instruction">LD (IY+$00),B</td>
+<td class="comment-1" rowspan="1">Store the token</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28006"></span>6D66</td>
+<td class="instruction">LD (IY+$01),C</td>
+<td class="comment-1" rowspan="1">Store C at (IY+1)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28009"></span>6D69</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28011"></span>6D6B</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28013"></span>6D6D</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">Loop until the end-of-line token ($C0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28014"></span>6D6E</td>
+<td class="instruction">CP $C0</td>
+<td class="comment-1" rowspan="1">Compare with 192</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28016"></span>6D70</td>
+<td class="instruction">JR NZ,$6D28</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="27914.html#27944">6D28</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28018"></span>6D72</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="1">Quote still open at the end of the line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28021"></span>6D75</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28022"></span>6D76</td>
+<td class="instruction">JR Z,$6D81</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="27914.html#28033">6D81</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28024"></span>6D78</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28025"></span>6D79</td>
+<td class="instruction">LD ($B60B),A</td>
+<td class="comment-1" rowspan="1">Store A in the quotation level</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28028"></span>6D7C</td>
+<td class="instruction">CALL <a href="32761.html">$7FF9</a></td>
+<td class="comment-1" rowspan="1">Yes: complain and start again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28031"></span>6D7F</td>
+<td class="instruction">JR $6D0A</td>
+<td class="comment-1" rowspan="1">Continue at Main command loop (<a href="27914.html">6D0A</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28033"></span>6D81</td>
+<td class="instruction">LD HL,$7093</td>
+<td class="comment-1" rowspan="1">Parse the tokens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28036"></span>6D84</td>
+<td class="instruction">LD ($B5CD),HL</td>
+<td class="comment-1" rowspan="1">Store HL in the token pointer</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28039"></span>6D87</td>
+<td class="instruction">CALL <a href="31823.html">$7C4F</a></td>
+<td class="comment-1" rowspan="1">Call: Parse the command (<a href="31823.html">7C4F</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28042"></span>6D8A</td>
+<td class="instruction">JP NZ,$6D0A</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z reset, go to Main command loop (<a href="27914.html">6D0A</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28045"></span>6D8D</td>
+<td class="instruction">CALL <a href="33617.html">$8351</a></td>
+<td class="comment-1" rowspan="1">Execute the command and run the rest of the turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28048"></span>6D90</td>
+<td class="instruction">LD A,($B5F6)</td>
+<td class="comment-1" rowspan="1">More commands on this line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28051"></span>6D93</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28052"></span>6D94</td>
+<td class="instruction">JR NZ,$6D87</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="27914.html#28039">6D87</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28054"></span>6D96</td>
+<td class="instruction">JP $6D0A</td>
+<td class="comment-1" rowspan="1">Finish by jumping to Main command loop (<a href="27914.html">6D0A</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28057"></span>6D99</td>
+<td class="instruction">LD HL,$AC87</td>
+<td class="comment-1" rowspan="1">Unknown word: complain and quote it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28060"></span>6D9C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">A = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28062"></span>6D9E</td>
+<td class="instruction">LD ($B5F2),A</td>
+<td class="comment-1" rowspan="1">Store A in the lower-window flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28065"></span>6DA1</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the message at HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28068"></span>6DA4</td>
+<td class="instruction">LD HL,($B5CB)</td>
+<td class="comment-1" rowspan="1">HL = the start of the current word</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28071"></span>6DA7</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28072"></span>6DA8</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="1">Compare with 13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28074"></span>6DAA</td>
+<td class="instruction">JR Z,$6DB8</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="27914.html#28088">6DB8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28076"></span>6DAC</td>
+<td class="instruction">CP $22</td>
+<td class="comment-1" rowspan="1">Is it """?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28078"></span>6DAE</td>
+<td class="instruction">JR Z,$6DB8</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="27914.html#28088">6DB8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28080"></span>6DB0</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28083"></span>6DB3</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28084"></span>6DB4</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">Is it " "?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28086"></span>6DB6</td>
+<td class="instruction">JR NZ,$6DA7</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="27914.html#28071">6DA7</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28088"></span>6DB8</td>
+<td class="instruction">LD A,$22</td>
+<td class="comment-1" rowspan="1">A = 34</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28090"></span>6DBA</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28093"></span>6DBD</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">Print a new line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28096"></span>6DC0</td>
+<td class="instruction">JP $6D0A</td>
+<td class="comment-1" rowspan="1">Finish by jumping to Main command loop (<a href="27914.html">6D0A</a>)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="27687.html">6C27</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#27914">Map</a></td>
+<td class="next">
+Next: <a href="28099.html">6DC3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

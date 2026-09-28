@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7122</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28945.html">7111</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28962">Map</a></td>
+<td class="next">
+Next: <a href="29132.html">71CC</a>
+</td>
+</tr>
+</table>
+<div class="description">7122: Report the action ("you attack thorin with the sword.")</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the sentence that describes what an actor has just done, for example 'you go east.', 'thorin attacks you.', 'gandalf opens the round green door.' or 'you attack thorin with the short strong sword.'. It is built from the entry for the current action (number in $B5D8) in the action table <a href="43591.html">AA47</a>, whose four word slots hold the verb, a particle, a preposition and (for movement) GO.
+</div>
+<div class="paragraph">
+The flags collected by <a href="28906.html">70EA</a> decide what is printed. If bit 4 of them is set the action is silent and nothing is printed at all.
+</div>
+<div class="paragraph">
+Otherwise the actor's name is printed (<a href="29594.html#29598">739E</a>: 'you', 'thorin', 'gandalf'...). If the action was only being tried and would have failed ($B5EC is 0) the word CANNOT is inserted, so the report reads 'you cannot open the door'. The verb follows (<a href="29873.html">74B1</a>). For the ten movement actions a special case applies when the actor is a character and the move is not possible: the word SOMEWHERE is printed instead of the direction. Then, as the flags require, the particle, the target object (<a href="29606.html#29611">73AB</a>, with its article) and the preposition plus instrument (<a href="29630.html">73BE</a>) are added. The sentence ends with a full stop and a new line.
+</div>
+<div class="paragraph">
+The printing is done with $70D6 set to 1, which makes <a href="29750.html">7436</a> use 'the' rather than 'a' for articles. $B5F2 is set when the action is only being tried, which sends the text to the lower window instead (see <a href="30080.html">7580</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28962"></span>7122</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">A = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28964"></span>7124</td>
+<td class="instruction">LD ($70D6),A</td>
+<td class="comment-1" rowspan="1">Store A in the "definite article" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28967"></span>7127</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28968"></span>7128</td>
+<td class="instruction">LD ($B5F4),A</td>
+<td class="comment-1" rowspan="1">Store A in the "print an article" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28971"></span>712B</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28973"></span>712D</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Save BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28974"></span>712E</td>
+<td class="instruction">LD A,($B5EC)</td>
+<td class="comment-1" rowspan="1">A = the "it would work" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28977"></span>7131</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28978"></span>7132</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28979"></span>7133</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">A = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28981"></span>7135</td>
+<td class="instruction">JR Z,$7138</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="28962.html#28984">7138</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28983"></span>7137</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28984"></span>7138</td>
+<td class="instruction">LD ($B5F2),A</td>
+<td class="comment-1" rowspan="1">Store A in the lower-window flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28987"></span>713B</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28989"></span>713D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28990"></span>713E</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28991"></span>713F</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">IX = the action table entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28994"></span>7142</td>
+<td class="instruction">CALL <a href="28895.html">$70DF</a></td>
+<td class="comment-1" rowspan="1">Call: Get the address of an action table entry (<a href="28895.html">70DF</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28997"></span>7145</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28998"></span>7146</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29000"></span>7148</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">Only start a new line for the player when the action really happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29001"></span>7149</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Compare with B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29002"></span>714A</td>
+<td class="instruction">JR Z,$7153</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28962.html#29011">7153</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29004"></span>714C</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29007"></span>714F</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29008"></span>7150</td>
+<td class="instruction">CALL Z,<a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">If zero/equal: print a new line</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29011"></span>7153</td>
+<td class="instruction">CALL <a href="28906.html">$70EA</a></td>
+<td class="comment-1" rowspan="1">Get the flags; bit 4 set means say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29014"></span>7156</td>
+<td class="instruction">BIT 4,A</td>
+<td class="comment-1" rowspan="1">Test bit 4 of A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29016"></span>7158</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29017"></span>7159</td>
+<td class="instruction">JP NZ,$71C0</td>
+<td class="comment-1" rowspan="1">If the bit is set, go to <a href="28962.html#29120">71C0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29020"></span>715C</td>
+<td class="instruction">CALL <a href="29594.html#29598">$739E</a></td>
+<td class="comment-1" rowspan="1">Print the actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29023"></span>715F</td>
+<td class="instruction">LD DE,$00EE</td>
+<td class="comment-1" rowspan="1">"cannot" if the action would not work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29026"></span>7162</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29027"></span>7163</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Compare with B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29028"></span>7164</td>
+<td class="instruction">CALL Z,<a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">If zero/equal: call: Print a dictionary word (<a href="29880.html">74B8</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29031"></span>7167</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29032"></span>7168</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="1">DE = 6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29035"></span>716B</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Add HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29036"></span>716C</td>
+<td class="instruction">CALL <a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">Print the verb</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29039"></span>716F</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">A character that cannot move goes "somewhere"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29042"></span>7172</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29043"></span>7173</td>
+<td class="instruction">JR NC,$7186</td>
+<td class="comment-1" rowspan="1">If the routine returned with carry reset, go to <a href="28962.html#29062">7186</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29045"></span>7175</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29048"></span>7178</td>
+<td class="instruction">CP $0B</td>
+<td class="comment-1" rowspan="1">Is it action 11 (STRIKE WITH)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29050"></span>717A</td>
+<td class="instruction">JR NC,$7186</td>
+<td class="comment-1" rowspan="1">If A &gt;= 11, go to <a href="28962.html#29062">7186</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29052"></span>717C</td>
+<td class="instruction">LD DE,$0AEA</td>
+<td class="comment-1" rowspan="1">DE = $0AEA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29055"></span>717F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29056"></span>7180</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29057"></span>7181</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">Call: Print a dictionary word (<a href="29880.html">74B8</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29060"></span>7184</td>
+<td class="instruction">JR $7189</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28962.html#29065">7189</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="29062"></span>7186</td>
+<td class="instruction">CALL <a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">Call: Print a word from a list (<a href="29873.html">74B1</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29065"></span>7189</td>
+<td class="instruction">BIT 3,C</td>
+<td class="comment-1" rowspan="1">Target wanted?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29067"></span>718B</td>
+<td class="instruction">JR Z,$719D</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="28962.html#29085">719D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29069"></span>718D</td>
+<td class="instruction">BIT 5,C</td>
+<td class="comment-1" rowspan="1">Test bit 5 of C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29071"></span>718F</td>
+<td class="instruction">CALL NZ,<a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">If not zero/not equal: call: Print a word from a list (<a href="29873.html">74B1</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29074"></span>7192</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="1">A = the action's second flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29077"></span>7195</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="1">Test bit 7 of A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29079"></span>7197</td>
+<td class="instruction">CALL NZ,<a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">If not zero/not equal: call: Print a word from a list (<a href="29873.html">74B1</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29082"></span>719A</td>
+<td class="instruction">CALL <a href="29606.html#29611">$73AB</a></td>
+<td class="comment-1" rowspan="1">Call: <a href="29606.html#29611">73AB</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="29085"></span>719D</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">Instrument wanted?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29088"></span>71A0</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it nobody ($FF)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29090"></span>71A2</td>
+<td class="instruction">JR Z,$71B8</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28962.html#29112">71B8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29092"></span>71A4</td>
+<td class="instruction">BIT 2,C</td>
+<td class="comment-1" rowspan="1">Test bit 2 of C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29094"></span>71A6</td>
+<td class="instruction">JR Z,$71B8</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="28962.html#29112">71B8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29096"></span>71A8</td>
+<td class="instruction">BIT 5,C</td>
+<td class="comment-1" rowspan="1">Test bit 5 of C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29098"></span>71AA</td>
+<td class="instruction">CALL Z,<a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">If zero/equal: call: Print a word from a list (<a href="29873.html">74B1</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29101"></span>71AD</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="1">A = the action's second flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29104"></span>71B0</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="1">Test bit 7 of A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29106"></span>71B2</td>
+<td class="instruction">CALL Z,<a href="29873.html">$74B1</a></td>
+<td class="comment-1" rowspan="1">If zero/equal: call: Print a word from a list (<a href="29873.html">74B1</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29109"></span>71B5</td>
+<td class="instruction">CALL <a href="29630.html">$73BE</a></td>
+<td class="comment-1" rowspan="1">Call: Print the instrument (<a href="29630.html">73BE</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29112"></span>71B8</td>
+<td class="instruction">LD A,$2E</td>
+<td class="comment-1" rowspan="1">End the sentence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29114"></span>71BA</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29117"></span>71BD</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">Print a new line</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29120"></span>71C0</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29121"></span>71C1</td>
+<td class="instruction">LD ($70D6),A</td>
+<td class="comment-1" rowspan="1">Store A in the "definite article" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29124"></span>71C4</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29125"></span>71C5</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29126"></span>71C6</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29128"></span>71C8</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29129"></span>71C9</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29131"></span>71CB</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28945.html">7111</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28962">Map</a></td>
+<td class="next">
+Next: <a href="29132.html">71CC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

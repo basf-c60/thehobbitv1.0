@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F6F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32617.html">7F69</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32623">Map</a></td>
+<td class="next">
+Next: <a href="32641.html">7F81</a>
+</td>
+</tr>
+</table>
+<div class="description">7F6F: Find the previous frame (24 bytes higher)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns IX = IY + 24: the frame before the current one in parse order, skipping ALL EXCEPT exception frames (bit 6 of byte 1). The entry at $7F73 is shared with <a href="32617.html">7F69</a>, which uses -24 instead.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32623"></span>7F6F</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32624"></span>7F70</td>
+<td class="instruction">LD DE,$0018</td>
+<td class="comment-1" rowspan="1">Step +24: the previous frame</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32627"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32617.html">7F69</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32627"></span>7F73</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">IX = IY...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32629"></span>7F75</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32631"></span>7F77</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">...plus the step</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32633"></span>7F79</td>
+<td class="instruction">BIT 6,(IX+$01)</td>
+<td class="comment-1" rowspan="1">Is this an exception frame (bit 6)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32637"></span>7F7D</td>
+<td class="instruction">JR NZ,$7F77</td>
+<td class="comment-1" rowspan="3">Yes: skip over it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32639"></span>7F7F</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32640"></span>7F80</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32617.html">7F69</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32623">Map</a></td>
+<td class="next">
+Next: <a href="32641.html">7F81</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9D77</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40238.html">9D2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40311">Map</a></td>
+<td class="next">
+Next: <a href="40326.html">9D86</a>
+</td>
+</tr>
+</table>
+<div class="description">9D77: Can the object at IY be seen from IX?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Swaps IX and IY around a call to <a href="40338.html">9D92</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40311"></span>9D77</td>
+<td class="instruction">CALL $9D7D</td>
+<td class="comment-1" rowspan="1">Swap IX and IY over, so that whichever object was "the one being looked at" (IY) becomes "the one doing the looking" (IX), and vice versa</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40314"></span>9D7A</td>
+<td class="instruction">CALL <a href="40338.html">$9D92</a></td>
+<td class="comment-1" rowspan="1">Now test whether the two are in the same place, with them the right way round for that test</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40317"></span>9D7D</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="5">(This same code, reused: falling in here after the test above swaps IX and IY straight back again, and its own RET then returns from this whole routine)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40319"></span>9D7F</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40321"></span>9D81</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40323"></span>9D83</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40325"></span>9D85</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40238.html">9D2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40311">Map</a></td>
+<td class="next">
+Next: <a href="40326.html">9D86</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

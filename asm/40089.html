@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9C99</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40076.html">9C8C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40089">Map</a></td>
+<td class="next">
+Next: <a href="40101.html">9CA5</a>
+</td>
+</tr>
+</table>
+<div class="description">9C99: Check for a dry run</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The command routines are run more than once: first as a 'dry run' to find out whether a command is possible (for example while the parser is choosing between two objects that fit the same noun), and then for real. The flag at $B5EB is 1 when the action should really happen. If it is not, this routine sets $B5EC to record that the action would have succeeded, discards its own return address and returns to the caller's caller, so the rest of the command routine is skipped. That is why the fight routine calls this after rolling the attack value but before doing anything that has a visible effect.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40089"></span>9C99</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="2">Is this action really happening, or is it only being tried out to see if it would work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40092"></span>9C9C</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40094"></span>9C9E</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Really happening: carry on with the rest of the routine as normal</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40095"></span>9C9F</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Only a trial: record that it would succeed...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40096"></span>9CA0</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40099"></span>9CA3</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">...then throw away the return address of whoever called us, so control passes back one level further, skipping the part of the routine that would actually change anything</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40100"></span>9CA4</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40076.html">9C8C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40089">Map</a></td>
+<td class="next">
+Next: <a href="40101.html">9CA5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

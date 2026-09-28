@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8250</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33289.html">8209</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33360">Map</a></td>
+<td class="next">
+Next: <a href="33387.html">826B</a>
+</td>
+</tr>
+</table>
+<div class="description">8250: Load a block, or restart on a tape error</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Calls LD-BYTES. If it fails, prints 'tape error - hit any key to restart program', waits for a key and restarts the game (<a href="27687.html">6C27</a>), because a half-loaded game state could not be trusted.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33360"></span>8250</td>
+<td class="instruction">CALL $0556</td>
+<td class="comment-1" rowspan="1">The ROM's own LD-BYTES routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33363"></span>8253</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Loaded successfully: carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33364"></span>8254</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Failed: print in the lower window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33366"></span>8256</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33369"></span>8259</td>
+<td class="instruction">LD HL,$B249</td>
+<td class="comment-1" rowspan="2">"tape error - hit any key to restart program."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33372"></span>825C</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="33375"></span>825F</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33376"></span>8260</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33378"></span>8262</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33380"></span>8264</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33382"></span>8266</td>
+<td class="instruction">JR Z,$825F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33384"></span>8268</td>
+<td class="instruction">JP <a href="27687.html">$6C27</a></td>
+<td class="comment-1" rowspan="1">Restart the game (a half-loaded state cannot be trusted)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33289.html">8209</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33360">Map</a></td>
+<td class="next">
+Next: <a href="33387.html">826B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

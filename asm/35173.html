@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8965</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35172.html">8964</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35173">Map</a></td>
+<td class="next">
+Next: <a href="35205.html">8985</a>
+</td>
+</tr>
+</table>
+<div class="description">8965: Draw the picture of a room, if it has one</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Looks the room A up in the picture index at <a href="52224.html">CC00</a>. If there is a picture, it is drawn by <a href="35205.html">8985</a>. The result of the search is stored at $8964, where <a href="38329.html">95B9</a> later looks to decide whether to wait for a key after the picture has been drawn.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Room number</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35173"></span>8965</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="5">Save every register this uses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35174"></span>8966</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35175"></span>8967</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35176"></span>8968</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35177"></span>8969</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35179"></span>896B</td>
+<td class="instruction">LD IX,$CC00</td>
+<td class="comment-1" rowspan="1">IX = the picture index</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35183"></span>896F</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+<td class="comment-1" rowspan="1">Does room A have a picture?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35186"></span>8972</td>
+<td class="instruction">LD ($8964),A</td>
+<td class="comment-1" rowspan="1">Remember the answer for <a href="38329.html">95B9</a> to check afterwards</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35189"></span>8975</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">HL = the picture's own address, if there is one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35192"></span>8978</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35195"></span>897B</td>
+<td class="instruction">CALL NZ,<a href="35205.html">$8985</a></td>
+<td class="comment-1" rowspan="1">If there is, draw it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35198"></span>897E</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="6">Restore every saved register</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35200"></span>8980</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35201"></span>8981</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35202"></span>8982</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35203"></span>8983</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35204"></span>8984</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35172.html">8964</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35173">Map</a></td>
+<td class="next">
+Next: <a href="35205.html">8985</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

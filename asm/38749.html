@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 975D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38738.html">9752</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38749">Map</a></td>
+<td class="next">
+Next: <a href="38761.html">9769</a>
+</td>
+</tr>
+</table>
+<div class="description">975D: Is the action really happening?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns to the caller only if both $B5EB (really do it) and $B5EC (it would work) are set. Otherwise it discards the caller's return address, so the caller returns at once.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38749"></span>975D</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Save BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38750"></span>975E</td>
+<td class="instruction">LD BC,($B5EB)</td>
+<td class="comment-1" rowspan="2">B = "it would work", C = "really happening"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38754"></span>9762</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38755"></span>9763</td>
+<td class="instruction">AND B</td>
+<td class="comment-1" rowspan="1">Are both true?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38756"></span>9764</td>
+<td class="instruction">JR NZ,$9767</td>
+<td class="comment-1" rowspan="1">Yes: carry on normally</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38758"></span>9766</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">No: discard the caller's own return address too...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38759"></span>9767</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">...so control passes back one level further, skipping whatever the caller was about to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38760"></span>9768</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38738.html">9752</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38749">Map</a></td>
+<td class="next">
+Next: <a href="38761.html">9769</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

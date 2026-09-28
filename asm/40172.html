@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9CEC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40104.html">9CA8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40172">Map</a></td>
+<td class="next">
+Next: <a href="40210.html">9D12</a>
+</td>
+</tr>
+</table>
+<div class="description">9CEC: Count the visible things an object holds</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns in A the number of visible objects (bit 7 of their flags set) held directly by object A.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Count</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40172"></span>9CEC</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Save the caller's IX, IY and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40174"></span>9CEE</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40176"></span>9CF0</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40177"></span>9CF1</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1">B will be the running count, starting at 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40179"></span>9CF3</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">IX = just before the start of the object index, so the first search below lands on its very first entry</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40183"></span>9CF7</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+<td class="comment-1" rowspan="1">Look at the next object; IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40186"></span>9CFA</td>
+<td class="instruction">JR Z,$9D0B</td>
+<td class="comment-1" rowspan="1">Have we run out of objects?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40188"></span>9CFC</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">No: is this object held by the one whose contents we are counting?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40191"></span>9CFF</td>
+<td class="instruction">JR NZ,$9CF7</td>
+<td class="comment-1" rowspan="1">It is not: try the next one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40193"></span>9D01</td>
+<td class="instruction">BIT 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">It is: is it visible (not, say, a locked-away thing nobody can see)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40197"></span>9D05</td>
+<td class="instruction">JR Z,$9CF7</td>
+<td class="comment-1" rowspan="1">No: do not count it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40199"></span>9D07</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Yes: one more to the count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40200"></span>9D08</td>
+<td class="instruction">JP $9CF7</td>
+<td class="comment-1" rowspan="1">Look for more</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40203"></span>9D0B</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = the final count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40204"></span>9D0C</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the caller's IY and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40205"></span>9D0D</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40207"></span>9D0F</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">Restore the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40209"></span>9D11</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40104.html">9CA8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40172">Map</a></td>
+<td class="next">
+Next: <a href="40210.html">9D12</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

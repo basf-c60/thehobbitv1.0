@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A9D4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43465.html">A9C9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43476">Map</a></td>
+<td class="next">
+Next: <a href="43501.html">A9ED</a>
+</td>
+</tr>
+</table>
+<div class="description">A9D4: Timer 6 expires: the ring comes off</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+When timer 6 (started by <a href="41664.html">A2C0</a>) runs out, whoever holds the golden ring becomes the actor and, if the ring is still being worn (it is invisible), it is taken off (<a href="41708.html">A2EC</a>). If nobody holds the ring, nothing happens.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43476"></span>A9D4</td>
+<td class="instruction">LD IX,$C209</td>
+<td class="comment-1" rowspan="1">IX = the ring's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43480"></span>A9D8</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Who holds it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43483"></span>A9DB</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43485"></span>A9DD</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Nobody: nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43486"></span>A9DE</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the holder's record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43489"></span>A9E1</td>
+<td class="instruction">LD ($B5FC),IX</td>
+<td class="comment-1" rowspan="1">...who becomes the actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43493"></span>A9E5</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the ring being worn (invisible)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43497"></span>A9E9</td>
+<td class="instruction">JP Z,<a href="41708.html">$A2EC</a></td>
+<td class="comment-1" rowspan="2">Yes: take it off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43500"></span>A9EC</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43465.html">A9C9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43476">Map</a></td>
+<td class="next">
+Next: <a href="43501.html">A9ED</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

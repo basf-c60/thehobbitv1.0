@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7375</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29549.html">736D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29557">Map</a></td>
+<td class="next">
+Next: <a href="29572.html">7384</a>
+</td>
+</tr>
+</table>
+<div class="description">7375: Message code $02: relative jump</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Moves the message pointer IX by the signed byte that follows the code, so a message can skip over part of itself or loop. Returns with Z set. The entry point at $7382 (XOR A / RET) is used by the codes that do nothing.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29557"></span>7375</td>
+<td class="instruction">LD E,(IX+$01)</td>
+<td class="comment-1" rowspan="2">E = the signed jump distance that follows this code</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29560"></span>7378</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29562"></span>737A</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="2">Is it negative?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29564"></span>737C</td>
+<td class="instruction">JR Z,$7380</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29566"></span>737E</td>
+<td class="instruction">LD D,$FF</td>
+<td class="comment-1" rowspan="1">If so, sign-extend it into D</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29568"></span>7380</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">Move the message pointer by that many bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29570"></span>7382</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Tell the interpreter to just carry on from the new position</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29571"></span>7383</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29549.html">736D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29557">Map</a></td>
+<td class="next">
+Next: <a href="29572.html">7384</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

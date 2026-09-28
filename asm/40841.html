@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9F89</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40720.html">9F10</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40841">Map</a></td>
+<td class="next">
+Next: <a href="40926.html">9FDE</a>
+</td>
+</tr>
+</table>
+<div class="description">9F89: Print the heading for a list of contents</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+For object A: if it is closed and not dead (bits 3 and 5 of the flags clear), or holds nothing visible, a new line is printed and the routine returns with carry set. Otherwise, for a character, 'X is carrying'; for anything else a heading chosen by the low four bits of byte 4 of the object's record, from the message at $AEBD: IN (0), ON (1), BEHIND (2), UNDER (3) or TIED TO (4), followed by 'there is' or 'there are' - so 'behind the heavy curtain there is a wall' and 'under the trap door there is the goblins cache'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40841"></span>9F89</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Save the caller's IX, BC and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40843"></span>9F8B</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40844"></span>9F8C</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40845"></span>9F8D</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = the object whose contents we are about to introduce</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40846"></span>9F8E</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40849"></span>9F91</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="1">A = its flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40852"></span>9F94</td>
+<td class="instruction">AND $28</td>
+<td class="comment-1" rowspan="1">Keep only whether it is closed and whether it is dead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40854"></span>9F96</td>
+<td class="instruction">JR Z,$9FD8</td>
+<td class="comment-1" rowspan="1">Neither closed-and-alive nor dead: nothing worth a heading (an ordinary open container falls through here fine; this only stops things that are shut away)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40856"></span>9F98</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">A = the object again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40857"></span>9F99</td>
+<td class="instruction">CALL <a href="40172.html">$9CEC</a></td>
+<td class="comment-1" rowspan="2">How many visible things does it hold?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40860"></span>9F9C</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40862"></span>9F9E</td>
+<td class="instruction">JR Z,$9FD8</td>
+<td class="comment-1" rowspan="1">None at all: no heading needed either</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40864"></span>9FA0</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it a living character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40868"></span>9FA4</td>
+<td class="instruction">JR Z,$9FAD</td>
+<td class="comment-1" rowspan="1">No: use the ordinary IN/ON/BEHIND/UNDER/TIED-TO wording instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40870"></span>9FA6</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Yes: push its own number as the message parameter...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40871"></span>9FA7</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40872"></span>9FA8</td>
+<td class="instruction">LD HL,$ACEC</td>
+<td class="comment-1" rowspan="1">..."X is carrying"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40875"></span>9FAB</td>
+<td class="instruction">JR $9FCF</td>
+<td class="comment-1" rowspan="1">Skip the ordinary wording below</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40877"></span>9FAD</td>
+<td class="instruction">LD HL,$039F</td>
+<td class="comment-1" rowspan="1">"is"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40880"></span>9FB0</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Is there only a single thing inside (so "is" is right rather than "are")?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40881"></span>9FB1</td>
+<td class="instruction">JR Z,$9FB6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40883"></span>9FB3</td>
+<td class="instruction">LD HL,$0065</td>
+<td class="comment-1" rowspan="1">More than one: "are" instead</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40886"></span>9FB6</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Push IS or ARE as a message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40887"></span>9FB7</td>
+<td class="instruction">LD L,(IX+$08)</td>
+<td class="comment-1" rowspan="4">HL = the object's own words (so the heading can name it: "in the chest")...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40890"></span>9FBA</td>
+<td class="instruction">LD A,(IX+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40893"></span>9FBD</td>
+<td class="instruction">AND $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40895"></span>9FBF</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40896"></span>9FC0</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">...pushed as another message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40897"></span>9FC1</td>
+<td class="instruction">LD HL,$AEBD</td>
+<td class="comment-1" rowspan="1">HL = the shared IN/ON/BEHIND/UNDER/TIED-TO message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40900"></span>9FC4</td>
+<td class="instruction">LD A,(IX+$04)</td>
+<td class="comment-1" rowspan="1">A = the object's attribute byte, whose low bits say how its contents should be introduced</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40903"></span>9FC7</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="2">Shift that containment word up...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40904"></span>9FC8</td>
+<td class="instruction">RLCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40905"></span>9FC9</td>
+<td class="instruction">AND $3C</td>
+<td class="comment-1" rowspan="3">...into an index, since each choice of wording is 4 bytes further into the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40907"></span>9FCB</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40908"></span>9FCC</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40910"></span>9FCE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">HL = the exact wording for this object's own containment style</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40911"></span>9FCF</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the whole heading</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40914"></span>9FD2</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Clear the carry flag: there is something to list after all</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40915"></span>9FD3</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="4">Restore the caller's DE, BC and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40916"></span>9FD4</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40917"></span>9FD5</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40919"></span>9FD7</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40920"></span>9FD8</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">Nothing worth a heading: just move to a new line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40923"></span>9FDB</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag: there is nothing to list</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40924"></span>9FDC</td>
+<td class="instruction">JR $9FD3</td>
+<td class="comment-1" rowspan="1">Join the shared ending above</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40720.html">9F10</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40841">Map</a></td>
+<td class="next">
+Next: <a href="40926.html">9FDE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

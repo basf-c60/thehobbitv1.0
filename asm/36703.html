@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8F5F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36672.html">8F40</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36703">Map</a></td>
+<td class="next">
+Next: <a href="36766.html">8F9E</a>
+</td>
+</tr>
+</table>
+<div class="description">8F5F: THROW AT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The default handler for THROW X AT Y. After checking that the actor can lift the thing thrown (<a href="35974.html">8C86</a>), it becomes an attack: if the target is alive, the fight routine (<a href="37083.html">90DB</a>, ATTACK) is used, otherwise the breaking routine (<a href="37463.html">9257</a>, STRIKE), in both cases with the thrown object as the weapon (<a href="40595.html">9E93</a>). Afterwards the thrown object lands at the target's feet (its holder is cleared) and the target reacts as if attacked (<a href="38207.html">953F</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36703"></span>8F5F</td>
+<td class="instruction">CALL <a href="35974.html">$8C86</a></td>
+<td class="comment-1" rowspan="1">Can the actor actually lift the thing being thrown (the target)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36706"></span>8F62</td>
+<td class="instruction">LD HL,$90DB</td>
+<td class="comment-1" rowspan="2">Assume the thing being thrown AT is alive: HL = the fight routine, action 15 (ATTACK)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36709"></span>8F65</td>
+<td class="instruction">LD A,$0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36711"></span>8F67</td>
+<td class="instruction">LD IX,($B5FA)</td>
+<td class="comment-1" rowspan="1">IX = the record of whatever is being thrown at (currently the "instrument", via AT)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36715"></span>8F6B</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it actually alive?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36719"></span>8F6F</td>
+<td class="instruction">JR NZ,$8F76</td>
+<td class="comment-1" rowspan="1">Yes: keep the fight routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36721"></span>8F71</td>
+<td class="instruction">LD HL,$9257</td>
+<td class="comment-1" rowspan="2">No (e.g. a window): HL = the breaking routine instead, action 11 (STRIKE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36724"></span>8F74</td>
+<td class="instruction">LD A,$0B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36726"></span>8F76</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">This becomes the action to carry out</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36729"></span>8F79</td>
+<td class="instruction">CALL <a href="40595.html">$9E93</a></td>
+<td class="comment-1" rowspan="1">Run it with target and instrument swapped, so the thing thrown AT becomes the new target, and the thing thrown becomes the weapon</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36732"></span>8F7C</td>
+<td class="instruction">LD A,$2A</td>
+<td class="comment-1" rowspan="2">Restore the action number to THROW AT itself, for the rest of the turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36734"></span>8F7E</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36737"></span>8F81</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="2">Did this really happen (not just a trial)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36740"></span>8F84</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36742"></span>8F86</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Only a trial: nothing more to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36743"></span>8F87</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">It really happened: IX = the thrown object's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36747"></span>8F8B</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">It falls to the ground, held by nobody</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36751"></span>8F8F</td>
+<td class="instruction">LD A,$0F</td>
+<td class="comment-1" rowspan="4">Let whatever it hit react as if attacked</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36753"></span>8F91</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36756"></span>8F94</td>
+<td class="instruction">LD A,($B5D9)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36759"></span>8F97</td>
+<td class="instruction">JP <a href="38207.html">$953F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36762"></span>8F9A</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">(unreachable leftover code)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36672.html">8F40</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36703">Map</a></td>
+<td class="next">
+Next: <a href="36766.html">8F9E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

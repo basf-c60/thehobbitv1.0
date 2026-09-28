@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9C42</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39997.html">9C3D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40002">Map</a></td>
+<td class="next">
+Next: <a href="40021.html">9C55</a>
+</td>
+</tr>
+</table>
+<div class="description">9C42: Total weight of an object's contents</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns in A the total weight (byte 3) of everything held by object A, including the contents of containers, found by <a href="40021.html">9C55</a>. The result is $FF if it overflows.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Weight</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40002"></span>9C42</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">TOTAL WEIGHT: save the caller's BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40003"></span>9C43</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1">B=0 tells the shared routine below to add up weights</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40005"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39997.html">9C3D</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40005"></span>9C45</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Save the caller's IX and IY, which the search below will use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40007"></span>9C47</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40009"></span>9C49</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1">C will be the running total, starting at 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40011"></span>9C4B</td>
+<td class="instruction">CALL <a href="40021.html">$9C55</a></td>
+<td class="comment-1" rowspan="1">Add up everything object A holds</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40014"></span>9C4E</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">A = the finished total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40015"></span>9C4F</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="2">Restore the caller's IY and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40017"></span>9C51</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40019"></span>9C53</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore the caller's BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40020"></span>9C54</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39997.html">9C3D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40002">Map</a></td>
+<td class="next">
+Next: <a href="40021.html">9C55</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A486</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42088.html">A468</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42118">Map</a></td>
+<td class="next">
+Next: <a href="42179.html">A4C3</a>
+</td>
+</tr>
+</table>
+<div class="description">A486: CLIMB INTO (the barrel, the chest or the boat)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The actor must not already be inside. The container must be open, and big enough: unless its size is $FF (unlimited), it must be larger than the actor plus everything the actor carries (<a href="39997.html">9C3D</a>), or 'you are too big'. Then the container becomes the actor's holder, and the actor goes wherever it goes (<a href="39736.html">9B38</a>) - which is how Bilbo escapes in the barrel (<a href="42228.html">A4F4</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42118"></span>A486</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42122"></span>A48A</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is the actor already inside the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42125"></span>A48D</td>
+<td class="instruction">CP (IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42128"></span>A490</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Yes: fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42131"></span>A493</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = how much the actor can carry...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42134"></span>A496</td>
+<td class="instruction">CALL <a href="39997.html">$9C3D</a></td>
+<td class="comment-1" rowspan="2">...plus how much the actor is already carrying</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42137"></span>A499</td>
+<td class="instruction">ADD A,(IY+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42140"></span>A49C</td>
+<td class="instruction">JR C,$A4A0</td>
+<td class="comment-1" rowspan="2">Overflowed past 255? Then treat the actor as unmeasurably big</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42142"></span>A49E</td>
+<td class="instruction">LD A,$FF</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42144"></span>A4A0</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the actor's own total size, for the check below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42145"></span>A4A1</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's (the container's) own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42149"></span>A4A5</td>
+<td class="instruction">CALL <a href="42179.html">$A4C3</a></td>
+<td class="comment-1" rowspan="1">Is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42152"></span>A4A8</td>
+<td class="instruction">JP Z,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42155"></span>A4AB</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1">A = the container's own capacity</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42158"></span>A4AE</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it unlimited?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42160"></span>A4B0</td>
+<td class="instruction">JR Z,$A4B9</td>
+<td class="comment-1" rowspan="1">Yes: skip the size check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42162"></span>A4B2</td>
+<td class="instruction">SUB B</td>
+<td class="comment-1" rowspan="1">No: is the actor too big to fit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42163"></span>A4B3</td>
+<td class="instruction">LD HL,$B030</td>
+<td class="comment-1" rowspan="1">"you are too big."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42166"></span>A4B6</td>
+<td class="instruction">JP NC,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Too big: say so and stop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42169"></span>A4B9</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42172"></span>A4BC</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">The actor becomes held by the target...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42175"></span>A4BF</td>
+<td class="instruction">LD (IY+$01),A</td>
+<td class="comment-1" rowspan="2">...so wherever the target goes, the actor goes too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42178"></span>A4C2</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42088.html">A468</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42118">Map</a></td>
+<td class="next">
+Next: <a href="42179.html">A4C3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

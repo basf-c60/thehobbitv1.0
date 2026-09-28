@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 73F0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29655.html">73D7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29680">Map</a></td>
+<td class="next">
+Next: <a href="29694.html">73FE</a>
+</td>
+</tr>
+</table>
+<div class="description">73F0: Message code $0C: HIS or YOUR (actor)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns the word YOUR if the actor is Bilbo (object 0) and HIS for anyone else, with Z reset so that the interpreter prints it. The entry at $73F3 is shared with <a href="29694.html">73FE</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29680"></span>73F0</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the current actor</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29683"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29694.html">73FE</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29683"></span>73F3</td>
+<td class="instruction">LD DE,$0990</td>
+<td class="comment-1" rowspan="1">DE = HIS</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29686"></span>73F6</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is the actor Bilbo (0)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29687"></span>73F7</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: HIS is right, and Z is already reset, so the interpreter prints it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29688"></span>73F8</td>
+<td class="instruction">LD DE,$0BEA</td>
+<td class="comment-1" rowspan="1">Yes: DE = YOUR instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29691"></span>73FB</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29693"></span>73FD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...so YOUR gets printed</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29655.html">73D7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29680">Map</a></td>
+<td class="next">
+Next: <a href="29694.html">73FE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

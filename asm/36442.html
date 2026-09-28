@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8E5A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36430.html">8E4E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36442">Map</a></td>
+<td class="next">
+Next: <a href="36509.html">8E9D</a>
+</td>
+</tr>
+</table>
+<div class="description">8E5A: LOOK ACROSS (a river)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Finds the exit that passes through the target (<a href="40558.html">9E6E</a>). If it leads anywhere, and the room on the other side is lit, the actor is moved there for a moment, the room is described ('you see ...', <a href="38281.html">9589</a>), and the actor is put back. If the far side is dark: 'it is dark.' This is how you can see what is on the other bank of the river, or behind a door, without going there.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36442"></span>8E5A</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the current actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36445"></span>8E5D</td>
+<td class="instruction">CALL <a href="36404.html">$8E34</a></td>
+<td class="comment-1" rowspan="1">Is the actor shut inside something (rather than free to look around)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36448"></span>8E60</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: cannot look through anything from in there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36449"></span>8E61</td>
+<td class="instruction">CALL <a href="40558.html">$9E6E</a></td>
+<td class="comment-1" rowspan="2">Find the exit that passes through the target (the door, window or river)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36452"></span>8E64</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36454"></span>8E66</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No such exit: fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36457"></span>8E69</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">A = where that exit leads</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36460"></span>8E6C</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36462"></span>8E6E</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Leads nowhere: fail</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36465"></span>8E71</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36468"></span>8E74</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save the exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36470"></span>8E76</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = the room on the far side</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36473"></span>8E79</td>
+<td class="instruction">BIT 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Is it lit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36477"></span>8E7D</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36479"></span>8E7F</td>
+<td class="instruction">JR Z,$8E97</td>
+<td class="comment-1" rowspan="1">Dark over there: "it is dark." (below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36481"></span>8E81</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36485"></span>8E85</td>
+<td class="instruction">LD A,(IY+$10)</td>
+<td class="comment-1" rowspan="2">Save the actor's TRUE room for a moment...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36488"></span>8E88</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36489"></span>8E89</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">...and pretend, just for a moment, that they are on the far side</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36492"></span>8E8C</td>
+<td class="instruction">LD (IY+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36495"></span>8E8F</td>
+<td class="instruction">CALL <a href="38281.html">$9589</a></td>
+<td class="comment-1" rowspan="1">Describe what can be seen from there ("you see ...")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36498"></span>8E92</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="3">Put the actor back in their real room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36499"></span>8E93</td>
+<td class="instruction">LD (IY+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36502"></span>8E96</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36503"></span>8E97</td>
+<td class="instruction">LD HL,$AD12</td>
+<td class="comment-1" rowspan="2">"it is dark."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36506"></span>8E9A</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36430.html">8E4E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36442">Map</a></td>
+<td class="next">
+Next: <a href="36509.html">8E9D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

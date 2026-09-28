@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6E82</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28273.html">6E71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28290">Map</a></td>
+<td class="next">
+Next: <a href="28302.html">6E8E</a>
+</td>
+</tr>
+</table>
+<div class="description">6E82: Delete the whole input line</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Rubs out everything typed so far. While B has bit 7 reset (i.e. at least one character has been typed; see <a href="28109.html">6DCD</a>), it prints a backspace, puts B back up by one and moves HL back one character.
+</div>
+<div class="paragraph">
+Called for SYMBOL SHIFT + 0 by the line editor, and by <a href="29248.html">7240</a> before it types WAIT for an idle player, so that anything half-typed is thrown away and replaced by WAIT.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Current position in the input buffer</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Space left in the buffer</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28290"></span>6E82</td>
+<td class="instruction">BIT 7,B</td>
+<td class="comment-1" rowspan="1">Stop when the line is empty</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28292"></span>6E84</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Return if the bit is set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28293"></span>6E85</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="1">Print a backspace</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28295"></span>6E87</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28298"></span>6E8A</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">One more character of space; step back in the buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28299"></span>6E8B</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrement HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28300"></span>6E8C</td>
+<td class="instruction">JR $6E82</td>
+<td class="comment-1" rowspan="1">Continue at Delete the whole input line (<a href="28290.html">6E82</a>)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28273.html">6E71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28290">Map</a></td>
+<td class="next">
+Next: <a href="28302.html">6E8E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

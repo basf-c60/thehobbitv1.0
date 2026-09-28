@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8BE9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35772.html">8BBC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35817">Map</a></td>
+<td class="next">
+Next: <a href="35884.html">8C2C</a>
+</td>
+</tr>
+</table>
+<div class="description">8BE9: Start a picture: clear the picture area</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Reads the picture's first two bytes: the border colour, which is set straight away, and the attribute for the picture area. The top two thirds of the screen ($4000-$4FFF) are cleared, and the 512 attributes of that area are filled with the picture's colour.
+</div>
+<div class="paragraph">
+If Bilbo is in the dark (<a href="38221.html">954D</a>), the border and attributes are set to black instead, and the drawing is abandoned: the return address is discarded and the routine jumps to the end of <a href="35205.html">8985</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35817"></span>8BE9</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">Is Bilbo in the dark? (carry set if so)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35820"></span>8BEC</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Keep the answer in the alternate AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35821"></span>8BED</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">A = the border colour (first byte of the picture)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35824"></span>8BF0</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35826"></span>8BF2</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35827"></span>8BF3</td>
+<td class="instruction">JR NC,$8BF8</td>
+<td class="comment-1" rowspan="1">Not dark: keep it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35829"></span>8BF5</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="4">Dark: black border</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35830"></span>8BF6</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35831"></span>8BF7</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35832"></span>8BF8</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35833"></span>8BF9</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="4">Set the border</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35835"></span>8BFB</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35836"></span>8BFC</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35837"></span>8BFD</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35838"></span>8BFE</td>
+<td class="instruction">LD HL,$4000</td>
+<td class="comment-1" rowspan="5">Clear the top two thirds of the screen ($4000-$4FFF)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35841"></span>8C01</td>
+<td class="instruction">LD DE,$4001</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35844"></span>8C04</td>
+<td class="instruction">LD BC,$0FFF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35847"></span>8C07</td>
+<td class="instruction">LD (HL),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35849"></span>8C09</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35851"></span>8C0B</td>
+<td class="instruction">LD HL,$5800</td>
+<td class="comment-1" rowspan="3">512 attributes from $5800</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35854"></span>8C0E</td>
+<td class="instruction">LD DE,$5801</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35857"></span>8C11</td>
+<td class="instruction">LD BC,$01FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35860"></span>8C14</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">A = the picture's colours (second byte)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35863"></span>8C17</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35865"></span>8C19</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35866"></span>8C1A</td>
+<td class="instruction">JR NC,$8C1F</td>
+<td class="comment-1" rowspan="1">Not dark: keep them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35868"></span>8C1C</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="4">Dark: black on black</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35869"></span>8C1D</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35870"></span>8C1E</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35871"></span>8C1F</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35872"></span>8C20</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="5">Fill the attributes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35873"></span>8C21</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35875"></span>8C23</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35876"></span>8C24</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35877"></span>8C25</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35878"></span>8C26</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Not dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35879"></span>8C27</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="1">Then return and draw the picture</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35880"></span>8C28</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Dark: discard the return address...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35881"></span>8C29</td>
+<td class="instruction">JP <a href="35205.html#35399">$8A47</a></td>
+<td class="comment-1" rowspan="1">...and skip the drawing altogether</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35772.html">8BBC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35817">Map</a></td>
+<td class="next">
+Next: <a href="35884.html">8C2C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

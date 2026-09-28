@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 736D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29534.html">735E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29549">Map</a></td>
+<td class="next">
+Next: <a href="29557.html">7375</a>
+</td>
+</tr>
+</table>
+<div class="description">736D: Message code $01: print a word passed on the stack</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Removes a word reference that the caller pushed on the stack (in the same way as <a href="29534.html">735E</a>) and returns it in DE with Z reset, which makes the interpreter print it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29549"></span>736D</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Reach past the interpreter's own two return addresses...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29550"></span>736E</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29551"></span>736F</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">...to find the word the caller pushed, lifting it out...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29552"></span>7370</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">...and putting the two return addresses back</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29553"></span>7371</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">DE = that word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29554"></span>7372</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make sure A is not zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29556"></span>7374</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...so the interpreter is told to print the word now in DE</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29534.html">735E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29549">Map</a></td>
+<td class="next">
+Next: <a href="29557.html">7375</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

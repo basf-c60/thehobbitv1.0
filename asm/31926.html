@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7CB6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31900.html">7C9C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31926">Map</a></td>
+<td class="next">
+Next: <a href="31931.html">7CBB</a>
+</td>
+</tr>
+</table>
+<div class="description">7CB6: Is the parser inside a quotation (set Z)?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z set if $B60B is exactly 1 (inside one level of quotation).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31926"></span>7CB6</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="1">A = how many levels of quotation we are inside</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31929"></span>7CB9</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Is that exactly one level (an ordinary order to a character, not a quotation within a quotation)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31930"></span>7CBA</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z reflects the answer</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31900.html">7C9C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31926">Map</a></td>
+<td class="next">
+Next: <a href="31931.html">7CBB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

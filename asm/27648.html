@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6C00</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="27630.html">6BEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#27648">Map</a></td>
+<td class="next">
+Next: <a href="27687.html">6C27</a>
+</td>
+</tr>
+</table>
+<div class="description">6C00: Game entry point (RANDOMIZE USR 27648)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The BASIC loader 'hobbit' loads the loading screen to 40000, copies it onto the display, loads this 37,888-byte block at 24576 ($6000) and then does RANDOMIZE USR 27648, which arrives here.
+</div>
+<div class="paragraph">
+The first job is to make pristine copies of everything that changes during play, so the game can be restarted after Bilbo dies without reloading the tape: the object table (<a href="49163.html">C00B</a>, $614 bytes) and the room table (<a href="47482.html">B97A</a>, $5D9 bytes) are copied up to $F400 onwards, the 28 bytes of game variables at <a href="46539.html#46556">B5DC</a> are copied to $5F00, and the timer and character tables at <a href="51571.html">C973</a> ($BF bytes) follow the room copy.
+</div>
+<div class="paragraph">
+Execution then falls through into <a href="27687.html">6C27</a>, which is also the restart point.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="27648"></span>6C00</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Disable interrupts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27649"></span>6C01</td>
+<td class="instruction">LD DE,$F400</td>
+<td class="comment-1" rowspan="1">Back up the object table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27652"></span>6C04</td>
+<td class="instruction">LD HL,$C00B</td>
+<td class="comment-1" rowspan="1">HL = the object table (Bilbo's record)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27655"></span>6C07</td>
+<td class="instruction">LD BC,$0614</td>
+<td class="comment-1" rowspan="1">BC = $0614</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27658"></span>6C0A</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27660"></span>6C0C</td>
+<td class="instruction">LD HL,$B97A</td>
+<td class="comment-1" rowspan="1">...and the room table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27663"></span>6C0F</td>
+<td class="instruction">LD BC,$05D9</td>
+<td class="comment-1" rowspan="1">BC = $05D9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27666"></span>6C12</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27668"></span>6C14</td>
+<td class="instruction">LD DE,$5F00</td>
+<td class="comment-1" rowspan="1">...the game variables at B5DC...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27671"></span>6C17</td>
+<td class="instruction">LD HL,$B5DC</td>
+<td class="comment-1" rowspan="1">HL = the address of the saved variables</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27674"></span>6C1A</td>
+<td class="instruction">LD BC,$001C</td>
+<td class="comment-1" rowspan="1">BC = 28</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27677"></span>6C1D</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27679"></span>6C1F</td>
+<td class="instruction">LD HL,$C973</td>
+<td class="comment-1" rowspan="1">...and the timer/character tables</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27682"></span>6C22</td>
+<td class="instruction">LD BC,$00BF</td>
+<td class="comment-1" rowspan="1">BC = 191</td>
+</tr>
+<tr>
+<td class="address-1"><span id="27685"></span>6C25</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="27630.html">6BEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#27648">Map</a></td>
+<td class="next">
+Next: <a href="27687.html">6C27</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7DB6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31936.html">7CC0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32182">Map</a></td>
+<td class="next">
+Next: <a href="32213.html">7DD5</a>
+</td>
+</tr>
+</table>
+<div class="description">7DB6: Parser: a direction</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+A direction on its own ('north') is a complete movement command: if a verb may start here (bit 1 of E), it is treated as GO NORTH ($7DFB). After a verb, a direction is stored as the frame's particle, like an adverb ($7DBC): bit 2 of E must allow it, and it is put at offset 2 of the frame (<a href="32734.html#32738">7FE2</a>). The entry at $7DBC is the handler for adverbs.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32182"></span>7DB6</td>
+<td class="instruction">BIT 1,E</td>
+<td class="comment-1" rowspan="1">May a verb start here?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32184"></span>7DB8</td>
+<td class="instruction">JR NZ,<a href="32251.html">$7DFB</a></td>
+<td class="comment-1" rowspan="1">Yes: treat the direction as "go &lt;direction&gt;"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32186"></span>7DBA</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1">Otherwise it is used like an adverb</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32188"></span>7DBC</td>
+<td class="instruction">BIT 2,E</td>
+<td class="comment-1" rowspan="1">ADVERB: is an adverb allowed here?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32190"></span>7DBE</td>
+<td class="instruction">JP Z,<a href="32750.html#32755">$7FF3</a></td>
+<td class="comment-1" rowspan="1">No: syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32193"></span>7DC1</td>
+<td class="instruction">LD A,($B609)</td>
+<td class="comment-1" rowspan="3">Under ALL EXCEPT...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32196"></span>7DC4</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32198"></span>7DC6</td>
+<td class="instruction">JR NZ,$7DCB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32200"></span>7DC8</td>
+<td class="instruction">CALL <a href="32546.html">$7F22</a></td>
+<td class="comment-1" rowspan="1">...start a new frame for it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32203"></span>7DCB</td>
+<td class="instruction">RES 2,E</td>
+<td class="comment-1" rowspan="1">No more adverbs</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32205"></span>7DCD</td>
+<td class="instruction">LD L,$02</td>
+<td class="comment-1" rowspan="2">Store the word at offset 2 of the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32207"></span>7DCF</td>
+<td class="instruction">CALL <a href="32734.html#32738">$7FE2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32210"></span>7DD2</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Next noun phrase</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31936.html">7CC0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32182">Map</a></td>
+<td class="next">
+Next: <a href="32213.html">7DD5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

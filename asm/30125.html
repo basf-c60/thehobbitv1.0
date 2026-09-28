@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 75AD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30124.html">75AC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30125">Map</a></td>
+<td class="next">
+Next: <a href="30208.html">7600</a>
+</td>
+</tr>
+</table>
+<div class="description">75AD: Print a character in the lower (input) window</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints a character in the four-line window at the bottom of the screen, where the player's typing and the game's immediate replies appear. Unlike the story window, this one uses the Spectrum ROM's 8x8 font (<a href="30317.html">766D</a>) at 32 characters per line, and letters are always shown in upper case.
+</div>
+<div class="paragraph">
+The print position is kept at $75A9 and the number of columns left at $75A8. After each character, the cursor character (from $75AB, a '+') is drawn in the next position, so the player can see where the next key will appear.
+</div>
+<div class="paragraph">
+ENTER blanks the cursor and scrolls the window up a line (<a href="30208.html">7600</a>). A backspace ($08) rubs out the cursor, moves back one column and draws the cursor there; backspacing past the start of a line scrolls the window down again (<a href="30269.html">763D</a>). Reaching the end of a line also scrolls the window.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30125"></span>75AD</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Save HL and AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30126"></span>75AE</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30127"></span>75AF</td>
+<td class="instruction">LD HL,($75A9)</td>
+<td class="comment-1" rowspan="1">HL = where the next character goes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30130"></span>75B2</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="2">Is it ENTER?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30132"></span>75B4</td>
+<td class="instruction">JR NZ,$75BD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30134"></span>75B6</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="2">Yes: rub out the cursor with a space...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30136"></span>75B8</td>
+<td class="instruction">CALL <a href="30317.html">$766D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="30139"></span>75BB</td>
+<td class="instruction">JR $75D4</td>
+<td class="comment-1" rowspan="1">...then go straight to starting a new line</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30141"></span>75BD</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="2">Is it a backspace?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30143"></span>75BF</td>
+<td class="instruction">JR Z,$75EA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30145"></span>75C1</td>
+<td class="instruction">CP $61</td>
+<td class="comment-1" rowspan="4">Otherwise, is it a lower-case letter?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30147"></span>75C3</td>
+<td class="instruction">JR C,$75CB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30149"></span>75C5</td>
+<td class="instruction">CP $7B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30151"></span>75C7</td>
+<td class="instruction">JR NC,$75CB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30153"></span>75C9</td>
+<td class="instruction">AND $5F</td>
+<td class="comment-1" rowspan="1">If so, make it upper case: this window always shows capitals</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30155"></span>75CB</td>
+<td class="instruction">CALL <a href="30317.html">$766D</a></td>
+<td class="comment-1" rowspan="1">Draw the character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30158"></span>75CE</td>
+<td class="instruction">LD A,($75A8)</td>
+<td class="comment-1" rowspan="2">One less column of room on this line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30161"></span>75D1</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30162"></span>75D2</td>
+<td class="instruction">JR NZ,$75DB</td>
+<td class="comment-1" rowspan="1">Room left: just update the cursor position below</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30164"></span>75D4</td>
+<td class="instruction">LD L,$E0</td>
+<td class="comment-1" rowspan="1">Line full: move to the start of the next one...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30166"></span>75D6</td>
+<td class="instruction">CALL <a href="30208.html">$7600</a></td>
+<td class="comment-1" rowspan="1">...scrolling the window up</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30169"></span>75D9</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="1">Full width of room again, on the fresh line</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30171"></span>75DB</td>
+<td class="instruction">LD ($75A8),A</td>
+<td class="comment-1" rowspan="1">Save the columns left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30174"></span>75DE</td>
+<td class="instruction">LD A,($75AB)</td>
+<td class="comment-1" rowspan="1">A = the cursor character ('+')</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30177"></span>75E1</td>
+<td class="instruction">LD ($75A9),HL</td>
+<td class="comment-1" rowspan="1">Remember where it goes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30180"></span>75E4</td>
+<td class="instruction">CALL <a href="30317.html">$766D</a></td>
+<td class="comment-1" rowspan="1">Draw it, so the player can see where the next key will land</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30183"></span>75E7</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30184"></span>75E8</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30185"></span>75E9</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30186"></span>75EA</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="2">BACKSPACE: rub out the cursor with a space</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30188"></span>75EC</td>
+<td class="instruction">CALL <a href="30317.html">$766D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="30191"></span>75EF</td>
+<td class="instruction">DEC L</td>
+<td class="comment-1" rowspan="2">Step back one character position</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30192"></span>75F0</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30193"></span>75F1</td>
+<td class="instruction">LD A,($75A8)</td>
+<td class="comment-1" rowspan="3">Was there anything on this line left to delete?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30196"></span>75F4</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30197"></span>75F5</td>
+<td class="instruction">CP $21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30199"></span>75F7</td>
+<td class="instruction">JR NZ,$75DB</td>
+<td class="comment-1" rowspan="1">Something there: just move the cursor back</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30201"></span>75F9</td>
+<td class="instruction">LD L,$FF</td>
+<td class="comment-1" rowspan="1">Nothing left on this line: move up to the end of the previous one...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30203"></span>75FB</td>
+<td class="instruction">CALL <a href="30269.html">$763D</a></td>
+<td class="comment-1" rowspan="2">...scrolling the window back down</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30206"></span>75FE</td>
+<td class="instruction">JR $75D9</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30124.html">75AC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30125">Map</a></td>
+<td class="next">
+Next: <a href="30208.html">7600</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

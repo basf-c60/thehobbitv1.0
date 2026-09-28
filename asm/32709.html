@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7FC5</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32641.html">7F81</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32709">Map</a></td>
+<td class="next">
+Next: <a href="32734.html">7FDE</a>
+</td>
+</tr>
+</table>
+<div class="description">7FC5: Copy part of one frame to another</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Copies C bytes at offset DE from the frame at IX to the same offset in the frame at IY. Entry points: $7FC5 copies 6 bytes (a noun and two adjectives), $7FC9 copies 10 (a whole noun phrase) and $7FCD copies 2 (one word). Used by <a href="32641.html">7F81</a> and <a href="31936.html">7CC0</a> to share words between commands.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32709"></span>7FC5</td>
+<td class="instruction">LD C,$06</td>
+<td class="comment-1" rowspan="2">6 bytes: a noun with two adjectives</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32711"></span>7FC7</td>
+<td class="instruction">JR $7FCF</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32713"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32641.html">7F81</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32713"></span>7FC9</td>
+<td class="instruction">LD C,$0A</td>
+<td class="comment-1" rowspan="2">10 bytes: a whole noun phrase</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32715"></span>7FCB</td>
+<td class="instruction">JR $7FCF</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32717"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32641.html">7F81</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32717"></span>7FCD</td>
+<td class="instruction">LD C,$02</td>
+<td class="comment-1" rowspan="1">2 bytes: a single word</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32719"></span>7FCF</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="3">HL = the destination frame, moved on by DE...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32721"></span>7FD1</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32722"></span>7FD2</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32723"></span>7FD3</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save that address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32724"></span>7FD4</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">HL = the source frame, moved on by the same amount...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32726"></span>7FD6</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32727"></span>7FD7</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32728"></span>7FD8</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">DE = the destination, HL = the source</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32729"></span>7FD9</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="3">Copy the given number of bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32731"></span>7FDB</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32733"></span>7FDD</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32641.html">7F81</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32709">Map</a></td>
+<td class="next">
+Next: <a href="32734.html">7FDE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

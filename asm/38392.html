@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 95F8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38372.html">95E4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38392">Map</a></td>
+<td class="next">
+Next: <a href="38406.html">9606</a>
+</td>
+</tr>
+</table>
+<div class="description">95F8: Wait for a key after a picture</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Waits until a key is pressed, then resets the border to white (the picture may have changed it).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38392"></span>95F8</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Is a key already being held down (so we should wait for it to be released first)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38393"></span>95F9</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38395"></span>95FB</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38397"></span>95FD</td>
+<td class="instruction">CP $1F</td>
+<td class="comment-1" rowspan="2">Yes: keep waiting</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38399"></span>95FF</td>
+<td class="instruction">JR Z,$95F8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38401"></span>9601</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="3">A key has been pressed: reset the border to white (a picture may have changed its colour)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38403"></span>9603</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38405"></span>9605</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38372.html">95E4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38392">Map</a></td>
+<td class="next">
+Next: <a href="38406.html">9606</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

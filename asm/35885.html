@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8C2D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35884.html">8C2C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35885">Map</a></td>
+<td class="next">
+Next: <a href="35898.html">8C3A</a>
+</td>
+</tr>
+</table>
+<div class="description">8C2D: LOOK</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Describes the room the actor is in (<a href="38286.html">958E</a>). The dry-run check (<a href="40089.html">9C99</a>) comes first, so trying LOOK costs nothing.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35885"></span>8C2D</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: LOOK always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35888"></span>8C30</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the current actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35892"></span>8C34</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="1">A = the actor's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35895"></span>8C37</td>
+<td class="instruction">JP <a href="38286.html">$958E</a></td>
+<td class="comment-1" rowspan="1">Describe that room, in full</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35884.html">8C2C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35885">Map</a></td>
+<td class="next">
+Next: <a href="35898.html">8C3A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8D19</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36117.html">8D15</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36121">Map</a></td>
+<td class="next">
+Next: <a href="36404.html">8E34</a>
+</td>
+</tr>
+</table>
+<div class="description">8D19: Move an actor (GO north, EAST, etc.)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Moves the current actor one step in the direction given by the action number (1-10: north, south, east, west, northeast, northwest, southeast, southwest, up, down). Used for the player's movement commands and for every character that moves.
+</div>
+<div class="paragraph">
+IN THE DARK, Bilbo does not know which way he is going: the direction is replaced by a random one ($8D1E). And if there is no exit that way, instead of 'you cannot go that way' he stumbles: his strength is halved, and he reads 'but fall and hit your head.', or, once his strength has dropped to nothing, 'but fall and smash your skull.' and dies.
+</div>
+<div class="paragraph">
+A character being carried by another character (for example Bilbo carried by someone) is set down first. The size of the actor plus everything it carries is worked out ($8D18). The exit must exist; if it has a door, the door must be open (or broken); Bilbo cannot use a door with bit 7 of its attributes set; and the actor must be no bigger than the door ('the window is too small for you to enter'). If the destination room has a capacity, there must be room ('the boat is too full for you to enter').
+</div>
+<div class="paragraph">
+Then the actor's location becomes the destination and everything it carries moves with it (<a href="39736.html">9B38</a>). If the actor is Bilbo, the room-entry handler for the destination is run (<a href="50813.html">C67D</a>), and the room is described. The first time Bilbo enters a room, bit 6 of the room's flags is set, the room is described in full (<a href="38286.html">958E</a>), and if the room is in the scoring table at <a href="36074.html">8CEA</a> its points are added to the score. On later visits the short description is used (<a href="38406.html">9606</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36121"></span>8D19</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">Is Bilbo in the dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36124"></span>8D1C</td>
+<td class="instruction">JR NC,$8D27</td>
+<td class="comment-1" rowspan="1">No: go on with the direction he chose</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36126"></span>8D1E</td>
+<td class="instruction">LD A,$09</td>
+<td class="comment-1" rowspan="1">In the dark: pick a random direction from 1 to 10 instead...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36128"></span>8D20</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+<td class="comment-1" rowspan="1">A = a random number from 0 to A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36131"></span>8D23</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36132"></span>8D24</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">...and make it the action</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36135"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36512.html">8EA0</a> and <a href="41469.html">A1FD</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36135"></span>8D27</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the actor's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36139"></span>8D2B</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Is the actor being held by something?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36142"></span>8D2E</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it nobody ($FF)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36144"></span>8D30</td>
+<td class="instruction">JR Z,$8D3F</td>
+<td class="comment-1" rowspan="1">No: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36146"></span>8D32</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the holder's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36149"></span>8D35</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the holder a living character (bit 6)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36153"></span>8D39</td>
+<td class="instruction">JR Z,$8D55</td>
+<td class="comment-1" rowspan="1">No (a box or barrel): the actor cannot just walk off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36155"></span>8D3B</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="1">Yes: the actor gets down from the character carrying it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36159"></span>8D3F</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">Work out the size of the actor plus everything it carries...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36162"></span>8D42</td>
+<td class="instruction">CALL <a href="39997.html">$9C3D</a></td>
+<td class="comment-1" rowspan="1">Call: Total size of an object's contents (<a href="39997.html">9C3D</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36165"></span>8D45</td>
+<td class="instruction">ADD A,(IY+$02)</td>
+<td class="comment-1" rowspan="1">...plus its own size</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36168"></span>8D48</td>
+<td class="instruction">LD ($8D18),A</td>
+<td class="comment-1" rowspan="1">...and keep it for the door and room checks</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36171"></span>8D4B</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36174"></span>8D4E</td>
+<td class="instruction">CALL <a href="40529.html">$9E51</a></td>
+<td class="comment-1" rowspan="1">IX = the exit that way, if there is one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36177"></span>8D51</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is there one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36179"></span>8D53</td>
+<td class="instruction">JR NZ,$8D76</td>
+<td class="comment-1" rowspan="1">Yes: go and check it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36181"></span>8D55</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">No exit (or it cannot be used): is Bilbo in the dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36184"></span>8D58</td>
+<td class="instruction">JP NC,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No: just report the failure ("you cannot go that way")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36187"></span>8D5B</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36190"></span>8D5E</td>
+<td class="instruction">LD IX,$C00B</td>
+<td class="comment-1" rowspan="1">IX = Bilbo's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36194"></span>8D62</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Clear the carry flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36195"></span>8D63</td>
+<td class="instruction">LD HL,$AC71</td>
+<td class="comment-1" rowspan="1">"but fall and hit your head."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36198"></span>8D66</td>
+<td class="instruction">RR (IX+$05)</td>
+<td class="comment-1" rowspan="1">Halve Bilbo's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36202"></span>8D6A</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If he has any left, print the message and return</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36205"></span>8D6D</td>
+<td class="instruction">LD HL,$AC7E</td>
+<td class="comment-1" rowspan="1">Otherwise: "but fall and smash your skull."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36208"></span>8D70</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36211"></span>8D73</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Bilbo is dead</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36214"></span>8D76</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1">A = the exit's destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36217"></span>8D79</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is there one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36218"></span>8D7A</td>
+<td class="instruction">JR Z,$8D55</td>
+<td class="comment-1" rowspan="1">No: the exit cannot be used</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36220"></span>8D7C</td>
+<td class="instruction">LD ($8D17),A</td>
+<td class="comment-1" rowspan="1">Save the destination room number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36223"></span>8D7F</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = the exit's door, if any</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36226"></span>8D82</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is there a door?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36227"></span>8D83</td>
+<td class="instruction">JR Z,$8DA4</td>
+<td class="comment-1" rowspan="1">No door: go on to the destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36229"></span>8D85</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the door's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36232"></span>8D88</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="1">A = the door's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36235"></span>8D8B</td>
+<td class="instruction">AND $28</td>
+<td class="comment-1" rowspan="1">Is it open (bit 5) or broken (bit 3)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36237"></span>8D8D</td>
+<td class="instruction">JR Z,$8D55</td>
+<td class="comment-1" rowspan="1">No: the door is in the way</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36239"></span>8D8F</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36242"></span>8D92</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36243"></span>8D93</td>
+<td class="instruction">JR NZ,$8D9B</td>
+<td class="comment-1" rowspan="1">No: skip the next check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36245"></span>8D95</td>
+<td class="instruction">BIT 7,(IX+$04)</td>
+<td class="comment-1" rowspan="1">Bit 7 of the door's attributes: a way Bilbo cannot use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36249"></span>8D99</td>
+<td class="instruction">JR NZ,$8D55</td>
+<td class="comment-1" rowspan="1">Set: he cannot go this way</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36251"></span>8D9B</td>
+<td class="instruction">LD A,($8D18)</td>
+<td class="comment-1" rowspan="1">A = the size of the actor and its load</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36254"></span>8D9E</td>
+<td class="instruction">LD B,(IX+$02)</td>
+<td class="comment-1" rowspan="1">B = the size of the door</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36257"></span>8DA1</td>
+<td class="instruction">SUB B</td>
+<td class="comment-1" rowspan="1">Compare them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36258"></span>8DA2</td>
+<td class="instruction">JR NC,$8E1C</td>
+<td class="comment-1" rowspan="1">Too big: "the X is too small for you to enter"</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36260"></span>8DA4</td>
+<td class="instruction">LD A,($8D17)</td>
+<td class="comment-1" rowspan="1">A = the destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36263"></span>8DA7</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">Keep it in B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36264"></span>8DA8</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = its room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36267"></span>8DAB</td>
+<td class="instruction">LD ($8D15),IX</td>
+<td class="comment-1" rowspan="1">Keep that for later</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36271"></span>8DAF</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Does the room have a capacity ($FF = unlimited)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36273"></span>8DB1</td>
+<td class="instruction">CP (IX+$01)</td>
+<td class="comment-1" rowspan="1">Compare with the byte at (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36276"></span>8DB4</td>
+<td class="instruction">JR Z,$8DC1</td>
+<td class="comment-1" rowspan="1">Unlimited: go ahead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36278"></span>8DB6</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = the destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36279"></span>8DB7</td>
+<td class="instruction">CALL <a href="39830.html">$9B96</a></td>
+<td class="comment-1" rowspan="1">A = the space left in it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36282"></span>8DBA</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Keep it in C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36283"></span>8DBB</td>
+<td class="instruction">LD A,($8D18)</td>
+<td class="comment-1" rowspan="1">A = the size of the actor and its load</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36286"></span>8DBE</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="1">Compare them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36287"></span>8DBF</td>
+<td class="instruction">JR NC,$8E21</td>
+<td class="comment-1" rowspan="1">Too big: "the X is too full for you to enter"</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36289"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39736.html">9B38</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36289"></span>8DC1</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: the move would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36292"></span>8DC4</td>
+<td class="instruction">LD (IY+$10),B</td>
+<td class="comment-1" rowspan="1">Move the actor: its location becomes the destination</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36295"></span>8DC7</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Move everything the actor holds with it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36298"></span>8DCA</td>
+<td class="instruction">CALL <a href="39736.html">$9B38</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36301"></span>8DCD</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36304"></span>8DD0</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36306"></span>8DD2</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: a character has moved, and that is all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36307"></span>8DD3</td>
+<td class="instruction">LD IX,$C67D</td>
+<td class="comment-1" rowspan="3">Look up the destination in the room-entry handlers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36311"></span>8DD7</td>
+<td class="instruction">LD A,($8D17)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36314"></span>8DDA</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36317"></span>8DDD</td>
+<td class="instruction">JR Z,$8DE8</td>
+<td class="comment-1" rowspan="1">None: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36319"></span>8DDF</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">HL = the handler...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36322"></span>8DE2</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36325"></span>8DE5</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+<td class="comment-1" rowspan="1">...and run it</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36328"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="50905.html">C6D9</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36328"></span>8DE8</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">Is Bilbo now in the dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36331"></span>8DEB</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Yes: he sees nothing, so describe nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36332"></span>8DEC</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36335"></span>8DEF</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36336"></span>8DF0</td>
+<td class="instruction">LD A,($8D17)</td>
+<td class="comment-1" rowspan="1">A = the room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36339"></span>8DF3</td>
+<td class="instruction">JR NZ,$8E19</td>
+<td class="comment-1" rowspan="1">No: describe it anyway (entry for other callers)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36341"></span>8DF5</td>
+<td class="instruction">LD HL,($8D15)</td>
+<td class="comment-1" rowspan="1">HL = the room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36344"></span>8DF8</td>
+<td class="instruction">BIT 6,(HL)</td>
+<td class="comment-1" rowspan="1">Has Bilbo been here before (bit 6 of the room's flags)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36346"></span>8DFA</td>
+<td class="instruction">JP NZ,<a href="38406.html">$9606</a></td>
+<td class="comment-1" rowspan="1">Yes: give the short description</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36349"></span>8DFD</td>
+<td class="instruction">SET 6,(HL)</td>
+<td class="comment-1" rowspan="1">No: mark the room as visited</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36351"></span>8DFF</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save the room number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36352"></span>8E00</td>
+<td class="instruction">LD IX,$8CEA</td>
+<td class="comment-1" rowspan="2">Look the room up in the scoring table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36356"></span>8E04</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36359"></span>8E07</td>
+<td class="instruction">JR Z,$8E18</td>
+<td class="comment-1" rowspan="2">Not there: no points</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36361"></span>8E09</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36362"></span>8E0A</td>
+<td class="instruction">LD E,(IX+$01)</td>
+<td class="comment-1" rowspan="2">DE = the points for this room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36365"></span>8E0D</td>
+<td class="instruction">LD D,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36368"></span>8E10</td>
+<td class="instruction">LD HL,($B5E8)</td>
+<td class="comment-1" rowspan="4">Add them to the score</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36371"></span>8E13</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36372"></span>8E14</td>
+<td class="instruction">LD ($B5E8),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36375"></span>8E17</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36376"></span>8E18</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the room number</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36377"></span>8E19</td>
+<td class="instruction">JP <a href="38286.html">$958E</a></td>
+<td class="comment-1" rowspan="1">Describe the room in full</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36380"></span>8E1C</td>
+<td class="instruction">LD HL,$AD16</td>
+<td class="comment-1" rowspan="2">"&lt;the door&gt; is too small for you to enter"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36383"></span>8E1F</td>
+<td class="instruction">JR $8E28</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36385"></span>8E21</td>
+<td class="instruction">LD IX,($8D15)</td>
+<td class="comment-1" rowspan="1">IX = the destination room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36389"></span>8E25</td>
+<td class="instruction">LD HL,$AD21</td>
+<td class="comment-1" rowspan="2">"&lt;the room&gt; is too full for you to enter"</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36392"></span>8E28</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36393"></span>8E29</td>
+<td class="instruction">LD L,(IX+$02)</td>
+<td class="comment-1" rowspan="1">Push the room's (or door's) words as the message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36396"></span>8E2C</td>
+<td class="instruction">LD H,(IX+$03)</td>
+<td class="comment-1" rowspan="2">H = (IX+3)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36399"></span>8E2F</td>
+<td class="instruction">EX (SP),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36400"></span>8E30</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36403"></span>8E33</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36117.html">8D15</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36121">Map</a></td>
+<td class="next">
+Next: <a href="36404.html">8E34</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

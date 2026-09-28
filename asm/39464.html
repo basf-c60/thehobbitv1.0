@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9A28</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39419.html">99FB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39464">Map</a></td>
+<td class="next">
+Next: <a href="39517.html">9A5D</a>
+</td>
+</tr>
+</table>
+<div class="description">9A28: Report that a character has arrived</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the message at DE (for example 'thorin enters.' or 'X appears.') with the object's name, if object A has just arrived in the room where Bilbo is ($B5E6), was not there before ((HL)), and Bilbo is not in the dark.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39464"></span>9A28</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is there actually no object at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39466"></span>9A2A</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">If so, there is nothing to report</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39467"></span>9A2B</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is it object 0 (Bilbo himself)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39468"></span>9A2C</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">If so, do not announce his own arrival</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39469"></span>9A2D</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39470"></span>9A2E</td>
+<td class="instruction">LD A,($976A)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the dark?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39473"></span>9A31</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39475"></span>9A33</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: he would not see this anyway</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39476"></span>9A34</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = the object again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39477"></span>9A35</td>
+<td class="instruction">CALL <a href="40651.html">$9ECB</a></td>
+<td class="comment-1" rowspan="2">A = its own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39480"></span>9A38</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39481"></span>9A39</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Was it already in that room before this turn?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39482"></span>9A3A</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: nothing has changed, no need to announce it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39483"></span>9A3B</td>
+<td class="instruction">LD A,($B5E6)</td>
+<td class="comment-1" rowspan="2">Is that room the one Bilbo is actually in right now?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39486"></span>9A3E</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39487"></span>9A3F</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: he would not see it arrive</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39488"></span>9A40</td>
+<td class="instruction">LD A,($9B37)</td>
+<td class="comment-1" rowspan="2">Was Bilbo himself just moved along with it (e.g. carried in a barrel)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39491"></span>9A43</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39492"></span>9A44</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: report it as usual, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39493"></span>9A45</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Yes: switch output on, since this is happening right in front of him</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39495"></span>9A47</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39498"></span>9A4A</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">HL = whichever "enters"/"appears" message the caller is using</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39499"></span>9A4B</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39500"></span>9A4C</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">IX = the object's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39501"></span>9A4D</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="39504"></span>9A50</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39505"></span>9A51</td>
+<td class="instruction">LD DE,$0008</td>
+<td class="comment-1" rowspan="2">IX = the object's own words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39508"></span>9A54</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39510"></span>9A56</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39511"></span>9A57</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Push the object's name as the message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39513"></span>9A59</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="2">Print the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39516"></span>9A5C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39419.html">99FB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39464">Map</a></td>
+<td class="next">
+Next: <a href="39517.html">9A5D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

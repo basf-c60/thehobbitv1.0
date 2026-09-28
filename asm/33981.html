@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 84BD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33963.html">84AB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33981">Map</a></td>
+<td class="next">
+Next: <a href="33993.html">84C9</a>
+</td>
+</tr>
+</table>
+<div class="description">84BD: Choose the object table to search</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets IX to the object index at <a href="48979.html">BF53</a> if the low two bits of A are 0, or to $BF50 (three bytes earlier, which makes the search start with a dummy entry) otherwise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33981"></span>84BD</td>
+<td class="instruction">LD IX,$BF53</td>
+<td class="comment-1" rowspan="1">IX = the ordinary object index...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33985"></span>84C1</td>
+<td class="instruction">AND $03</td>
+<td class="comment-1" rowspan="1">Do the flags call for characters only, or objects only?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33987"></span>84C3</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Neither: the ordinary index is fine as it is</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33988"></span>84C4</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="2">Otherwise start one entry earlier, so the very first search step lands on the true first entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33992"></span>84C8</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33963.html">84AB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33981">Map</a></td>
+<td class="next">
+Next: <a href="33993.html">84C9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

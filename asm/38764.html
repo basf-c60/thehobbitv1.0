@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 976C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38761.html">9769</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38764">Map</a></td>
+<td class="next">
+Next: <a href="39027.html">9873</a>
+</td>
+</tr>
+</table>
+<div class="description">976C: Let the other characters act</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+This is The Hobbit's famous 'independent characters' system. Every character in the table at <a href="51642.html">C9BA</a> gets a turn after the player.
+</div>
+<div class="paragraph">
+Each entry of that table is 7 bytes: the character's object number (0 if the character is dead or gone), a count used by <a href="39348.html">99B4</a>, the address of the character's current place in its behaviour program, the address of its reaction table, and a 'stubbornness' value used by <a href="36766.html">8F9E</a>.
+</div>
+<div class="paragraph">
+For each living character, the character becomes the current actor ($B5DB, $B5FC) and the room it starts the turn in is noted ($B5E7). Output is switched on only if Bilbo can see the character (<a href="40311.html">9D77</a>), so the player sees only what happens in front of him. If Bilbo is in the dark, the first character to do anything in his room produces 'you hear a noise.' instead ($AF19).
+</div>
+<div class="paragraph">
+A character that is inside something (held by an object rather than standing in a room) tries to get out first (<a href="39537.html">9A71</a>).
+</div>
+<div class="paragraph">
+Then the character's behaviour program is run. Each instruction starts with a byte whose low nibble is its type and whose high bits are flags: bit 4 'jump afterwards to the address that follows', bit 5 'do this only once' (the instruction is cleared to 0 after use), bit 6 'do not take orders at this point'. The types are:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>0-3: do an action. The next three bytes are the action, the target and the instrument (<a href="39043.html">9883</a>). If bit 0 of the flags is set, the next two bytes are instead the address of a routine that does something special - most of the routines in the range $A406-$A91B are such character routines.</li>
+<li>4: do an action without objects, such as moving in a direction (<a href="39119.html">98CF</a>). An action of $FF just jumps.</li>
+<li>$0C: change the character's reaction (<a href="39419.html">99FB</a>).</li>
+<li>$0E: jump to the address that follows.</li>
+<li>$0F: choose at random one of the behaviours in the reaction table (<a href="39348.html">99B4</a>).</li>
+<li>anything else: go back to the first behaviour in the reaction table.</li>
+</ul>
+</div>
+<div class="paragraph">
+Before the program, if the player has given the character an order (<a href="35069.html">88FD</a>) and the current instruction allows it (bit 6 clear), the order is obeyed instead (<a href="35079.html">8907</a>, $9929).
+</div>
+<div class="paragraph">
+A character stops after 6 instructions in one turn ($9769). At the end the player becomes the actor again, with output switched on.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38764"></span>976C</td>
+<td class="instruction">CALL <a href="39517.html">$9A5D</a></td>
+<td class="comment-1" rowspan="1">Note Bilbo's room and whether he is in the dark</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38767"></span>976F</td>
+<td class="instruction">LD IY,$C9BA</td>
+<td class="comment-1" rowspan="1">IY = the first entry of the character table</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38771"></span>9773</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Reset the count of instructions tried by this character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38772"></span>9774</td>
+<td class="instruction">LD ($9769),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38775"></span>9777</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">A = the character's object number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38778"></span>977A</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">End of the table?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38780"></span>977C</td>
+<td class="instruction">JP Z,$9864</td>
+<td class="comment-1" rowspan="1">Yes: all done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38783"></span>977F</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="1">0 means a dead character or an empty slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38785"></span>9781</td>
+<td class="instruction">JP Z,$985C</td>
+<td class="comment-1" rowspan="1">Skip it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38788"></span>9784</td>
+<td class="instruction">LD ($B5DB),A</td>
+<td class="comment-1" rowspan="1">Make the character the current actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38791"></span>9787</td>
+<td class="instruction">CALL <a href="40651.html">$9ECB</a></td>
+<td class="comment-1" rowspan="1">A = its room, IX = its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38794"></span>978A</td>
+<td class="instruction">LD ($B5FC),IX</td>
+<td class="comment-1" rowspan="1">Its record is the actor's record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38798"></span>978E</td>
+<td class="instruction">LD ($B5E7),A</td>
+<td class="comment-1" rowspan="1">...and its room is the room it starts the turn in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38801"></span>9791</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">Switch output off until we know Bilbo can see</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38802"></span>9792</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38805"></span>9795</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38807"></span>9797</td>
+<td class="instruction">LD IY,$C00B</td>
+<td class="comment-1" rowspan="1">IY = Bilbo's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38811"></span>979B</td>
+<td class="instruction">CALL <a href="40311.html">$9D77</a></td>
+<td class="comment-1" rowspan="2">Can Bilbo see the character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38814"></span>979E</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38816"></span>97A0</td>
+<td class="instruction">JR Z,$97C3</td>
+<td class="comment-1" rowspan="1">No: its actions will not be printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38818"></span>97A2</td>
+<td class="instruction">LD A,($976A)</td>
+<td class="comment-1" rowspan="2">Has "you hear a noise" already been printed this turn?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38821"></span>97A5</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38823"></span>97A7</td>
+<td class="instruction">JR Z,$97C3</td>
+<td class="comment-1" rowspan="1">Yes: keep quiet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38825"></span>97A9</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Output on: Bilbo can see what the character does</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38827"></span>97AB</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38830"></span>97AE</td>
+<td class="instruction">LD A,($976A)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the dark ($976A = 1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38833"></span>97B1</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38835"></span>97B3</td>
+<td class="instruction">JR NZ,$97C3</td>
+<td class="comment-1" rowspan="1">No: carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38837"></span>97B5</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Yes: remember that the noise has been heard ($976A = 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38838"></span>97B6</td>
+<td class="instruction">LD ($976A),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38841"></span>97B9</td>
+<td class="instruction">LD HL,$AF19</td>
+<td class="comment-1" rowspan="2">"you hear a noise."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38844"></span>97BC</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38847"></span>97BF</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">And switch output off: Bilbo sees nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38848"></span>97C0</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38851"></span>97C3</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">Is the character held by something?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38853"></span>97C5</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38856"></span>97C8</td>
+<td class="instruction">JP NZ,<a href="39537.html">$9A71</a></td>
+<td class="comment-1" rowspan="1">Yes: try to get out instead (<a href="39537.html">9A71</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38859"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39537.html">9A71</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38859"></span>97CB</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the character's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38863"></span>97CF</td>
+<td class="instruction">CALL <a href="35069.html">$88FD</a></td>
+<td class="comment-1" rowspan="1">Has the player given it an order?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38866"></span>97D2</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="4">$B5E5 = 1 if so, 0 if not</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38868"></span>97D4</td>
+<td class="instruction">JR NZ,$97D7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38870"></span>97D6</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38871"></span>97D7</td>
+<td class="instruction">LD ($B5E5),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38874"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39119.html">98CF</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38874"></span>97DA</td>
+<td class="instruction">LD L,(IY+$02)</td>
+<td class="comment-1" rowspan="2">HL = where the character has got to in its behaviour program</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38877"></span>97DD</td>
+<td class="instruction">LD H,(IY+$03)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38880"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39119.html">98CF</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38880"></span>97E0</td>
+<td class="instruction">LD A,($9769)</td>
+<td class="comment-1" rowspan="2">Has the character already tried six instructions this turn?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38883"></span>97E3</td>
+<td class="instruction">CP $06</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38885"></span>97E5</td>
+<td class="instruction">JR Z,$985C</td>
+<td class="comment-1" rowspan="1">Yes: that is enough, next character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38887"></span>97E7</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = the instruction byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38888"></span>97E8</td>
+<td class="instruction">LD DE,$0004</td>
+<td class="comment-1" rowspan="1">DE = 4, the length of an action instruction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38891"></span>97EB</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">IX = the instruction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38892"></span>97EC</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38894"></span>97EE</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="1">The low nibble is the instruction type</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38896"></span>97F0</td>
+<td class="instruction">CP $05</td>
+<td class="comment-1" rowspan="1">Types 0-4 are actions</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38898"></span>97F2</td>
+<td class="instruction">JR NC,$9826</td>
+<td class="comment-1" rowspan="1">Types 5 and up: go and decode them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38900"></span>97F4</td>
+<td class="instruction">LD A,($B5E5)</td>
+<td class="comment-1" rowspan="2">An action instruction. Is an order from the player waiting?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38903"></span>97F7</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38905"></span>97F9</td>
+<td class="instruction">JR NZ,$981A</td>
+<td class="comment-1" rowspan="1">No: carry out the program</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38907"></span>97FB</td>
+<td class="instruction">BIT 6,(HL)</td>
+<td class="comment-1" rowspan="1">Does this instruction refuse orders (bit 6)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38909"></span>97FD</td>
+<td class="instruction">JR NZ,$981A</td>
+<td class="comment-1" rowspan="1">Yes: carry out the program</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38911"></span>97FF</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">The order is being dealt with now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38912"></span>9800</td>
+<td class="instruction">LD ($B5E5),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38915"></span>9803</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38916"></span>9804</td>
+<td class="instruction">CALL <a href="35079.html">$8907</a></td>
+<td class="comment-1" rowspan="1">Match the order to an action and objects</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38919"></span>9807</td>
+<td class="instruction">JR Z,$981A</td>
+<td class="comment-1" rowspan="1">It cannot be done: carry on with the program instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38921"></span>9809</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">The order will be obeyed for real</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38923"></span>980B</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38926"></span>980E</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38929"></span>9811</td>
+<td class="instruction">LD HL,$985C</td>
+<td class="comment-1" rowspan="3">Arrange to go on to the next character afterwards</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38932"></span>9814</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38933"></span>9815</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38935"></span>9817</td>
+<td class="instruction">JP <a href="39201.html#39209">$9929</a></td>
+<td class="comment-1" rowspan="1">Do it (<a href="39201.html">9921</a>), then return to $985C</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38938"></span>981A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Fetch the instruction type again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38939"></span>981B</td>
+<td class="instruction">AND $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38941"></span>981D</td>
+<td class="instruction">CP $04</td>
+<td class="comment-1" rowspan="2">Type 4: an action without objects</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38943"></span>981F</td>
+<td class="instruction">JP Z,<a href="39119.html">$98CF</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38946"></span>9822</td>
+<td class="instruction">JR C,<a href="39043.html">$9883</a></td>
+<td class="comment-1" rowspan="1">Types 0-3: an action with objects, or a routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38948"></span>9824</td>
+<td class="instruction">JR $985C</td>
+<td class="comment-1" rowspan="1">(Not reached)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38950"></span>9826</td>
+<td class="instruction">CP $0E</td>
+<td class="comment-1" rowspan="2">Type $0E: go to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38952"></span>9828</td>
+<td class="instruction">JR NZ,$9838</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38954"></span>982A</td>
+<td class="instruction">LD E,(IX+$01)</td>
+<td class="comment-1" rowspan="4">Store the address that follows as the new program position</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38957"></span>982D</td>
+<td class="instruction">LD (IY+$02),E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38960"></span>9830</td>
+<td class="instruction">LD E,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38963"></span>9833</td>
+<td class="instruction">LD (IY+$03),E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38966"></span>9836</td>
+<td class="instruction">JR $97DA</td>
+<td class="comment-1" rowspan="1">And carry on from there, in the same turn</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38968"></span>9838</td>
+<td class="instruction">CP $0C</td>
+<td class="comment-1" rowspan="2">Type $0C: change behaviour on a named action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38970"></span>983A</td>
+<td class="instruction">JR NZ,$9847</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38972"></span>983C</td>
+<td class="instruction">LD B,(IX+$01)</td>
+<td class="comment-1" rowspan="1">B = the action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38975"></span>983F</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">A = this character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38978"></span>9842</td>
+<td class="instruction">CALL <a href="39419.html">$99FB</a></td>
+<td class="comment-1" rowspan="1">Switch to its reaction for that action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38981"></span>9845</td>
+<td class="instruction">JR $97DA</td>
+<td class="comment-1" rowspan="1">Carry on</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38983"></span>9847</td>
+<td class="instruction">CP $0F</td>
+<td class="comment-1" rowspan="3">Type $0F: pick a behaviour at random</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38985"></span>9849</td>
+<td class="instruction">JR NZ,$9850</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38987"></span>984B</td>
+<td class="instruction">CALL <a href="39348.html">$99B4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38990"></span>984E</td>
+<td class="instruction">JR $97DA</td>
+<td class="comment-1" rowspan="1">Carry on</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38992"></span>9850</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="4">Type 0 would skip the instruction here, but types below 5 never get this far</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38994"></span>9852</td>
+<td class="instruction">JR NZ,$9857</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38996"></span>9854</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38997"></span>9855</td>
+<td class="instruction">JR $97E0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38999"></span>9857</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Any other type: return to the default behaviour (reaction table entry 0)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39000"></span>9858</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39001"></span>9859</td>
+<td class="instruction">CALL <a href="39348.html#39363">$99C3</a></td>
+<td class="comment-1" rowspan="1">...and end this character's turn</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="39004"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="39043.html">9883</a>, <a href="39119.html">98CF</a> and <a href="39537.html">9A71</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39004"></span>985C</td>
+<td class="instruction">LD DE,$0007</td>
+<td class="comment-1" rowspan="3">Next character: entries are 7 bytes long</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39007"></span>985F</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39009"></span>9861</td>
+<td class="instruction">JP $9773</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39012"></span>9864</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">All characters done: Bilbo is the actor again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39013"></span>9865</td>
+<td class="instruction">LD ($B5DB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39016"></span>9868</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Output back on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39017"></span>9869</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39020"></span>986C</td>
+<td class="instruction">LD HL,$C00B</td>
+<td class="comment-1" rowspan="3">The actor's record is Bilbo's</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39023"></span>986F</td>
+<td class="instruction">LD ($B5FC),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39026"></span>9872</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38761.html">9769</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38764">Map</a></td>
+<td class="next">
+Next: <a href="39027.html">9873</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

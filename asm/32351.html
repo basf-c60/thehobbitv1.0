@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7E5F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32346.html">7E5A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32351">Map</a></td>
+<td class="next">
+Next: <a href="32364.html">7E6C</a>
+</td>
+</tr>
+</table>
+<div class="description">7E5F: Parser: IN or INTO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+IN and INTO are usually prepositions, and are handled as such (<a href="32364.html">7E6C</a>, with class $70). The exception is when a verb may start here and the previous word was AND or a comma, in which case they begin a new command such as 'and in': the parser jumps back to $7DFB to treat them like a direction.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32351"></span>7E5F</td>
+<td class="instruction">BIT 1,E</td>
+<td class="comment-1" rowspan="1">May a verb start here?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32353"></span>7E61</td>
+<td class="instruction">JR Z,$7E6A</td>
+<td class="comment-1" rowspan="1">No: treat IN/INTO as an ordinary preposition</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32355"></span>7E63</td>
+<td class="instruction">LD A,($B5CF)</td>
+<td class="comment-1" rowspan="2">A verb could start here - was the word just before this one AND or a comma?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32358"></span>7E66</td>
+<td class="instruction">CP $A0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32360"></span>7E68</td>
+<td class="instruction">JR Z,<a href="32251.html">$7DFB</a></td>
+<td class="comment-1" rowspan="1">If so, IN/INTO really begins a new command (like a direction): treat it as one</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32362"></span>7E6A</td>
+<td class="instruction">LD D,$70</td>
+<td class="comment-1" rowspan="1">Otherwise it is an ordinary preposition after all</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32346.html">7E5A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32351">Map</a></td>
+<td class="next">
+Next: <a href="32364.html">7E6C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

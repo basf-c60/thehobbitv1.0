@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7ED3</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32364.html">7E6C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32467">Map</a></td>
+<td class="next">
+Next: <a href="32486.html">7EE6</a>
+</td>
+</tr>
+</table>
+<div class="description">7ED3: Parser: store an adjective</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Stores the adjective token BC in the first empty adjective slot of the noun phrase buffer ($7C4B or $7C4D). If both are full, it is a syntax error (<a href="32750.html">7FEE</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32467"></span>7ED3</td>
+<td class="instruction">LD HL,$7C4B</td>
+<td class="comment-1" rowspan="1">HL = the first adjective slot of the noun phrase being built</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32470"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32486.html">7EE6</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32470"></span>7ED6</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Is it still empty?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32471"></span>7ED7</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32472"></span>7ED8</td>
+<td class="instruction">OR (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32473"></span>7ED9</td>
+<td class="instruction">JR Z,$7EE2</td>
+<td class="comment-1" rowspan="1">Yes: use this slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32475"></span>7EDB</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="4">No: try the second adjective slot instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32476"></span>7EDC</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32477"></span>7EDD</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32478"></span>7EDE</td>
+<td class="instruction">OR (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32479"></span>7EDF</td>
+<td class="instruction">JP NZ,<a href="32750.html">$7FEE</a></td>
+<td class="comment-1" rowspan="1">That is full too - a third adjective makes no sense: syntax error</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32482"></span>7EE2</td>
+<td class="instruction">LD (HL),B</td>
+<td class="comment-1" rowspan="2">Store the adjective's high byte...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32483"></span>7EE3</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32484"></span>7EE4</td>
+<td class="instruction">LD (HL),C</td>
+<td class="comment-1" rowspan="2">...and its low byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32485"></span>7EE5</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32364.html">7E6C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32467">Map</a></td>
+<td class="next">
+Next: <a href="32486.html">7EE6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

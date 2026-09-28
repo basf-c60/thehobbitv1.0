@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8F37</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36631.html">8F17</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36663">Map</a></td>
+<td class="next">
+Next: <a href="36672.html">8F40</a>
+</td>
+</tr>
+</table>
+<div class="description">8F37: ENTER and GO INTO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Finds the exit of the current room that leads to the room named as the target (<a href="40566.html">9E76</a>) and goes through it (<a href="36512.html">8EA0</a>), so 'go into the tunnel' works without naming a direction.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36663"></span>8F37</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target (the room named, e.g. "the tunnel")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36666"></span>8F3A</td>
+<td class="instruction">CALL <a href="40566.html">$9E76</a></td>
+<td class="comment-1" rowspan="1">Find the exit that leads there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36669"></span>8F3D</td>
+<td class="instruction">JP <a href="36512.html">$8EA0</a></td>
+<td class="comment-1" rowspan="1">Go through it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36631.html">8F17</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36663">Map</a></td>
+<td class="next">
+Next: <a href="36672.html">8F40</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7580</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30072.html">7578</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30080">Map</a></td>
+<td class="next">
+Next: <a href="30120.html">75A8</a>
+</td>
+</tr>
+</table>
+<div class="description">7580: Print a character</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The main character output routine. It does nothing if <a href="30059.html">756B</a> says printing is switched off.
+</div>
+<div class="paragraph">
+If $B5F2 is set, the character goes to the lower (input) window via <a href="30125.html">75AD</a>, which is how the player's own typing, and replies such as 'I don't know the word', appear down there. Otherwise it goes to the upper story window via <a href="30356.html">7694</a>.
+</div>
+<div class="paragraph">
+Then comes one of the game's jokes. If the flag at $B5F1 is set, every S (or s) printed in the story window is followed by an H. That flag is set when Bilbo drinks the wine (the wine's object record calls <a href="43501.html">A9ED</a>), and cleared five turns later by timer 7 (<a href="43519.html">A9FF</a>). So for a while after drinking, the game slurs: 'you drink shome wine. gandalf goesh easht.'
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character to print</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30080"></span>7580</td>
+<td class="instruction">CALL <a href="30059.html">$756B</a></td>
+<td class="comment-1" rowspan="1">Printing switched off?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30083"></span>7583</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if the routine returned with Z set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30084"></span>7584</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30085"></span>7585</td>
+<td class="instruction">LD A,($B5F2)</td>
+<td class="comment-1" rowspan="1">Input window or story window?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30088"></span>7588</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30089"></span>7589</td>
+<td class="instruction">JR NZ,<a href="30124.html">$75AC</a></td>
+<td class="comment-1" rowspan="1">If it is not zero, go to Print a character in the input window (entry from <a href="30080.html">7580</a>) (<a href="30124.html">75AC</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30091"></span>758B</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30092"></span>758C</td>
+<td class="instruction">CALL <a href="30356.html">$7694</a></td>
+<td class="comment-1" rowspan="1">Call: Put a character on the screen (<a href="30356.html">7694</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30095"></span>758F</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30096"></span>7590</td>
+<td class="instruction">LD A,($B5F1)</td>
+<td class="comment-1" rowspan="1">Has Bilbo been drinking?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30099"></span>7593</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30100"></span>7594</td>
+<td class="instruction">JR NZ,$7598</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="30080.html#30104">7598</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="30102"></span>7596</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30103"></span>7597</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30104"></span>7598</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30105"></span>7599</td>
+<td class="instruction">CP $53</td>
+<td class="comment-1" rowspan="1">If so, follow every S with an H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30107"></span>759B</td>
+<td class="instruction">JR Z,$75A0</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="30080.html#30112">75A0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="30109"></span>759D</td>
+<td class="instruction">CP $73</td>
+<td class="comment-1" rowspan="1">Is it "s"?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30111"></span>759F</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Return if no</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30112"></span>75A0</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30113"></span>75A1</td>
+<td class="instruction">LD A,$48</td>
+<td class="comment-1" rowspan="1">A = 72</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30115"></span>75A3</td>
+<td class="instruction">CALL <a href="30356.html">$7694</a></td>
+<td class="comment-1" rowspan="1">Call: Put a character on the screen (<a href="30356.html">7694</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30118"></span>75A6</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30119"></span>75A7</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30072.html">7578</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30080">Map</a></td>
+<td class="next">
+Next: <a href="30120.html">75A8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

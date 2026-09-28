@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A577</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42320.html">A550</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42359">Map</a></td>
+<td class="next">
+Next: <a href="42385.html">A591</a>
+</td>
+</tr>
+</table>
+<div class="description">A577: Handler for the trap door: OPEN and CLOSE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The trap door can only be opened or closed from room 32; elsewhere 'you cannot reach the trap door'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42359"></span>A577</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42363"></span>A57B</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="2">Is the actor in room 32 (the only place the trap door can be worked from)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42366"></span>A57E</td>
+<td class="instruction">CP $20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42368"></span>A580</td>
+<td class="instruction">LD HL,$B00D</td>
+<td class="comment-1" rowspan="1">"you cannot reach the trap door."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42371"></span>A583</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42374"></span>A586</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="2">Yes - is this actually CLOSE (action 12)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42377"></span>A589</td>
+<td class="instruction">CP $0C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42379"></span>A58B</td>
+<td class="instruction">JP Z,<a href="37026.html">$90A2</a></td>
+<td class="comment-1" rowspan="1">Yes: close it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42382"></span>A58E</td>
+<td class="instruction">JP <a href="36984.html">$9078</a></td>
+<td class="comment-1" rowspan="1">Otherwise (OPEN): open it as usual</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42320.html">A550</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42359">Map</a></td>
+<td class="next">
+Next: <a href="42385.html">A591</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

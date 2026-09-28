@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C6EB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50905.html">C6D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50923">Map</a></td>
+<td class="next">
+Next: <a href="50941.html">C6FD</a>
+</td>
+</tr>
+</table>
+<div class="description">C6EB: Gollum's riddles</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Four 4-byte entries, one of which is chosen at random by <a href="38667.html">970B</a>: the word that answers the riddle, and the address of the riddle. There are only two riddles, each stored twice, so they are equally likely. The code for the hidden routes (<a href="38667.html">970B</a>) counts its entries from $C6F7, so the last riddle entry also serves as that table's never-used entry 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50923"></span>C6EB</td>
+<td class="instruction">DEFB $78,$04,$E0,$B0</td>
+<td class="comment-1" rowspan="1">NIGHT: "it cannot be seen, cannot be felt..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50927"></span>C6EF</td>
+<td class="instruction">DEFB $2D,$04,$A9,$B1</td>
+<td class="comment-1" rowspan="1">MAN: the riddle of the Sphinx</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50931"></span>C6F3</td>
+<td class="instruction">DEFB $78,$04,$E0,$B0</td>
+<td class="comment-1" rowspan="1">NIGHT</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50935"></span>C6F7</td>
+<td class="instruction">DEFB $2D,$04,$A9,$B1</td>
+<td class="comment-1" rowspan="1">MAN</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50939"></span>C6FB</td>
+<td class="instruction">DEFB $FF,$FF</td>
+<td class="comment-1" rowspan="1">Unused</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50905.html">C6D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50923">Map</a></td>
+<td class="next">
+Next: <a href="50941.html">C6FD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

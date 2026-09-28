@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8284</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33393.html">8271</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33412">Map</a></td>
+<td class="next">
+Next: <a href="33554.html">8312</a>
+</td>
+</tr>
+</table>
+<div class="description">8284: SAVE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Saves the game to tape. Three bytes at $C8D1 (part of the data after the room-entry handlers) are first copied over the start of the saved variables at $B5DC so that they are saved too. The player is asked to start the tape and press a key, and the four blocks listed under <a href="33289.html">8209</a> are saved with the ROM routine SA-BYTES ($04C2).
+</div>
+<div class="paragraph">
+Then, unusually for a 1982 game, it offers to VERIFY the save: 'rewind and prepare tape for verification - then hit any key', and reads the four blocks back with the ROM routine in verify mode (<a href="33554.html">8312</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33412"></span>8284</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Save IX and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33414"></span>8286</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33415"></span>8287</td>
+<td class="instruction">LD DE,$B5DC</td>
+<td class="comment-1" rowspan="3">Tuck Bard's own remembered order (from $C8D1) in among the saved variables for a moment...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33418"></span>828A</td>
+<td class="instruction">LD HL,$C8D1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33421"></span>828D</td>
+<td class="instruction">CALL <a href="33387.html">$826B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33424"></span>8290</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="4">Ask the player to get the tape ready, in the lower window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33426"></span>8292</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33429"></span>8295</td>
+<td class="instruction">LD HL,$B234</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33432"></span>8298</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33435"></span>829B</td>
+<td class="instruction">CALL <a href="33393.html">$8271</a></td>
+<td class="comment-1" rowspan="1">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33438"></span>829E</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="3">Save the 28 bytes of game variables (with Bard's order folded in)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33440"></span>82A0</td>
+<td class="instruction">LD IX,$B5DC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33444"></span>82A4</td>
+<td class="instruction">LD DE,$001C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33447"></span>82A7</td>
+<td class="instruction">CALL $04C2</td>
+<td class="comment-1" rowspan="1">...using the ROM's own SA-BYTES routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33450"></span>82AA</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="4">Then the object table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33452"></span>82AC</td>
+<td class="instruction">LD IX,$C00B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33456"></span>82B0</td>
+<td class="instruction">LD DE,$0614</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33459"></span>82B3</td>
+<td class="instruction">CALL $04C2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33462"></span>82B6</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="4">Then the timers and character table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33464"></span>82B8</td>
+<td class="instruction">LD IX,$C973</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33468"></span>82BC</td>
+<td class="instruction">LD DE,$00BF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33471"></span>82BF</td>
+<td class="instruction">CALL $04C2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33474"></span>82C2</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="4">Then the room table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33476"></span>82C4</td>
+<td class="instruction">LD IX,$B97A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33480"></span>82C8</td>
+<td class="instruction">LD DE,$05D9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33483"></span>82CB</td>
+<td class="instruction">CALL $04C2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33486"></span>82CE</td>
+<td class="instruction">LD HL,$B296</td>
+<td class="comment-1" rowspan="2">Ask for the tape to be rewound, ready to verify what was just saved</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33489"></span>82D1</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33492"></span>82D4</td>
+<td class="instruction">CALL <a href="33393.html">$8271</a></td>
+<td class="comment-1" rowspan="1">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33495"></span>82D7</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="5">Verify the variables...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33497"></span>82D9</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33498"></span>82DA</td>
+<td class="instruction">LD IX,$B5DC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33502"></span>82DE</td>
+<td class="instruction">LD DE,$001C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33505"></span>82E1</td>
+<td class="instruction">CALL <a href="33554.html">$8312</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33508"></span>82E4</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="5">...then the object table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33510"></span>82E6</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33511"></span>82E7</td>
+<td class="instruction">LD IX,$C00B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33515"></span>82EB</td>
+<td class="instruction">LD DE,$0614</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33518"></span>82EE</td>
+<td class="instruction">CALL <a href="33554.html">$8312</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33521"></span>82F1</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="5">...the timers and characters...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33523"></span>82F3</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33524"></span>82F4</td>
+<td class="instruction">LD IX,$C973</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33528"></span>82F8</td>
+<td class="instruction">LD DE,$00BF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33531"></span>82FB</td>
+<td class="instruction">CALL <a href="33554.html">$8312</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33534"></span>82FE</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="5">...and the room table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33536"></span>8300</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33537"></span>8301</td>
+<td class="instruction">LD IX,$B97A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33541"></span>8305</td>
+<td class="instruction">LD DE,$05D9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33544"></span>8308</td>
+<td class="instruction">CALL <a href="33554.html">$8312</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33547"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="33554.html">8312</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33547"></span>830B</td>
+<td class="instruction">DI</td>
+<td class="comment-1" rowspan="1">Interrupts off while poking at memory directly</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33548"></span>830C</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore DE and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33549"></span>830D</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33551"></span>830F</td>
+<td class="instruction">JP <a href="32875.html">$806B</a></td>
+<td class="comment-1" rowspan="1">Carry on parsing</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33393.html">8271</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33412">Map</a></td>
+<td class="next">
+Next: <a href="33554.html">8312</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8B1F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35608.html">8B18</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35615">Map</a></td>
+<td class="next">
+Next: <a href="35622.html">8B26</a>
+</td>
+</tr>
+</table>
+<div class="description">8B1F: Move the drawing position right</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Increases D (x), unless it would go past 255. Returns with Z set at the edge.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35615"></span>8B1F</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="1">x one higher</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35616"></span>8B20</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Still within 0-255: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35617"></span>8B21</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="1">Wrapped past 255: undo the move</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35618"></span>8B22</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1">Save A for a moment...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35619"></span>8B23</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">...set Z, to tell the caller the edge was reached...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35620"></span>8B24</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="2">...then restore A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35621"></span>8B25</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35608.html">8B18</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35615">Map</a></td>
+<td class="next">
+Next: <a href="35622.html">8B26</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A678</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42581.html">A655</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42616">Map</a></td>
+<td class="next">
+Next: <a href="42654.html">A69E</a>
+</td>
+</tr>
+</table>
+<div class="description">A678: Handler for the window</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Bilbo cannot reach the window unless something (or someone) is holding him up: if nothing holds him, 'you cannot reach the window.' Characters, and a Bilbo who is being carried, are passed on to the normal handlers for going through it (<a href="36509.html">8E9D</a>), breaking it (<a href="37463.html">9257</a>) or looking through it (<a href="36430.html">8E4E</a>). The HELP message in the goblins' dungeon hints at this: 'a window should be no obstacle to a thief with friends'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42616"></span>A678</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42619"></span>A67B</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42621"></span>A67D</td>
+<td class="instruction">JP NZ,$A68B</td>
+<td class="comment-1" rowspan="1">No: characters can always reach it, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42624"></span>A680</td>
+<td class="instruction">LD A,($C00C)</td>
+<td class="comment-1" rowspan="2">Yes - is Bilbo currently being held up by something?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42627"></span>A683</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42629"></span>A685</td>
+<td class="instruction">LD HL,$B00D</td>
+<td class="comment-1" rowspan="1">"you cannot reach the window."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42632"></span>A688</td>
+<td class="instruction">JP Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Held by nobody: he cannot reach it - say so and stop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42635"></span>A68B</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the current action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42638"></span>A68E</td>
+<td class="instruction">CP $1E</td>
+<td class="comment-1" rowspan="1">Is it GO THROUGH?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42640"></span>A690</td>
+<td class="instruction">JP Z,<a href="36509.html">$8E9D</a></td>
+<td class="comment-1" rowspan="1">Yes: go through it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42643"></span>A693</td>
+<td class="instruction">CP $0B</td>
+<td class="comment-1" rowspan="1">Is it STRIKE (breaking it)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42645"></span>A695</td>
+<td class="instruction">JP Z,<a href="37463.html">$9257</a></td>
+<td class="comment-1" rowspan="1">Yes: break it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42648"></span>A698</td>
+<td class="instruction">CP $18</td>
+<td class="comment-1" rowspan="1">Is it LOOK THROUGH?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42650"></span>A69A</td>
+<td class="instruction">JP Z,<a href="36430.html">$8E4E</a></td>
+<td class="comment-1" rowspan="1">Yes: look through it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42653"></span>A69D</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Anything else: do nothing further here</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42581.html">A655</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42616">Map</a></td>
+<td class="next">
+Next: <a href="42654.html">A69E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

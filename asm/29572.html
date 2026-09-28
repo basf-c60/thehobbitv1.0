@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7384</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29557.html">7375</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29572">Map</a></td>
+<td class="next">
+Next: <a href="29579.html">738B</a>
+</td>
+</tr>
+</table>
+<div class="description">7384: Message code $03: print the instrument's noun</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns the word stored at $B5ED (the noun the player used for the instrument, e.g. SWORD in 'hit thorin with the sword') in DE with Z reset, so the interpreter prints it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29572"></span>7384</td>
+<td class="instruction">LD DE,($B5ED)</td>
+<td class="comment-1" rowspan="1">DE = the noun the player used for the instrument (e.g. SWORD)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29576"></span>7388</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29578"></span>738A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...so the interpreter prints it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29557.html">7375</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29572">Map</a></td>
+<td class="next">
+Next: <a href="29579.html">738B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

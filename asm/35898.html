@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8C3A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35885.html">8C2D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35898">Map</a></td>
+<td class="next">
+Next: <a href="35909.html">8C45</a>
+</td>
+</tr>
+</table>
+<div class="description">8C3A: Is the actor carrying the target?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns normally if the actor is carrying the target (<a href="39885.html">9BCD</a>). If not, it prints 'you are not carrying it.' and returns to the caller's caller, so the action goes no further.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35898"></span>8C3A</td>
+<td class="instruction">CALL <a href="39885.html">$9BCD</a></td>
+<td class="comment-1" rowspan="1">Is the target held by the current actor?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35901"></span>8C3D</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Yes: carry on with whatever the caller wanted to do next</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35902"></span>8C3E</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">No: throw away the caller's own return address...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35903"></span>8C3F</td>
+<td class="instruction">LD HL,$ACE4</td>
+<td class="comment-1" rowspan="1">..."you are not carrying it."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35906"></span>8C42</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">...and print that instead, ending the action here</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35885.html">8C2D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35898">Map</a></td>
+<td class="next">
+Next: <a href="35909.html">8C45</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

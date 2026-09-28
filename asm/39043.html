@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9883</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39027.html">9873</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39043">Map</a></td>
+<td class="next">
+Next: <a href="39119.html">98CF</a>
+</td>
+</tr>
+</table>
+<div class="description">9883: Character instruction: do an action</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Carries out an action instruction from a character's behaviour program. Normally the three bytes after the instruction byte give the action, the target and the instruction ($B5D8-$B5DA) and <a href="39201.html">9921</a> tries it. If bit 0 of the instruction byte is set, the next two bytes are the address of a special routine, which is called first as a dry run and, if it says it would work, for real.
+</div>
+<div class="paragraph">
+If the action worked, and the instruction has a jump address (bit 4), the program jumps there. If bit 5 is set the instruction is erased so it will not be done again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39043"></span>9883</td>
+<td class="instruction">CALL <a href="39027.html">$9873</a></td>
+<td class="comment-1" rowspan="1">Move the program pointer past this instruction (and its failure address, if any)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39046"></span>9886</td>
+<td class="instruction">BIT 0,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Is it a call to a special routine (bit 0)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39050"></span>988A</td>
+<td class="instruction">JR NZ,$98A5</td>
+<td class="comment-1" rowspan="1">Yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39052"></span>988C</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">The action...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39055"></span>988F</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39058"></span>9892</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">...the target...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39061"></span>9895</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39064"></span>9898</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="2">...and the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39067"></span>989B</td>
+<td class="instruction">LD ($B5DA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39070"></span>989E</td>
+<td class="instruction">CALL <a href="39201.html">$9921</a></td>
+<td class="comment-1" rowspan="1">Try it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39073"></span>98A1</td>
+<td class="instruction">JR Z,<a href="39119.html#39173">$9905</a></td>
+<td class="comment-1" rowspan="1">It failed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39075"></span>98A3</td>
+<td class="instruction">JR $98C2</td>
+<td class="comment-1" rowspan="1">It worked</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39077"></span>98A5</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">HL = the special routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39080"></span>98A8</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39083"></span>98AB</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Run it first as a dry run: "really do it" off...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39084"></span>98AC</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39087"></span>98AF</td>
+<td class="instruction">LD ($B5EC),A</td>
+<td class="comment-1" rowspan="2">...and "would work" off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39090"></span>98B2</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="39093"></span>98B5</td>
+<td class="instruction">LD A,($B5EC)</td>
+<td class="comment-1" rowspan="2">Did it say it would work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39096"></span>98B8</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39098"></span>98BA</td>
+<td class="instruction">JR NZ,<a href="39119.html#39173">$9905</a></td>
+<td class="comment-1" rowspan="1">No: it failed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39100"></span>98BC</td>
+<td class="instruction">LD ($B5EB),A</td>
+<td class="comment-1" rowspan="2">Yes: run it again for real</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39103"></span>98BF</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="39106"></span>98C2</td>
+<td class="instruction">BIT 5,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Success. Is this a once-only instruction (bit 5)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39110"></span>98C6</td>
+<td class="instruction">JP Z,<a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">No: this character's turn is over</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39113"></span>98C9</td>
+<td class="instruction">LD (IX+$00),$00</td>
+<td class="comment-1" rowspan="1">Yes: wipe out its instruction byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39117"></span>98CD</td>
+<td class="instruction">JR <a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">Turn over</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39027.html">9873</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39043">Map</a></td>
+<td class="next">
+Next: <a href="39119.html">98CF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at 7B74</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31595.html">7B6B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31604">Map</a></td>
+<td class="next">
+Next: <a href="31622.html">7B86</a>
+</td>
+</tr>
+</table>
+<div class="description">7B74: Keyboard scan state</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<ul class="">
+<li>$7B74-$7B7B: a mask for each of the eight half-rows of the keyboard, ORed with the reading so that those keys are never seen as pressed. The masks hide CAPS SHIFT ($01 in the first half-row) and SYMBOL SHIFT ($02 in the last), which are read separately as shift keys, and the unused keys 1, 3, 4 ($0D in the 1-5 half-row) and 9 ($02 in the 0-6 half-row).</li>
+<li>$7B7C-$7B7D: the newly pressed key found by the last scan: the bits in $7B7C and the half-row in $7B7D, or 0 for none.</li>
+<li>$7B7E-$7B85: the previous reading of each half-row, used to detect keys that have just gone down.</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31604"></span>7B74</td>
+<td class="instruction">DEFB $01,$00,$00,$0D,$02,$00,$00,$02</td>
+<td class="comment-1" rowspan="1">Key masks</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31612"></span>7B7C</td>
+<td class="instruction">DEFB $00,$00</td>
+<td class="comment-1" rowspan="1">New key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31614"></span>7B7E</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Previous readings</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31595.html">7B6B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31604">Map</a></td>
+<td class="next">
+Next: <a href="31622.html">7B86</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

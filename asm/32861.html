@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 805D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32809.html">8029</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32861">Map</a></td>
+<td class="next">
+Next: <a href="32875.html">806B</a>
+</td>
+</tr>
+</table>
+<div class="description">805D: PRINT and NOPRINT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+PRINT ($805D) switches on copying of the story window to a ZX Printer (<a href="31509.html">7B15</a>), by setting $B5E3 to 1, but only if a printer is attached: bit 6 of port $FB is 0 when one is. NOPRINT ($8067) sets $B5E3 to 0.
+</div>
+<div class="paragraph">
+The test for the printer has a curious slip: when no printer is attached, the JR NZ at $805F jumps to $8069, which is in the middle of the LD ($B5E3),A instruction. The bytes there are executed as EX (SP),HL and OR L before execution reaches <a href="32875.html">806B</a>. In my tests the game carried on normally after PRINT with no printer, so the damage appears to be harmless in practice.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32861"></span>805D</td>
+<td class="instruction">IN A,($FB)</td>
+<td class="comment-1" rowspan="1">Read the ZX Printer's status port</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32863"></span>805F</td>
+<td class="instruction">BIT 6,A</td>
+<td class="comment-1" rowspan="1">Is a printer actually attached (bit 6 clear means yes)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32865"></span>8061</td>
+<td class="instruction">JR NZ,<a href="32875.html">$806B</a></td>
+<td class="comment-1" rowspan="1">No printer: leave printing switched off (joins the shared ending below, via the mis-jump described in the bug note)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32867"></span>8063</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">PRINT: switch printing on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32869"></span>8065</td>
+<td class="instruction">JR $8068</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32871"></span>8067</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">NOPRINT: switch it off</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32872"></span>8068</td>
+<td class="instruction">LD ($B5E3),A</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32809.html">8029</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32861">Map</a></td>
+<td class="next">
+Next: <a href="32875.html">806B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

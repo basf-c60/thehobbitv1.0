@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9BCD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39830.html">9B96</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39885">Map</a></td>
+<td class="next">
+Next: <a href="39903.html">9BDF</a>
+</td>
+</tr>
+</table>
+<div class="description">9BCD: Is the actor holding the target?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with carry set if the target ($B5D9) is held by the actor, directly or inside something the actor holds. The entry at $9BD0 does the same for object A. An object of $FF counts as held.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Carry set if held</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39885"></span>9BCD</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target of the current command</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="39888"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36832.html">8FE0</a>, <a href="37999.html">946F</a> and <a href="38534.html">9686</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39888"></span>9BD0</td>
+<td class="instruction">LD HL,$B5DB</td>
+<td class="comment-1" rowspan="1">HL = the address holding the current actor's number</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="39891"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="35957.html">8C75</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39891"></span>9BD3</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is there no target at all ($FF)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39893"></span>9BD5</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="2">If so, treat that as "yes, held" (set the carry flag), since there is nothing to fail the test</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39894"></span>9BD6</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39895"></span>9BD7</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39897"></span>9BD9</td>
+<td class="instruction">CALL <a href="39903.html">$9BDF</a></td>
+<td class="comment-1" rowspan="1">Is the target held, directly or indirectly, by whichever object's number is stored at HL?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39900"></span>9BDC</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">Restore the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39902"></span>9BDE</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39830.html">9B96</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39885">Map</a></td>
+<td class="next">
+Next: <a href="39903.html">9BDF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

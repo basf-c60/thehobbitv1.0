@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9D12</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40172.html">9CEC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40210">Map</a></td>
+<td class="next">
+Next: <a href="40238.html">9D2E</a>
+</td>
+</tr>
+</table>
+<div class="description">9D12: Search a table of 3-byte entries</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches a table at IX made of 3-byte entries, each a one-byte key followed by a two-byte value, for the key in A. The table ends with $FF. Returns with IX pointing at the matching entry if found, or at the terminating $FF entry if not. The flags are set by a final CP $FF on the entry's own key: Z is SET when that key is $FF, so Z RESET (NZ) means the search succeeded and Z SET means it ran off the end without a match; equivalently, the carry flag is SET when the entry was found. This is easy to get backwards, so callers are shown branching on NZ/carry for success and Z for failure throughout this disassembly. Used for the object index (<a href="48979.html">BF53</a>), the room-entry handlers (<a href="50813.html">C67D</a>) and several other tables.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Key</td>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Table</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Matching entry, or the $FF terminator</td>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z SET if not found (end of table); NZ or carry set if found</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40210"></span>9D12</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch to the alternate registers, so this search does not disturb the caller's own BC, DE and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40211"></span>9D13</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">HL = the table to search, taken from IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40213"></span>9D15</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40214"></span>9D16</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the key being searched for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40215"></span>9D17</td>
+<td class="instruction">LD E,$03</td>
+<td class="comment-1" rowspan="2">DE = 3: the size of one entry, ready for stepping through the table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40217"></span>9D19</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40219"></span>9D1B</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = this entry's key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40220"></span>9D1C</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Does it match what we are looking for?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40221"></span>9D1D</td>
+<td class="instruction">JR Z,$9D27</td>
+<td class="comment-1" rowspan="1">Yes: stop here, with this entry found</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40223"></span>9D1F</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">No: is this the table's $FF terminator, meaning there are no more entries?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40225"></span>9D21</td>
+<td class="instruction">JR Z,$9D27</td>
+<td class="comment-1" rowspan="1">Yes: stop here too, empty-handed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40227"></span>9D23</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Neither: move on to the next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40228"></span>9D24</td>
+<td class="instruction">JP $9D1B</td>
+<td class="comment-1" rowspan="1">...and keep looking</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40231"></span>9D27</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Whichever way we stopped, move the address we ended up at into IX...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40232"></span>9D28</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">...for the caller to use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40234"></span>9D2A</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Was that the $FF terminator (not found), or a genuine entry (found)? Z ends up SET when NOT found, so the caller should test NZ, or the carry flag, for success</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40236"></span>9D2C</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="2">Switch back to the caller's own registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40237"></span>9D2D</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40172.html">9CEC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40210">Map</a></td>
+<td class="next">
+Next: <a href="40238.html">9D2E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

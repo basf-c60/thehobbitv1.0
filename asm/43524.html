@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at AA04</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43519.html">A9FF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43524">Map</a></td>
+<td class="next">
+Next: <a href="43539.html">AA13</a>
+</td>
+</tr>
+</table>
+<div class="description">AA04: Timer 2 expires: smothered by the spiders</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The expiry routine of timer 2 (count 5), started when Bilbo enters the place of black spiders (<a href="50849.html">C6A1</a>). The count drops to 4 at the end of the turn he enters, so it reaches 0 at the end of his fourth turn after that: if he is still in room 26, 'the spider web is slowly smothering you', and he dies. In the emulator, entering and waiting three times, then leaving, is safe; waiting a fourth time is fatal.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43524"></span>AA04</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo still in the spiders' place (room 26)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43527"></span>AA07</td>
+<td class="instruction">CP $1A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43529"></span>AA09</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: he got away</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43530"></span>AA0A</td>
+<td class="instruction">LD HL,$AFEF</td>
+<td class="comment-1" rowspan="2">"the spider web is slowly smothering you"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43533"></span>AA0D</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43536"></span>AA10</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Bilbo is dead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43519.html">A9FF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43524">Map</a></td>
+<td class="next">
+Next: <a href="43539.html">AA13</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 756B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29880.html">74B8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30059">Map</a></td>
+<td class="next">
+Next: <a href="30072.html">7578</a>
+</td>
+</tr>
+</table>
+<div class="description">756B: Is output enabled?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z set if nothing should be printed at the moment: output happens only if both $B5EB (the command is really being carried out, not just tried) and $B5F3 (the event can be seen by the player) are non-zero. A is preserved.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if printing is switched off</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30059"></span>756B</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30060"></span>756C</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1">Keep the caller's A safe in L for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30061"></span>756D</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="2">Is this action really happening (not just being tried)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30064"></span>7570</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30065"></span>7571</td>
+<td class="instruction">LD A,($B5F3)</td>
+<td class="comment-1" rowspan="1">Can Bilbo actually see or hear it happen?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30068"></span>7574</td>
+<td class="instruction">AND H</td>
+<td class="comment-1" rowspan="1">Both must be true for anything to be printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30069"></span>7575</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1">Restore the caller's own A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30070"></span>7576</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30071"></span>7577</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z set means printing is switched off</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29880.html">74B8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30059">Map</a></td>
+<td class="next">
+Next: <a href="30072.html">7578</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

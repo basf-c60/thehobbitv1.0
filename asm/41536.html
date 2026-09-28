@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A240</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41522.html">A232</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41536">Map</a></td>
+<td class="next">
+Next: <a href="41560.html">A258</a>
+</td>
+</tr>
+</table>
+<div class="description">A240: Handler for the fast black river: SWIM</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The enchanted river from the book: 'as soon as you touch the river you fall asleep and gently float away.' For Bilbo this is followed by 'time passes...', and the swimmer dies (<a href="38621.html">96DD</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41536"></span>A240</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41539"></span>A243</td>
+<td class="instruction">LD HL,$AFA6</td>
+<td class="comment-1" rowspan="1">"as soon as X touches the river X falls asleep and gently floats away."</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="41542"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="41560.html">A258</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41542"></span>A246</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">}</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41545"></span>A249</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="3">Is the swimmer Bilbo himself?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41548"></span>A24C</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41549"></span>A24D</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41550"></span>A24E</td>
+<td class="instruction">LD HL,$AC9D</td>
+<td class="comment-1" rowspan="1">"time passes..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41553"></span>A251</td>
+<td class="instruction">CALL Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If it is Bilbo, add that too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41556"></span>A254</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41557"></span>A255</td>
+<td class="instruction">JP <a href="38621.html">$96DD</a></td>
+<td class="comment-1" rowspan="1">The swimmer dies</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41522.html">A232</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41536">Map</a></td>
+<td class="next">
+Next: <a href="41560.html">A258</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

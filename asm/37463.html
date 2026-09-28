@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9257</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37458.html">9252</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37463">Map</a></td>
+<td class="next">
+Next: <a href="37640.html">9308</a>
+</td>
+</tr>
+</table>
+<div class="description">9257: STRIKE (break something)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Breaking things - STRIKE, BREAK and SMASH, and THROW at something that is not alive. Things that pour cannot be broken, and nor can anything with a defence of 0. If there is an instrument, it must have some strength and must itself have a STRIKE handler (so you can smash a door with the sword but not with the lunch).
+</div>
+<div class="paragraph">
+The force is the instrument's strength plus the actor's strength plus a random number from -21 to +21 (<a href="39933.html">9BFD</a>), capped at 255. If that is at least the target's defence, the target breaks: it is marked broken, its adjective becomes BROKEN (<a href="41148.html">A0BC</a>), its strength is halved, and if it is a container its contents fall out. 'the door is broken.'
+</div>
+<div class="paragraph">
+Then the instrument may break too, whether or not the target did: its defence plus a random number from -21 to +21 is compared with the target's defence, and if it is at least as large the instrument breaks. As written, this makes a tougher instrument more likely to break. Worse, the addition has the same carry-flag mistake as the fight code (<a href="37245.html">917D</a>): a negative random number sets the carry, which is taken as an overflow, and the value becomes 255 - so the instrument breaks whenever the random number is negative. In 40 test runs in the emulator of BREAK DOOR WITH SWORD against the heavy rock door, the sword broke 9 times; with the bow, whose defence of 16 could never reach the door's 144 honestly, the bow still broke 5 times.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37463"></span>9257</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37467"></span>925B</td>
+<td class="instruction">BIT 1,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the object "evaporates" (bit 1 of its flags)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37471"></span>925F</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">If the bit is set, go to Report failure (<a href="40639.html">9EBF</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37474"></span>9262</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the object dead/broken (bit 3 of its flags)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37478"></span>9266</td>
+<td class="instruction">JP NZ,$9303</td>
+<td class="comment-1" rowspan="1">If the bit is set, go to <a href="37463.html#37635">9303</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37481"></span>9269</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37482"></span>926A</td>
+<td class="instruction">CP (IX+$06)</td>
+<td class="comment-1" rowspan="1">Compare with the byte at (IX+$06)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37485"></span>926D</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">If yes, go to Report failure (<a href="40639.html">9EBF</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37488"></span>9270</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37489"></span>9271</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">A = the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37492"></span>9274</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">(sets Z if A was $FF: none)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37493"></span>9275</td>
+<td class="instruction">JR Z,$9296</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="37463.html#37526">9296</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37495"></span>9277</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37499"></span>927B</td>
+<td class="instruction">LD A,(IY+$05)</td>
+<td class="comment-1" rowspan="1">A = the object's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37502"></span>927E</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37503"></span>927F</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">If it is zero, go to Report failure (<a href="40639.html">9EBF</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37506"></span>9282</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37508"></span>9284</td>
+<td class="instruction">LD IX,($B5FA)</td>
+<td class="comment-1" rowspan="1">IX = the instrument's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37512"></span>9288</td>
+<td class="instruction">LD A,$0B</td>
+<td class="comment-1" rowspan="1">A = 11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37514"></span>928A</td>
+<td class="instruction">CALL <a href="39644.html">$9ADC</a></td>
+<td class="comment-1" rowspan="1">Call: Find an object's handler for an action (<a href="39644.html">9ADC</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37517"></span>928D</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37519"></span>928F</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37520"></span>9290</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">If the routine returned with Z set, go to Report failure (<a href="40639.html">9EBF</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37523"></span>9293</td>
+<td class="instruction">LD B,(IY+$05)</td>
+<td class="comment-1" rowspan="1">B = the object's strength</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37526"></span>9296</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then just record that this would work, and return from the caller</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37529"></span>9299</td>
+<td class="instruction">LD A,$15</td>
+<td class="comment-1" rowspan="1">A = 21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37531"></span>929B</td>
+<td class="instruction">CALL <a href="39933.html">$9BFD</a></td>
+<td class="comment-1" rowspan="1">Call: Random number in a range (<a href="39933.html">9BFD</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37534"></span>929E</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1">Add A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37535"></span>929F</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the actor's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37539"></span>92A3</td>
+<td class="instruction">ADD A,(IY+$05)</td>
+<td class="comment-1" rowspan="1">Add the object's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37542"></span>92A6</td>
+<td class="instruction">JR NC,$92AA</td>
+<td class="comment-1" rowspan="1">If the routine returned with carry reset, go to <a href="37463.html#37546">92AA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37544"></span>92A8</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">A = 255</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37546"></span>92AA</td>
+<td class="instruction">SUB (IX+$06)</td>
+<td class="comment-1" rowspan="1">Subtract the object's defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37549"></span>92AD</td>
+<td class="instruction">JR C,$92CA</td>
+<td class="comment-1" rowspan="1">If carry is set, go to <a href="37463.html#37578">92CA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37551"></span>92AF</td>
+<td class="instruction">SET 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Set the object's "dead/broken" flag (bit 3)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37555"></span>92B3</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37558"></span>92B6</td>
+<td class="instruction">CALL <a href="41148.html">$A0BC</a></td>
+<td class="comment-1" rowspan="1">Call: Mark an object as dead or broken (<a href="41148.html">A0BC</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37561"></span>92B9</td>
+<td class="instruction">SRA (IX+$05)</td>
+<td class="comment-1" rowspan="1">Shift/rotate (IX+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37565"></span>92BD</td>
+<td class="instruction">LD A,(IX+$04)</td>
+<td class="comment-1" rowspan="1">How are the target's contents described?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37568"></span>92C0</td>
+<td class="instruction">CP $02</td>
+<td class="comment-1" rowspan="1">In (0) or on (1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37570"></span>92C2</td>
+<td class="instruction">CALL C,<a href="40101.html">$9CA5</a></td>
+<td class="comment-1" rowspan="1">Then they fall out of the broken container</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37573"></span>92C5</td>
+<td class="instruction">LD A,$83</td>
+<td class="comment-1" rowspan="1">A = 131</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37575"></span>92C7</td>
+<td class="instruction">CALL <a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">Call: "The X is Y" (<a href="41116.html">A09C</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37578"></span>92CA</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">A = the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37581"></span>92CD</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it nobody ($FF)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37583"></span>92CF</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37584"></span>92D0</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37588"></span>92D4</td>
+<td class="instruction">BIT 3,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Is the object dead/broken (bit 3 of its flags)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37592"></span>92D8</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Return if the bit is set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37593"></span>92D9</td>
+<td class="instruction">LD B,(IY+$06)</td>
+<td class="comment-1" rowspan="1">B = the object's defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37596"></span>92DC</td>
+<td class="instruction">LD A,$15</td>
+<td class="comment-1" rowspan="1">A = 21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37598"></span>92DE</td>
+<td class="instruction">CALL <a href="39933.html">$9BFD</a></td>
+<td class="comment-1" rowspan="1">Call: Random number in a range (<a href="39933.html">9BFD</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37601"></span>92E1</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1">Add A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37602"></span>92E2</td>
+<td class="instruction">JR NC,$92E6</td>
+<td class="comment-1" rowspan="1">If the routine returned with carry reset, go to <a href="37463.html#37606">92E6</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37604"></span>92E4</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">A = 255</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37606"></span>92E6</td>
+<td class="instruction">SUB (IX+$06)</td>
+<td class="comment-1" rowspan="1">Subtract the object's defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37609"></span>92E9</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Return if carry is set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37610"></span>92EA</td>
+<td class="instruction">SET 3,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Set the object's "dead/broken" flag (bit 3)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37614"></span>92EE</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">A = the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37617"></span>92F1</td>
+<td class="instruction">CALL <a href="41148.html">$A0BC</a></td>
+<td class="comment-1" rowspan="1">Call: Mark an object as dead or broken (<a href="41148.html">A0BC</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37620"></span>92F4</td>
+<td class="instruction">LD A,(IY+$05)</td>
+<td class="comment-1" rowspan="1">A = the object's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37623"></span>92F7</td>
+<td class="instruction">SRA A</td>
+<td class="comment-1" rowspan="1">Shift/rotate A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37625"></span>92F9</td>
+<td class="instruction">LD (IY+$05),A</td>
+<td class="comment-1" rowspan="1">Set the object's strength to A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37628"></span>92FC</td>
+<td class="instruction">CALL <a href="40101.html">$9CA5</a></td>
+<td class="comment-1" rowspan="1">Call: Drop everything the target holds (<a href="40101.html">9CA5</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37631"></span>92FF</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37633"></span>9301</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37635"></span>9303</td>
+<td class="instruction">LD A,$83</td>
+<td class="comment-1" rowspan="1">A = 131</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37637"></span>9305</td>
+<td class="instruction">JP <a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">Finish by jumping to "The X is Y" (<a href="41116.html">A09C</a>)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37458.html">9252</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37463">Map</a></td>
+<td class="next">
+Next: <a href="37640.html">9308</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

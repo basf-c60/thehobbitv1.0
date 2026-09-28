@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9C55</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40002.html">9C42</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40021">Map</a></td>
+<td class="next">
+Next: <a href="40076.html">9C8C</a>
+</td>
+</tr>
+</table>
+<div class="description">9C55: Add up the contents of an object</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Recursive worker for <a href="40002.html">9C42</a> and <a href="39997.html">9C3D</a>: for each object held by object A, adds its weight (or size, if B=1) to C, and for weights also the weight of its contents. The overflow test uses JP PE.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40021"></span>9C55</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40023"></span>9C57</td>
+<td class="instruction">LD IX,$BF53</td>
+<td class="comment-1" rowspan="1">IX = the start of the object index, ready to look at every object in the game in turn</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40027"></span>9C5B</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+<td class="comment-1" rowspan="1">Look at the next object: IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40030"></span>9C5E</td>
+<td class="instruction">JR Z,$9C84</td>
+<td class="comment-1" rowspan="1">Have we run out of objects (reached the index's terminator)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40032"></span>9C60</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">No: is THIS object held by the one whose contents we are adding up?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40035"></span>9C63</td>
+<td class="instruction">JR NZ,$9C5B</td>
+<td class="comment-1" rowspan="1">It is not: move on and look at the next object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40037"></span>9C65</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">It is: save the object we are adding up for a moment (it is not disturbed by anything above)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40038"></span>9C66</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Are we totalling weight (B=0) or size (B=1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40039"></span>9C67</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40040"></span>9C68</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">A = the running total so far</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40041"></span>9C69</td>
+<td class="instruction">JR Z,$9C74</td>
+<td class="comment-1" rowspan="1">Weight wanted: add this object's own weight instead (skip down)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40043"></span>9C6B</td>
+<td class="instruction">ADD A,(IY+$02)</td>
+<td class="comment-1" rowspan="1">Size wanted: add this object's own size (byte 2 of its record)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40046"></span>9C6E</td>
+<td class="instruction">JP PE,$9C87</td>
+<td class="comment-1" rowspan="1">Did that go past 255? Then the whole total is unknowable - give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40049"></span>9C71</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Otherwise keep the new, larger running total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40050"></span>9C72</td>
+<td class="instruction">JR $9C81</td>
+<td class="comment-1" rowspan="1">...and go on to look inside this object too, in case it holds anything itself</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40052"></span>9C74</td>
+<td class="instruction">ADD A,(IY+$03)</td>
+<td class="comment-1" rowspan="1">Weight wanted: add this object's own weight (byte 3 of its record)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40055"></span>9C77</td>
+<td class="instruction">JP PE,$9C87</td>
+<td class="comment-1" rowspan="1">Did that go past 255? Then the whole total is unknowable - give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40058"></span>9C7A</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Otherwise keep the new, larger running total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40059"></span>9C7B</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the object we just added in, so we can look inside it as well</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40062"></span>9C7E</td>
+<td class="instruction">CALL $9C55</td>
+<td class="comment-1" rowspan="1">Recursively add up whatever THAT object holds, in case it is itself a container</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40065"></span>9C81</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the object we are totalling up (saved earlier)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40066"></span>9C82</td>
+<td class="instruction">JR $9C5B</td>
+<td class="comment-1" rowspan="1">Go back and look for more objects held by it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40068"></span>9C84</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">No more objects anywhere: restore the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40070"></span>9C86</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40071"></span>9C87</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">OVERFLOW: throw away the object number we had saved</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40072"></span>9C88</td>
+<td class="instruction">LD C,$FF</td>
+<td class="comment-1" rowspan="1">The total becomes $FF, meaning "too big to say exactly"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40074"></span>9C8A</td>
+<td class="instruction">JR $9C84</td>
+<td class="comment-1" rowspan="1">Finish as normal</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40002.html">9C42</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40021">Map</a></td>
+<td class="next">
+Next: <a href="40076.html">9C8C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

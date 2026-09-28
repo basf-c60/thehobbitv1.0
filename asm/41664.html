@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A2C0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41639.html">A2A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41664">Map</a></td>
+<td class="next">
+Next: <a href="41708.html">A2EC</a>
+</td>
+</tr>
+</table>
+<div class="description">A2C0: Handler for the ring: WEAR</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Putting the golden ring on makes the wearer invisible (bit 7 of their flags cleared) - but also divides their strength by 4. The ring itself becomes invisible and held by the wearer, and timer 6 is started with a random count of 2 to 10 (<a href="39924.html">9BF4</a>), after which the ring comes off by itself (<a href="43476.html">A9D4</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41664"></span>A2C0</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41667"></span>A2C3</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the wearer's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41671"></span>A2C7</td>
+<td class="instruction">LD IX,$C209</td>
+<td class="comment-1" rowspan="1">IX = the ring's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41675"></span>A2CB</td>
+<td class="instruction">RES 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">The wearer becomes invisible...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41679"></span>A2CF</td>
+<td class="instruction">SRL (IY+$05)</td>
+<td class="comment-1" rowspan="2">...and a quarter as strong</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41683"></span>A2D3</td>
+<td class="instruction">SRL (IY+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41687"></span>A2D7</td>
+<td class="instruction">RES 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">The ring vanishes from view...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41691"></span>A2DB</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">...into the wearer's hand</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41694"></span>A2DE</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41697"></span>A2E1</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 8...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41699"></span>A2E3</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41702"></span>A2E6</td>
+<td class="instruction">ADD A,$02</td>
+<td class="comment-1" rowspan="1">...plus 2...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41704"></span>A2E8</td>
+<td class="instruction">LD ($C99E),A</td>
+<td class="comment-1" rowspan="2">...and start timer 6 with it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41707"></span>A2EB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41639.html">A2A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41664">Map</a></td>
+<td class="next">
+Next: <a href="41708.html">A2EC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

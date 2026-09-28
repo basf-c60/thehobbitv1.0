@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8405</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33703.html">83A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33797">Map</a></td>
+<td class="next">
+Next: <a href="33892.html">8464</a>
+</td>
+</tr>
+</table>
+<div class="description">8405: Search for a target and an instrument</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Tries the objects that fit the noun phrases of the command, in two nested loops: for each candidate target (<a href="34492.html">86BC</a>) it tries each candidate instrument (<a href="34568.html">8708</a>). For every combination, a dry run of the action (<a href="34014.html">84DE</a>, which runs the action with $B5EB clear) says whether it would work. The first combination that works is kept. Counts of the candidates are kept at $8330-$8332 so that <a href="34733.html">87AD</a> can tell whether there were none, one or several.
+</div>
+<div class="paragraph">
+When only one candidate is allowed ($8344), the search stops after the first.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z reset if no workable combination was found</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33797"></span>8405</td>
+<td class="instruction">CALL <a href="34492.html">$86BC</a></td>
+<td class="comment-1" rowspan="1">Find the next candidate target for which the action would actually work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33800"></span>8408</td>
+<td class="instruction">JR NZ,$841F</td>
+<td class="comment-1" rowspan="1">None found (or several already tried): go and see how many there were in total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33802"></span>840A</td>
+<td class="instruction">LD A,($8331)</td>
+<td class="comment-1" rowspan="2">Did EXACTLY one candidate target turn out to work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33805"></span>840D</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33807"></span>840F</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No (none, or more than one): give up, leaving the caller to explain why</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33808"></span>8410</td>
+<td class="instruction">LD A,($8347)</td>
+<td class="comment-1" rowspan="1">Yes: A = that one candidate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33811"></span>8413</td>
+<td class="instruction">LD ($B5D9),A</td>
+<td class="comment-1" rowspan="1">It becomes the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33814"></span>8416</td>
+<td class="instruction">CALL <a href="33963.html">$84AB</a></td>
+<td class="comment-1" rowspan="1">Start searching for an instrument too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33817"></span>8419</td>
+<td class="instruction">CALL <a href="33993.html">$84C9</a></td>
+<td class="comment-1" rowspan="1">Does this action even need one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33820"></span>841C</td>
+<td class="instruction">JR NZ,$8446</td>
+<td class="comment-1" rowspan="1">Yes: go and look for it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33822"></span>841E</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">No: we are done, with just the target settled</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33823"></span>841F</td>
+<td class="instruction">LD HL,$8330</td>
+<td class="comment-1" rowspan="2">No workable target this time: count how many candidates fitted the words at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33826"></span>8422</td>
+<td class="instruction">INC (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33827"></span>8423</td>
+<td class="instruction">CALL <a href="33993.html">$84C9</a></td>
+<td class="comment-1" rowspan="1">Does the action need an instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33830"></span>8426</td>
+<td class="instruction">JR Z,$8441</td>
+<td class="comment-1" rowspan="1">No: try this same target candidate again, ignoring the instrument entirely</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33832"></span>8428</td>
+<td class="instruction">CALL <a href="33963.html">$84AB</a></td>
+<td class="comment-1" rowspan="1">Yes: start searching for an instrument to go with THIS candidate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33835"></span>842B</td>
+<td class="instruction">CALL <a href="34568.html">$8708</a></td>
+<td class="comment-1" rowspan="1">Find the next candidate instrument for which it would work</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33838"></span>842E</td>
+<td class="instruction">JR Z,$8405</td>
+<td class="comment-1" rowspan="1">None: go back and try a different target instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33840"></span>8430</td>
+<td class="instruction">LD A,($8344)</td>
+<td class="comment-1" rowspan="2">Found one - but does the caller only want a single candidate overall (rather than checking for ambiguity)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33843"></span>8433</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33844"></span>8434</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: stop here, with this pairing as the answer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33845"></span>8435</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">No: remember this target as one that works...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33848"></span>8438</td>
+<td class="instruction">LD ($8347),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33851"></span>843B</td>
+<td class="instruction">LD HL,$8331</td>
+<td class="comment-1" rowspan="2">...and count it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33854"></span>843E</td>
+<td class="instruction">INC (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33855"></span>843F</td>
+<td class="instruction">JR $8405</td>
+<td class="comment-1" rowspan="1">...then go on looking for more targets, to see whether the choice is ambiguous</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33857"></span>8441</td>
+<td class="instruction">CALL <a href="34014.html">$84DE</a></td>
+<td class="comment-1" rowspan="1">Try the action with just this target and no instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33860"></span>8444</td>
+<td class="instruction">JR $842E</td>
+<td class="comment-1" rowspan="1">Treat the result exactly as if an instrument search had just finished</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33862"></span>8446</td>
+<td class="instruction">CALL <a href="34568.html">$8708</a></td>
+<td class="comment-1" rowspan="1">Look for another candidate instrument for the current target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33865"></span>8449</td>
+<td class="instruction">JR NZ,$8458</td>
+<td class="comment-1" rowspan="1">None left: count how many there were in total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33867"></span>844B</td>
+<td class="instruction">LD A,($8332)</td>
+<td class="comment-1" rowspan="2">Did EXACTLY one candidate instrument work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33870"></span>844E</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33872"></span>8450</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: give up, leaving the caller to explain why</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33873"></span>8451</td>
+<td class="instruction">LD A,($8348)</td>
+<td class="comment-1" rowspan="1">Yes: A = that one candidate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33876"></span>8454</td>
+<td class="instruction">LD ($B5DA),A</td>
+<td class="comment-1" rowspan="2">It becomes the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33879"></span>8457</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33880"></span>8458</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Found another workable instrument: remember it...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33883"></span>845B</td>
+<td class="instruction">LD ($8348),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33886"></span>845E</td>
+<td class="instruction">LD HL,$8332</td>
+<td class="comment-1" rowspan="2">...and count it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33889"></span>8461</td>
+<td class="instruction">INC (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33890"></span>8462</td>
+<td class="instruction">JR $8446</td>
+<td class="comment-1" rowspan="1">...then keep looking, to see whether the choice is ambiguous</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33703.html">83A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33797">Map</a></td>
+<td class="next">
+Next: <a href="33892.html">8464</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

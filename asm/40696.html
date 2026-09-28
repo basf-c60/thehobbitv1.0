@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9EF8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40669.html">9EDD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40696">Map</a></td>
+<td class="next">
+Next: <a href="40720.html">9F10</a>
+</td>
+</tr>
+</table>
+<div class="description">9EF8: List the objects held by A in room B</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Lists the objects (<a href="40720.html">9F10</a>) and prints '      nothing' if there were none.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40696"></span>9EF8</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="3">Save the caller's IY, DE and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40698"></span>9EFA</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40699"></span>9EFB</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40700"></span>9EFC</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1">C will count how many things get printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40702"></span>9EFE</td>
+<td class="instruction">LD D,$04</td>
+<td class="comment-1" rowspan="1">D = 4, meaning "no indent yet", since this is a fresh list rather than something nested inside another</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40704"></span>9F00</td>
+<td class="instruction">CALL <a href="40720.html">$9F10</a></td>
+<td class="comment-1" rowspan="1">List the objects, updating the count in C as it goes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40707"></span>9F03</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Was anything at all printed?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40708"></span>9F04</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40709"></span>9F05</td>
+<td class="instruction">LD HL,$B22D</td>
+<td class="comment-1" rowspan="1">"      nothing"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40712"></span>9F08</td>
+<td class="instruction">CALL Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If nothing was printed, say so</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40715"></span>9F0B</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="4">Restore the caller's BC, DE and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40716"></span>9F0C</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40717"></span>9F0D</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40719"></span>9F0F</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40669.html">9EDD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40696">Map</a></td>
+<td class="next">
+Next: <a href="40720.html">9F10</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

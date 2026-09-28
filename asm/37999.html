@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 946F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37942.html">9436</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37999">Map</a></td>
+<td class="next">
+Next: <a href="38207.html">953F</a>
+</td>
+</tr>
+</table>
+<div class="description">946F: Carry out the action</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Performs the current action ($B5D8) with the current target ($B5D9) and instrument ($B5DA). During a dry run ($B5EB = 0) nothing is printed or changed, and the routines report success in $B5EC instead.
+</div>
+<div class="paragraph">
+First the basic checks: the action must make sense (<a href="39583.html">9A9F</a>: you cannot, for instance, give something to yourself; if it fails, 'I cannot do that.'). If it is dark (<a href="38221.html">954D</a>) and the action needs light, 'I see nothing.' unless the objects are being carried. The records of the target and instrument are found and saved in $B5F8 and $B5FA, and each must be within reach (<a href="38534.html">9686</a>).
+</div>
+<div class="paragraph">
+Then the handlers are found. If the target (or, for certain actions listed at <a href="41275.html">A13B</a>, the instrument) has handlers of its own for this action (<a href="39644.html">9ADC</a>), they are called one after another: the matching entry and any entries with action 0 straight after it. Otherwise the default handler for the action is looked up in <a href="50719.html">C61F</a>. If there is none, 'I cannot do that.'
+</div>
+<div class="paragraph">
+Finally, if the action really happened and the player did it in the dark, the darkness message is printed, and <a href="38207.html">953F</a> gives any character involved as target or instrument a chance to react (<a href="39419.html">99FB</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37999"></span>946F</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38000"></span>9470</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38002"></span>9472</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38003"></span>9473</td>
+<td class="instruction">CALL <a href="39583.html">$9A9F</a></td>
+<td class="comment-1" rowspan="1">Does the action make sense (not done to yourself, and so on)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38006"></span>9476</td>
+<td class="instruction">JP Z,$953A</td>
+<td class="comment-1" rowspan="1">No: "I cannot do that."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38009"></span>9479</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">Is it too dark for Bilbo to see?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38012"></span>947C</td>
+<td class="instruction">JR NC,$9499</td>
+<td class="comment-1" rowspan="1">No: carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38014"></span>947E</td>
+<td class="instruction">LD A,($B601)</td>
+<td class="comment-1" rowspan="2">Dark. Can this action be done in the dark anyway?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38017"></span>9481</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38018"></span>9482</td>
+<td class="instruction">JR NZ,$9491</td>
+<td class="comment-1" rowspan="1">No: "I see nothing"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38020"></span>9484</td>
+<td class="instruction">CALL <a href="39885.html">$9BCD</a></td>
+<td class="comment-1" rowspan="1">Is the target something Bilbo is holding?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38023"></span>9487</td>
+<td class="instruction">JR NC,$9491</td>
+<td class="comment-1" rowspan="1">No: "I see nothing"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38025"></span>9489</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Is the instrument something he is holding?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38028"></span>948C</td>
+<td class="instruction">CALL <a href="39885.html#39888">$9BD0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38031"></span>948F</td>
+<td class="instruction">JR C,$9499</td>
+<td class="comment-1" rowspan="1">Yes: he can manage by touch</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38033"></span>9491</td>
+<td class="instruction">LD HL,$AEB7</td>
+<td class="comment-1" rowspan="3">"I see nothing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38036"></span>9494</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38039"></span>9497</td>
+<td class="instruction">JR $94FB</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38041"></span>9499</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="2">Is the target a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38044"></span>949C</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38046"></span>949E</td>
+<td class="instruction">JP Z,$952C</td>
+<td class="comment-1" rowspan="1">Yes: straight to the default handler</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38049"></span>94A1</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is there a target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38052"></span>94A4</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38054"></span>94A6</td>
+<td class="instruction">JP Z,$952C</td>
+<td class="comment-1" rowspan="1">No: straight to the default handler</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38057"></span>94A9</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the target's record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38060"></span>94AC</td>
+<td class="instruction">LD ($B5F8),IX</td>
+<td class="comment-1" rowspan="1">...which is saved for the handlers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38064"></span>94B0</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is it within the player's reach?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38067"></span>94B3</td>
+<td class="instruction">CALL <a href="38534.html">$9686</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38070"></span>94B6</td>
+<td class="instruction">JR NZ,$94FB</td>
+<td class="comment-1" rowspan="1">No: stop (the reason has been printed)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38072"></span>94B8</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Is there an instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38075"></span>94BB</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38077"></span>94BD</td>
+<td class="instruction">JR Z,$94DA</td>
+<td class="comment-1" rowspan="1">No: use the target's handlers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38079"></span>94BF</td>
+<td class="instruction">LD A,($B5F0)</td>
+<td class="comment-1" rowspan="2">Is the instrument a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38082"></span>94C2</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38084"></span>94C4</td>
+<td class="instruction">JR Z,$952C</td>
+<td class="comment-1" rowspan="1">Yes: default handler</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38086"></span>94C6</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">IX = the instrument's record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38089"></span>94C9</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38092"></span>94CC</td>
+<td class="instruction">LD ($B5FA),IX</td>
+<td class="comment-1" rowspan="1">...saved for the handlers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38096"></span>94D0</td>
+<td class="instruction">CALL <a href="38534.html">$9686</a></td>
+<td class="comment-1" rowspan="1">Is it within reach?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38099"></span>94D3</td>
+<td class="instruction">JR NZ,$94FB</td>
+<td class="comment-1" rowspan="1">No: stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38101"></span>94D5</td>
+<td class="instruction">CALL <a href="41216.html">$A100</a></td>
+<td class="comment-1" rowspan="1">Is this one of the actions the instrument handles (PUT IN, TAKE OUT OF...)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38104"></span>94D8</td>
+<td class="instruction">JR Z,$94DE</td>
+<td class="comment-1" rowspan="1">Yes: use the instrument's handlers (IX is still its record)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38106"></span>94DA</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">Otherwise use the target's</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38110"></span>94DE</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38113"></span>94E1</td>
+<td class="instruction">CALL <a href="39644.html">$9ADC</a></td>
+<td class="comment-1" rowspan="1">Does the object have its own handler for it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38116"></span>94E4</td>
+<td class="instruction">JR NC,$952C</td>
+<td class="comment-1" rowspan="1">No: use the default handler</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38118"></span>94E6</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">HL = the handler...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38121"></span>94E9</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38124"></span>94EC</td>
+<td class="instruction">CALL <a href="39623.html">$9AC7</a></td>
+<td class="comment-1" rowspan="1">...run it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38127"></span>94EF</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="3">Next entry in the list</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38129"></span>94F1</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38131"></span>94F3</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38133"></span>94F5</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Is it action 0 (a chained handler)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38134"></span>94F6</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38137"></span>94F9</td>
+<td class="instruction">JR Z,$94E6</td>
+<td class="comment-1" rowspan="1">Yes: run that too</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38139"></span>94FB</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="2">Did the action really happen?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38142"></span>94FE</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38144"></span>9500</td>
+<td class="instruction">JR NZ,$9527</td>
+<td class="comment-1" rowspan="1">No: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38146"></span>9502</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Was it the player?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38149"></span>9505</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38151"></span>9507</td>
+<td class="instruction">JR NZ,$950F</td>
+<td class="comment-1" rowspan="1">No: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38153"></span>9509</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="2">If the player is in the dark, add "it is dark."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38156"></span>950C</td>
+<td class="instruction">CALL C,<a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="38159"></span>950F</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="2">B = the action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38162"></span>9512</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38163"></span>9513</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">Let the target react (a character that was attacked, say)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38166"></span>9516</td>
+<td class="instruction">LD IX,($B5F8)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38170"></span>951A</td>
+<td class="instruction">CALL <a href="38207.html">$953F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38173"></span>951D</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="7">Let the instrument react too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38176"></span>9520</td>
+<td class="instruction">LD IX,($B5FA)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38180"></span>9524</td>
+<td class="instruction">CALL <a href="38207.html">$953F</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="38183"></span>9527</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38184"></span>9528</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38186"></span>952A</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38187"></span>952B</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38188"></span>952C</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="3">DEFAULT HANDLER: look the action up in <a href="50719.html">C61F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38191"></span>952F</td>
+<td class="instruction">LD IX,$C61F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38195"></span>9533</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38198"></span>9536</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Found?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38200"></span>9538</td>
+<td class="instruction">JR NZ,$94E6</td>
+<td class="comment-1" rowspan="1">Yes: run it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38202"></span>953A</td>
+<td class="instruction">CALL <a href="29381.html">$72C5</a></td>
+<td class="comment-1" rowspan="2">No: "I cannot do that."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38205"></span>953D</td>
+<td class="instruction">JR $9527</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37942.html">9436</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37999">Map</a></td>
+<td class="next">
+Next: <a href="38207.html">953F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

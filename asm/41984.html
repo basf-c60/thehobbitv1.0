@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A400</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41959.html">A3E7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41984">Map</a></td>
+<td class="next">
+Next: <a href="41990.html">A406</a>
+</td>
+</tr>
+</table>
+<div class="description">A400: Timer 3 expires: the goblins' door closes</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Two turns after it was opened (<a href="41959.html">A3E7</a>), the goblins' door closes itself.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41984"></span>A400</td>
+<td class="instruction">LD HL,$C23A</td>
+<td class="comment-1" rowspan="1">HL = the goblins' door's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41987"></span>A403</td>
+<td class="instruction">RES 5,(HL)</td>
+<td class="comment-1" rowspan="2">Close it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41989"></span>A405</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41959.html">A3E7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41984">Map</a></td>
+<td class="next">
+Next: <a href="41990.html">A406</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

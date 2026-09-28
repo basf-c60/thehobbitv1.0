@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8E4E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36404.html">8E34</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36430">Map</a></td>
+<td class="next">
+Next: <a href="36442.html">8E5A</a>
+</td>
+</tr>
+</table>
+<div class="description">8E4E: LOOK THROUGH (a door or window)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The LOOK THROUGH handler of every door (and, via <a href="42616.html">A678</a>, the window). The door must be open (otherwise 'the door is closed'), and the actor must not be shut inside anything. Then it continues as <a href="36442.html">8E5A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36430"></span>8E4E</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target (the door or window)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36433"></span>8E51</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36436"></span>8E54</td>
+<td class="instruction">CALL <a href="42179.html">$A4C3</a></td>
+<td class="comment-1" rowspan="1">Is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36439"></span>8E57</td>
+<td class="instruction">JP Z,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop ("the door is closed.")</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36404.html">8E34</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36430">Map</a></td>
+<td class="next">
+Next: <a href="36442.html">8E5A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8FCF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36766.html">8F9E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36815">Map</a></td>
+<td class="next">
+Next: <a href="36832.html">8FE0</a>
+</td>
+</tr>
+</table>
+<div class="description">8FCF: DIG (the sand)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The sand's DIG handler: digging opens it (<a href="36984.html#36993">9081</a>), revealing anything buried in it; digging again closes it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36815"></span>8FCF</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36818"></span>8FD2</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the sand's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36822"></span>8FD6</td>
+<td class="instruction">BIT 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it already open (dug)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36826"></span>8FDA</td>
+<td class="instruction">JP Z,<a href="36984.html#36993">$9081</a></td>
+<td class="comment-1" rowspan="1">No: open it, as if by OPEN (revealing whatever is buried)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36829"></span>8FDD</td>
+<td class="instruction">JP <a href="37026.html#37039">$90AF</a></td>
+<td class="comment-1" rowspan="1">Yes: close it again instead (covering things back up)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36766.html">8F9E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36815">Map</a></td>
+<td class="next">
+Next: <a href="36832.html">8FE0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

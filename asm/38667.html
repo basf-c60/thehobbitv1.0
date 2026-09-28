@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 970B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38621.html">96DD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38667">Map</a></td>
+<td class="next">
+Next: <a href="38738.html">9752</a>
+</td>
+</tr>
+</table>
+<div class="description">970B: Choose the random features of a new game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called at the start of every game. It makes Bilbo the actor and then makes two random choices.
+</div>
+<div class="paragraph">
+The hidden route: one of five exits listed in the table at <a href="50941.html">C6FD</a> is chosen (a random number 1-5 from <a href="39924.html">9BF4</a>) and blanked out in its room record, so that way is closed. The address of the chosen entry is written into the instruction at $A6C3, where Elrond will need it (<a href="42680.html">A6B8</a>). The candidates are the exits from Beorn's house to the great river, from the forest gate to the bewitched gloomy place, from the treeless opening to the goblins' outside gate, from the long lake to lake town, and from the misty mountain to the narrow place. Because of the way <a href="39924.html">9BF4</a> works, the first and last are chosen half as often as the others.
+</div>
+<div class="paragraph">
+Gollum's riddle: one of the four entries at <a href="50923.html">C6EB</a> is chosen (each equally likely) and its address stored at $B5DF (see <a href="42950.html">A7C6</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38667"></span>970B</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Bilbo is the actor...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38668"></span>970C</td>
+<td class="instruction">LD ($B5DB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38671"></span>970F</td>
+<td class="instruction">LD ($B5E2),A</td>
+<td class="comment-1" rowspan="1">...the map has not been read...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38674"></span>9712</td>
+<td class="instruction">LD ($B5EA),A</td>
+<td class="comment-1" rowspan="1">...and Gollum is not waiting for an answer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38677"></span>9715</td>
+<td class="instruction">LD HL,$C00B</td>
+<td class="comment-1" rowspan="2">The actor's record is Bilbo's</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38680"></span>9718</td>
+<td class="instruction">LD ($B5FC),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38683"></span>971B</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 4...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38685"></span>971D</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38688"></span>9720</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">...plus 1: one of the five hidden routes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38689"></span>9721</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38690"></span>9722</td>
+<td class="instruction">LD IY,$C6F7</td>
+<td class="comment-1" rowspan="1">IY = the route table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38694"></span>9726</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="1">Six bytes per entry</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38697"></span>9729</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="2">Step to the chosen entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38699"></span>972B</td>
+<td class="instruction">DJNZ $9729</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38701"></span>972D</td>
+<td class="instruction">LD ($A6C5),IY</td>
+<td class="comment-1" rowspan="1">Write its address into the LD IY instruction in Elrond's map routine (<a href="42680.html">A6B8</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38705"></span>9731</td>
+<td class="instruction">LD L,(IY+$01)</td>
+<td class="comment-1" rowspan="2">HL = the address of the exit in the room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38708"></span>9734</td>
+<td class="instruction">LD H,(IY+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38711"></span>9737</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="4">Blank out its three bytes: the way is closed</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38713"></span>9739</td>
+<td class="instruction">LD (HL),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38715"></span>973B</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38716"></span>973C</td>
+<td class="instruction">DJNZ $9739</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38718"></span>973E</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 3...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38720"></span>9740</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38723"></span>9743</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="4">...times 4...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38724"></span>9744</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38726"></span>9746</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38728"></span>9748</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38730"></span>974A</td>
+<td class="instruction">LD HL,$C6EB</td>
+<td class="comment-1" rowspan="2">...to choose one of the four riddle entries</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38733"></span>974D</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38734"></span>974E</td>
+<td class="instruction">LD ($B5DF),HL</td>
+<td class="comment-1" rowspan="2">Remember it for Gollum</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38737"></span>9751</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38621.html">96DD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38667">Map</a></td>
+<td class="next">
+Next: <a href="38738.html">9752</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

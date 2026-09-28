@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 766D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30269.html">763D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30317">Map</a></td>
+<td class="next">
+Next: <a href="30350.html">768E</a>
+</td>
+</tr>
+</table>
+<div class="description">766D: Print a character using the ROM font</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Draws character A at screen address HL using the Spectrum ROM's character set at $3D00 (8 x 8 pixels), then moves HL on to the next character cell. Used only for the lower (input) window.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Screen address</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Next character position</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30317"></span>766D</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="4">Save the registers this uses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30318"></span>766E</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30319"></span>766F</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30320"></span>7670</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30321"></span>7671</td>
+<td class="instruction">SUB $20</td>
+<td class="comment-1" rowspan="3">A = the character code, counted from the space character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30323"></span>7673</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30324"></span>7674</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30326"></span>7676</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-1" rowspan="3">...times 8, since each character's bitmap is 8 bytes...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30327"></span>7677</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30328"></span>7678</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30329"></span>7679</td>
+<td class="instruction">LD DE,$3D00</td>
+<td class="comment-1" rowspan="2">...added to the start of the ROM's own character set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30332"></span>767C</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30333"></span>767D</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">DE = the character's own bitmap</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30334"></span>767E</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">HL = where to draw it (put back for a moment)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30335"></span>767F</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30336"></span>7680</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="1">Eight pixel rows to copy</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30338"></span>7682</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="2">Copy one row of the bitmap...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30339"></span>7683</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30340"></span>7684</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="1">Move on to the next row of the bitmap...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30341"></span>7685</td>
+<td class="instruction">INC H</td>
+<td class="comment-1" rowspan="2">...and the next pixel line on screen (the odd layout means +$100)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30342"></span>7686</td>
+<td class="instruction">DJNZ $7682</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30344"></span>7688</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="4">Restore HL and the other saved registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30345"></span>7689</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30346"></span>768A</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30347"></span>768B</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30348"></span>768C</td>
+<td class="instruction">INC L</td>
+<td class="comment-1" rowspan="2">Move on to the next character cell</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30349"></span>768D</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30269.html">763D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30317">Map</a></td>
+<td class="next">
+Next: <a href="30350.html">768E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

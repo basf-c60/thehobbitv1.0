@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A468</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42077.html">A45D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42088">Map</a></td>
+<td class="next">
+Next: <a href="42118.html">A486</a>
+</td>
+</tr>
+</table>
+<div class="description">A468: CLIMB OUT OF</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The default handler for CLIMB OUT OF. The actor must be inside the target, which must be open ('the barrel is closed'). The actor's holder is cleared: he is out.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42088"></span>A468</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42092"></span>A46C</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is the actor actually inside the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42095"></span>A46F</td>
+<td class="instruction">CP (IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42098"></span>A472</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No: fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42101"></span>A475</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42104"></span>A478</td>
+<td class="instruction">CALL <a href="42179.html">$A4C3</a></td>
+<td class="comment-1" rowspan="1">Is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42107"></span>A47B</td>
+<td class="instruction">JP Z,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42110"></span>A47E</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42113"></span>A481</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="2">The actor is held by nobody now: they are out</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42117"></span>A485</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42077.html">A45D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42088">Map</a></td>
+<td class="next">
+Next: <a href="42118.html">A486</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

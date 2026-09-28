@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F3D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32558.html">7F2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32573">Map</a></td>
+<td class="next">
+Next: <a href="32598.html">7F56</a>
+</td>
+</tr>
+</table>
+<div class="description">7F3D: Parser: fetch the next token</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Reads the next token from the token buffer (pointer at $B5CD), which it then advances by two. On return D holds the class (the top nibble of the first byte) and BC the word: B the top nibble of the offset and C the bottom byte. The previous class is saved at $B5CF (so that handlers can see what came before), and the position of the token is saved at $B5CB for error messages. A also holds the class.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Class</td>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">Class</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Word</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32573"></span>7F3D</td>
+<td class="instruction">LD HL,($B5CD)</td>
+<td class="comment-1" rowspan="1">HL = the token pointer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32576"></span>7F40</td>
+<td class="instruction">LD ($B5CB),HL</td>
+<td class="comment-1" rowspan="1">Remember where this word is, for error messages</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32579"></span>7F43</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="2">Remember the previous class</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32580"></span>7F44</td>
+<td class="instruction">LD ($B5CF),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32583"></span>7F47</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">B = the top four bits of the word offset</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32584"></span>7F48</td>
+<td class="instruction">AND $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32586"></span>7F4A</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32587"></span>7F4B</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="4">D = A = the class</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32588"></span>7F4C</td>
+<td class="instruction">AND $F0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32590"></span>7F4E</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32591"></span>7F4F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32592"></span>7F50</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-1" rowspan="2">C = the bottom eight bits of the offset</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32593"></span>7F51</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32594"></span>7F52</td>
+<td class="instruction">LD ($B5CD),HL</td>
+<td class="comment-1" rowspan="2">Move the token pointer on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32597"></span>7F55</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32558.html">7F2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32573">Map</a></td>
+<td class="next">
+Next: <a href="32598.html">7F56</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

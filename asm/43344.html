@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A950</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43291.html">A91B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43344">Map</a></td>
+<td class="next">
+Next: <a href="43368.html">A968</a>
+</td>
+</tr>
+</table>
+<div class="description">A950: Timer 1 expires: the web is mended</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Two turns after the spider web was broken (<a href="41639.html">A2A7</a>) the spiders have mended it: it is no longer broken, it is closed again (blocking the way), its strength is doubled, and its first adjective is set back to SPIDER (it had become BROKEN, <a href="41148.html">A0BC</a>).
+</div>
+<div class="paragraph">
+Doubling uses SLA, which drops the top bit: the web starts with strength 64, so the first mending makes it 128, and the second makes it 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43344"></span>A950</td>
+<td class="instruction">LD IX,$C0F5</td>
+<td class="comment-1" rowspan="1">IX = the spider web's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43348"></span>A954</td>
+<td class="instruction">RES 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Not broken any more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43352"></span>A958</td>
+<td class="instruction">RES 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Closed again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43356"></span>A95C</td>
+<td class="instruction">SLA (IX+$05)</td>
+<td class="comment-1" rowspan="1">Twice as strong (64, then 128, then 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43360"></span>A960</td>
+<td class="instruction">LD DE,$0627</td>
+<td class="comment-1" rowspan="1">Its adjective is SPIDER again...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43363"></span>A963</td>
+<td class="instruction">LD ($C0FF),DE</td>
+<td class="comment-1" rowspan="2">...instead of BROKEN</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43367"></span>A967</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43291.html">A91B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43344">Map</a></td>
+<td class="next">
+Next: <a href="43368.html">A968</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

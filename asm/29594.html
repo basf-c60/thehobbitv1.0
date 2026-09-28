@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 739A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29579.html">738B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29594">Map</a></td>
+<td class="next">
+Next: <a href="29606.html">73A6</a>
+</td>
+</tr>
+</table>
+<div class="description">739A: Message code $06: print the actor's name</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the name of the current actor ($B5DB) with no article, via <a href="29823.html">747F</a>: 'you' for Bilbo, 'thorin', 'gandalf' and so on. The entry point at $739E is used by <a href="28962.html">7122</a> without clearing the article flag.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29594"></span>739A</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">No article for a name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29595"></span>739B</td>
+<td class="instruction">LD ($B5F4),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29598"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="28962.html">7122</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29598"></span>739E</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the current actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29601"></span>73A1</td>
+<td class="instruction">CALL <a href="29823.html">$747F</a></td>
+<td class="comment-1" rowspan="1">Print their name ("you", "thorin"...)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29604"></span>73A4</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Already printed: nothing more needed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29605"></span>73A5</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29579.html">738B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29594">Map</a></td>
+<td class="next">
+Next: <a href="29606.html">73A6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

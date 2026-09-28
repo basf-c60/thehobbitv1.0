@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9B96</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39788.html">9B6C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39830">Map</a></td>
+<td class="next">
+Next: <a href="39885.html">9BCD</a>
+</td>
+</tr>
+</table>
+<div class="description">9B96: How much room is left in a room?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns in A the free space in room A: byte 1 of the room record is the room's capacity, from which the size (byte 2) of every ordinary object there is subtracted. Returns 0 if the room is overfull.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Room</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Free space</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39830"></span>9B96</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Save IX, IY and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39832"></span>9B98</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39834"></span>9B9A</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39835"></span>9B9B</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the room being asked about</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39836"></span>9B9C</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39839"></span>9B9F</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">C = its own total capacity</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39842"></span>9BA2</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39843"></span>9BA3</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">Search every object in the game...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39847"></span>9BA7</td>
+<td class="instruction">CALL <a href="39662.html">$9AEE</a></td>
+<td class="comment-1" rowspan="1">Look at the next one; IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39850"></span>9BAA</td>
+<td class="instruction">JR Z,$9BC2</td>
+<td class="comment-1" rowspan="1">No more objects: finished (below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39852"></span>9BAC</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="2">Is it an ordinary, single-place object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39855"></span>9BAF</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39857"></span>9BB1</td>
+<td class="instruction">JR NZ,$9BA7</td>
+<td class="comment-1" rowspan="1">No (e.g. a door): does not count towards the room's capacity</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39859"></span>9BB3</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Is it actually in the room we are asking about?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39860"></span>9BB4</td>
+<td class="instruction">CP (IY+$10)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39863"></span>9BB7</td>
+<td class="instruction">JR NZ,$9BA7</td>
+<td class="comment-1" rowspan="1">No: skip it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39865"></span>9BB9</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Yes: subtract its own size from the space left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39866"></span>9BBA</td>
+<td class="instruction">SUB (IY+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39869"></span>9BBD</td>
+<td class="instruction">JR C,$9BC9</td>
+<td class="comment-1" rowspan="1">Already overfull: give up with 0 space left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39871"></span>9BBF</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Otherwise keep the smaller total</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39872"></span>9BC0</td>
+<td class="instruction">JR $9BA7</td>
+<td class="comment-1" rowspan="1">Look for more objects</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39874"></span>9BC2</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="1">A = the space left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39875"></span>9BC3</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="4">Restore BC, IY and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39876"></span>9BC4</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39878"></span>9BC6</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39880"></span>9BC8</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39881"></span>9BC9</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="2">Overfull: 0 space left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39883"></span>9BCB</td>
+<td class="instruction">JR $9BC2</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39788.html">9B6C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39830">Map</a></td>
+<td class="next">
+Next: <a href="39885.html">9BCD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 99E0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39348.html">99B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39392">Map</a></td>
+<td class="next">
+Next: <a href="39419.html">99FB</a>
+</td>
+</tr>
+</table>
+<div class="description">99E0: Find a character's table entry</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the character table <a href="51642.html">C9BA</a> for character A and returns IY pointing at its entry (or at the $FF end marker, with A=$FF, if it is not there).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Table entry</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39392"></span>99E0</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">Save DE and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39393"></span>99E1</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39394"></span>99E2</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the character being searched for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39395"></span>99E3</td>
+<td class="instruction">LD HL,$C9BA</td>
+<td class="comment-1" rowspan="2">HL = the start of the character table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39398"></span>99E6</td>
+<td class="instruction">LD DE,$0007</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39401"></span>99E9</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = this entry's own character number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39402"></span>99EA</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="2">Is it the one we want?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39403"></span>99EB</td>
+<td class="instruction">JR Z,$99F5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39405"></span>99ED</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="2">Is this the end of the table?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39407"></span>99EF</td>
+<td class="instruction">JR Z,$99F5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39409"></span>99F1</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Neither: move on to the next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39410"></span>99F2</td>
+<td class="instruction">JP $99E9</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39413"></span>99F5</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Found it (or reached the end): restore BC and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39414"></span>99F6</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39415"></span>99F7</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">IY = the entry (or the end marker)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39416"></span>99F8</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39418"></span>99FA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39348.html">99B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39392">Map</a></td>
+<td class="next">
+Next: <a href="39419.html">99FB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

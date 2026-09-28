@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8C75</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35909.html">8C45</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35957">Map</a></td>
+<td class="next">
+Next: <a href="35974.html">8C86</a>
+</td>
+</tr>
+</table>
+<div class="description">8C75: TAKE OUT OF</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The containers' handler for TAKE X OUT OF Y (the goblins' cache, the cupboard, the chest and the boat). The target must actually be inside the container (<a href="39885.html#39891">9BD3</a> checks the holder chain), or 'the X is not in the Y.' Then it is taken like anything else (the rest of <a href="36040.html">8CC8</a>, reached at $8CD1).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35957"></span>8C75</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target of the current command</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35960"></span>8C78</td>
+<td class="instruction">LD HL,$B5DA</td>
+<td class="comment-1" rowspan="1">HL = the address holding the instrument (the container we are meant to take it out of)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35963"></span>8C7B</td>
+<td class="instruction">CALL <a href="39885.html#39891">$9BD3</a></td>
+<td class="comment-1" rowspan="1">Is the target actually inside that container? (reuses the tail of <a href="39885.html">9BCD</a>, comparing against whatever holder number sits at HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35966"></span>8C7E</td>
+<td class="instruction">LD HL,$AEA8</td>
+<td class="comment-1" rowspan="1">"the X is not in the Y."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35969"></span>8C81</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If it is not inside, say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35972"></span>8C84</td>
+<td class="instruction">JR <a href="36040.html#36049">$8CD1</a></td>
+<td class="comment-1" rowspan="1">Otherwise take it just like an ordinary TAKE (joins the rest of <a href="36040.html">8CC8</a>)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35909.html">8C45</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35957">Map</a></td>
+<td class="next">
+Next: <a href="35974.html">8C86</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7EF5</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32486.html">7EE6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32501">Map</a></td>
+<td class="next">
+Next: <a href="32546.html">7F22</a>
+</td>
+</tr>
+</table>
+<div class="description">7EF5: Parser: store a noun phrase in the frame</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Copies the 10-byte noun phrase from $7C45 into the command frame: to offset 4 if bit 6 of E says the first phrase is still empty ($7F1A), otherwise to offset 14 if bit 7 says the second is empty ($7F02). The corresponding bit of E is cleared. If both phrases are already full, it is a syntax error (<a href="32750.html">7FEE</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32501"></span>7EF5</td>
+<td class="instruction">BIT 6,E</td>
+<td class="comment-1" rowspan="1">Is the first noun phrase free?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32503"></span>7EF7</td>
+<td class="instruction">JR NZ,$7F1A</td>
+<td class="comment-1" rowspan="1">Yes: store it there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32505"></span>7EF9</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1">Is the second free?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32507"></span>7EFB</td>
+<td class="instruction">JR NZ,$7F02</td>
+<td class="comment-1" rowspan="1">Yes: store it there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32509"></span>7EFD</td>
+<td class="instruction">CALL <a href="32750.html">$7FEE</a></td>
+<td class="comment-1" rowspan="3">Neither: syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32512"></span>7F00</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32513"></span>7F01</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32514"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32943.html">80AF</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32514"></span>7F02</td>
+<td class="instruction">RES 7,E</td>
+<td class="comment-1" rowspan="2">The second phrase is now taken</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32516"></span>7F04</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32517"></span>7F05</td>
+<td class="instruction">LD DE,$000E</td>
+<td class="comment-1" rowspan="4">Offset 14 in the frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32520"></span>7F08</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32521"></span>7F09</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32523"></span>7F0B</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32524"></span>7F0C</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">DE = the place in the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32525"></span>7F0D</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32526"></span>7F0E</td>
+<td class="instruction">LD HL,$7C45</td>
+<td class="comment-1" rowspan="5">Copy the 10-byte noun phrase there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32529"></span>7F11</td>
+<td class="instruction">LD BC,$000A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32532"></span>7F14</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32534"></span>7F16</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32535"></span>7F17</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32536"></span>7F18</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Return with Z set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32537"></span>7F19</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32538"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="32364.html">7E6C</a> and <a href="32943.html">80AF</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32538"></span>7F1A</td>
+<td class="instruction">RES 6,E</td>
+<td class="comment-1" rowspan="2">The first phrase is now taken</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32540"></span>7F1C</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32541"></span>7F1D</td>
+<td class="instruction">LD DE,$0004</td>
+<td class="comment-1" rowspan="2">Offset 4 in the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32544"></span>7F20</td>
+<td class="instruction">JR $7F08</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32486.html">7EE6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32501">Map</a></td>
+<td class="next">
+Next: <a href="32546.html">7F22</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

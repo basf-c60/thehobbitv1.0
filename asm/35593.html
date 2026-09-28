@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8B09</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35583.html">8AFF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35593">Map</a></td>
+<td class="next">
+Next: <a href="35608.html">8B18</a>
+</td>
+</tr>
+</table>
+<div class="description">8B09: Move the drawing position up</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Increases E (y), unless it would go past 127. Returns with Z set if the edge was reached. A is preserved.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35593"></span>8B09</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1">y + 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35594"></span>8B0A</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1">Past 127?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35596"></span>8B0C</td>
+<td class="instruction">JR Z,$8B13</td>
+<td class="comment-1" rowspan="1">No: return with Z reset</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35598"></span>8B0E</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="2">Yes: undo it...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35599"></span>8B0F</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35600"></span>8B10</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">...and return with Z set (A preserved)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35601"></span>8B11</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35602"></span>8B12</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="35603"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="35608.html">8B18</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35603"></span>8B13</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1">}</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35604"></span>8B14</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="3">Reset Z (A preserved)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35606"></span>8B16</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35607"></span>8B17</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35583.html">8AFF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35593">Map</a></td>
+<td class="next">
+Next: <a href="35608.html">8B18</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

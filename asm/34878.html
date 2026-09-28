@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 883E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34733.html">87AD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34878">Map</a></td>
+<td class="next">
+Next: <a href="34917.html">8865</a>
+</td>
+</tr>
+</table>
+<div class="description">883E: Report a missing or unsuitable instrument</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The instrument's counterpart of the end of <a href="34733.html">87AD</a>. If nothing was found to match the words, 'i see nothing to unlock the door with'. Otherwise the command is left unfinished (<a href="34661.html">8765</a>) and the game asks 'unlock the door with what?' ($ACB4), so the player can simply answer 'the key'. The words of the question are pushed by <a href="34921.html">8869</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34878"></span>883E</td>
+<td class="instruction">CALL <a href="34917.html">$8865</a></td>
+<td class="comment-1" rowspan="1">Push the action's own particle and preposition, for the "with what?" question</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34881"></span>8841</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34884"></span>8844</td>
+<td class="instruction">CALL <a href="29145.html">$71D9</a></td>
+<td class="comment-1" rowspan="1">HL = its own words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34887"></span>8847</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Push them too, so the question can name the target ("unlock the door with what?")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34888"></span>8848</td>
+<td class="instruction">CALL <a href="34921.html">$8869</a></td>
+<td class="comment-1" rowspan="3">Push the action's own words again, this time for the "I see nothing to..." message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34891"></span>884B</td>
+<td class="instruction">LD HL,($8349)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34894"></span>884E</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34895"></span>884F</td>
+<td class="instruction">LD HL,$ACDB</td>
+<td class="comment-1" rowspan="1">"I see nothing to &lt;verb&gt; the &lt;target&gt; &lt;preposition&gt;."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34898"></span>8852</td>
+<td class="instruction">LD A,($8332)</td>
+<td class="comment-1" rowspan="2">Was there in fact exactly one possible instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34901"></span>8855</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34902"></span>8856</td>
+<td class="instruction">JP Z,<a href="34689.html">$8781</a></td>
+<td class="comment-1" rowspan="1">No, none at all: print that message and give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34905"></span>8859</td>
+<td class="instruction">LD A,($8346)</td>
+<td class="comment-1" rowspan="2">Yes, exactly one: use it anyway</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34908"></span>885C</td>
+<td class="instruction">CALL <a href="34661.html">$8765</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34911"></span>885F</td>
+<td class="instruction">LD HL,$ACB4</td>
+<td class="comment-1" rowspan="2">"&lt;verb&gt; the &lt;target&gt; &lt;preposition&gt; what?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34914"></span>8862</td>
+<td class="instruction">JP <a href="34689.html">$8781</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34733.html">87AD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34878">Map</a></td>
+<td class="next">
+Next: <a href="34917.html">8865</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

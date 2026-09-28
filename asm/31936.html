@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7CC0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31931.html">7CBB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31936">Map</a></td>
+<td class="next">
+Next: <a href="32182.html">7DB6</a>
+</td>
+</tr>
+</table>
+<div class="description">7CC0: Parser: end of line (and THEN / full stop)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Handles the end-of-line token, and (from $7CC4) THEN or a full stop. It closes the current command frame. If a verb was required but none was given it complains (<a href="32761.html">7FF9</a>).
+</div>
+<div class="paragraph">
+For ALL (see <a href="32906.html">808A</a>) the verb is flagged. The frame count $B5F7 is increased and, for THEN, the parser goes back to the start state for the next command ($7C6A).
+</div>
+<div class="paragraph">
+At the end of the line some tidying up is done. If the previous command was unfinished ($B60A), the new words are merged into it ($7D02-$7D4B): empty slots in the old frame are filled from the new one. Then frames that have no verb of their own (because of AND, as in 'take the key and the sword') are given the verb of the frame before them (<a href="32641.html">7F81</a>). Finally, noun phrases consisting of IT are resolved, and if a quotation is still open the parser starts again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31936"></span>7CC0</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">End of the line: no more commands will follow</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31937"></span>7CC1</td>
+<td class="instruction">LD ($B5F6),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31940"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="32213.html">7DD5</a> and <a href="32251.html">7DFB</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31940"></span>7CC4</td>
+<td class="instruction">BIT 1,E</td>
+<td class="comment-1" rowspan="1">THEN, full stop or end: has a verb been given (bit 1 of E clear)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31942"></span>7CC6</td>
+<td class="instruction">JR Z,$7CDE</td>
+<td class="comment-1" rowspan="1">Yes: close the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31944"></span>7CC8</td>
+<td class="instruction">LD A,($B5F7)</td>
+<td class="comment-1" rowspan="2">No verb. Is this the first frame?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31947"></span>7CCB</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31948"></span>7CCC</td>
+<td class="instruction">JR NZ,$7CDE</td>
+<td class="comment-1" rowspan="1">No: the verb will be copied from the frame before</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31950"></span>7CCE</td>
+<td class="instruction">LD A,($B5CF)</td>
+<td class="comment-1" rowspan="4">First frame without a verb. Was the previous word the end of the line too?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31953"></span>7CD1</td>
+<td class="instruction">CP $C0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31955"></span>7CD3</td>
+<td class="instruction">JR NZ,$7CD8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31957"></span>7CD5</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31958"></span>7CD6</td>
+<td class="instruction">JR Z,<a href="31926.html">$7CB6</a></td>
+<td class="comment-1" rowspan="1">An empty line: nothing to do</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31960"></span>7CD8</td>
+<td class="instruction">CALL <a href="31931.html">$7CBB</a></td>
+<td class="comment-1" rowspan="1">Inside a quotation?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31963"></span>7CDB</td>
+<td class="instruction">JP Z,<a href="32761.html">$7FF9</a></td>
+<td class="comment-1" rowspan="1">No: a command with no verb, so "what?"</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31966"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="31823.html">7C4F</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31966"></span>7CDE</td>
+<td class="instruction">LD A,($B609)</td>
+<td class="comment-1" rowspan="3">Close the frame. Is ALL in force?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31969"></span>7CE1</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31970"></span>7CE2</td>
+<td class="instruction">JR NZ,$7CE8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31972"></span>7CE4</td>
+<td class="instruction">SET 7,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Yes: mark the verb with bit 7 (ALL)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31976"></span>7CE8</td>
+<td class="instruction">LD HL,$B5F7</td>
+<td class="comment-1" rowspan="4">HL = the frame count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31979"></span>7CEB</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31980"></span>7CEC</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31981"></span>7CED</td>
+<td class="instruction">JR NZ,$7CF3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31983"></span>7CEF</td>
+<td class="instruction">CP $A0</td>
+<td class="comment-1" rowspan="2">(Under ALL EXCEPT, an AND does not start a new frame)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31985"></span>7CF1</td>
+<td class="instruction">JR Z,$7CF4</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31987"></span>7CF3</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment-1" rowspan="1">Count the frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31988"></span>7CF4</td>
+<td class="instruction">CALL <a href="32604.html#32605">$7F5D</a></td>
+<td class="comment-1" rowspan="1">Move on to the next frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31991"></span>7CF7</td>
+<td class="instruction">CP $A0</td>
+<td class="comment-1" rowspan="1">Was this an AND or THEN rather than the end of the line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31993"></span>7CF9</td>
+<td class="instruction">JP Z,<a href="31823.html#31850">$7C6A</a></td>
+<td class="comment-1" rowspan="1">Yes: start the next command</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31996"></span>7CFC</td>
+<td class="instruction">LD A,($B60A)</td>
+<td class="comment-1" rowspan="2">END OF THE LINE. Is an unfinished command waiting?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31999"></span>7CFF</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32000"></span>7D00</td>
+<td class="instruction">JR Z,$7D4C</td>
+<td class="comment-1" rowspan="1">No: go on to share verbs between frames</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32002"></span>7D02</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="6">Yes: HL = the slot in the old frame that the question was about ($B60A holds its offset)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32003"></span>7D03</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32004"></span>7D04</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32006"></span>7D06</td>
+<td class="instruction">LD HL,$B8B8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32009"></span>7D09</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32010"></span>7D0A</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32012"></span>7D0C</td>
+<td class="instruction">LD IY,$B8A0</td>
+<td class="comment-1" rowspan="1">IY = the frame just typed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32016"></span>7D10</td>
+<td class="instruction">LD A,(IY+$08)</td>
+<td class="comment-1" rowspan="3">Does its first noun phrase have a noun?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32019"></span>7D13</td>
+<td class="instruction">OR (IY+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32022"></span>7D16</td>
+<td class="instruction">LD DE,$B8A8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32025"></span>7D19</td>
+<td class="instruction">JR Z,$7D32</td>
+<td class="comment-1" rowspan="1">No: use it anyway</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32027"></span>7D1B</td>
+<td class="instruction">LD A,(IY+$08)</td>
+<td class="comment-1" rowspan="7">Is it the same noun the old command used?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32030"></span>7D1E</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32031"></span>7D1F</td>
+<td class="instruction">JR NZ,$7D29</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32033"></span>7D21</td>
+<td class="instruction">LD A,(IY+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32036"></span>7D24</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32037"></span>7D25</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32038"></span>7D26</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32039"></span>7D27</td>
+<td class="instruction">JR Z,$7D32</td>
+<td class="comment-1" rowspan="1">Yes: take this phrase</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32041"></span>7D29</td>
+<td class="instruction">LD A,(IY+$12)</td>
+<td class="comment-1" rowspan="4">Otherwise try the second noun phrase</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32044"></span>7D2C</td>
+<td class="instruction">OR (IY+$13)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32047"></span>7D2F</td>
+<td class="instruction">LD DE,$B8B2</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32050"></span>7D32</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32052"></span>7D34</td>
+<td class="instruction">JR NZ,$7D4B</td>
+<td class="comment-1" rowspan="1">No suitable phrase: leave the old command as it was</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32054"></span>7D36</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="6">Fill the empty words of the old phrase (noun and two adjectives) from the new one...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32055"></span>7D37</td>
+<td class="instruction">LD B,$03</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32057"></span>7D39</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32058"></span>7D3A</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32059"></span>7D3B</td>
+<td class="instruction">OR (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32060"></span>7D3C</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32061"></span>7D3D</td>
+<td class="instruction">JR NZ,$7D41</td>
+<td class="comment-1" rowspan="10">...keeping any word already there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32063"></span>7D3F</td>
+<td class="instruction">LD A,(DE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32064"></span>7D40</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32065"></span>7D41</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32066"></span>7D42</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32067"></span>7D43</td>
+<td class="instruction">JR NZ,$7D47</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32069"></span>7D45</td>
+<td class="instruction">LD A,(DE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32070"></span>7D46</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32071"></span>7D47</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32072"></span>7D48</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32073"></span>7D49</td>
+<td class="instruction">DJNZ $7D39</td>
+<td class="comment-1" rowspan="2">...for all three words</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32075"></span>7D4B</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32076"></span>7D4C</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">SHARE VERBS: start just above the first frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32078"></span>7D4E</td>
+<td class="instruction">LD IY,$B8D0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32082"></span>7D52</td>
+<td class="instruction">LD A,($B5F7)</td>
+<td class="comment-1" rowspan="3">B = the number of frames</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32085"></span>7D55</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32086"></span>7D56</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32087"></span>7D57</td>
+<td class="instruction">CALL <a href="32604.html">$7F5C</a></td>
+<td class="comment-1" rowspan="1">Step to the first frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32090"></span>7D5A</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Any frames left?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32091"></span>7D5B</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32092"></span>7D5C</td>
+<td class="instruction">JR Z,$7D6E</td>
+<td class="comment-1" rowspan="1">No</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32094"></span>7D5E</td>
+<td class="instruction">CALL <a href="32604.html">$7F5C</a></td>
+<td class="comment-1" rowspan="1">Step to the next frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32097"></span>7D61</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="3">Does it have a verb of its own?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32100"></span>7D64</td>
+<td class="instruction">AND $7F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32102"></span>7D66</td>
+<td class="instruction">OR (IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32105"></span>7D69</td>
+<td class="instruction">CALL Z,<a href="32641.html">$7F81</a></td>
+<td class="comment-1" rowspan="1">No (it came from AND): give it the previous frame's verb</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32108"></span>7D6C</td>
+<td class="instruction">JR $7D5A</td>
+<td class="comment-1" rowspan="1">Loop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32110"></span>7D6E</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">SHARE SECOND NOUN PHRASES, working backwards:</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32111"></span>7D6F</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32113"></span>7D71</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32115"></span>7D73</td>
+<td class="instruction">CALL <a href="32598.html">$7F56</a></td>
+<td class="comment-1" rowspan="1">step to the previous frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32118"></span>7D76</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Any frames left?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32119"></span>7D77</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32120"></span>7D78</td>
+<td class="instruction">JP Z,$7DA8</td>
+<td class="comment-1" rowspan="1">No: finish</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32123"></span>7D7B</td>
+<td class="instruction">CALL <a href="32598.html">$7F56</a></td>
+<td class="comment-1" rowspan="1">Step back one more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32126"></span>7D7E</td>
+<td class="instruction">LD A,(IY+$12)</td>
+<td class="comment-1" rowspan="3">Does this frame lack a second noun phrase...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32129"></span>7D81</td>
+<td class="instruction">OR (IY+$13)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32132"></span>7D84</td>
+<td class="instruction">JR NZ,$7D76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32134"></span>7D86</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="6">...and have the same verb as the frame after it...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32137"></span>7D89</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32140"></span>7D8C</td>
+<td class="instruction">JR NZ,$7D76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32142"></span>7D8E</td>
+<td class="instruction">LD A,(IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32145"></span>7D91</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32148"></span>7D94</td>
+<td class="instruction">JR NZ,$7D76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32150"></span>7D96</td>
+<td class="instruction">LD A,(IX+$0E)</td>
+<td class="comment-1" rowspan="3">...which does have one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32153"></span>7D99</td>
+<td class="instruction">OR (IX+$0F)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32156"></span>7D9C</td>
+<td class="instruction">JR Z,$7D76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32158"></span>7D9E</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="3">Then copy that phrase into this frame ("put the key and the sword in the chest")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32159"></span>7D9F</td>
+<td class="instruction">LD DE,$000E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32162"></span>7DA2</td>
+<td class="instruction">CALL <a href="32641.html#32692">$7FB4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32165"></span>7DA5</td>
+<td class="instruction">JP $7D76</td>
+<td class="comment-1" rowspan="2">Loop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32168"></span>7DA8</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32170"></span>7DAA</td>
+<td class="instruction">LD A,($B5F6)</td>
+<td class="comment-1" rowspan="2">More commands to come (THEN)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32173"></span>7DAD</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32174"></span>7DAE</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: parsing is complete</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32175"></span>7DAF</td>
+<td class="instruction">CALL <a href="31931.html">$7CBB</a></td>
+<td class="comment-1" rowspan="1">Inside a quotation?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32178"></span>7DB2</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: return</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32179"></span>7DB3</td>
+<td class="instruction">JP <a href="31823.html#31850">$7C6A</a></td>
+<td class="comment-1" rowspan="1">Yes: carry on parsing the words after it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31931.html">7CBB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31936">Map</a></td>
+<td class="next">
+Next: <a href="32182.html">7DB6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

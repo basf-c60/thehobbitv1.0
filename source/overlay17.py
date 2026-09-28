@@ -222,12 +222,12 @@ C(0xA4CA,{
  0xA4D8:'Say it'})
 
 C(0xA4DB,{
- 0xA4DB:'Is the target the barrel (object 19)?',
+ 0xA4DB:'Is the object just thrown through the door the barrel (object 19)?',
  0xA4DE:'',
  0xA4E0:'No: this handler does nothing',
- 0xA4E1:'Only if this is really happening (opening the trap door)',
+ 0xA4E1:'Only if this is really happening (chained after the trap door\'s own THROW THROUGH, #R$9404, which has already moved the barrel)',
  0xA4E4:'IX = the barrel\'s own record',
- 0xA4E8:'Is it in room 33 (the cellar)?',
+ 0xA4E8:'Did it land in room 33, the forest river below?',
  0xA4EB:'',
  0xA4ED:'No: nothing happens',
  0xA4EE:'Yes: start timer 0 with a count of 2',
@@ -258,14 +258,14 @@ C(0xA577,{
  0xA58E:'Otherwise (OPEN): open it as usual'})
 
 C(0xA600,{
- 0xA600:'Find the exit that passes through the boat',
+ 0xA600:'Find the exit that passes through the target (presumably meant to be the boat)',
  0xA603:'Is there no such exit?',
  0xA605:'If so, there is nothing to do',
- 0xA606:'Clear the exit\'s three bytes - the way through the boat is removed',
+ 0xA606:'Clear the exit\'s three bytes - sealing up the way, presumably once the boat is no longer there',
  0xA607:'',
  0xA60B:'',
  0xA60F:'',
- 0xA613:''})
+ 0xA613:'(This routine is never actually called by anything in the game - see the note above)'})
 
 C(0xA614,{
  0xA614:'Dry run? Then stop here: it would work',
@@ -550,5 +550,8 @@ C(0xA9FF,{0xA9FF:'Clear the "drunk" flag: Bilbo has sobered up',0xAA00:'',0xAA03
 
 # ---------------------------------------------------------------- a bug found while tracing the barrel handler
 bug('barreljump','Approaching the barrel the wrong way can crash the game',
- "#R$A91B lets the player climb into or jump onto the barrel from an adjoining room, provided the only route there is DOWN - the way the book's escape works. When an exit is found but its direction is anything else, the handler means to print 'you cannot jump onto the barrel from here.' by loading its address into HL and printing it (exactly as the case above it does), but the instruction actually used is a direct JP NZ to that same address, so the Z80 jumps straight into the message's own bytecode and starts executing it as instructions. In the emulator this sends the program off through a string of unrelated addresses and into an infinite loop inside the routine that saves an unfinished command, freezing the game.",
+ "#R$A91B lets the player climb into or jump onto the barrel from an adjoining room, provided the only route there is DOWN - the way the book's escape works. When an exit is found but its direction is anything else, the handler means to print 'you cannot jump onto the barrel from here.' by loading its address into HL and printing it (exactly as the case above it does), but the instruction actually used is a direct JP NZ to that same address, so the Z80 jumps straight into the message's own bytecode and starts executing it as instructions. In one emulator test this sent the program off through a string of unrelated addresses and into an infinite loop inside the routine that saves an unfinished command, freezing the game; the precise garbage path would depend on the exact machine state at the time, but a jump straight into data like this is never going to behave sensibly.",
  "It is reachable in the finished game: standing in the Elvenking's great halls (room 30) or the dark dungeon (room 31) and typing 'climb into barrel' or 'jump onto barrel' while the barrel is in the cellar reaches this path, since both rooms have an exit to the cellar that is not DOWN.")
+
+fact('deadcode','Two routines that nothing ever calls',
+ "The finished game contains two complete routines that are never reached from anywhere: #R$A0DE, which looks up whoever holds a given object, and #R$A600, which finds and seals up an exit (its own reuse of #R$9E6E suggests it was meant for the boat). Neither is called by any other routine, referenced in any object's handler list, or used by any room-entry handler or timer. They read like abandoned code - perhaps an earlier approach to a puzzle that was solved a different way by the time the game shipped.")

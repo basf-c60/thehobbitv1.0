@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A5D5</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42427.html">A5BB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42453">Map</a></td>
+<td class="next">
+Next: <a href="42496.html">A600</a>
+</td>
+</tr>
+</table>
+<div class="description">A5D5: Character routine: the dragon wakes</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Does nothing while the valuable treasure (location at $C4CC) is still in room 41. Once it has been moved, and if the dragon's current room is lit, a random number from 0 to 100 (<a href="39924.html">9BF4</a>) decides: below 80, 'in the distance you see the shape of a monstrous dragon flying after you.'; otherwise 'the dragon descends and in a terrific spout of flames burns you to a crisp.' and Bilbo dies. Because of the skew in the random numbers (<a href="39933.html">9BFD</a>), the fatal result comes up about 16% of the time, every turn, for as long as the dragon lives.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42453"></span>A5D5</td>
+<td class="instruction">LD A,($C4CC)</td>
+<td class="comment-1" rowspan="2">Is the treasure still in room 41?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42456"></span>A5D8</td>
+<td class="instruction">CP $29</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42458"></span>A5DA</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: the dragon sleeps on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42459"></span>A5DB</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: this would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42462"></span>A5DE</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Make sure Bilbo sees what follows</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42464"></span>A5E0</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42467"></span>A5E3</td>
+<td class="instruction">CALL <a href="40076.html">$9C8C</a></td>
+<td class="comment-1" rowspan="1">IX = the room the dragon (the actor) is in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42470"></span>A5E6</td>
+<td class="instruction">BIT 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Is it lit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42474"></span>A5EA</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42475"></span>A5EB</td>
+<td class="instruction">LD HL,$B098</td>
+<td class="comment-1" rowspan="1">"in the distance you see the shape of a monstrous dragon flying after you."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42478"></span>A5EE</td>
+<td class="instruction">LD A,$64</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 100</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42480"></span>A5F0</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42483"></span>A5F3</td>
+<td class="instruction">CP $50</td>
+<td class="comment-1" rowspan="1">Below 80?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42485"></span>A5F5</td>
+<td class="instruction">JR C,<a href="42385.html#42423">$A5B7</a></td>
+<td class="comment-1" rowspan="1">Yes: the dragon is just a shape in the distance</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42487"></span>A5F7</td>
+<td class="instruction">LD HL,$B0AC</td>
+<td class="comment-1" rowspan="2">Otherwise: "the dragon descends and in a terrific spout of flames burns you to a crisp."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42490"></span>A5FA</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42493"></span>A5FD</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Bilbo is dead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42427.html">A5BB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42453">Map</a></td>
+<td class="next">
+Next: <a href="42496.html">A600</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

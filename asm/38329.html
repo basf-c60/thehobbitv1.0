@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 95B9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38286.html">958E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38329">Map</a></td>
+<td class="next">
+Next: <a href="38372.html">95E4</a>
+</td>
+</tr>
+</table>
+<div class="description">95B9: Describe a room (continued)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the room's name from its word list, or its own description script if bytes 8-9 of the room record are non-zero (<a href="38372.html">95E4</a>). Then the room's picture is drawn if it has one (<a href="35173.html">8965</a>); if it did, the game waits for a key (<a href="38392.html">95F8</a>) so the player can look at it. Then the doors (<a href="40952.html">9FF8</a>), the visible exits (<a href="41064.html">A068</a>) and the objects and characters present (<a href="40669.html">9EDD</a>) are listed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38329"></span>95B9</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38330"></span>95BA</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38333"></span>95BD</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print "you are in" (or a short heading from the caller)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38336"></span>95C0</td>
+<td class="instruction">LD L,(IX+$08)</td>
+<td class="comment-1" rowspan="4">Does the room have its own description script?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38339"></span>95C3</td>
+<td class="instruction">LD H,(IX+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38342"></span>95C6</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38343"></span>95C7</td>
+<td class="instruction">OR L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38344"></span>95C8</td>
+<td class="instruction">CALL <a href="38372.html">$95E4</a></td>
+<td class="comment-1" rowspan="1">Print that, or else the room's name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38347"></span>95CB</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">Draw its picture, if it has one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38348"></span>95CC</td>
+<td class="instruction">CALL <a href="35173.html">$8965</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38351"></span>95CF</td>
+<td class="instruction">LD A,($8964)</td>
+<td class="comment-1" rowspan="2">Was there a picture?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38354"></span>95D2</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38355"></span>95D3</td>
+<td class="instruction">CALL NZ,<a href="38392.html">$95F8</a></td>
+<td class="comment-1" rowspan="1">If so, wait for a key so it can be looked at</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38358"></span>95D6</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">New line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38361"></span>95D9</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">"to the east there is the round green door" and so on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38362"></span>95DA</td>
+<td class="instruction">CALL <a href="40952.html">$9FF8</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38365"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="38406.html">9606</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38365"></span>95DD</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">"visible exits are: ..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38366"></span>95DE</td>
+<td class="instruction">CALL <a href="41064.html">$A068</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38369"></span>95E1</td>
+<td class="instruction">JP <a href="40669.html">$9EDD</a></td>
+<td class="comment-1" rowspan="1">Finish with "you see: ..."</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38286.html">958E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38329">Map</a></td>
+<td class="next">
+Next: <a href="38372.html">95E4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

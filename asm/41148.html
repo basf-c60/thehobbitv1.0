@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A0BC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41116.html">A09C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41148">Map</a></td>
+<td class="next">
+Next: <a href="41182.html">A0DE</a>
+</td>
+</tr>
+</table>
+<div class="description">A0BC: Mark an object as dead or broken</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Changes the adjectives of object A: the second adjective is removed and the first becomes DEAD for a character (bit 6 of its flags) or BROKEN for anything else. So after a fight, 'thorin' becomes 'the dead thorin'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41148"></span>A0BC</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41150"></span>A0BE</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41153"></span>A0C1</td>
+<td class="instruction">LD (IX+$0C),$00</td>
+<td class="comment-1" rowspan="2">Remove the second adjective</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41157"></span>A0C5</td>
+<td class="instruction">LD (IX+$0D),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41161"></span>A0C9</td>
+<td class="instruction">LD DE,$00CD</td>
+<td class="comment-1" rowspan="1">The first adjective becomes BROKEN...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41164"></span>A0CC</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="2">...unless it is a living thing (bit 6)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41168"></span>A0D0</td>
+<td class="instruction">JR Z,$A0D5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41170"></span>A0D2</td>
+<td class="instruction">LD DE,$0192</td>
+<td class="comment-1" rowspan="5">...which becomes DEAD</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41173"></span>A0D5</td>
+<td class="instruction">LD (IX+$0A),E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41176"></span>A0D8</td>
+<td class="instruction">LD (IX+$0B),D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41179"></span>A0DB</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41181"></span>A0DD</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41116.html">A09C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41148">Map</a></td>
+<td class="next">
+Next: <a href="41182.html">A0DE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

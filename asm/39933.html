@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9BFD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39924.html">9BF4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39933">Map</a></td>
+<td class="next">
+Next: <a href="39997.html">9C3D</a>
+</td>
+</tr>
+</table>
+<div class="description">9BFD: Random number in a range</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns a random number in A in the range -C to +C (signed). The random byte is produced from the seed at $B5FE (set from the R register in <a href="27687.html">6C27</a>), the counter at $B602 and a byte fetched from memory.
+</div>
+<div class="paragraph">
+The random bytes come from memory itself. A 16-bit counter at $B602 is increased on every call and used as an address; the byte found there (and one a little further on) is mixed with the previous result. So the program code, the tables and even the ROM serve as the game's random number table, and the R register seed from the start of the game (<a href="27687.html">6C27</a>) decides where the sequence begins. A result equal to the previous one is thrown away.
+</div>
+<div class="paragraph">
+The way it narrows the random byte down to the range is unusual: B is set to 2*C, and then the random byte is halved (SRL A) until it is no more than B. Finally C is subtracted. Because 0-255 has to be halved several times, the upper half of the range gets far more than its share: with C=10, values 0-10 of the byte (results -10 to 0) mostly come only from the original byte being 0-10 directly, while 11-20 are hit by many different starting values. For C=10 the results come out approximately: each of -10 to -1: 1/256; 0: 16/256; +1 to +5: 31/256 each; +6 to +10: 15/256 each.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Range</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Random value from -C to +C</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39933"></span>9BFD</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="39935"></span>9BFF</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="39936"></span>9C00</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = the range</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39937"></span>9C01</td>
+<td class="instruction">SLA A</td>
+<td class="comment-1" rowspan="2">B = twice the range...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39939"></span>9C03</td>
+<td class="instruction">JR NC,$9C07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39941"></span>9C05</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">...capped at 255</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39943"></span>9C07</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39944"></span>9C08</td>
+<td class="instruction">LD IX,$B602</td>
+<td class="comment-1" rowspan="4">Advance the 16-bit counter at $B602-$B603</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39948"></span>9C0C</td>
+<td class="instruction">INC (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39951"></span>9C0F</td>
+<td class="instruction">JR NZ,$9C14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39953"></span>9C11</td>
+<td class="instruction">INC (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39956"></span>9C14</td>
+<td class="instruction">LD IX,($B602)</td>
+<td class="comment-1" rowspan="1">IX = the counter, used as an ADDRESS: it points somewhere in memory</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39960"></span>9C18</td>
+<td class="instruction">LD A,($B5FE)</td>
+<td class="comment-1" rowspan="1">A = the seed...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39963"></span>9C1B</td>
+<td class="instruction">ADC A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">...plus the byte at that address...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39966"></span>9C1E</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">(move on by DE, whatever it happens to hold)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39968"></span>9C20</td>
+<td class="instruction">XOR (IX+$01)</td>
+<td class="comment-1" rowspan="3">...exclusive-ORed with the byte after</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39971"></span>9C23</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39972"></span>9C24</td>
+<td class="instruction">LD HL,$B5FE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39975"></span>9C27</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="2">The same as the previous random number?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39976"></span>9C28</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39977"></span>9C29</td>
+<td class="instruction">JR Z,$9C08</td>
+<td class="comment-1" rowspan="1">Yes: try again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39979"></span>9C2B</td>
+<td class="instruction">LD ($B5FE),A</td>
+<td class="comment-1" rowspan="1">Save it as the new seed</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39982"></span>9C2E</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="3">Is it within 0 to 2 x range?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39983"></span>9C2F</td>
+<td class="instruction">JR C,$9C38</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39985"></span>9C31</td>
+<td class="instruction">JR Z,$9C38</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39987"></span>9C33</td>
+<td class="instruction">SRL A</td>
+<td class="comment-1" rowspan="2">No: halve it and try again (this is what skews the results)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39989"></span>9C35</td>
+<td class="instruction">JP $9C2E</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39992"></span>9C38</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="4">Subtract the range to give -range to +range</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39993"></span>9C39</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39994"></span>9C3A</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39996"></span>9C3C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39924.html">9BF4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39933">Map</a></td>
+<td class="next">
+Next: <a href="39997.html">9C3D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

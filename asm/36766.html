@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8F9E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36703.html">8F5F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36766">Map</a></td>
+<td class="next">
+Next: <a href="36815.html">8FCF</a>
+</td>
+</tr>
+</table>
+<div class="description">8F9E: TALK TO and SAY TO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Hands the orders collected from a quotation (<a href="32973.html">80CD</a>) to the character being spoken to (<a href="34983.html">88A7</a>). Something that is not a character cannot take orders.
+</div>
+<div class="paragraph">
+Whether the character obeys depends on byte 6 of its entry in <a href="51642.html">C9BA</a>. A value of 0 means it always obeys. Otherwise a random number from 0 up to that value is picked (<a href="39924.html">9BF4</a>), and 0 means it says "no". Because of the way the random numbers are skewed (<a href="39933.html">9BFD</a>), the chance of a refusal goes DOWN as the value goes up: 1 gives a refusal half the time, 3 a quarter of the time, and 5 or 6 one time in eight. So the value is really a measure of willingness rather than stubbornness: the trolls, the wood elf and the butler (1) are the most contrary, Gollum and Bard (3) refuse one order in four, Gandalf, Elrond and Thorin (5 and 6) one in eight - and the goblins, the warg and the dragon (0) never refuse at all.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36766"></span>8F9E</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: talking always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36769"></span>8FA1</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">Is the person spoken to a character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36772"></span>8FA4</td>
+<td class="instruction">CALL <a href="39392.html">$99E0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36775"></span>8FA7</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36777"></span>8FA9</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1">(A = 0: no orders to hand over)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36779"></span>8FAB</td>
+<td class="instruction">JR Z,$8FC2</td>
+<td class="comment-1" rowspan="1">No: the orders are thrown away</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36781"></span>8FAD</td>
+<td class="instruction">LD A,($B5EA)</td>
+<td class="comment-1" rowspan="2">Is Gollum waiting for his answer?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36784"></span>8FB0</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36786"></span>8FB2</td>
+<td class="instruction">JR NZ,$8FC2</td>
+<td class="comment-1" rowspan="1">Yes: the words go to him, no refusal</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36788"></span>8FB4</td>
+<td class="instruction">LD A,(IY+$06)</td>
+<td class="comment-1" rowspan="2">A = the character's stubbornness</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36791"></span>8FB7</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36793"></span>8FB9</td>
+<td class="instruction">JR Z,$8FC2</td>
+<td class="comment-1" rowspan="1">0: always obeys</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36795"></span>8FBB</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+<td class="comment-1" rowspan="2">Otherwise pick a random number from 0 up to the stubbornness</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36798"></span>8FBE</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36800"></span>8FC0</td>
+<td class="instruction">JR Z,$8FC6</td>
+<td class="comment-1" rowspan="1">0: refuses</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36802"></span>8FC2</td>
+<td class="instruction">CALL <a href="34983.html">$88A7</a></td>
+<td class="comment-1" rowspan="2">Hand over the orders (A of them)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36805"></span>8FC5</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36806"></span>8FC6</td>
+<td class="instruction">LD HL,$B0D5</td>
+<td class="comment-1" rowspan="2">"&lt;character&gt; says "no"."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36809"></span>8FC9</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36812"></span>8FCC</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">No orders</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36813"></span>8FCD</td>
+<td class="instruction">JR $8FC2</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36703.html">8F5F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36766">Map</a></td>
+<td class="next">
+Next: <a href="36815.html">8FCF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

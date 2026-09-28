@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F81</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32623.html">7F6F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32641">Map</a></td>
+<td class="next">
+Next: <a href="32709.html">7FC5</a>
+</td>
+</tr>
+</table>
+<div class="description">7F81: Parser: give a frame the previous frame's verb</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Copies the verb from the frame at IX into the frame at IY (keeping IY's flag bits). This is how the verb is shared when AND joins objects: 'take the key and the sword' produces two TAKE frames.
+</div>
+<div class="paragraph">
+If the new frame has a second noun phrase, and bit 7 of E is set, the second noun phrase and the particle of the previous frame are copied too ($7FC9), so that 'put the key and the sword in the chest' puts both in the chest.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32641"></span>7F81</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch to the alternate registers for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32642"></span>7F82</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = the previous frame's own verb flags...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32645"></span>7F85</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-1" rowspan="1">...with the ALL bit (bit 7) stripped out, since that should not be copied along</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32647"></span>7F87</td>
+<td class="instruction">OR (IY+$01)</td>
+<td class="comment-1" rowspan="2">Combine that with whatever flags this frame already carries (such as its own EXCEPT bit)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32650"></span>7F8A</td>
+<td class="instruction">LD (IY+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32653"></span>7F8D</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="2">Copy the verb itself too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32656"></span>7F90</td>
+<td class="instruction">LD (IY+$00),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32659"></span>7F93</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Back to the ordinary registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32660"></span>7F94</td>
+<td class="instruction">LD A,(IY+$1C)</td>
+<td class="comment-1" rowspan="2">Does the new frame have a second noun phrase of its own?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32663"></span>7F97</td>
+<td class="instruction">OR (IY+$1D)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32666"></span>7F9A</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No noun there at all: nothing more to copy</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32667"></span>7F9B</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1">Is the "second phrase still empty" state flag set?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32669"></span>7F9D</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">It is not empty: leave it as it is</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32670"></span>7F9E</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch to the alternate registers again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32671"></span>7F9F</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">HL = the new frame's own address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32673"></span>7FA1</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32674"></span>7FA2</td>
+<td class="instruction">LD DE,$0012</td>
+<td class="comment-1" rowspan="2">Move on to its particle...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32677"></span>7FA5</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32678"></span>7FA6</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save that address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32679"></span>7FA7</td>
+<td class="instruction">LD DE,$FFF6</td>
+<td class="comment-1" rowspan="2">Move back instead to the PREVIOUS frame's own particle</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32682"></span>7FAA</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32683"></span>7FAB</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">DE = the new frame's particle address, HL = the previous frame's</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32684"></span>7FAC</td>
+<td class="instruction">LD BC,$0006</td>
+<td class="comment-1" rowspan="2">Copy 6 bytes: the particle, and the start of the noun that follows it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32687"></span>7FAF</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32689"></span>7FB1</td>
+<td class="instruction">LD DE,$0004</td>
+<td class="comment-1" rowspan="1">Offset to the second noun phrase</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32692"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="31936.html">7CC0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32692"></span>7FB4</td>
+<td class="instruction">CALL <a href="32709.html#32713">$7FC9</a></td>
+<td class="comment-1" rowspan="1">Copy that whole phrase too, from the previous frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32695"></span>7FB7</td>
+<td class="instruction">LD A,(IY+$02)</td>
+<td class="comment-1" rowspan="2">Does the new frame's OWN particle turn out to be still empty?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32698"></span>7FBA</td>
+<td class="instruction">OR (IY+$03)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32701"></span>7FBD</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="2">If so, copy just the particle word on its own as well</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32704"></span>7FC0</td>
+<td class="instruction">CALL Z,<a href="32709.html#32717">$7FCD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32707"></span>7FC3</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="2">Back to the ordinary registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32708"></span>7FC4</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32623.html">7F6F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32641">Map</a></td>
+<td class="next">
+Next: <a href="32709.html">7FC5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

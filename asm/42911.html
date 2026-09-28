@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A79F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42898.html">A792</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42911">Map</a></td>
+<td class="next">
+Next: <a href="42950.html">A7C6</a>
+</td>
+</tr>
+</table>
+<div class="description">A79F: Character routine: Bard remembers his orders</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Bard has been given an order (<a href="35079.html">8907</a>), it is checked and then written into Bard's own behaviour program: the action ($B5D7), target and instrument ($B5D9, $B5DA) are stored at $C8D2-$C8D4, and the first byte at $C8D1 is set to $42 (an action instruction that cannot be interrupted by orders). From then on Bard carries out that order every turn. So 'say to bard "shoot the dragon"' keeps him shooting until it works.
+</div>
+<div class="paragraph">
+SAVE and LOAD (<a href="33412.html">8284</a>, <a href="33289.html">8209</a>) preserve the three bytes at $C8D1-$C8D3, because the behaviour programs are not otherwise saved; the instrument at $C8D4 is not included.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42911"></span>A79F</td>
+<td class="instruction">LD A,($B5E5)</td>
+<td class="comment-1" rowspan="2">Has the player given Bard an order?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42914"></span>A7A2</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42916"></span>A7A4</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42917"></span>A7A5</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">It is dealt with now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42918"></span>A7A6</td>
+<td class="instruction">LD ($B5E5),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42921"></span>A7A9</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42922"></span>A7AA</td>
+<td class="instruction">CALL <a href="35079.html">$8907</a></td>
+<td class="comment-1" rowspan="1">Take the order and match it to an action and objects</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42925"></span>A7AD</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">It makes no sense: ignore it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42926"></span>A7AE</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Do not carry it out now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42927"></span>A7AF</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42930"></span>A7B2</td>
+<td class="instruction">LD A,($B5D7)</td>
+<td class="comment-1" rowspan="1">Write the action...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42933"></span>A7B5</td>
+<td class="instruction">LD ($C8D2),A</td>
+<td class="comment-1" rowspan="1">...into Bard's next instruction at $C8D1...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42936"></span>A7B8</td>
+<td class="instruction">LD BC,($B5D9)</td>
+<td class="comment-1" rowspan="2">...with its target and instrument...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42940"></span>A7BC</td>
+<td class="instruction">LD ($C8D3),BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42944"></span>A7C0</td>
+<td class="instruction">LD A,$42</td>
+<td class="comment-1" rowspan="2">...and make it an action instruction that orders cannot interrupt ($42)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42946"></span>A7C2</td>
+<td class="instruction">LD ($C8D1),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42949"></span>A7C5</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">From now on Bard repeats it every turn</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42898.html">A792</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42911">Map</a></td>
+<td class="next">
+Next: <a href="42950.html">A7C6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

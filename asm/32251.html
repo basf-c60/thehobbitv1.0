@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7DFB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32249.html">7DF9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32251">Map</a></td>
+<td class="next">
+Next: <a href="32346.html">7E5A</a>
+</td>
+</tr>
+</table>
+<div class="description">7DFB: Parser: a verb</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The entry at $7DFB (from <a href="32182.html">7DB6</a>) supplies the verb GO ($30 class) for a bare direction; the entry at $7DFD handles verbs typed by the player.
+</div>
+<div class="paragraph">
+If a verb arrives when a command has already been started and there has been no AND, the parser backtracks: the state saved by the last AND (<a href="32213.html">7DD5</a>) is restored and the AND is reinterpreted as THEN, splitting the line into two commands.
+</div>
+<div class="paragraph">
+Otherwise the verb must be allowed here (bit 1 of E). It is stored at offset 0 of the frame (<a href="32734.html">7FDE</a>). GO and RUN look ahead (from $7E31) past any adverbs: if the next word is a direction, the verb is dropped and the direction stored as the particle, so that 'go north' and 'north' produce the same frame.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32251"></span>7DFB</td>
+<td class="instruction">LD D,$30</td>
+<td class="comment-1" rowspan="1">Class of GO (for a bare direction)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32253"></span>7DFD</td>
+<td class="instruction">BIT 3,E</td>
+<td class="comment-1" rowspan="1">VERB: has there just been an AND?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32255"></span>7DFF</td>
+<td class="instruction">JR NZ,$7E1F</td>
+<td class="comment-1" rowspan="1">Yes: a new command after AND is fine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32257"></span>7E01</td>
+<td class="instruction">CALL <a href="31931.html">$7CBB</a></td>
+<td class="comment-1" rowspan="1">Inside a quotation?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32260"></span>7E04</td>
+<td class="instruction">JR NZ,$7E1F</td>
+<td class="comment-1" rowspan="1">Yes: accept it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32262"></span>7E06</td>
+<td class="instruction">LD HL,($7C3E)</td>
+<td class="comment-1" rowspan="2">A second verb without AND: backtrack to the last AND...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32265"></span>7E09</td>
+<td class="instruction">LD ($B5CD),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32268"></span>7E0C</td>
+<td class="instruction">LD D,$B0</td>
+<td class="comment-1" rowspan="1">...and treat it as THEN</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32270"></span>7E0E</td>
+<td class="instruction">LD A,($7C40)</td>
+<td class="comment-1" rowspan="5">Restore the state saved at the AND</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32273"></span>7E11</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32274"></span>7E12</td>
+<td class="instruction">LD A,($7C43)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32277"></span>7E15</td>
+<td class="instruction">LD ($B5F7),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32280"></span>7E18</td>
+<td class="instruction">LD IY,($7C41)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32284"></span>7E1C</td>
+<td class="instruction">JP <a href="31936.html#31940">$7CC4</a></td>
+<td class="comment-1" rowspan="1">Close the frame and start a new one</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32287"></span>7E1F</td>
+<td class="instruction">CALL <a href="32553.html">$7F29</a></td>
+<td class="comment-1" rowspan="1">A verb cancels ALL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32290"></span>7E22</td>
+<td class="instruction">BIT 1,E</td>
+<td class="comment-1" rowspan="1">Is a verb allowed here?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32292"></span>7E24</td>
+<td class="instruction">JP Z,<a href="32750.html#32755">$7FF3</a></td>
+<td class="comment-1" rowspan="1">No: syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32295"></span>7E27</td>
+<td class="instruction">BIT 0,E</td>
+<td class="comment-1" rowspan="1">Is this a GO followed by a direction?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32297"></span>7E29</td>
+<td class="instruction">JR Z,$7E31</td>
+<td class="comment-1" rowspan="1">No: look ahead</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32299"></span>7E2B</td>
+<td class="instruction">CALL <a href="32734.html">$7FDE</a></td>
+<td class="comment-1" rowspan="1">Store the verb in the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32302"></span>7E2E</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Next noun phrase</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32305"></span>7E31</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="8">Look ahead past any adverbs...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32306"></span>7E32</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32307"></span>7E33</td>
+<td class="instruction">LD HL,($B5CD)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32310"></span>7E36</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32311"></span>7E37</td>
+<td class="instruction">CALL <a href="32573.html">$7F3D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32314"></span>7E3A</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32316"></span>7E3C</td>
+<td class="instruction">JR Z,$7E37</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32318"></span>7E3E</td>
+<td class="instruction">SET 0,E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32320"></span>7E40</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">...is the next word a direction?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32322"></span>7E42</td>
+<td class="instruction">JR Z,$7E4C</td>
+<td class="comment-1" rowspan="1">Yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32324"></span>7E44</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="5">No: rewind and store the verb normally</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32325"></span>7E45</td>
+<td class="instruction">LD ($B5CD),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32328"></span>7E48</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32329"></span>7E49</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32330"></span>7E4A</td>
+<td class="instruction">JR $7E2B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32332"></span>7E4C</td>
+<td class="instruction">CALL <a href="32734.html">$7FDE</a></td>
+<td class="comment-1" rowspan="4">Store GO as the verb...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32335"></span>7E4F</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32336"></span>7E50</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32337"></span>7E51</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32338"></span>7E52</td>
+<td class="instruction">LD L,$02</td>
+<td class="comment-1" rowspan="2">...and the direction at offset 2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32340"></span>7E54</td>
+<td class="instruction">CALL <a href="32734.html#32738">$7FE2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="32343"></span>7E57</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Next noun phrase</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32249.html">7DF9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32251">Map</a></td>
+<td class="next">
+Next: <a href="32346.html">7E5A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

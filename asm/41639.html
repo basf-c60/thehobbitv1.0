@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A2A7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41624.html">A298</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41639">Map</a></td>
+<td class="next">
+Next: <a href="41664.html">A2C0</a>
+</td>
+</tr>
+</table>
+<div class="description">A2A7: Handler for the spider web: it has been broken</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Chained after the spider web's handler for breaking it (the web is object 7). If the web really is broken now (bit 3 of its flags), it is opened (bit 5), so the way through is clear, and timer 1 is started (count 2): 'some spiders start mending the broken web.' Two turns later <a href="43344.html">A950</a> closes it again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41639"></span>A2A7</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the web's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41643"></span>A2AB</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it broken?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41647"></span>A2AF</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41648"></span>A2B0</td>
+<td class="instruction">SET 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Yes: it no longer blocks the way</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41652"></span>A2B4</td>
+<td class="instruction">LD A,($C97A)</td>
+<td class="comment-1" rowspan="2">Start timer 1 (count 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41655"></span>A2B7</td>
+<td class="instruction">LD ($C97B),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41658"></span>A2BA</td>
+<td class="instruction">LD HL,$AF8B</td>
+<td class="comment-1" rowspan="2">"some spiders start mending the broken web."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41661"></span>A2BD</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41624.html">A298</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41639">Map</a></td>
+<td class="next">
+Next: <a href="41664.html">A2C0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

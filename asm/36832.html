@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8FE0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36815.html">8FCF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36832">Map</a></td>
+<td class="next">
+Next: <a href="36924.html">903C</a>
+</td>
+</tr>
+</table>
+<div class="description">8FE0: SHOOT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The shooter must be carrying the bow (object 25): otherwise 'you are not carrying the bow.' Then, if it would work, it is treated as an attack.
+</div>
+<div class="paragraph">
+Anyone except Bard: the dragon cannot be hit at all ('the arrow misses the dragon by a wide margin'), and anyone else is missed if a random number from 0 to 8 (<a href="39924.html">9BF4</a>) is below 3.
+</div>
+<div class="paragraph">
+Bard (object 70) never misses. On a hit the arrow (object 26) is left lying where it fell, 'the arrow hits X.', and a living target is killed outright (<a href="38621.html">96DD</a>); anything else is broken (<a href="37463.html">9257</a>).
+</div>
+<div class="paragraph">
+So the only way to kill the dragon is to get Bard to shoot it - which is what the HELP message in the lower halls means by 'look to bard'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36832"></span>8FE0</td>
+<td class="instruction">LD A,$19</td>
+<td class="comment-1" rowspan="2">Is the actor holding the bow (object 25)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36834"></span>8FE2</td>
+<td class="instruction">CALL <a href="39885.html#39888">$9BD0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36837"></span>8FE5</td>
+<td class="instruction">LD HL,$B013</td>
+<td class="comment-1" rowspan="1">"you are not carrying the bow."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36840"></span>8FE8</td>
+<td class="instruction">JP NC,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If not, say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36843"></span>8FEB</td>
+<td class="instruction">CALL <a href="37044.html">$90B4</a></td>
+<td class="comment-1" rowspan="1">Check the target is something that can be attacked at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36846"></span>8FEE</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36849"></span>8FF1</td>
+<td class="instruction">LD A,$0F</td>
+<td class="comment-1" rowspan="2">Treat this as an ordinary attack from now on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36851"></span>8FF3</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36854"></span>8FF6</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bard himself?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36857"></span>8FF9</td>
+<td class="instruction">CP $46</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36859"></span>8FFB</td>
+<td class="instruction">JR Z,$9012</td>
+<td class="comment-1" rowspan="1">Yes: Bard never misses - skip the ordinary chance-to-miss below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36861"></span>8FFD</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">No: is the target the dragon?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36864"></span>9000</td>
+<td class="instruction">CP $3C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36866"></span>9002</td>
+<td class="instruction">LD HL,$B019</td>
+<td class="comment-1" rowspan="1">"the arrow misses the dragon by a wide margin."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36869"></span>9005</td>
+<td class="instruction">JP Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Against the dragon, anyone but Bard always misses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36872"></span>9008</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="2">Anyone else: pick a random number from 0 to 8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36874"></span>900A</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36877"></span>900D</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1">Below 3?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36879"></span>900F</td>
+<td class="instruction">JP C,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Yes: the shot misses (HL still holds the "misses" message)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36882"></span>9012</td>
+<td class="instruction">LD IX,$C3D9</td>
+<td class="comment-1" rowspan="1">IX = the arrow's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36886"></span>9016</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">Is the target the strong arrow itself (an odd edge case)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36889"></span>9019</td>
+<td class="instruction">CP $1A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36891"></span>901B</td>
+<td class="instruction">JR Z,$9021</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36893"></span>901D</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">Otherwise the arrow falls to the ground, held by nobody</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36897"></span>9021</td>
+<td class="instruction">LD HL,$B028</td>
+<td class="comment-1" rowspan="2">"the arrow hits X."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36900"></span>9024</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36903"></span>9027</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36907"></span>902B</td>
+<td class="instruction">CALL <a href="41208.html">$A0F8</a></td>
+<td class="comment-1" rowspan="1">Is the target actually alive?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36910"></span>902E</td>
+<td class="instruction">JP NZ,<a href="37463.html">$9257</a></td>
+<td class="comment-1" rowspan="1">No: break it instead (STRIKE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36913"></span>9031</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Yes: kill it outright</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36916"></span>9034</td>
+<td class="instruction">CALL <a href="38621.html">$96DD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36919"></span>9037</td>
+<td class="instruction">LD A,$06</td>
+<td class="comment-1" rowspan="1">A = the state code for DEAD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36921"></span>9039</td>
+<td class="instruction">JP <a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">"the X is dead."</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36815.html">8FCF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36832">Map</a></td>
+<td class="next">
+Next: <a href="36924.html">903C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

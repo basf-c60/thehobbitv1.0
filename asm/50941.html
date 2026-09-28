@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C6FD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50923.html">C6EB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50941">Map</a></td>
+<td class="next">
+Next: <a href="50972.html">C71C</a>
+</td>
+</tr>
+</table>
+<div class="description">C6FD: Hidden routes</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Six bytes per entry, one chosen at random by <a href="38667.html">970B</a>: the room, the address of an exit in that room's record, and the three bytes of the exit (direction, door, destination), which are blanked out at the start of the game and restored when Elrond reads the map (<a href="42680.html">A6B8</a>). Terminated by $FF. The code counts entries from $C6F7, six bytes earlier, so the first entry here is number 1.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50941"></span>C6FD</td>
+<td class="instruction">DEFB $16,$02,$BC,$01,$00,$31</td>
+<td class="comment-1" rowspan="1">Beorn's house: north to the great river</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50947"></span>C703</td>
+<td class="instruction">DEFB $18,$16,$BC,$03,$00,$19</td>
+<td class="comment-1" rowspan="1">Forest gate: east to the bewitched gloomy place</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50953"></span>C709</td>
+<td class="instruction">DEFB $15,$E8,$BB,$04,$00,$14</td>
+<td class="comment-1" rowspan="1">Treeless opening: west to the goblins' outside gate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50959"></span>C70F</td>
+<td class="instruction">DEFB $22,$D2,$BC,$03,$00,$23</td>
+<td class="comment-1" rowspan="1">Long lake: east to lake town</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50965"></span>C715</td>
+<td class="instruction">DEFB $0A,$FA,$B9,$03,$00,$0B</td>
+<td class="comment-1" rowspan="1">Misty mountain: east to the narrow place</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50971"></span>C71B</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End marker</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50923.html">C6EB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50941">Map</a></td>
+<td class="next">
+Next: <a href="50972.html">C71C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

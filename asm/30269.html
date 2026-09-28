@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 763D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30208.html">7600</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30269">Map</a></td>
+<td class="next">
+Next: <a href="30317.html">766D</a>
+</td>
+</tr>
+</table>
+<div class="description">763D: Scroll the input window down</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The reverse of <a href="30208.html">7600</a>: moves the lower window's rows down by one character row, working from the bottom. Used when a backspace goes back past the start of a line of typing (<a href="30125.html">75AD</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30269"></span>763D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="4">Save the registers this uses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30270"></span>763E</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30271"></span>763F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30272"></span>7640</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30273"></span>7641</td>
+<td class="instruction">LD HL,$50C0</td>
+<td class="comment-1" rowspan="1">HL = the third character row of the input window...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30276"></span>7644</td>
+<td class="instruction">LD DE,$50E0</td>
+<td class="comment-1" rowspan="1">...DE = the fourth, where it is moving to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30279"></span>7647</td>
+<td class="instruction">LD A,$05</td>
+<td class="comment-1" rowspan="1">Five pixel-line moves are needed to shift everything down one row</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30281"></span>7649</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Save the row addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30282"></span>764A</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30283"></span>764B</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="1">Eight pixel lines per character row</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30285"></span>764D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Save this pixel line's addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30286"></span>764E</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30287"></span>764F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30288"></span>7650</td>
+<td class="instruction">LD BC,$0020</td>
+<td class="comment-1" rowspan="1">32 bytes per pixel line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30291"></span>7653</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy it down</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30293"></span>7655</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore the counters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30294"></span>7656</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30295"></span>7657</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30296"></span>7658</td>
+<td class="instruction">INC H</td>
+<td class="comment-1" rowspan="2">Move down to the next pixel line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30297"></span>7659</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30298"></span>765A</td>
+<td class="instruction">DJNZ $764D</td>
+<td class="comment-1" rowspan="1">One fewer pixel line to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30300"></span>765C</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the row addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30301"></span>765D</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30302"></span>765E</td>
+<td class="instruction">LD BC,$FFE0</td>
+<td class="comment-1" rowspan="5">Move both addresses BACK one character row instead (a negative step)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30305"></span>7661</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30306"></span>7662</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30307"></span>7663</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30308"></span>7664</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30309"></span>7665</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">One fewer character row to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30310"></span>7666</td>
+<td class="instruction">JR NZ,$7649</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30312"></span>7668</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="5">Restore the saved registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30313"></span>7669</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30314"></span>766A</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30315"></span>766B</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30316"></span>766C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30208.html">7600</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30269">Map</a></td>
+<td class="next">
+Next: <a href="30317.html">766D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

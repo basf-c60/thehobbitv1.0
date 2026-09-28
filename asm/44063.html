@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at AC1F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43591.html">AA47</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#44063">Map</a></td>
+<td class="next">
+Next: <a href="44081.html">AC31</a>
+</td>
+</tr>
+</table>
+<div class="description">AC1F: Articles</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<a href="29750.html">7436</a> uses these to put an article in front of a noun. The first two bytes are unused. At $AC21: THE, A, AN, SOME (chosen by flag bits in the noun's reference); at $AC29: THE, THE, THE, SOME (used when a definite article is wanted).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44063"></span>AC1F</td>
+<td class="instruction">DEFB $00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="44065"></span>AC21</td>
+<td class="instruction">DEFW $06A3</td>
+<td class="comment-1" rowspan="4">THE, A, AN, SOME</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44067"></span>AC23</td>
+<td class="instruction">DEFW $0040</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44069"></span>AC25</td>
+<td class="instruction">DEFW $0058</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44071"></span>AC27</td>
+<td class="instruction">DEFW $0607</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44073"></span>AC29</td>
+<td class="instruction">DEFW $06A3</td>
+<td class="comment-1" rowspan="4">THE, THE, THE, SOME</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44075"></span>AC2B</td>
+<td class="instruction">DEFW $06A3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44077"></span>AC2D</td>
+<td class="instruction">DEFW $06A3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44079"></span>AC2F</td>
+<td class="instruction">DEFW $0607</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43591.html">AA47</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#44063">Map</a></td>
+<td class="next">
+Next: <a href="44081.html">AC31</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

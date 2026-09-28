@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9DC8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40338.html">9D92</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40392">Map</a></td>
+<td class="next">
+Next: <a href="40414.html">9DDE</a>
+</td>
+</tr>
+</table>
+<div class="description">9DC8: Find the outermost holder</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Follows the chain of holders of the object at IX upwards, as long as each holder is open (bit 5) or dead (bit 3): you can see into an open box or a dead character's pockets. Returns $FF if the chain ends with the object (or an open container holding it) loose in a room, and 0 if it ends at a closed container or a living character.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40392"></span>9DC8</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-2"><span id="40394"></span>9DCA</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = the holder</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40397"></span>9DCD</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Nobody?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40399"></span>9DCF</td>
+<td class="instruction">JR Z,$9DDB</td>
+<td class="comment-1" rowspan="1">Then the object is loose: return $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40401"></span>9DD1</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the holder's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40404"></span>9DD4</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="2">Is the holder open or dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40407"></span>9DD7</td>
+<td class="instruction">AND $28</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40409"></span>9DD9</td>
+<td class="instruction">JR NZ,$9DCA</td>
+<td class="comment-1" rowspan="1">Yes: see through it and look at its holder</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40411"></span>9DDB</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">No: return 0 (shut in)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40413"></span>9DDD</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40338.html">9D92</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40392">Map</a></td>
+<td class="next">
+Next: <a href="40414.html">9DDE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

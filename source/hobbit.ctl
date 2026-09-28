@@ -2642,7 +2642,8 @@ D $81A7 Prints the score (#R$81AD) and carries on parsing (#R$806B).
 C $81A7 Print the score
 C $81AA Carry on parsing
 c $81AD Print the score
-D $81AD Prints 'you have mastered xx.x% of this adventure.' The score is kept at $B5E8 in tenths of a percent (so 1000 would be 100.0%). The hundreds and tens are printed with #R$81E6 (a leading zero in the hundreds is suppressed), then a decimal point and the tenths digit.
+D $81AD Prints 'you have mastered xx.x% of this adventure.' The score is kept at $B5E8 in tenths of a percent. The hundreds and tens are printed with #R$81E6 (a leading zero in the hundreds is suppressed), then a decimal point and the tenths digit.
+D $81AD The hundreds-digit routine only ever prints a single character ('0' plus the digit), so a score of 1000 or more would print a stray ':' rather than '10' - I checked this in the emulator by poking the score directly. It cannot happen in an ordinary game, though: the highest score obtainable is 750, or 75.0% (#R$8CEA), safely below the point where this would show.
 C $81AD Save HL and DE
 C $81AF Print in the lower window
 C $81B3 "you have mastered "
@@ -2971,7 +2972,8 @@ C $860E Work out which of its noun phrases is the target and which the instrumen
 C $8611 Make A non-zero...
 C $8613 ...telling the caller a matching action was found
 c $8614 Assign the noun phrases to target and instrument
-D $8614 Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's flags. So 'hit thorin with the sword' and 'with the sword hit thorin' both work. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase actually has a noun.
+D $8614 Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase actually has a noun.
+D $8614 I originally described this as also making 'with the sword hit thorin' work alongside 'hit thorin with the sword'. Testing it in the emulator shows that is not so: putting the prepositional phrase before the plain noun - 'with sword hit thorin', 'hit with sword thorin', 'with large key unlock heavy door' - always fails, usually with a nonsensical result such as 'you cannot attack the short strong sword.' (the sword having been read as the target). Only the ordinary phrasing works reliably. What the crossing test in #R$8614 is actually for is not fully confirmed; it may cover cases within the two fixed phrase slots that ordinary play does not exercise, such as an action whose own table entry could match the two collected prepositions either way round.
 C $8614 Did #R$71EA find the two words in the natural order (A=0) or crossed over (A=1)?
 C $8615 Natural order: nothing to undo
 C $8617 Crossed over: swap the two prepositions collected by #R$858F...
@@ -5858,16 +5860,16 @@ C $A4D4 No: say nothing
 C $A4D5 "the vicious warg runs around you and howls."
 C $A4D8 Say it
 c $A4DB Handler for the trap door: the barrel escape
-D $A4DB When the large trap door is opened and the barrel (object 19) is the target and is in room 33, timer 0 (#R$C973) is set to 2. Two turns later #R$A4F4 floats the barrel away.
-C $A4DB Is the target the barrel (object 19)?
+D $A4DB Chained after the trap door's own THROW THROUGH handler (action 44, #R$9404), not after OPEN as I first assumed - it is throwing the barrel through the door, not merely opening the door, that starts the escape. If the object just thrown through is the barrel (object 19) and it has landed in room 33 (the forest river below the cellar), timer 0 (#R$C973) is set to 2. Two turns later #R$A4F4 floats the barrel away.
+C $A4DB Is the object just thrown through the door the barrel (object 19)?
 C $A4E0 No: this handler does nothing
-C $A4E1 Only if this is really happening (opening the trap door)
+C $A4E1 Only if this is really happening (chained after the trap door's own THROW THROUGH, #R$9404, which has already moved the barrel)
 C $A4E4 IX = the barrel's own record
-C $A4E8 Is it in room 33 (the cellar)?
+C $A4E8 Did it land in room 33, the forest river below?
 C $A4ED No: nothing happens
 C $A4EE Yes: start timer 0 with a count of 2
 c $A4F4 Timer 0: the barrel floats down the river
-D $A4F4 The expiry routine of timer 0, two turns after the trap door is opened with the barrel in the cellar (#R$A4DB). If Bilbo is in the barrel he reads 'you are thrown onto the bank of the long lake.' Everything in the barrel is moved to room 34 on the long lake (#R$9B38) and tipped out there (#R$9CA8), silently. The barrel itself goes back to the cellar (room 32), closed and full, and the wine (object 20) is put back in it. This is the book's escape from the Elvenking's halls, and the game resets it so the barrel is ready again.
+D $A4F4 The expiry routine of timer 0, two turns after the barrel is thrown through the trap door into the forest river below the cellar (#R$A4DB). If Bilbo is in the barrel he reads 'you are thrown onto the bank of the long lake.' Everything in the barrel is moved to room 34 on the long lake (#R$9B38) and tipped out there (#R$9CA8), silently. The barrel itself goes back to the cellar (room 32), closed and full, and the wine (object 20) is put back in it. This is the book's escape from the Elvenking's halls, and the game resets it so the barrel is ready again.
 C $A4F4 Let other timers expire this turn too
 C $A4F8 Is Bilbo in the barrel (object 19)?
 C $A4FD "you are thrown onto the bank of the long lake."
@@ -5955,12 +5957,13 @@ C $A5F3 Below 80?
 C $A5F5 Yes: the dragon is just a shape in the distance
 C $A5F7 Otherwise: "the dragon descends and in a terrific spout of flames burns you to a crisp."
 C $A5FD Bilbo is dead
-c $A600 Handler for the wooden boat
-D $A600 Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes it by clearing its three bytes.
-C $A600 Find the exit that passes through the boat
+c $A600 Unused routine
+D $A600 Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes its three bytes, presumably meaning to seal up a way through once something (perhaps the boat) is no longer there to use. But nothing in the game calls it: it is not wired into any object's handler list, any room-entry handler, or any timer, and no other routine calls or jumps to it. Like #R$A0DE, it appears to be leftover or abandoned code.
+C $A600 Find the exit that passes through the target (presumably meant to be the boat)
 C $A603 Is there no such exit?
 C $A605 If so, there is nothing to do
-C $A606 Clear the exit's three bytes - the way through the boat is removed
+C $A606 Clear the exit's three bytes - sealing up the way, presumably once the boat is no longer there
+C $A613 (This routine is never actually called by anything in the game - see the note above)
 c $A614 Handler for the magic door
 D $A614 When the magic door is examined: if the actor can see it clearly (bit 7 of its flags), 'you see nothing special'. Otherwise timer 5 is started (by copying its reload value) and 'the magic door warns of elves approaching.'
 C $A614 Dry run? Then stop here: it would work
@@ -7078,7 +7081,7 @@ N $C92A Behaviour program for the trolls.
 b $C973 Turn timers
 D $C973 Ten 7-byte entries processed at the end of every turn by #R$9611, terminated by $FF. Each entry is: a reload value (copied into the count to start the timer), the count (0 = not running), the address of an 'expire' routine (run when the count reaches 0), a threshold, and the address of a 'tick' routine (run on each turn that the count is between 1 and the threshold; 0 = none). Only one timer may expire per turn.
 D $C973 Every timer gives a delayed consequence to something the player did:
-D $C973 #TABLE(default) { =h Timer | =h Started by | =h Runs for | =h What happens } { 0 | opening the trap door with the barrel in the cellar (#R$A4DB) | 2 turns | the barrel floats off to the long lake with whatever is in it (#R$A4F4) } { 1 | breaking the spider web (#R$A2A7) | 2 turns | 'some spiders start mending the broken web'; the web is whole again and twice as strong (#R$A950) } { 2 | entering the place of black spiders, room 26 (#R$C6A1) | the turn of arrival and 3 more | if Bilbo is still there, 'the spider web is slowly smothering you' and he dies (#R$AA04) } { 3 | opening the goblins' door from the goblins' big cavern (#R$A3E7) | 2 turns | the door closes by itself (#R$A400) } { 4 | entering the deep bog, room 29 (#R$C6A8) | 1 turn | 'you are slowly sinking into the bog', and Bilbo dies (#R$A69E) } { 5 | examining the magic door while invisible (#R$A614) | 4 turns | the door opens, 'an elf sweeps past', the ring comes off (#R$A9A7); next turn the door closes (#R$A9C9) } { 6 | putting the ring on (#R$A2C0) | 2-10 turns, random | the ring comes off by itself (#R$A9D4) } { 7 | drinking the wine (#R$A9ED) | 5 turns | Bilbo sobers up (#R$A9FF) } { 8 | entering the forest road or forest, rooms 2 and 3 (#R$C6CC) | 4 turns | the pale bulbous eyes (#R$AA13, #R$AA2E) } { 9 | entering the Elvenking's cellar (#R$C6AF), and closing the side door (#R$A996) | repeats every 5 turns | the side door of the Lonely Mountain appears for a turn and vanishes again (#R$A985, #R$A968) } TABLE#
+D $C973 #TABLE(default) { =h Timer | =h Started by | =h Runs for | =h What happens } { 0 | the barrel is thrown through the trap door into the forest river (#R$A4DB) | 2 turns | the barrel floats off to the long lake with whatever is in it (#R$A4F4) } { 1 | breaking the spider web (#R$A2A7) | 2 turns | 'some spiders start mending the broken web'; the web is whole again and twice as strong (#R$A950) } { 2 | entering the place of black spiders, room 26 (#R$C6A1) | the turn of arrival and 3 more | if Bilbo is still there, 'the spider web is slowly smothering you' and he dies (#R$AA04) } { 3 | opening the goblins' door from the goblins' big cavern (#R$A3E7) | 2 turns | the door closes by itself (#R$A400) } { 4 | entering the deep bog, room 29 (#R$C6A8) | 1 turn | 'you are slowly sinking into the bog', and Bilbo dies (#R$A69E) } { 5 | examining the magic door while invisible (#R$A614) | 4 turns | the door opens, 'an elf sweeps past', the ring comes off (#R$A9A7); next turn the door closes (#R$A9C9) } { 6 | putting the ring on (#R$A2C0) | 2-10 turns, random | the ring comes off by itself (#R$A9D4) } { 7 | drinking the wine (#R$A9ED) | 5 turns | Bilbo sobers up (#R$A9FF) } { 8 | entering the forest road or forest, rooms 2 and 3 (#R$C6CC) | 4 turns | the pale bulbous eyes (#R$AA13, #R$AA2E) } { 9 | entering the Elvenking's cellar (#R$C6AF), and closing the side door (#R$A996) | repeats every 5 turns | the side door of the Lonely Mountain appears for a turn and vanishes again (#R$A985, #R$A968) } TABLE#
 B $C973,7,7 Timer 0: the barrel floats away
 B $C97A,7,7 Timer 1: the spiders mend their web
 B $C981,7,7 Timer 2: smothered in the spiders' place

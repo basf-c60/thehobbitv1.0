@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A631</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42516.html">A614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42545">Map</a></td>
+<td class="next">
+Next: <a href="42581.html">A655</a>
+</td>
+</tr>
+</table>
+<div class="description">A631: Handler for Thorin: the small curious key shatters</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Attached to Thorin's record. When Thorin is dead (bit 3 of his flags at $C2A8), the small curious key (record at $C091) is marked broken (<a href="41148.html">A0BC</a>) and, if Bilbo can see it, 'the small curious key shatters.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42545"></span>A631</td>
+<td class="instruction">LD HL,$C2A8</td>
+<td class="comment-1" rowspan="1">HL = Thorin's own flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42548"></span>A634</td>
+<td class="instruction">BIT 3,(HL)</td>
+<td class="comment-1" rowspan="1">Is he dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42550"></span>A636</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42551"></span>A637</td>
+<td class="instruction">CALL <a href="38749.html">$975D</a></td>
+<td class="comment-1" rowspan="1">Only if this is really happening</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42554"></span>A63A</td>
+<td class="instruction">LD IX,$C09D</td>
+<td class="comment-1" rowspan="1">IX = the small curious key's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42558"></span>A63E</td>
+<td class="instruction">SET 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Mark it broken</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42562"></span>A642</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="2">Remove its second adjective, leaving just BROKEN</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42564"></span>A644</td>
+<td class="instruction">CALL <a href="41148.html">$A0BC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42567"></span>A647</td>
+<td class="instruction">LD IY,$C00B</td>
+<td class="comment-1" rowspan="2">Can Bilbo actually see the key (is it near enough)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42571"></span>A64B</td>
+<td class="instruction">CALL <a href="40311.html">$9D77</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42574"></span>A64E</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42575"></span>A64F</td>
+<td class="instruction">LD HL,$AFFB</td>
+<td class="comment-1" rowspan="2">"the small curious key shatters."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42578"></span>A652</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42516.html">A614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42545">Map</a></td>
+<td class="next">
+Next: <a href="42581.html">A655</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

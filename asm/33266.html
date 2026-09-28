@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 81F2</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33254.html">81E6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33266">Map</a></td>
+<td class="next">
+Next: <a href="33289.html">8209</a>
+</td>
+</tr>
+</table>
+<div class="description">81F2: PAUSE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Turns the border green, waits for a key to be pressed and released (<a href="33393.html">8271</a>), and turns the border white again. The game is frozen in the meantime: no timers run and no characters act.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33266"></span>81F2</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">Green border</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33268"></span>81F4</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33270"></span>81F6</td>
+<td class="instruction">CALL <a href="33393.html">$8271</a></td>
+<td class="comment-1" rowspan="1">Wait for a key to be pressed, then released</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33273"></span>81F9</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Wait here until a key really is pressed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33274"></span>81FA</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33276"></span>81FC</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33278"></span>81FE</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33280"></span>8200</td>
+<td class="instruction">JR NZ,$81F9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33282"></span>8202</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">White border again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33284"></span>8204</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33286"></span>8206</td>
+<td class="instruction">JP <a href="32875.html">$806B</a></td>
+<td class="comment-1" rowspan="1">Carry on parsing</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33254.html">81E6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33266">Map</a></td>
+<td class="next">
+Next: <a href="33289.html">8209</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

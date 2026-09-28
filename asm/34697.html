@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8789</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34689.html">8781</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34697">Map</a></td>
+<td class="next">
+Next: <a href="34733.html">87AD</a>
+</td>
+</tr>
+</table>
+<div class="description">8789: Decide about the instrument</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The instrument's counterpart of <a href="34733.html">87AD</a>, using the flags at $832F: no noun given goes to <a href="34878.html">883E</a> ('unlock the door with what?'), a noun that matched nothing widens the search as for the target, and if exactly one instrument would work the action is simply carried out.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34697"></span>8789</td>
+<td class="instruction">LD HL,$832F</td>
+<td class="comment-1" rowspan="2">Was any noun at all given for the instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34700"></span>878C</td>
+<td class="instruction">BIT 0,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34702"></span>878E</td>
+<td class="instruction">JP Z,<a href="34878.html">$883E</a></td>
+<td class="comment-1" rowspan="1">No: go and ask "with what?" or say there was nothing suitable</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34705"></span>8791</td>
+<td class="instruction">BIT 1,(HL)</td>
+<td class="comment-1" rowspan="4">Are we still in the middle of searching (rather than already knowing the answer)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34707"></span>8793</td>
+<td class="instruction">LD HL,$8339</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34710"></span>8796</td>
+<td class="instruction">LD DE,$B5DA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34713"></span>8799</td>
+<td class="instruction">LD BC,$B5F0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34716"></span>879C</td>
+<td class="instruction">JR Z,<a href="34733.html#34799">$87EF</a></td>
+<td class="comment-1" rowspan="1">Not searching yet: go and search properly, exactly as for the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34718"></span>879E</td>
+<td class="instruction">LD A,($8332)</td>
+<td class="comment-1" rowspan="2">Already searched: did EXACTLY one instrument candidate work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34721"></span>87A1</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34722"></span>87A2</td>
+<td class="instruction">JP Z,<a href="34733.html#34790">$87E6</a></td>
+<td class="comment-1" rowspan="1">None worked at all: let the action's own handler explain why</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34725"></span>87A5</td>
+<td class="instruction">LD A,($8346)</td>
+<td class="comment-1" rowspan="1">(the frame offset, though not needed again here)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34728"></span>87A8</td>
+<td class="instruction">LD A,($8339)</td>
+<td class="comment-1" rowspan="1">A = the instrument's own noun word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34731"></span>87AB</td>
+<td class="instruction">JR <a href="34676.html#34682">$877A</a></td>
+<td class="comment-1" rowspan="1">More than one worked: ask "which one?"</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34689.html">8781</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34697">Map</a></td>
+<td class="next">
+Next: <a href="34733.html">87AD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

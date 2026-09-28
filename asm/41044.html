@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A054</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40952.html">9FF8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41044">Map</a></td>
+<td class="next">
+Next: <a href="41064.html">A068</a>
+</td>
+</tr>
+</table>
+<div class="description">A054: Find the next visible exit</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Steps IX to the next exit that has a direction and no door. Returns with Z set at the end of the exits.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41044"></span>A054</td>
+<td class="instruction">ADD IX,BC</td>
+<td class="comment-1" rowspan="1">Move on to the next exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41046"></span>A056</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">Have we reached the end of the exits?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41048"></span>A058</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41051"></span>A05B</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41052"></span>A05C</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Does this exit have a door?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41053"></span>A05D</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41056"></span>A060</td>
+<td class="instruction">JR NZ,$A054</td>
+<td class="comment-1" rowspan="1">It does: it is not a "visible" exit in the sense wanted here, so skip it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41058"></span>A062</td>
+<td class="instruction">CP (IX+$00)</td>
+<td class="comment-1" rowspan="1">Does it even have a direction at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41061"></span>A065</td>
+<td class="instruction">JR Z,$A054</td>
+<td class="comment-1" rowspan="1">No direction (an unused slot): skip that too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41063"></span>A067</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Found a plain, doorless exit</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40952.html">9FF8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41044">Map</a></td>
+<td class="next">
+Next: <a href="41064.html">A068</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

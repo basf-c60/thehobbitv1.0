@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9A9F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39537.html">9A71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39583">Map</a></td>
+<td class="next">
+Next: <a href="39623.html">9AC7</a>
+</td>
+</tr>
+</table>
+<div class="description">9A9F: Is the action sensible?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z set if the action cannot make sense: the target is the actor, or the instrument is the target, or the instrument is the actor. A missing target ($FF) is always fine.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if the objects are not sensible</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39583"></span>9A9F</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">Is there actually no target at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39586"></span>9AA2</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39587"></span>9AA3</td>
+<td class="instruction">JR NZ,$9AA7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39589"></span>9AA5</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">If so, that always makes sense: A becomes non-zero (Z reset)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39590"></span>9AA6</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39591"></span>9AA7</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="2">Is the target actually a room (rather than an object)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39594"></span>9AAA</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39595"></span>9AAB</td>
+<td class="instruction">JR NZ,$9ABA</td>
+<td class="comment-1" rowspan="1">Yes: a room can never be "the same as the actor", so skip that check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39597"></span>9AAD</td>
+<td class="instruction">LD HL,$B5D9</td>
+<td class="comment-1" rowspan="3">No: is the target the same as the actor?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39600"></span>9AB0</td>
+<td class="instruction">LD A,($B5DB)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39603"></span>9AB3</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39604"></span>9AB4</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: that makes no sense (Z set)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39605"></span>9AB5</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Is the instrument the same as the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39608"></span>9AB8</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39609"></span>9AB9</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: that makes no sense either</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39610"></span>9ABA</td>
+<td class="instruction">LD A,($B5F0)</td>
+<td class="comment-1" rowspan="2">Is the instrument actually a room too?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39613"></span>9ABD</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39614"></span>9ABE</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: skip the last check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39615"></span>9ABF</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="3">No: is the instrument the same as the actor?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39618"></span>9AC2</td>
+<td class="instruction">LD HL,$B5DB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39621"></span>9AC5</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39622"></span>9AC6</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z set means it is, and so makes no sense</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39537.html">9A71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39583">Map</a></td>
+<td class="next">
+Next: <a href="39623.html">9AC7</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

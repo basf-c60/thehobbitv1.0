@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8492</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33892.html">8464</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33938">Map</a></td>
+<td class="next">
+Next: <a href="33963.html">84AB</a>
+</td>
+</tr>
+</table>
+<div class="description">8492: Start the search for targets</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets up the table (objects or rooms) in which the target will be searched for (<a href="33981.html">84BD</a>), according to bits 2-3 of $B60E, and saves the starting position in $833F. Does nothing when repeating an ALL command.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33938"></span>8492</td>
+<td class="instruction">LD A,($B60C)</td>
+<td class="comment-1" rowspan="2">Is an ALL command already partway through its list of objects?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33941"></span>8495</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33942"></span>8496</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: do not restart the search - carry straight on from where it was</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33943"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34022.html">84E6</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33943"></span>8497</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="1">A = the action's second set of flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33946"></span>849A</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="2">Shift its "which table" bits down...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33947"></span>849B</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33948"></span>849C</td>
+<td class="instruction">CALL <a href="33981.html">$84BD</a></td>
+<td class="comment-1" rowspan="1">...and choose the object index, or the character-only/object-only index, accordingly</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33951"></span>849F</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="2">Is the target actually meant to be a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33954"></span>84A2</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33955"></span>84A3</td>
+<td class="instruction">CALL NZ,<a href="40414.html">$9DDE</a></td>
+<td class="comment-1" rowspan="1">If so, search the actor's own room's exits instead of the object table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33958"></span>84A6</td>
+<td class="instruction">LD ($833F),IX</td>
+<td class="comment-1" rowspan="2">Remember where the search has got to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33962"></span>84AA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33892.html">8464</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33938">Map</a></td>
+<td class="next">
+Next: <a href="33963.html">84AB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

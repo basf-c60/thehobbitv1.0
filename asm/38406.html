@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9606</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38392.html">95F8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38406">Map</a></td>
+<td class="next">
+Next: <a href="38417.html">9611</a>
+</td>
+</tr>
+</table>
+<div class="description">9606: Describe a room briefly</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the name of room A (<a href="38372.html#38375">95E7</a>) and a new line, and then carries on with the doors, exits and contents as in <a href="38329.html">95B9</a> ($95DD), without the picture.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38406"></span>9606</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = room A's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38409"></span>9609</td>
+<td class="instruction">CALL <a href="38372.html#38375">$95E7</a></td>
+<td class="comment-1" rowspan="1">Print its name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38412"></span>960C</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="1">New line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38415"></span>960F</td>
+<td class="instruction">JR <a href="38329.html#38365">$95DD</a></td>
+<td class="comment-1" rowspan="1">Join the rest of the full room description (doors, exits and contents), skipping the picture</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38392.html">95F8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38406">Map</a></td>
+<td class="next">
+Next: <a href="38417.html">9611</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

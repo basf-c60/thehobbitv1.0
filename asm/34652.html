@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 875C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34629.html">8745</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34652">Map</a></td>
+<td class="next">
+Next: <a href="34661.html">8765</a>
+</td>
+</tr>
+</table>
+<div class="description">875C: Prepare to reply to the player</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets $B5EB (really do it) and $B5F2 (print in the lower window), ready to print a reply.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34652"></span>875C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">From now on, this really is happening...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34654"></span>875E</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34657"></span>8761</td>
+<td class="instruction">LD ($B5F2),A</td>
+<td class="comment-1" rowspan="2">...and any reply goes to the lower (input) window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34660"></span>8764</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34629.html">8745</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34652">Map</a></td>
+<td class="next">
+Next: <a href="34661.html">8765</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

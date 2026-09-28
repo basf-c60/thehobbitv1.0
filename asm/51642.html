@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C9BA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="51571.html">C973</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51642">Map</a></td>
+<td class="next">
+Next: <a href="51762.html">CA32</a>
+</td>
+</tr>
+</table>
+<div class="description">C9BA: Character table</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The characters who act on their own (<a href="38764.html">976C</a>), 7 bytes each, terminated by $FF: object number (0 once the character is dead), a count, the address of the character's current position in its behaviour program, the address of its reaction table (<a href="50972.html">C71C</a>), and a stubbornness value (<a href="36766.html">8F9E</a>).
+</div>
+<div class="paragraph">
+<ul class="">
+<li>$C9BA: $3E Gandalf</li>
+<li>$C9C1: $3F Thorin</li>
+<li>$C9C8: $40 the wood elf</li>
+<li>$C9CF: $43 the warg</li>
+<li>$C9D6: empty until Bilbo enters Beorn's house, then $42 the butler (<a href="50835.html">C693</a>)</li>
+<li>$C9DD: $41 Elrond</li>
+<li>$C9E4: $44 Gollum</li>
+<li>$C9EB: empty until Bilbo enters the Elvenking's cellar, then $46 Bard (<a href="50863.html">C6AF</a>)</li>
+<li>$C9F2: empty until then, then $3C the dragon</li>
+<li>$C9F9, $CA00: $47 and $48 the trolls</li>
+<li>$CA07-$CA2A: $3D, $45, $4B, $49, $4A and $4C, the goblins</li>
+</ul> Byte 6 of each entry decides how often the character refuses an order given with SAY TO (<a href="36766.html">8F9E</a>); despite what one might expect, higher values mean fewer refusals, and 0 means it never refuses. The values are: Gandalf 5, Thorin 6, Elrond 5, Bard and Gollum 3, the wood elf, the butler and the trolls 1, and the goblins, the warg and the dragon 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51642"></span>C9BA</td>
+<td class="instruction">DEFB $3E,$07,$A9,$C7,$90,$C7,$05,$3F</td>
+<td class="comment-1" rowspan="15">Characters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51650"></span>C9C2</td>
+<td class="instruction">DEFB $02,$DB,$C7,$D1,$C7,$06,$40,$02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51658"></span>C9CA</td>
+<td class="instruction">DEFB $0C,$C8,$02,$C8,$01,$43,$00,$17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51666"></span>C9D2</td>
+<td class="instruction">DEFB $C8,$13,$C8,$00,$00,$02,$3F,$C8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51674"></span>C9DA</td>
+<td class="instruction">DEFB $35,$C8,$01,$41,$02,$89,$C8,$7F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51682"></span>C9E2</td>
+<td class="instruction">DEFB $C8,$05,$44,$01,$E6,$C8,$DF,$C8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51690"></span>C9EA</td>
+<td class="instruction">DEFB $03,$00,$01,$CD,$C8,$C6,$C8,$03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51698"></span>C9F2</td>
+<td class="instruction">DEFB $00,$01,$A7,$C8,$A0,$C8,$00,$47</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51706"></span>C9FA</td>
+<td class="instruction">DEFB $01,$2A,$C9,$23,$C9,$01,$48,$01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51714"></span>CA02</td>
+<td class="instruction">DEFB $2A,$C9,$23,$C9,$01,$3D,$01,$31</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51722"></span>CA0A</td>
+<td class="instruction">DEFB $C7,$1C,$C7,$00,$45,$01,$31,$C7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51730"></span>CA12</td>
+<td class="instruction">DEFB $1C,$C7,$00,$4B,$01,$60,$C7,$23</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51738"></span>CA1A</td>
+<td class="instruction">DEFB $C7,$00,$49,$01,$84,$C7,$2A,$C7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51746"></span>CA22</td>
+<td class="instruction">DEFB $00,$4A,$01,$84,$C7,$2A,$C7,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51754"></span>CA2A</td>
+<td class="instruction">DEFB $4C,$01,$84,$C7,$2A,$C7,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51761"></span>CA31</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End marker</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="51571.html">C973</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51642">Map</a></td>
+<td class="next">
+Next: <a href="51762.html">CA32</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7EE6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32467.html">7ED3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32486">Map</a></td>
+<td class="next">
+Next: <a href="32501.html">7EF5</a>
+</td>
+</tr>
+</table>
+<div class="description">7EE6: Parser: store a preposition</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Counts the prepositions in the current noun phrase ($7C44) and stores the token BC in the first empty preposition slot ($7C45 or $7C47). A third preposition is a syntax error (<a href="32750.html">7FEE</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32486"></span>7EE6</td>
+<td class="instruction">LD HL,$7C44</td>
+<td class="comment-1" rowspan="1">HL = the count of prepositions seen in this noun phrase so far</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32489"></span>7EE9</td>
+<td class="instruction">INC (HL)</td>
+<td class="comment-1" rowspan="2">One more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32490"></span>7EEA</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32491"></span>7EEB</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1">Is that three or more?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32493"></span>7EED</td>
+<td class="instruction">JP NC,<a href="32750.html">$7FEE</a></td>
+<td class="comment-1" rowspan="1">A third preposition makes no sense: syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32496"></span>7EF0</td>
+<td class="instruction">LD HL,$7C45</td>
+<td class="comment-1" rowspan="1">Otherwise HL = the first or second preposition slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32499"></span>7EF3</td>
+<td class="instruction">JR <a href="32467.html#32470">$7ED6</a></td>
+<td class="comment-1" rowspan="1">...and store it there, sharing the adjective-storing code above</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32467.html">7ED3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32486">Map</a></td>
+<td class="next">
+Next: <a href="32501.html">7EF5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

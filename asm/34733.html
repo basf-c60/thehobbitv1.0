@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 87AD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34697.html">8789</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34733">Map</a></td>
+<td class="next">
+Next: <a href="34878.html">883E</a>
+</td>
+</tr>
+</table>
+<div class="description">87AD: Report why the objects could not be decided</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called when <a href="33797.html">8405</a> did not settle on exactly one workable target, to explain why - or to make the best of it. Inside a quotation (an order to a character) it says nothing at all and returns, so characters are not given the player's excuses.
+</div>
+<div class="paragraph">
+If exactly one candidate target would work, the instrument is dealt with instead (<a href="34697.html">8789</a>). Otherwise the target's flags at $832E decide:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>No noun was given ($8821): the words of the action are pushed and, if nothing suitable could be found at all, 'i see nothing to open' is printed; if there was something, the command is left unfinished (<a href="34661.html">8765</a>) and the game asks 'open what?', so that the next thing typed completes it.</li>
+<li>A noun was given but nothing matching it was found ($87EF): the search is widened - first to the rooms leading off this one (<a href="40425.html">9DE9</a>, for commands such as GO INTO), then to every object anywhere (<a href="40238.html">9D2E</a> with the filter set to 2) - so that something the player has named but cannot use is still recognised. If it is found, it is made the target and the action is reported as a failure (<a href="28945.html">7111</a>, 'you cannot open the door'); if not, 'i do not see the door here'.</li>
+<li>Several candidates fit the words: 'which key?' (<a href="34676.html">8774</a>), again leaving the command unfinished.</li>
+<li>Exactly one candidate, or none, but the action would not work with it: the action is carried out for real anyway ($87E6), so that its own handler prints the proper reason.</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34733"></span>87AD</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="2">Are we inside a quotation (an order to a character)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34736"></span>87B0</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34737"></span>87B1</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: say nothing - characters are not given the player's own excuses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34738"></span>87B2</td>
+<td class="instruction">LD A,($B60C)</td>
+<td class="comment-1" rowspan="2">Is an ALL command still working through a list of objects?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34741"></span>87B5</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34742"></span>87B6</td>
+<td class="instruction">JR Z,$87BC</td>
+<td class="comment-1" rowspan="1">No: work out what really went wrong, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34744"></span>87B8</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Yes: this particular object just did not work out, but others might - abandon it quietly...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34745"></span>87B9</td>
+<td class="instruction">JP <a href="33617.html#33669">$8385</a></td>
+<td class="comment-1" rowspan="1">...and go straight on to whatever ALL should try next</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34748"></span>87BC</td>
+<td class="instruction">LD A,($8331)</td>
+<td class="comment-1" rowspan="2">Did EXACTLY ONE target candidate work, with the problem lying only with the instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34751"></span>87BF</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34753"></span>87C1</td>
+<td class="instruction">JR Z,<a href="34697.html">$8789</a></td>
+<td class="comment-1" rowspan="1">Yes: go and sort out the instrument specifically</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34755"></span>87C3</td>
+<td class="instruction">LD HL,$832E</td>
+<td class="comment-1" rowspan="2">No: was any noun at all given for the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34758"></span>87C6</td>
+<td class="instruction">BIT 0,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34760"></span>87C8</td>
+<td class="instruction">JP Z,$8821</td>
+<td class="comment-1" rowspan="1">No: go and ask "open what?" or say there was nothing to open</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34763"></span>87CB</td>
+<td class="instruction">BIT 1,(HL)</td>
+<td class="comment-1" rowspan="4">Are we still in the middle of searching?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34765"></span>87CD</td>
+<td class="instruction">LD HL,$8333</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34768"></span>87D0</td>
+<td class="instruction">LD DE,$B5D9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34771"></span>87D3</td>
+<td class="instruction">LD BC,$B5EF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34774"></span>87D6</td>
+<td class="instruction">JR Z,$87EF</td>
+<td class="comment-1" rowspan="1">Not searching yet: go and search properly, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34776"></span>87D8</td>
+<td class="instruction">LD A,($8330)</td>
+<td class="comment-1" rowspan="2">Already searched: how many candidates fitted the words at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34779"></span>87DB</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34780"></span>87DC</td>
+<td class="instruction">JR Z,$87E6</td>
+<td class="comment-1" rowspan="2">None at all: let the action's own handler explain why</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34782"></span>87DE</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34783"></span>87DF</td>
+<td class="instruction">JR NZ,<a href="34676.html">$8774</a></td>
+<td class="comment-1" rowspan="1">More than one: ask "which one?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34785"></span>87E1</td>
+<td class="instruction">CALL <a href="33993.html">$84C9</a></td>
+<td class="comment-1" rowspan="1">Exactly one candidate, but the action still failed - does it even need an instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34788"></span>87E4</td>
+<td class="instruction">JR NZ,<a href="34697.html">$8789</a></td>
+<td class="comment-1" rowspan="1">It does: go and sort that out instead</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="34790"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="33617.html">8351</a> and <a href="34697.html">8789</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34790"></span>87E6</td>
+<td class="instruction">CALL <a href="34652.html">$875C</a></td>
+<td class="comment-1" rowspan="1">It does not, or nothing else fits: carry the action out anyway...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34793"></span>87E9</td>
+<td class="instruction">CALL <a href="37999.html">$946F</a></td>
+<td class="comment-1" rowspan="1">...so its own handler can explain the real reason ("you cannot open the door")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34796"></span>87EC</td>
+<td class="instruction">JP <a href="33617.html#33663">$837F</a></td>
+<td class="comment-1" rowspan="1">Then carry on with the rest of the turn as usual</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="34799"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34697.html">8789</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34799"></span>87EF</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">SEARCH PROPERLY: save the noun that was given</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34800"></span>87F0</td>
+<td class="instruction">CALL <a href="40414.html">$9DDE</a></td>
+<td class="comment-1" rowspan="1">IX = the actor's own room's exits</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34803"></span>87F3</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Assume, for now, that the noun names a nearby room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34805"></span>87F5</td>
+<td class="instruction">LD (BC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34806"></span>87F6</td>
+<td class="instruction">CALL <a href="40425.html">$9DE9</a></td>
+<td class="comment-1" rowspan="2">Does any exit lead to a room with that name?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34809"></span>87F9</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34811"></span>87FB</td>
+<td class="instruction">JR NZ,$8811</td>
+<td class="comment-1" rowspan="1">Yes: that settles it - use that room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34813"></span>87FD</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">No: restore the noun</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34814"></span>87FE</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="3">Widen the search to EVERY object in the game, not just nearby ones...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34816"></span>8800</td>
+<td class="instruction">LD ($B600),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34819"></span>8803</td>
+<td class="instruction">LD IX,$BF50</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34823"></span>8807</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">...and note that reach no longer matters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34824"></span>8808</td>
+<td class="instruction">LD (BC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34825"></span>8809</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save the noun again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34826"></span>880A</td>
+<td class="instruction">CALL <a href="40238.html">$9D2E</a></td>
+<td class="comment-1" rowspan="2">Search absolutely everywhere for something matching it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34829"></span>880D</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34831"></span>880F</td>
+<td class="instruction">JR Z,$8816</td>
+<td class="comment-1" rowspan="1">Nothing anywhere fits those words</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34833"></span>8811</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Something was found (a room, or a distant object): use it as the target/instrument...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34834"></span>8812</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34835"></span>8813</td>
+<td class="instruction">JP <a href="28945.html">$7111</a></td>
+<td class="comment-1" rowspan="1">...and report the action as a failure ("you cannot open the door"), since it is out of reach</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34838"></span>8816</td>
+<td class="instruction">CALL <a href="34652.html">$875C</a></td>
+<td class="comment-1" rowspan="1">Truly nothing fits those words anywhere</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34841"></span>8819</td>
+<td class="instruction">LD HL,$ACC7</td>
+<td class="comment-1" rowspan="2">"I do not see the X here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34844"></span>881C</td>
+<td class="instruction">CALL <a href="29386.html">$72CA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34847"></span>881F</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">The command could not be completed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34848"></span>8820</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34849"></span>8821</td>
+<td class="instruction">CALL <a href="34921.html">$8869</a></td>
+<td class="comment-1" rowspan="3">NO NOUN GIVEN FOR THE TARGET: push the action's own words as message parameters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34852"></span>8824</td>
+<td class="instruction">LD HL,($8349)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34855"></span>8827</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34856"></span>8828</td>
+<td class="instruction">LD HL,$ACD5</td>
+<td class="comment-1" rowspan="1">"I see nothing to &lt;verb&gt; &lt;particle&gt; &lt;preposition&gt;."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34859"></span>882B</td>
+<td class="instruction">LD A,($8331)</td>
+<td class="comment-1" rowspan="2">Was there in fact exactly one possible object, even with no noun named?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34862"></span>882E</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34863"></span>882F</td>
+<td class="instruction">JP Z,<a href="34689.html">$8781</a></td>
+<td class="comment-1" rowspan="1">No, none at all: print that message and give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34866"></span>8832</td>
+<td class="instruction">LD A,($8345)</td>
+<td class="comment-1" rowspan="2">Yes, exactly one: use it anyway, and say which one was chosen</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34869"></span>8835</td>
+<td class="instruction">CALL <a href="34661.html">$8765</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34872"></span>8838</td>
+<td class="instruction">LD HL,$ACB8</td>
+<td class="comment-1" rowspan="2">"&lt;verb&gt; &lt;particle&gt; &lt;preposition&gt; what?" (one more chance to name it precisely)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34875"></span>883B</td>
+<td class="instruction">JP <a href="34689.html">$8781</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34697.html">8789</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34733">Map</a></td>
+<td class="next">
+Next: <a href="34878.html">883E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

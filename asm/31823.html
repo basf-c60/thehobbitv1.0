@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7C4F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31806.html">7C3E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31823">Map</a></td>
+<td class="next">
+Next: <a href="31900.html">7C9C</a>
+</td>
+</tr>
+</table>
+<div class="description">7C4F: Parse the command</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The parser. It works through the tokens in <a href="28819.html">7093</a> (the pointer to the next token is kept at $B5CD) and turns them into one or more 24-byte command frames, starting at <a href="46632.html#47288">B8B8</a> and growing downwards in memory ($B8A0, $B888...). The number of frames built is counted in $B5F7.
+</div>
+<div class="paragraph">
+A frame holds: the verb (offset 0; bit 7 of byte 1 marks a command with ALL, and bit 6 marks an extra frame that only holds an exception for ALL EXCEPT), an adverb, direction or particle (offset 2), and two noun phrases of 10 bytes each (offsets 4 and 14). A noun phrase is two prepositions, a noun and two adjectives, so 'put the small curious key in the wooden chest' becomes PUT, (KEY, SMALL, CURIOUS), (IN, CHEST, WOODEN).
+</div>
+<div class="paragraph">
+The parser is a state machine. Register E holds a set of flags saying what may come next: bit 1 'a verb may start here', bit 2 'an adverb is allowed', bit 3 'we have just had AND', bit 4 'an article is allowed', bit 6 'the first noun phrase is still empty', bit 7 'the second noun phrase is still empty', bit 0 'the verb has been followed by a direction'. Register D holds the class of the token being processed.
+</div>
+<div class="paragraph">
+For each token, <a href="32573.html">7F3D</a> fetches it and the class (top nibble, divided by 8) indexes the jump table at <a href="31900.html">7C9C</a>, which sends it to a handler: adverbs to $7DBC, IN/INTO to <a href="32351.html">7E5F</a>, directions to <a href="32182.html">7DB6</a>, verbs to $7DFD, GO/RUN to <a href="32249.html">7DF9</a>, nouns to $7E9B, adjectives to $7E93, prepositions to <a href="32364.html">7E6C</a>, articles to <a href="32346.html">7E5A</a>, special words to <a href="32777.html">8009</a>, AND to <a href="32213.html">7DD5</a>, THEN (and full stop) to $7CC4 and the end of the line to <a href="31936.html">7CC0</a>.
+</div>
+<div class="paragraph">
+A word that is not allowed where it appears goes to <a href="32750.html">7FEE</a>, which prints 'what?' (inside a quotation it is ignored instead, so that orders to other characters are more forgiving).
+</div>
+<div class="paragraph">
+If a previous command was left unfinished ($B60A set, for example after the game asked 'which key?'), the parser starts in a different state so that the words just typed are fitted into the old frame (see $7CFC).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31823"></span>7C4F</td>
+<td class="instruction">LD IY,$B8B8</td>
+<td class="comment-1" rowspan="1">IY = the first command frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31827"></span>7C53</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">Not inside a quotation</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31828"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32949.html">80B5</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31828"></span>7C54</td>
+<td class="instruction">LD ($B60B),A</td>
+<td class="comment-1" rowspan="1">}</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31831"></span>7C57</td>
+<td class="instruction">CALL <a href="32553.html">$7F29</a></td>
+<td class="comment-1" rowspan="1">No ALL or ALL EXCEPT in force</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31834"></span>7C5A</td>
+<td class="instruction">LD ($B5F7),A</td>
+<td class="comment-1" rowspan="1">No frames built yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31837"></span>7C5D</td>
+<td class="instruction">LD E,$FF</td>
+<td class="comment-1" rowspan="1">State: everything allowed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31839"></span>7C5F</td>
+<td class="instruction">LD A,($B60A)</td>
+<td class="comment-1" rowspan="2">Is an unfinished command waiting to be completed?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31842"></span>7C62</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31843"></span>7C63</td>
+<td class="instruction">LD D,$A0</td>
+<td class="comment-1" rowspan="1">(Pretend the previous word was AND)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31845"></span>7C65</td>
+<td class="instruction">JP NZ,<a href="31936.html#31966">$7CDE</a></td>
+<td class="comment-1" rowspan="1">Yes: go straight to the end-of-line processing, which merges the new words in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31848"></span>7C68</td>
+<td class="instruction">LD D,$C0</td>
+<td class="comment-1" rowspan="1">Previous class: end of line</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31850"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="31936.html">7CC0</a> and <a href="32777.html">8009</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31850"></span>7C6A</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">START OF A COMMAND: no prepositions yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31851"></span>7C6B</td>
+<td class="instruction">LD ($7C44),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31854"></span>7C6E</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Allow a verb (bit 1), an adverb (bit 2), and both noun phrases (bits 6 and 7)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31855"></span>7C6F</td>
+<td class="instruction">OR $C7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31857"></span>7C71</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31858"></span>7C72</td>
+<td class="instruction">LD A,($B609)</td>
+<td class="comment-1" rowspan="3">...but after ALL EXCEPT...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31861"></span>7C75</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31863"></span>7C77</td>
+<td class="instruction">JR NZ,$7C7B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31865"></span>7C79</td>
+<td class="instruction">RES 1,E</td>
+<td class="comment-1" rowspan="1">...no new verb is allowed</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31867"></span>7C7B</td>
+<td class="instruction">CALL <a href="32558.html">$7F2E</a></td>
+<td class="comment-1" rowspan="1">Clear the frame</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31870"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="32182.html">7DB6</a>, <a href="32251.html">7DFB</a>, <a href="32364.html">7E6C</a>, <a href="32750.html">7FEE</a>, <a href="32875.html">806B</a>, <a href="32882.html">8072</a>, <a href="32906.html">808A</a>, <a href="32922.html">809A</a>, <a href="32973.html">80CD</a> and <a href="33112.html">8158</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31870"></span>7C7E</td>
+<td class="instruction">LD HL,$7C45</td>
+<td class="comment-1" rowspan="3">NEXT NOUN PHRASE: clear the 10-byte noun phrase buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31873"></span>7C81</td>
+<td class="instruction">LD B,$0A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31875"></span>7C83</td>
+<td class="instruction">CALL <a href="28889.html">$70D9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31878"></span>7C86</td>
+<td class="instruction">SET 4,E</td>
+<td class="comment-1" rowspan="1">Articles are allowed again</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="31880"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32346.html">7E5A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31880"></span>7C88</td>
+<td class="instruction">CALL <a href="32573.html">$7F3D</a></td>
+<td class="comment-1" rowspan="2">NEXT WORD: fetch it; A and D = its class, BC = the word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31883"></span>7C8B</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31884"></span>7C8C</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="5">Class / 8 = offset into the jump table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31885"></span>7C8D</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31886"></span>7C8E</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31887"></span>7C8F</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31888"></span>7C90</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31890"></span>7C92</td>
+<td class="instruction">LD HL,$7C9C</td>
+<td class="comment-1" rowspan="7">HL = the handler for this class</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31893"></span>7C95</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31894"></span>7C96</td>
+<td class="instruction">LD E,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31895"></span>7C97</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31896"></span>7C98</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31897"></span>7C99</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31898"></span>7C9A</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31899"></span>7C9B</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Go to it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31806.html">7C3E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31823">Map</a></td>
+<td class="next">
+Next: <a href="31900.html">7C9C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

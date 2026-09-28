@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at C6AF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50856.html">C6A8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50863">Map</a></td>
+<td class="next">
+Next: <a href="50892.html">C6CC</a>
+</td>
+</tr>
+</table>
+<div class="description">C6AF: Room-entry handler: the Elvenking's cellar (room 32) wakes the dragon and Bard</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Entering the cellar where the king keeps his barrels of wine brings the last part of the adventure to life. Three things happen:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>Timer 9 (<a href="51571.html#51634">C9B2</a>) is started with a count of 3. This is the timer that controls the side door of the Lonely Mountain (object 11), far away in room 42: it makes 'a loud crack and a hole appears about three feet from the ground' for one turn in every five (<a href="43397.html">A985</a>), after which 'the hole vanishes' (<a href="43368.html">A968</a>), unless it has been opened. The count of 3 means the first appearance happens two turns after Bilbo enters the cellar.</li>
+<li>The dragon (object 60) is switched on by writing its number, $3C, into its empty slot in the character table at $C9F2 - unless it is already dead. Until now the dragon has been lying inert in the lower halls; from now on its behaviour program (<a href="42453.html">A5D5</a>, <a href="42385.html">A591</a>, <a href="42427.html">A5BB</a>) runs every turn.</li>
+<li>Bard (object 70) is switched on in the same way, by writing $46 into the slot at $C9EB, unless he is dead. He starts waiting for orders (<a href="42911.html">A79F</a>).</li>
+</ul>
+</div>
+<div class="paragraph">
+So the dragon cannot threaten Bilbo, and Bard cannot help him, until Bilbo has reached the Elvenking's cellar. Like the butler's handler (<a href="50835.html">C693</a>), this runs every time Bilbo enters the cellar, restarting the side door timer at 3 each time.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50863"></span>C6AF</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="1">Start timer 9 (the Lonely Mountain's side door)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50865"></span>C6B1</td>
+<td class="instruction">LD ($C9B3),A</td>
+<td class="comment-1" rowspan="1">...with a count of 3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50868"></span>C6B4</td>
+<td class="instruction">LD HL,$C02A</td>
+<td class="comment-1" rowspan="1">HL = the dragon's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50871"></span>C6B7</td>
+<td class="instruction">BIT 3,(HL)</td>
+<td class="comment-1" rowspan="1">Is the dragon dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50873"></span>C6B9</td>
+<td class="instruction">JR NZ,$C6C0</td>
+<td class="comment-1" rowspan="1">Yes: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50875"></span>C6BB</td>
+<td class="instruction">LD A,$3C</td>
+<td class="comment-1" rowspan="1">Put the dragon (object 60) into its empty character-table slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50877"></span>C6BD</td>
+<td class="instruction">LD ($C9F2),A</td>
+<td class="comment-1" rowspan="1">...so it starts acting</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50880"></span>C6C0</td>
+<td class="instruction">LD HL,$C3B9</td>
+<td class="comment-1" rowspan="1">HL = Bard's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50883"></span>C6C3</td>
+<td class="instruction">BIT 3,(HL)</td>
+<td class="comment-1" rowspan="1">Is Bard dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50885"></span>C6C5</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50886"></span>C6C6</td>
+<td class="instruction">LD A,$46</td>
+<td class="comment-1" rowspan="1">Put Bard (object 70) into his empty slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50888"></span>C6C8</td>
+<td class="instruction">LD ($C9EB),A</td>
+<td class="comment-1" rowspan="2">...so he starts waiting for orders</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50891"></span>C6CB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50856.html">C6A8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50863">Map</a></td>
+<td class="next">
+Next: <a href="50892.html">C6CC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

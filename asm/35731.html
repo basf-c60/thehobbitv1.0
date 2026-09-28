@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8B93</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35631.html">8B2F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35731">Map</a></td>
+<td class="next">
+Next: <a href="35772.html">8BBC</a>
+</td>
+</tr>
+</table>
+<div class="description">8B93: Plot a pixel</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets the pixel at (D,E) and gives its attribute cell the ink colour held at $8C2C, keeping the cell's paper colour. If the ink would be the same as the paper (and so invisible), the ink is changed to its complement (XOR $38 before shifting).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35731"></span>8B93</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="35732"></span>8B94</td>
+<td class="instruction">CALL <a href="35772.html">$8BBC</a></td>
+<td class="comment-1" rowspan="3">HL = the screen byte, A = the pixel's bit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35735"></span>8B97</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35736"></span>8B98</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35737"></span>8B99</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="7">Work out the attribute address from the screen address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35738"></span>8B9A</td>
+<td class="instruction">AND $18</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35740"></span>8B9C</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35741"></span>8B9D</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35742"></span>8B9E</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35743"></span>8B9F</td>
+<td class="instruction">ADD A,$58</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35745"></span>8BA1</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35746"></span>8BA2</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Keep only the cell's paper colour</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35747"></span>8BA3</td>
+<td class="instruction">AND $38</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35749"></span>8BA5</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35750"></span>8BA6</td>
+<td class="instruction">LD A,($8C2C)</td>
+<td class="comment-1" rowspan="4">A = the drawing colour, in the paper position</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35753"></span>8BA9</td>
+<td class="instruction">RLCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35754"></span>8BAA</td>
+<td class="instruction">RLCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35755"></span>8BAB</td>
+<td class="instruction">RLCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35756"></span>8BAC</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="2">Same as the paper?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35757"></span>8BAD</td>
+<td class="instruction">JR NZ,$8BB1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35759"></span>8BAF</td>
+<td class="instruction">XOR $38</td>
+<td class="comment-1" rowspan="1">Yes: use its complement so it shows</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35761"></span>8BB1</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="3">Back into the ink position</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35762"></span>8BB2</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35763"></span>8BB3</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35764"></span>8BB4</td>
+<td class="instruction">OR (HL)</td>
+<td class="comment-1" rowspan="1">Combine with the paper...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35765"></span>8BB5</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="2">...and store it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35766"></span>8BB6</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35767"></span>8BB7</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">A = the pixel's bit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35768"></span>8BB8</td>
+<td class="instruction">OR (HL)</td>
+<td class="comment-1" rowspan="4">Set the pixel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35769"></span>8BB9</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35770"></span>8BBA</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35771"></span>8BBB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35631.html">8B2F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35731">Map</a></td>
+<td class="next">
+Next: <a href="35772.html">8BBC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

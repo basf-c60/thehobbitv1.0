@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9404</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37869.html">93ED</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37892">Map</a></td>
+<td class="next">
+Next: <a href="37942.html">9436</a>
+</td>
+</tr>
+</table>
+<div class="description">9404: THROW ... ACROSS / THROUGH</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The actor must be carrying the target. The instrument (the thing thrown across or through, such as a river or a window) must be one of the exits of the room (<a href="40561.html">9E71</a>), and if it is a door it must be open ('the window is closed'). The target is then dropped and moved to the room on the other side, and <a href="39736.html">9B38</a> reports it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37892"></span>9404</td>
+<td class="instruction">CALL <a href="35898.html">$8C3A</a></td>
+<td class="comment-1" rowspan="1">Is the actor holding the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37895"></span>9407</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">A = the instrument (the river, window or similar being thrown across or through)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37898"></span>940A</td>
+<td class="instruction">CALL <a href="40561.html">$9E71</a></td>
+<td class="comment-1" rowspan="2">Find the room's exit that passes through it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37901"></span>940D</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37903"></span>940F</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No such exit exists: fail with the usual "you cannot go that way"-style message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37906"></span>9412</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37910"></span>9416</td>
+<td class="instruction">BIT 5,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Is it open (or is that even required)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37914"></span>941A</td>
+<td class="instruction">LD A,$05</td>
+<td class="comment-1" rowspan="1">A = the state code for OPEN/CLOSED</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37916"></span>941C</td>
+<td class="instruction">JP Z,<a href="41108.html">$A094</a></td>
+<td class="comment-1" rowspan="1">Closed: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37919"></span>941F</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37922"></span>9422</td>
+<td class="instruction">LD B,(IX+$02)</td>
+<td class="comment-1" rowspan="1">B = this exit's destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37925"></span>9425</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37929"></span>9429</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">It is held by nobody now...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37933"></span>942D</td>
+<td class="instruction">LD (IX+$10),B</td>
+<td class="comment-1" rowspan="1">...and lands in the room on the far side</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37936"></span>9430</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Move it there, telling Bilbo about it if he can see it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37939"></span>9433</td>
+<td class="instruction">JP <a href="39736.html">$9B38</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37869.html">93ED</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37892">Map</a></td>
+<td class="next">
+Next: <a href="37942.html">9436</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8781</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34676.html">8774</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34689">Map</a></td>
+<td class="next">
+Next: <a href="34697.html">8789</a>
+</td>
+</tr>
+</table>
+<div class="description">8781: Print a reply and give up</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the message at HL in the lower window (<a href="34652.html">875C</a>, <a href="29386.html">72CA</a>) and returns with A=0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34689"></span>8781</td>
+<td class="instruction">CALL <a href="34652.html">$875C</a></td>
+<td class="comment-1" rowspan="1">Make sure this prints properly, in the lower window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34692"></span>8784</td>
+<td class="instruction">CALL <a href="29386.html">$72CA</a></td>
+<td class="comment-1" rowspan="1">Print the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34695"></span>8787</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Tell the caller the command could not be completed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34696"></span>8788</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34676.html">8774</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34689">Map</a></td>
+<td class="next">
+Next: <a href="34697.html">8789</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

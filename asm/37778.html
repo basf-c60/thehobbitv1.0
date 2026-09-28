@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9392</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37742.html">936E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37778">Map</a></td>
+<td class="next">
+Next: <a href="37837.html">93CD</a>
+</td>
+</tr>
+</table>
+<div class="description">9392: PUT or DROP something in the river</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The rivers' PUT IN and DROP IN handler. The river is an object in two places, one on each bank. The thing dropped in is carried to the location on the other side from the actor ('... and it gets swept away'); if the actor is on the river's second bank, the thing goes to location 0, and is lost.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37778"></span>9392</td>
+<td class="instruction">CALL <a href="35974.html#36026">$8CBA</a></td>
+<td class="comment-1" rowspan="1">Is the target something that can even be picked up?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37781"></span>9395</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37784"></span>9398</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="1">A = the room the actor started this turn in (one bank of the river)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37787"></span>939B</td>
+<td class="instruction">LD IX,($B5FA)</td>
+<td class="comment-1" rowspan="1">IX = the river's own record (which has two locations, one on each bank)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37791"></span>939F</td>
+<td class="instruction">LD B,(IX+$00)</td>
+<td class="comment-1" rowspan="1">B = how many locations it has</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37794"></span>93A2</td>
+<td class="instruction">CP (IX+$10)</td>
+<td class="comment-1" rowspan="2">Is the actor's bank the FIRST of them?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37797"></span>93A5</td>
+<td class="instruction">JR Z,$93AE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37799"></span>93A7</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">No: try the next location</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37801"></span>93A9</td>
+<td class="instruction">DJNZ $93A2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37803"></span>93AB</td>
+<td class="instruction">JP <a href="29381.html">$72C5</a></td>
+<td class="comment-1" rowspan="1">Neither bank matches (should not happen): "I cannot do that."</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37806"></span>93AE</td>
+<td class="instruction">LD A,(IX+$11)</td>
+<td class="comment-1" rowspan="1">A = the OTHER bank (the one after this location)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37809"></span>93B1</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="2">Was this actually the last location?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37810"></span>93B2</td>
+<td class="instruction">JR NZ,$93B5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37812"></span>93B4</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">If so, there is no far bank: it is simply lost (room 0)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37813"></span>93B5</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37817"></span>93B9</td>
+<td class="instruction">LD (IX+$10),A</td>
+<td class="comment-1" rowspan="1">It moves to the far bank...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37820"></span>93BC</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">...held by nobody</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37824"></span>93C0</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = that room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37825"></span>93C1</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Move it there, and report it if Bilbo can see</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37828"></span>93C4</td>
+<td class="instruction">CALL <a href="39736.html">$9B38</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37831"></span>93C7</td>
+<td class="instruction">LD HL,$ACEF</td>
+<td class="comment-1" rowspan="2">"...and it gets swept away."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37834"></span>93CA</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37742.html">936E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37778">Map</a></td>
+<td class="next">
+Next: <a href="37837.html">93CD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

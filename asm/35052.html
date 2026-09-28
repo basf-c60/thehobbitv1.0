@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 88EC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34983.html">88A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35052">Map</a></td>
+<td class="next">
+Next: <a href="35069.html">88FD</a>
+</td>
+</tr>
+</table>
+<div class="description">88EC: Find an order for the current actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the eight 25-byte slots of the orders buffer (<a href="46632.html">B628</a>) for one addressed to the current actor ($B5DB). Returns with Z set and HL pointing at the slot if one is found.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if found</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Order slot</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35052"></span>88EC</td>
+<td class="instruction">LD HL,$B628</td>
+<td class="comment-1" rowspan="1">HL = the start of the orders buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35055"></span>88EF</td>
+<td class="instruction">LD DE,$0019</td>
+<td class="comment-1" rowspan="1">DE = 25, the size of one order slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35058"></span>88F2</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the current actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35061"></span>88F5</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="1">Eight slots to check</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35063"></span>88F7</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Is this slot addressed to the actor?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35064"></span>88F8</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: found it, with HL pointing at the slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35065"></span>88F9</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">No: move on to the next slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35066"></span>88FA</td>
+<td class="instruction">DJNZ $88F7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35068"></span>88FC</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">None found</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34983.html">88A7</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35052">Map</a></td>
+<td class="next">
+Next: <a href="35069.html">88FD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

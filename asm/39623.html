@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9AC7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39583.html">9A9F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39623">Map</a></td>
+<td class="next">
+Next: <a href="39643.html">9ADB</a>
+</td>
+</tr>
+</table>
+<div class="description">9AC7: Call the routine at HL (if HL is not 0)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+A general dispatcher used throughout the game for tables of routine addresses (the room-entry handlers, the timer table, the character table). All registers except AF are preserved, and a zero address means 'no routine', so tables can leave entries empty. The actual call is made by the JP (HL) at <a href="39643.html">9ADB</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Routine address, or 0</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39623"></span>9AC7</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="4">Save every register the routine we are about to call might disturb...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39625"></span>9AC9</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39627"></span>9ACB</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39628"></span>9ACC</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39629"></span>9ACD</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">...including HL itself, which holds the address to call</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39630"></span>9ACE</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="2">Is that address 0, meaning "there is nothing to call"?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39631"></span>9ACF</td>
+<td class="instruction">OR H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39632"></span>9AD0</td>
+<td class="instruction">CALL NZ,<a href="39643.html">$9ADB</a></td>
+<td class="comment-1" rowspan="1">If it is not 0, make the call</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39635"></span>9AD3</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="6">Restore the registers, in the same order they were saved...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39636"></span>9AD4</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39637"></span>9AD5</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39638"></span>9AD6</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39640"></span>9AD8</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39642"></span>9ADA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39583.html">9A9F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39623">Map</a></td>
+<td class="next">
+Next: <a href="39643.html">9ADB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

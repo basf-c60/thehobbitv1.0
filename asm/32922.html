@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 809A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32906.html">808A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32922">Map</a></td>
+<td class="next">
+Next: <a href="32943.html">80AF</a>
+</td>
+</tr>
+</table>
+<div class="description">809A: IT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Replaces IT with the object most recently mentioned: the noun and two adjectives saved at $B5D1 (by <a href="34324.html">8614</a> each time a command names a target) are copied into the noun phrase buffer, which is then stored in the frame (<a href="32943.html">80AF</a>). So 'take the key. unlock the door with it.' works.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32922"></span>809A</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32923"></span>809B</td>
+<td class="instruction">LD HL,$B5D1</td>
+<td class="comment-1" rowspan="1">HL = the words remembered for IT (the last object named)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32926"></span>809E</td>
+<td class="instruction">LD DE,$7C49</td>
+<td class="comment-1" rowspan="3">Copy them into the noun-phrase buffer currently being built</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32929"></span>80A1</td>
+<td class="instruction">LD BC,$0006</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32932"></span>80A4</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32934"></span>80A6</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32935"></span>80A7</td>
+<td class="instruction">BIT 7,E</td>
+<td class="comment-1" rowspan="1">Is the first noun phrase still empty?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32937"></span>80A9</td>
+<td class="instruction">CALL <a href="32943.html">$80AF</a></td>
+<td class="comment-1" rowspan="1">Store this phrase in whichever slot is free</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32940"></span>80AC</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Go back to reading the next word</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32906.html">808A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32922">Map</a></td>
+<td class="next">
+Next: <a href="32943.html">80AF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8ED3</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36512.html">8EA0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36563">Map</a></td>
+<td class="next">
+Next: <a href="36631.html">8F17</a>
+</td>
+</tr>
+</table>
+<div class="description">8ED3: FILL WITH</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The barrel's FILL handler. The instrument must be something that pours (bit 1 of its flags: water and wine, for example) and the target must not already be full ('the barrel is full'). The work is done by PUT IN (<a href="37305.html">91B9</a>) with target and instrument swapped (<a href="40595.html">9E93</a>), so FILL THE BARREL WITH WATER is really PUT THE WATER IN THE BARREL.
+</div>
+<div class="paragraph">
+Filling from a river is a special case: if the instrument is object 23 or 24 (the river's water or black water), a fresh object 21 or 22 ('water', 'black water') is used instead, so the river never runs dry.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36563"></span>8ED3</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record (the container being filled)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36567"></span>8ED7</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Is the instrument the fast river's water, or the enchanted river's black water?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36570"></span>8EDA</td>
+<td class="instruction">CP $17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36572"></span>8EDC</td>
+<td class="instruction">JR Z,$8EFC</td>
+<td class="comment-1" rowspan="2">Ordinary river water: go and use a fresh copy of it, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36574"></span>8EDE</td>
+<td class="instruction">CP $18</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36576"></span>8EE0</td>
+<td class="instruction">JR Z,$8F04</td>
+<td class="comment-1" rowspan="1">Black water: likewise</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36578"></span>8EE2</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">Anything else: IY = the instrument's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36582"></span>8EE6</td>
+<td class="instruction">BIT 1,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Does it actually pour (is it a liquid)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36586"></span>8EEA</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No: fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36589"></span>8EED</td>
+<td class="instruction">BIT 2,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the container already full?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36593"></span>8EF1</td>
+<td class="instruction">LD A,$82</td>
+<td class="comment-1" rowspan="1">A = the state code for FULL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36595"></span>8EF3</td>
+<td class="instruction">JP NZ,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">Yes: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36598"></span>8EF6</td>
+<td class="instruction">LD HL,$91B9</td>
+<td class="comment-1" rowspan="1">No: do the work as an ordinary PUT IN...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36601"></span>8EF9</td>
+<td class="instruction">JP <a href="40595.html">$9E93</a></td>
+<td class="comment-1" rowspan="1">...with target and instrument swapped, so "fill X with Y" becomes "put Y in X"</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36604"></span>8EFC</td>
+<td class="instruction">LD A,$15</td>
+<td class="comment-1" rowspan="1">Ordinary river water: A = a FRESH water object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36606"></span>8EFE</td>
+<td class="instruction">LD IY,$C343</td>
+<td class="comment-1" rowspan="2">IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36610"></span>8F02</td>
+<td class="instruction">JR $8F0A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36612"></span>8F04</td>
+<td class="instruction">LD A,$16</td>
+<td class="comment-1" rowspan="2">Black water: A = a fresh black-water object instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36614"></span>8F06</td>
+<td class="instruction">LD IY,$C358</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36618"></span>8F0A</td>
+<td class="instruction">LD ($B5DA),A</td>
+<td class="comment-1" rowspan="2">That fresh object becomes the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36621"></span>8F0D</td>
+<td class="instruction">LD ($B5FA),IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36625"></span>8F11</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="1">It starts out held by nobody...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36629"></span>8F15</td>
+<td class="instruction">JR $8EE2</td>
+<td class="comment-1" rowspan="1">...then join the ordinary FILL code above (so the river itself never runs dry)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36512.html">8EA0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36563">Map</a></td>
+<td class="next">
+Next: <a href="36631.html">8F17</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

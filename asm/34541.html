@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 86ED</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34492.html">86BC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34541">Map</a></td>
+<td class="next">
+Next: <a href="34568.html">8708</a>
+</td>
+</tr>
+</table>
+<div class="description">86ED: Find the next candidate target for which the action works</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Calls the search routine at IY with the target's words, and for each object found, puts it in $B5D9 and tries the action (<a href="37942.html">9436</a>). Stops at the first one for which it would work.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34541"></span>86ED</td>
+<td class="instruction">LD HL,$8333</td>
+<td class="comment-1" rowspan="1">HL = the target's own collected words (noun and adjectives)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34544"></span>86F0</td>
+<td class="instruction">CALL <a href="34490.html">$86BA</a></td>
+<td class="comment-1" rowspan="2">Search for the next object or room that fits them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34547"></span>86F3</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34549"></span>86F5</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">None left: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34550"></span>86F6</td>
+<td class="instruction">LD ($B5D9),A</td>
+<td class="comment-1" rowspan="2">Found one: it becomes the target, provisionally</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34553"></span>86F9</td>
+<td class="instruction">LD HL,$832E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34556"></span>86FC</td>
+<td class="instruction">SET 1,(HL)</td>
+<td class="comment-1" rowspan="1">Remember that we are still searching (rather than having settled on an answer)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34558"></span>86FE</td>
+<td class="instruction">CALL <a href="37942.html">$9436</a></td>
+<td class="comment-1" rowspan="3">Could the action even apply to it at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34561"></span>8701</td>
+<td class="instruction">LD A,($B5EC)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34564"></span>8704</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34565"></span>8705</td>
+<td class="instruction">JR Z,$86ED</td>
+<td class="comment-1" rowspan="1">No: try the next candidate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34567"></span>8707</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Yes: this is a workable candidate</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34492.html">86BC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34541">Map</a></td>
+<td class="next">
+Next: <a href="34568.html">8708</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

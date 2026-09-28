@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8351</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33582.html">832E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33617">Map</a></td>
+<td class="next">
+Next: <a href="33690.html">839A</a>
+</td>
+</tr>
+</table>
+<div class="description">8351: Execute a command and run the turn</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called by the main loop (<a href="27914.html">6D0A</a>) after parsing. It works through the command frames built by the parser, one per command, starting at <a href="46632.html#47288">B8B8</a>.
+</div>
+<div class="paragraph">
+For each frame, <a href="33703.html">83A7</a> finds the action and the objects it applies to. If that fails, the frame is dropped. Otherwise the action is carried out for real: $B5EB is set to 1, <a href="28962.html">7122</a> reports it ('you take the sword.'), <a href="37999.html">946F</a> performs it, and <a href="38417.html">9611</a> ends the turn, letting the characters act and the timers run. So every command the player types costs one turn, and a line with three commands costs three turns.
+</div>
+<div class="paragraph">
+A command with ALL is repeated ($837F) for each object it applies to, one turn each. When a frame is finished, the next frame (24 bytes lower) is taken, skipping the exception frames of ALL EXCEPT, until the frame count $B5F7 reaches 0.
+</div>
+<div class="paragraph">
+If the previous command was left unfinished ($B60A), it is picked up again at $8385 instead.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33617"></span>8351</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">No ALL command is still in progress yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33618"></span>8352</td>
+<td class="instruction">LD ($B60C),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33621"></span>8355</td>
+<td class="instruction">LD IY,$B8B8</td>
+<td class="comment-1" rowspan="1">IY = the first command frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33625"></span>8359</td>
+<td class="instruction">LD HL,$B60A</td>
+<td class="comment-1" rowspan="2">Was the previous line left with an unfinished command (e.g. waiting for "which key?" to be answered)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33628"></span>835C</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33629"></span>835D</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Either way, clear that flag now - this line's typing settles the question</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33630"></span>835E</td>
+<td class="instruction">JP NZ,$8385</td>
+<td class="comment-1" rowspan="1">If it WAS waiting, skip straight to picking up where it left off, rather than starting a fresh frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33633"></span>8361</td>
+<td class="instruction">CALL <a href="33703.html">$83A7</a></td>
+<td class="comment-1" rowspan="1">Find the action and its objects for this frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33636"></span>8364</td>
+<td class="instruction">JR NZ,$836B</td>
+<td class="comment-1" rowspan="1">Found: carry it out below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33638"></span>8366</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Not found (the command made no sense): give up on the rest of this line too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33639"></span>8367</td>
+<td class="instruction">LD ($B5F6),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33642"></span>836A</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33643"></span>836B</td>
+<td class="instruction">CALL <a href="34014.html">$84DE</a></td>
+<td class="comment-1" rowspan="1">Found: would the action actually succeed? (a dry run, changing nothing)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33646"></span>836E</td>
+<td class="instruction">JP Z,<a href="34733.html#34790">$87E6</a></td>
+<td class="comment-1" rowspan="1">No: let the action's own handler explain why, rather than saying nothing at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33649"></span>8371</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Yes: mark this as really happening now, not just a trial</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33651"></span>8373</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33654"></span>8376</td>
+<td class="instruction">CALL <a href="28962.html">$7122</a></td>
+<td class="comment-1" rowspan="1">Report it in words ("you take the sword.")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33657"></span>8379</td>
+<td class="instruction">CALL <a href="37999.html">$946F</a></td>
+<td class="comment-1" rowspan="1">Carry it out</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33660"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34191.html">858F</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33660"></span>837C</td>
+<td class="instruction">CALL <a href="38417.html">$9611</a></td>
+<td class="comment-1" rowspan="1">End the turn: let every other character act, and the timers tick</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33663"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34733.html">87AD</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33663"></span>837F</td>
+<td class="instruction">LD A,($B60C)</td>
+<td class="comment-1" rowspan="2">Is an ALL command still working through more objects?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33666"></span>8382</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33667"></span>8383</td>
+<td class="instruction">JR NZ,$8361</td>
+<td class="comment-1" rowspan="1">Yes: go round again for the next one</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="33669"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34733.html">87AD</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33669"></span>8385</td>
+<td class="instruction">LD A,($B5F7)</td>
+<td class="comment-1" rowspan="3">How many more command frames are left on this line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33672"></span>8388</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33673"></span>8389</td>
+<td class="instruction">LD ($B5F7),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33676"></span>838C</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">None left: the whole line is finished</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33677"></span>838D</td>
+<td class="instruction">LD BC,$FFE8</td>
+<td class="comment-1" rowspan="2">Step on to the next frame (24 bytes lower, since frames are built downwards)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33680"></span>8390</td>
+<td class="instruction">ADD IY,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33682"></span>8392</td>
+<td class="instruction">BIT 6,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Is this frame only an ALL EXCEPT exception, with no command of its own?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33686"></span>8396</td>
+<td class="instruction">JR NZ,$8390</td>
+<td class="comment-1" rowspan="1">Yes: skip over it and look at the one after</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33688"></span>8398</td>
+<td class="instruction">JR $8361</td>
+<td class="comment-1" rowspan="1">Otherwise carry it out</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33582.html">832E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33617">Map</a></td>
+<td class="next">
+Next: <a href="33690.html">839A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

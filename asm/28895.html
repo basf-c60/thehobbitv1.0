@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 70DF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28889.html">70D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28895">Map</a></td>
+<td class="next">
+Next: <a href="28906.html">70EA</a>
+</td>
+</tr>
+</table>
+<div class="description">70DF: Get the address of an action table entry</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns HL = $AA3F + 8 x A, the address of the 8-byte entry for action number A in the action table (<a href="43591.html">AA47</a> is action 1; there is no action 0). The action number of the command being carried out is kept at $B5D8.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Action number</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Action table entry</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28895"></span>70DF</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="2">HL = the action number...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28896"></span>70E0</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28898"></span>70E2</td>
+<td class="instruction">ADD HL,HL</td>
+<td class="comment-1" rowspan="3">...times 8, since each entry in the action table is 8 bytes...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28899"></span>70E3</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28900"></span>70E4</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28901"></span>70E5</td>
+<td class="instruction">LD DE,$AA3F</td>
+<td class="comment-1" rowspan="3">...added to the start of the action table itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28904"></span>70E8</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28905"></span>70E9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28889.html">70D9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28895">Map</a></td>
+<td class="next">
+Next: <a href="28906.html">70EA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

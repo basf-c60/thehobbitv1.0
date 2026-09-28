@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8ACC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35407.html">8A4F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35532">Map</a></td>
+<td class="next">
+Next: <a href="35539.html">8AD3</a>
+</td>
+</tr>
+</table>
+<div class="description">8ACC: Test a pixel</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z reset if the pixel at (D,E) is set.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">x</td>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">y</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35532"></span>8ACC</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="35533"></span>8ACD</td>
+<td class="instruction">CALL <a href="35772.html">$8BBC</a></td>
+<td class="comment-1" rowspan="1">HL = the screen byte, A = the bit for the pixel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35536"></span>8AD0</td>
+<td class="instruction">AND (HL)</td>
+<td class="comment-1" rowspan="3">Z reset if the pixel is set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35537"></span>8AD1</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35538"></span>8AD2</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35407.html">8A4F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35532">Map</a></td>
+<td class="next">
+Next: <a href="35539.html">8AD3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

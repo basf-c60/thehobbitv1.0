@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A6B8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42654.html">A69E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42680">Map</a></td>
+<td class="next">
+Next: <a href="42760.html">A708</a>
+</td>
+</tr>
+</table>
+<div class="description">A6B8: Handler for the curious map: Elrond reads it</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+When anyone other than Elrond (object 65) examines the curious map, it is an ordinary EXAMINE (<a href="37700.html">9344</a>). When Elrond does (because the player gave it to him and asked him to read it), the hidden route chosen at the start of the game (<a href="38667.html">970B</a>) is revealed: the three bytes of the exit that were blanked out are restored from the table at <a href="50923.html#50935">C6F7</a> (the address of the entry was written into the LD IY instruction at $A6C3), and Elrond says 'go &lt;direction&gt; from &lt;room&gt; to get to &lt;room&gt;'. $B5E2 records that it has been done.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42680"></span>A6B8</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">Pick up the number of the character doing the examining</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42683"></span>A6BB</td>
+<td class="instruction">CP $41</td>
+<td class="comment-1" rowspan="1">Is it Elrond (object 65)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42685"></span>A6BD</td>
+<td class="instruction">JP NZ,<a href="37700.html">$9344</a></td>
+<td class="comment-1" rowspan="1">No: treat it as an ordinary EXAMINE (you see the curious map)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42688"></span>A6C0</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Elrond: during a dry run, record that this would work and stop here</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42691"></span>A6C3</td>
+<td class="instruction">LD IY,$0000</td>
+<td class="comment-1" rowspan="1">IY = the hidden-route entry chosen at the start of the game (this operand is written by <a href="38667.html">970B</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42695"></span>A6C7</td>
+<td class="instruction">LD L,(IY+$01)</td>
+<td class="comment-1" rowspan="1">HL = the address of the blanked-out exit in the room record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42698"></span>A6CA</td>
+<td class="instruction">LD H,(IY+$02)</td>
+<td class="comment-1" rowspan="1">...(bytes 1 and 2 of the entry)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42701"></span>A6CD</td>
+<td class="instruction">LD A,($B5E2)</td>
+<td class="comment-1" rowspan="2">Has the map already been read?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42704"></span>A6D0</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42706"></span>A6D2</td>
+<td class="instruction">JR NZ,$A6E3</td>
+<td class="comment-1" rowspan="1">Yes: the exit is already open, so skip straight to what Elrond says</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42708"></span>A6D4</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="1">Three bytes to restore: direction, door and destination</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42710"></span>A6D6</td>
+<td class="instruction">LD A,(IY+$03)</td>
+<td class="comment-1" rowspan="1">Fetch one byte of the exit from the entry (bytes 3-5)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42713"></span>A6D9</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">...and put it back into the room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42714"></span>A6DA</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Next byte of the room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42715"></span>A6DB</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Next byte of the entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42717"></span>A6DD</td>
+<td class="instruction">DJNZ $A6D6</td>
+<td class="comment-1" rowspan="1">Repeat for all three bytes: the hidden way is now open</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42719"></span>A6DF</td>
+<td class="instruction">LD IY,($A6C5)</td>
+<td class="comment-1" rowspan="1">Point IY back at the start of the entry (the INCs moved it on)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42723"></span>A6E3</td>
+<td class="instruction">LD A,(IY+$05)</td>
+<td class="comment-1" rowspan="1">A = the destination room (byte 5 of the entry)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42726"></span>A6E6</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = its room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42729"></span>A6E9</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Skip the two flag bytes...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42731"></span>A6EB</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">...to reach the room's name words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42733"></span>A6ED</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Push them as the third parameter of the message ("...to get to &lt;room&gt;")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42735"></span>A6EF</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="1">A = the room that has the exit (byte 0 of the entry)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42738"></span>A6F2</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = its room record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42741"></span>A6F5</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Skip the two flag bytes...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42743"></span>A6F7</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">...to reach the room's name words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42745"></span>A6F9</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Push them as the second parameter ("...from &lt;room&gt;...")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42747"></span>A6FB</td>
+<td class="instruction">LD A,(IY+$03)</td>
+<td class="comment-1" rowspan="1">A = the direction of the exit (byte 3 of the entry)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42750"></span>A6FE</td>
+<td class="instruction">CALL <a href="40938.html">$9FEA</a></td>
+<td class="comment-1" rowspan="1">DE = the word for that direction (NORTH, EAST...)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42753"></span>A701</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Push it as the first parameter ("go &lt;direction&gt;...")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42754"></span>A702</td>
+<td class="instruction">LD HL,$B0C2</td>
+<td class="comment-1" rowspan="1">HL = the message "go &lt;direction&gt; from &lt;room&gt; to get to &lt;room&gt;"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42757"></span>A705</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Elrond says it: 'elrond says "go north from beorns house to get to the great river".'</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42654.html">A69E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42680">Map</a></td>
+<td class="next">
+Next: <a href="42760.html">A708</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A7EA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42950.html">A7C6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42986">Map</a></td>
+<td class="next">
+Next: <a href="43034.html">A81A</a>
+</td>
+</tr>
+</table>
+<div class="description">A7EA: Character routine: Gollum waits for the answer</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Next time, Gollum looks for an order given to him by the player (<a href="35079.html">8907</a>): the answer must be said to him, as in SAY TO GOLLUM "NIGHT". The words of the order are searched for the answer word stored in the riddle's entry (the CPIR loop). If the answer is there, all is well. If not, or if the player said nothing: 'someone strangles you from behind.', and Bilbo is dead (<a href="36924.html">903C</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42986"></span>A7EA</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then just record that this would work, and return</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42989"></span>A7ED</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Gollum is no longer waiting for an answer...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42990"></span>A7EE</td>
+<td class="instruction">LD ($B5EA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42993"></span>A7F1</td>
+<td class="instruction">CALL <a href="35079.html">$8907</a></td>
+<td class="comment-1" rowspan="1">Take the order the player gave Gollum (SAY TO GOLLUM "...") off the orders buffer; HL points at it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42996"></span>A7F4</td>
+<td class="instruction">JR Z,$A809</td>
+<td class="comment-1" rowspan="1">Nothing was said to him: Bilbo is strangled</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42998"></span>A7F6</td>
+<td class="instruction">LD BC,$0018</td>
+<td class="comment-1" rowspan="1">Search the 24 bytes of the order...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43001"></span>A7F9</td>
+<td class="instruction">LD DE,($B5DF)</td>
+<td class="comment-1" rowspan="1">DE = the riddle entry chosen at the start of the game</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43005"></span>A7FD</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1">A = the low byte of the answer word (NIGHT or MAN)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43006"></span>A7FE</td>
+<td class="instruction">CPIR</td>
+<td class="comment-1" rowspan="1">Look for it in the order</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43008"></span>A800</td>
+<td class="instruction">JR NZ,$A809</td>
+<td class="comment-1" rowspan="1">Not there: Bilbo is strangled</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43010"></span>A802</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="3">Found: now check the high byte of the word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43011"></span>A803</td>
+<td class="instruction">LD A,(DE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43012"></span>A804</td>
+<td class="instruction">DEC DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43013"></span>A805</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Does the next byte of the order match it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43014"></span>A806</td>
+<td class="instruction">JR NZ,$A7FE</td>
+<td class="comment-1" rowspan="1">No: keep searching the rest of the order</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43016"></span>A808</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Yes: the answer was right, and Bilbo lives</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43017"></span>A809</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43020"></span>A80C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Make sure the player sees the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43022"></span>A80E</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43025"></span>A811</td>
+<td class="instruction">LD HL,$B0CD</td>
+<td class="comment-1" rowspan="2">"someone strangles you from behind."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43028"></span>A814</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43031"></span>A817</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Bilbo is dead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42950.html">A7C6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42986">Map</a></td>
+<td class="next">
+Next: <a href="43034.html">A81A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

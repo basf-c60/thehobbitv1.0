@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 95E4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38329.html">95B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38372">Map</a></td>
+<td class="next">
+Next: <a href="38392.html">95F8</a>
+</td>
+</tr>
+</table>
+<div class="description">95E4: Print a room's name or description</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Z is reset, HL is a description script and it is printed. Otherwise the three name words of the room (from offset 2 of the record at IX) are printed with <a href="40479.html">9E1F</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38372"></span>95E4</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Does the room have its own description script (rather than needing its name printed)?</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="38375"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="38406.html">9606</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38375"></span>95E7</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="1">A room's own name words start 2 bytes into its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38378"></span>95EA</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38380"></span>95EC</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Copy the room's record into IY as well...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38382"></span>95EE</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38384"></span>95F0</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1">...then move it on to the name words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38386"></span>95F2</td>
+<td class="instruction">CALL <a href="40479.html">$9E1F</a></td>
+<td class="comment-1" rowspan="1">Print the room's own name (as a noun with adjectives)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38389"></span>95F5</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="2">Restore the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38391"></span>95F7</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38329.html">95B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38372">Map</a></td>
+<td class="next">
+Next: <a href="38392.html">95F8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

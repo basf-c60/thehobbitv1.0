@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A2EC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41664.html">A2C0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41708">Map</a></td>
+<td class="next">
+Next: <a href="41750.html">A316</a>
+</td>
+</tr>
+</table>
+<div class="description">A2EC: Handler for the ring: TAKE OFF</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Taking the ring off (also done automatically when timer 6 runs out, <a href="43476.html">A9D4</a>). If the ring is visible it is not being worn: '&lt;actor&gt; is not wearing the ring.' Otherwise the ring and its wearer become visible again, the wearer's strength is multiplied by 4, and timer 6 is stopped.
+</div>
+<div class="paragraph">
+Because putting the ring on divided the strength by 4 with SRL and taking it off multiplies it by 4 with SLA, the two lowest bits are lost each time: a strength of 74, for example, comes back as 72. Each use of the ring can cost Bilbo up to 3 points of strength.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41708"></span>A2EC</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the wearer's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41712"></span>A2F0</td>
+<td class="instruction">LD IY,$C209</td>
+<td class="comment-1" rowspan="1">IY = the ring's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41716"></span>A2F4</td>
+<td class="instruction">BIT 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Is the ring visible (not being worn)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41720"></span>A2F8</td>
+<td class="instruction">LD HL,$AF66</td>
+<td class="comment-1" rowspan="1">"you are not wearing the ring."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41723"></span>A2FB</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Yes: say so</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41726"></span>A2FE</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41729"></span>A301</td>
+<td class="instruction">SET 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">The ring can be seen again...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41733"></span>A305</td>
+<td class="instruction">SET 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">...and so can the wearer...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41737"></span>A309</td>
+<td class="instruction">SLA (IX+$05)</td>
+<td class="comment-1" rowspan="2">...whose strength is multiplied by 4 (the bottom two bits lost on the way in are gone)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41741"></span>A30D</td>
+<td class="instruction">SLA (IX+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41745"></span>A311</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">Stop timer 6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41746"></span>A312</td>
+<td class="instruction">LD ($C99E),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41749"></span>A315</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41664.html">A2C0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41708">Map</a></td>
+<td class="next">
+Next: <a href="41750.html">A316</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

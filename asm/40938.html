@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9FEA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40926.html">9FDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40938">Map</a></td>
+<td class="next">
+Next: <a href="40952.html">9FF8</a>
+</td>
+</tr>
+</table>
+<div class="description">9FEA: Get the word for a direction</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns in DE the word for direction A, from the table at $A13E (NORTH, SOUTH, EAST, WEST, NORTHEAST ... UP, DOWN). The entry at $9FED looks up another table at HL.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Direction</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Word</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40938"></span>9FEA</td>
+<td class="instruction">LD HL,$A13E</td>
+<td class="comment-1" rowspan="1">HL = the table of direction words</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40941"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="41116.html">A09C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40941"></span>9FED</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">E = the direction (1-10)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40942"></span>9FEE</td>
+<td class="instruction">RES 7,E</td>
+<td class="comment-1" rowspan="2">...with any stray extra bit cleared</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40944"></span>9FF0</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40946"></span>9FF2</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">HL = this direction's own entry...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40947"></span>9FF3</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">...doubled, since each word reference is 2 bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40948"></span>9FF4</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="2">DE = the word, read from the table (low byte)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40949"></span>9FF5</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40950"></span>9FF6</td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-1" rowspan="2">...then the high byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40951"></span>9FF7</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40926.html">9FDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40938">Map</a></td>
+<td class="next">
+Next: <a href="40952.html">9FF8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

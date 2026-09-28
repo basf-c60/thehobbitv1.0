@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at AC71</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="44081.html">AC31</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#44145">Map</a></td>
+<td class="next">
+Next: <a href="46539.html">B5CB</a>
+</td>
+</tr>
+</table>
+<div class="description">AC71: Messages and scripts</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The game's messages, in the bytecode format interpreted by <a href="29396.html">72D4</a>. Each message below is labelled with its text, obtained by running the game's own message printer on it in an emulator. In the labels, 'you' stands for the actor, 'the thing' for the target of the command, 'the other' for the instrument, and 'word' for a word or object passed as a parameter; the real text changes with who is acting and on what ('you cleave his skull' / 'thorin cleaves your skull').
+</div>
+<div class="paragraph">
+There are about 180 messages. Almost every byte of this area belongs to a message that the program uses; the one exception is at $B4EF, a fuller description of the bewitched gloomy place ('a bewitched gloomy place surrounded by thick trees') that nothing refers to - room 25 is described by its name words instead.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44145"></span>AC71</td>
+<td class="instruction">DEFB $66,$6C,$61,$83,$4B,$8B,$EA,$20,$48,$45,$41,$44,$15</td>
+<td class="comment-1" rowspan="1">"but fall and hit your HEAD."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44158"></span>AC7E</td>
+<td class="instruction">DEFB $66,$6C,$61,$85,$EA,$8B,$EA,$B5,$C2</td>
+<td class="comment-1" rowspan="1">"but fall and smash your skull."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44167"></span>AC87</td>
+<td class="instruction">DEFB $6F,$69,$73,$89,$C5,$78,$8B,$DE,$20,$22,$20,$16</td>
+<td class="comment-1" rowspan="1">"i do not know the word ""</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44179"></span>AC93</td>
+<td class="instruction">DEFB $7D,$20,$3F,$14</td>
+<td class="comment-1" rowspan="1">"what ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44183"></span>AC97</td>
+<td class="instruction">DEFB $0D,$F7,$AC,$01,$2E,$0D</td>
+<td class="comment-1" rowspan="1">"you word. time passes..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44189"></span>AC9D</td>
+<td class="instruction">DEFB $FB,$87,$8A,$74,$2E,$2E,$15</td>
+<td class="comment-1" rowspan="1">"time passes..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44196"></span>ACA4</td>
+<td class="instruction">DEFB $6F,$69,$73,$89,$C5,$78,$8B,$A9,$20,$22,$01,$01,$01,$20,$22,$14</td>
+<td class="comment-1" rowspan="1">"i do not know the verb " word word word ""</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44212"></span>ACB4</td>
+<td class="instruction">DEFB $01,$01,$01,$00</td>
+<td class="comment-1" rowspan="1">"word word word what ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44216"></span>ACB8</td>
+<td class="instruction">DEFB $01,$01,$01,$7D,$20,$3F,$20,$16</td>
+<td class="comment-1" rowspan="1">"word word word what ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44224"></span>ACC0</td>
+<td class="instruction">DEFB $8B,$D1,$01,$20,$3F,$20,$16</td>
+<td class="comment-1" rowspan="1">"which word ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44231"></span>ACC7</td>
+<td class="instruction">DEFB $6F,$69,$73,$76,$00,$6E,$14</td>
+<td class="comment-1" rowspan="1">"i do not see the word here"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44238"></span>ACCE</td>
+<td class="instruction">DEFB $14,$6F,$76,$8A,$5D,$A6,$D5</td>
+<td class="comment-1" rowspan="1">"(end of the previous message, followed by a fragment used by it)"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44245"></span>ACD5</td>
+<td class="instruction">DEFB $0B,$F9,$01,$01,$01,$14</td>
+<td class="comment-1" rowspan="1">"i see nothing to word word word"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44251"></span>ACDB</td>
+<td class="instruction">DEFB $0B,$F3,$01,$01,$01,$00,$01,$01,$14</td>
+<td class="comment-1" rowspan="1">"i see nothing to word word word"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44260"></span>ACE4</td>
+<td class="instruction">DEFB $10,$73,$68,$72,$15</td>
+<td class="comment-1" rowspan="1">"you are not carrying it."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44265"></span>ACE9</td>
+<td class="instruction">DEFB $10,$68,$15</td>
+<td class="comment-1" rowspan="1">"you are carrying."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44268"></span>ACEC</td>
+<td class="instruction">DEFB $13,$68,$14</td>
+<td class="comment-1" rowspan="1">"is carrying"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44271"></span>ACEF</td>
+<td class="instruction">DEFB $61,$72,$C2,$D2,$8B,$46,$B8,$1E</td>
+<td class="comment-1" rowspan="1">"and it gets swept away."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44279"></span>ACF7</td>
+<td class="instruction">DEFB $07,$71,$7C,$83,$2B,$7B,$B3,$D8</td>
+<td class="comment-1" rowspan="1">"the thing is too heavy to lift."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44287"></span>ACFF</td>
+<td class="instruction">DEFB $10,$68,$7C,$BA,$4B</td>
+<td class="comment-1" rowspan="1">"you are carrying too much."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44292"></span>AD04</td>
+<td class="instruction">DEFB $10,$80,$51,$68,$07,$15</td>
+<td class="comment-1" rowspan="1">"you are already carrying the thing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44298"></span>AD0A</td>
+<td class="instruction">DEFB $7B,$78,$16</td>
+<td class="comment-1" rowspan="1">"to the"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44301"></span>AD0D</td>
+<td class="instruction">DEFB $09,$71,$7C,$B2,$BD</td>
+<td class="comment-1" rowspan="1">"the other is too full."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44306"></span>AD12</td>
+<td class="instruction">DEFB $72,$71,$B1,$8E</td>
+<td class="comment-1" rowspan="1">"it is dark."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44310"></span>AD16</td>
+<td class="instruction">DEFB $04,$71,$7C,$85,$E5,$82,$93,$06,$7B,$B2,$31</td>
+<td class="comment-1" rowspan="1">"the word is too small for you to enter."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44321"></span>AD21</td>
+<td class="instruction">DEFB $04,$71,$7C,$82,$BD,$82,$93,$06,$7B,$D2,$31,$15</td>
+<td class="comment-1" rowspan="1">"the word is too full for you to enter."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44333"></span>AD2D</td>
+<td class="instruction">DEFB $7E,$84,$B1,$8B,$C4,$CA,$7E,$80,$AF,$06,$88,$6A,$0E,$B5,$C2</td>
+<td class="comment-1" rowspan="1">"with one well placed blow you cleave his skull."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44348"></span>AD3C</td>
+<td class="instruction">DEFB $0C,$20,$56,$49,$4F,$4C,$45,$4E</td>
+<td class="comment-1" rowspan="3">"your VIOLENT attack almost kills the thingis."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44356"></span>AD44</td>
+<td class="instruction">DEFB $54,$80,$73,$87,$DD,$C3,$AC,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44364"></span>AD4C</td>
+<td class="instruction">DEFB $15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44365"></span>AD4D</td>
+<td class="instruction">DEFB $06,$82,$D8,$07,$60,$87,$45,$D1</td>
+<td class="comment-1" rowspan="3">"you give the thing a vicious cut in the ribs- his strength is failing fast."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44373"></span>AD55</td>
+<td class="instruction">DEFB $78,$70,$78,$85,$3D,$2D,$0E,$8B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44381"></span>AD5D</td>
+<td class="instruction">DEFB $2E,$71,$89,$02,$B2,$57</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44387"></span>AD63</td>
+<td class="instruction">DEFB $60,$84,$6E,$85,$D3,$CA,$25,$0E,$B3,$26</td>
+<td class="comment-1" rowspan="1">"a nasty slice misses his heart."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44397"></span>AD6D</td>
+<td class="instruction">DEFB $06,$85,$D3,$0E,$2D,$83,$16,$80</td>
+<td class="comment-1" rowspan="3">"you slice his- hand blood drips slowly to the ground."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44405"></span>AD75</td>
+<td class="instruction">DEFB $B3,$88,$CA,$85,$DF,$7B,$78,$B9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44413"></span>AD7D</td>
+<td class="instruction">DEFB $65</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44414"></span>AD7E</td>
+<td class="instruction">DEFB $06,$82,$D8,$07,$60,$84,$6E,$D5,$C7,$70,$78,$B3,$CD</td>
+<td class="comment-1" rowspan="1">"you give the thing a nasty slash in the leg."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44427"></span>AD8B</td>
+<td class="instruction">DEFB $06,$83,$4B,$07,$83,$1A,$75,$78</td>
+<td class="comment-1" rowspan="3">"you hit the thing hard on the shoulder- the thing staggers and almost falls."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44435"></span>AD93</td>
+<td class="instruction">DEFB $85,$A2,$2D,$07,$9B,$03,$61,$87</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44443"></span>AD9B</td>
+<td class="instruction">DEFB $DD,$92,$53,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44447"></span>AD9F</td>
+<td class="instruction">DEFB $60,$82,$57,$65,$89,$BF,$78,$8B,$DA,$84,$C3,$74,$07,$15</td>
+<td class="comment-1" rowspan="1">"a fast blow knocks the wind out of the thing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44461"></span>ADAD</td>
+<td class="instruction">DEFB $60,$82,$57,$86,$62,$8B,$40,$07</td>
+<td class="comment-1" rowspan="3">"a fast stroke sweeps the thing off his feet, but the thing is on guard in a moment."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44469"></span>ADB5</td>
+<td class="instruction">DEFB $84,$A3,$0E,$82,$61,$2C,$66,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44477"></span>ADBD</td>
+<td class="instruction">DEFB $75,$89,$6F,$70,$60,$BA,$29</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44484"></span>ADC4</td>
+<td class="instruction">DEFB $06,$83,$4B,$07,$7E,$60,$89,$4C</td>
+<td class="comment-1" rowspan="3">"you hit the thing with a glancing blow andleave the thing momentarily stunned."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44492"></span>ADCC</td>
+<td class="instruction">DEFB $65,$61,$83,$C8,$07,$8A,$2F,$B6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44500"></span>ADD4</td>
+<td class="instruction">DEFB $74</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44501"></span>ADD5</td>
+<td class="instruction">DEFB $06,$8B,$81,$07,$80,$7C,$2D,$07</td>
+<td class="comment-1" rowspan="3">"you thrust the thing back- the thing loseshis footing but recovers quickly."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44509"></span>ADDD</td>
+<td class="instruction">DEFB $99,$E8,$0E,$89,$35,$66,$9A,$A4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44517"></span>ADE5</td>
+<td class="instruction">DEFB $B5,$10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44519"></span>ADE7</td>
+<td class="instruction">DEFB $06,$8B,$4B,$88,$4F,$63,$0E,$80</td>
+<td class="comment-1" rowspan="3">"you swing broadside at his body but at thelast moment the thing jumps aside."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44527"></span>ADEF</td>
+<td class="instruction">DEFB $BF,$66,$63,$78,$89,$C9,$8A,$29</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44535"></span>ADF7</td>
+<td class="instruction">DEFB $07,$93,$A5,$B8,$0C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44540"></span>ADFC</td>
+<td class="instruction">DEFB $0C,$03,$8B,$40,$8A,$7A,$81,$34,$7B,$0E,$B1,$FF</td>
+<td class="comment-1" rowspan="1">"your word sweeps past close to his ear."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44552"></span>AE08</td>
+<td class="instruction">DEFB $06,$85,$C7,$63,$07,$66,$78,$65,$71,$B9,$A0</td>
+<td class="comment-1" rowspan="1">"you slash at the thing but the blow is ineffective."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44563"></span>AE13</td>
+<td class="instruction">DEFB $06,$88,$42,$0C,$03,$2C,$66,$11,$75,$B9,$6F</td>
+<td class="comment-1" rowspan="1">"you brandish your word, but the thing is on guard."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44574"></span>AE1E</td>
+<td class="instruction">DEFB $06,$8B,$4B,$82,$5B,$63,$07,$66</td>
+<td class="comment-1" rowspan="3">"you swing feebly at the thing but miss by a wide margin."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44582"></span>AE26</td>
+<td class="instruction">DEFB $8A,$25,$88,$5F,$60,$87,$81,$B9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44590"></span>AE2E</td>
+<td class="instruction">DEFB $FD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44591"></span>AE2F</td>
+<td class="instruction">DEFB $06,$8A,$B2,$8B,$8B,$2D,$06,$8B</td>
+<td class="comment-1" rowspan="3">"you seem tired- you stagger but valiantLY attempt another blow."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44599"></span>AE37</td>
+<td class="instruction">DEFB $03,$66,$87,$2C,$4C,$59,$88,$17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44607"></span>AE3F</td>
+<td class="instruction">DEFB $80,$5E,$B0,$AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44611"></span>AE43</td>
+<td class="instruction">DEFB $66,$78,$88,$CF,$71,$8B,$BB,$2E,$0E,$88,$A6,$71,$7C,$B6,$68</td>
+<td class="comment-1" rowspan="1">"but the effort is wasted. his defense is too strong."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44626"></span>AE52</td>
+<td class="instruction">DEFB $7F,$67,$83,$AC,$7E,$09,$15</td>
+<td class="comment-1" rowspan="1">"you cannot kill with the other."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44633"></span>AE59</td>
+<td class="instruction">DEFB $72,$CA,$AB,$80,$43,$A0,$5B</td>
+<td class="comment-1" rowspan="1">"it sails across and"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44640"></span>AE60</td>
+<td class="instruction">DEFB $83,$BF,$53,$75,$78,$8A,$6B,$B5,$AA</td>
+<td class="comment-1" rowspan="1">"landS on the other side."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44649"></span>AE69</td>
+<td class="instruction">DEFB $C2,$53,$89,$B1,$85,$9D,$74,$78,$8A,$6B,$B5,$AA</td>
+<td class="comment-1" rowspan="1">"falls just short of the other side."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44661"></span>AE75</td>
+<td class="instruction">DEFB $0B,$08,$66,$CA,$D4,$84,$C3,$B7,$C7</td>
+<td class="comment-1" rowspan="1">"landS in the boat. but slides out again."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44670"></span>AE7E</td>
+<td class="instruction">DEFB $83,$BF,$53,$70,$78,$B0,$B8</td>
+<td class="comment-1" rowspan="1">"landS in the boat."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44677"></span>AE85</td>
+<td class="instruction">DEFB $78,$80,$B8,$89,$54,$80,$43,$78</td>
+<td class="comment-1" rowspan="3">"the boat glides across the river and landSon this side."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44685"></span>AE8D</td>
+<td class="instruction">DEFB $85,$4E,$61,$83,$BF,$53,$75,$7A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44693"></span>AE95</td>
+<td class="instruction">DEFB $B5,$AA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44695"></span>AE97</td>
+<td class="instruction">DEFB $7E,$60,$89,$B5,$78,$80,$B8,$89</td>
+<td class="comment-1" rowspan="3">"with a lurch the boat glides across the river and landS on the other side."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44703"></span>AE9F</td>
+<td class="instruction">DEFB $54,$80,$43,$78,$85,$4E,$61,$02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44711"></span>AEA7</td>
+<td class="instruction">DEFB $B9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44712"></span>AEA8</td>
+<td class="instruction">DEFB $07,$71,$73,$70,$09,$15</td>
+<td class="comment-1" rowspan="1">"the thing is not in the other."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44718"></span>AEAE</td>
+<td class="instruction">DEFB $04,$71,$01,$15</td>
+<td class="comment-1" rowspan="1">"the word is word."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44722"></span>AEB2</td>
+<td class="instruction">DEFB $6F,$67,$69,$B6,$9F</td>
+<td class="comment-1" rowspan="1">"i cannot do that."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44727"></span>AEB7</td>
+<td class="instruction">DEFB $6F,$76,$8A,$5D,$B9,$89</td>
+<td class="comment-1" rowspan="1">"i see nothing here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44733"></span>AEBD</td>
+<td class="instruction">DEFB $83,$7C,$02,$11,$84,$AE,$02,$0D</td>
+<td class="comment-1" rowspan="4">"in the word there word"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44741"></span>AEC5</td>
+<td class="instruction">DEFB $88,$29,$02,$09,$8B,$9B,$02,$05</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44749"></span>AECD</td>
+<td class="instruction">DEFB $86,$D1,$44,$7B,$78,$01,$79,$01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44757"></span>AED5</td>
+<td class="instruction">DEFB $14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44758"></span>AED6</td>
+<td class="instruction">DEFB $04,$71,$68,$04,$15</td>
+<td class="comment-1" rowspan="1">"the word is carrying the word."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44763"></span>AEDB</td>
+<td class="instruction">DEFB $6F,$67,$82,$89,$07,$6D,$6E,$15</td>
+<td class="comment-1" rowspan="1">"i cannot follow the thing from here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44771"></span>AEE3</td>
+<td class="instruction">DEFB $10,$B1,$92</td>
+<td class="comment-1" rowspan="1">"you are dead."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44774"></span>AEE6</td>
+<td class="instruction">DEFB $06,$76,$8A,$5D,$8A,$F7,$B9,$89</td>
+<td class="comment-1" rowspan="1">"you see nothing special here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44782"></span>AEEE</td>
+<td class="instruction">DEFB $10</td>
+<td class="comment-1" rowspan="1">"you are in"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44783"></span>AEEF</td>
+<td class="instruction">DEFB $83,$7C,$16</td>
+<td class="comment-1" rowspan="1">"in"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44786"></span>AEF2</td>
+<td class="instruction">DEFB $06,$76,$16</td>
+<td class="comment-1" rowspan="1">"you see"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44789"></span>AEF5</td>
+<td class="instruction">DEFB $06,$8A,$AF,$20,$3A,$14</td>
+<td class="comment-1" rowspan="1">"you see :"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44795"></span>AEFB</td>
+<td class="instruction">DEFB $06,$85,$88,$20,$22,$16</td>
+<td class="comment-1" rowspan="1">"you say ""</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44801"></span>AF01</td>
+<td class="instruction">DEFB $20,$22,$2E,$14</td>
+<td class="comment-1" rowspan="1">""."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44805"></span>AF05</td>
+<td class="instruction">DEFB $79,$71,$00,$14</td>
+<td class="comment-1" rowspan="1">"there is the word"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44809"></span>AF09</td>
+<td class="instruction">DEFB $00,$C2</td>
+<td class="comment-1" rowspan="1">"the word enters."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44811"></span>AF0B</td>
+<td class="instruction">DEFB $31,$2E,$14</td>
+<td class="comment-1" rowspan="1">"1."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44814"></span>AF0E</td>
+<td class="instruction">DEFB $00,$C7,$EE,$15</td>
+<td class="comment-1" rowspan="1">"the word appears."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44818"></span>AF12</td>
+<td class="instruction">DEFB $8B,$AD,$88,$F1,$62,$3A,$16</td>
+<td class="comment-1" rowspan="1">"visible exits are:"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44825"></span>AF19</td>
+<td class="instruction">DEFB $7F,$D9,$85,$60,$BA,$55</td>
+<td class="comment-1" rowspan="1">"you hear a noise."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44831"></span>AF1F</td>
+<td class="instruction">DEFB $09,$69,$45,$53,$73,$89,$19,$7A,$B3,$F6</td>
+<td class="comment-1" rowspan="1">"the other doES not fit this lock."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44841"></span>AF29</td>
+<td class="instruction">DEFB $78,$84,$28,$6A,$C4,$B8,$2E,$14</td>
+<td class="comment-1" rowspan="1">"the magic door opens."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44849"></span>AF31</td>
+<td class="instruction">DEFB $78,$84,$28,$6A,$C1,$34,$2E,$14</td>
+<td class="comment-1" rowspan="1">"the magic door closes."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44857"></span>AF39</td>
+<td class="instruction">DEFB $8B,$58,$A7,$AC</td>
+<td class="comment-1" rowspan="1">"thank you"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44861"></span>AF3D</td>
+<td class="instruction">DEFB $7D,$27,$53,$7A,$20,$3F,$16</td>
+<td class="comment-1" rowspan="1">"what'S this ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44868"></span>AF44</td>
+<td class="instruction">DEFB $7F,$62,$C8,$C6,$60,$83,$03,$A9,$AE</td>
+<td class="comment-1" rowspan="1">"you are doing a great job"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44877"></span>AF4D</td>
+<td class="instruction">DEFB $89,$9B,$A7,$29</td>
+<td class="comment-1" rowspan="1">"hurry up"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44881"></span>AF51</td>
+<td class="instruction">DEFB $A3,$30</td>
+<td class="comment-1" rowspan="1">"hello"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44883"></span>AF53</td>
+<td class="instruction">DEFB $7A,$8B,$B8,$FB,$6F,$A3,$A9</td>
+<td class="comment-1" rowspan="1">"this was thrains key"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44890"></span>AF5A</td>
+<td class="instruction">DEFB $07,$C2,$53,$81,$C8,$60,$83,$61,$61,$CB,$A3,$15</td>
+<td class="comment-1" rowspan="1">"the thing falls down a hole and vanishes."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44902"></span>AF66</td>
+<td class="instruction">DEFB $10,$73,$87,$76,$49,$4E,$47,$07,$15</td>
+<td class="comment-1" rowspan="1">"you are not wearING the thing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44911"></span>AF6F</td>
+<td class="instruction">DEFB $09,$71,$80,$51,$86,$D1,$44,$15</td>
+<td class="comment-1" rowspan="1">"the other is already tieD."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44919"></span>AF77</td>
+<td class="instruction">DEFB $78,$87,$45,$87,$9E,$85,$70,$87,$FC,$7F,$61,$A9,$96</td>
+<td class="comment-1" rowspan="1">"the vicious warg run around you and howls"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44932"></span>AF84</td>
+<td class="instruction">DEFB $07,$71,$73,$86,$D1,$44,$15</td>
+<td class="comment-1" rowspan="1">"the thing is not tieD."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44939"></span>AF8B</td>
+<td class="instruction">DEFB $77,$86,$27,$53,$8B,$17,$CA,$15,$78,$80,$CD,$B7,$7A</td>
+<td class="comment-1" rowspan="1">"some spiderS start mending the broken web."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44952"></span>AF98</td>
+<td class="instruction">DEFB $7D,$69,$7F,$88,$F6,$84,$33,$7B,$69,$7E,$7A,$20,$3F,$16</td>
+<td class="comment-1" rowspan="1">"what do you expect me to do with this ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44966"></span>AFA6</td>
+<td class="instruction">DEFB $88,$09,$8A,$F3,$88,$09,$06,$8B</td>
+<td class="comment-1" rowspan="3">"as soon as you touch the river you fall asleep and gently float away."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44974"></span>AFAE</td>
+<td class="instruction">DEFB $93,$78,$85,$4E,$06,$6C,$88,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44982"></span>AFB6</td>
+<td class="instruction">DEFB $61,$82,$CC,$89,$26,$B8,$1E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44989"></span>AFBD</td>
+<td class="instruction">DEFB $8B,$CC,$27,$53,$78,$86,$AF,$20,$3F,$16</td>
+<td class="comment-1" rowspan="1">"where'S the thief ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44999"></span>AFC7</td>
+<td class="instruction">DEFB $82,$D2,$8B,$A0,$84,$C3,$74,$7A,$84,$B1,$2C,$86,$AF,$20,$21,$16</td>
+<td class="comment-1" rowspan="1">"get us out of this one, thief !"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45015"></span>AFD7</td>
+<td class="instruction">DEFB $86,$B8,$CA,$D0,$81,$C8,$61,$CB,$17,$CA,$C8,$87,$B4,$A2,$F3</td>
+<td class="comment-1" rowspan="1">"thorin sits down and starts singing about gold"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45030"></span>AFE6</td>
+<td class="instruction">DEFB $86,$B8,$A7,$5A</td>
+<td class="comment-1" rowspan="1">"thorin wait"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45034"></span>AFEA</td>
+<td class="instruction">DEFB $06,$6C,$88,$11,$15</td>
+<td class="comment-1" rowspan="1">"you fall asleep."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45039"></span>AFEF</td>
+<td class="instruction">DEFB $78,$86,$27,$87,$7A,$71,$85,$DF,$85,$F7,$A7,$AC</td>
+<td class="comment-1" rowspan="1">"the spider web is slowly smothering you"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45051"></span>AFFB</td>
+<td class="instruction">DEFB $78,$85,$E5,$81,$63,$83,$A9,$CA,$C1,$15</td>
+<td class="comment-1" rowspan="1">"the small curious key shatters."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45061"></span>B005</td>
+<td class="instruction">DEFB $80,$58,$82,$0E,$8B,$40,$BA,$7A</td>
+<td class="comment-1" rowspan="1">"an elf sweeps past."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45069"></span>B00D</td>
+<td class="instruction">DEFB $7F,$67,$8A,$9F,$07,$15</td>
+<td class="comment-1" rowspan="1">"you cannot reach the thing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45075"></span>B013</td>
+<td class="instruction">DEFB $10,$73,$68,$78,$B0,$C3</td>
+<td class="comment-1" rowspan="1">"you are not carrying the bow."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45081"></span>B019</td>
+<td class="instruction">DEFB $78,$80,$6B,$8A,$25,$45,$53,$09,$88,$5F,$60,$87,$81,$B9,$FD</td>
+<td class="comment-1" rowspan="1">"the arrow missES the other by a wide margin."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45096"></span>B028</td>
+<td class="instruction">DEFB $78,$80,$6B,$D3,$4B,$53,$07,$15</td>
+<td class="comment-1" rowspan="1">"the arrow hitS the thing."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45104"></span>B030</td>
+<td class="instruction">DEFB $10,$7C,$B0,$A2</td>
+<td class="comment-1" rowspan="1">"you are too big."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45108"></span>B034</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1">"the word evaporates."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45109"></span>B035</td>
+<td class="instruction">DEFB $C8,$E1,$15</td>
+<td class="comment-1" rowspan="1">"evaporates."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45112"></span>B038</td>
+<td class="instruction">DEFB $0C,$82,$B5,$89,$5A,$89,$7B,$D3,$AC,$45,$44,$06,$15</td>
+<td class="comment-1" rowspan="1">"your foul gluttony has killED you."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45125"></span>B045</td>
+<td class="instruction">DEFB $10,$85,$DF,$CA,$CC,$83,$92,$78,$B0,$BC</td>
+<td class="comment-1" rowspan="1">"you are slowly sinking into the bog."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45135"></span>B04F</td>
+<td class="instruction">DEFB $78,$6B,$C5,$88,$20,$22,$FB,$C4</td>
+<td class="comment-1" rowspan="5">"the dragon says " well thief your cunning has failed you this time. prepare to die " ."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45143"></span>B057</td>
+<td class="instruction">DEFB $86,$AF,$8B,$EA,$81,$71,$89,$7B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45151"></span>B05F</td>
+<td class="instruction">DEFB $88,$FC,$7F,$7A,$8B,$87,$2E,$8A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45159"></span>B067</td>
+<td class="instruction">DEFB $91,$7B,$88,$B5,$20,$22,$20,$2E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45167"></span>B06F</td>
+<td class="instruction">DEFB $14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45168"></span>B070</td>
+<td class="instruction">DEFB $78,$6B,$C5,$88,$20,$22,$F3,$77</td>
+<td class="comment-1" rowspan="5">"the dragon says " i may not be able to seeyou thief but i can still burn you. prepare to die " ."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45176"></span>B078</td>
+<td class="instruction">DEFB $8A,$0D,$73,$64,$87,$B0,$7B,$76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45184"></span>B080</td>
+<td class="instruction">DEFB $7F,$86,$AF,$66,$F3,$77,$80,$EB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45192"></span>B088</td>
+<td class="instruction">DEFB $8B,$1C,$80,$D3,$7F,$2E,$8A,$91</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45200"></span>B090</td>
+<td class="instruction">DEFB $7B,$88,$B5,$20,$22,$20,$2E,$14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45208"></span>B098</td>
+<td class="instruction">DEFB $70,$78,$88,$BE,$7F,$76,$78,$8A</td>
+<td class="comment-1" rowspan="3">"in the distance you see the shape of a monstrous dragon flying after you."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45216"></span>B0A0</td>
+<td class="instruction">DEFB $BC,$74,$60,$84,$49,$6B,$89,$2B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45224"></span>B0A8</td>
+<td class="instruction">DEFB $80,$49,$B7,$AC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45228"></span>B0AC</td>
+<td class="instruction">DEFB $78,$6B,$88,$AD,$61,$70,$60,$8B</td>
+<td class="comment-1" rowspan="3">"the dragon descends and in a terrific spout of flames burns you to a crisp."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45236"></span>B0B4</td>
+<td class="instruction">DEFB $50,$DA,$FE,$74,$82,$73,$C0,$D3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45244"></span>B0BC</td>
+<td class="instruction">DEFB $7F,$7B,$60,$88,$9A,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45250"></span>B0C2</td>
+<td class="instruction">DEFB $D2,$E2,$01,$6D,$00,$7B,$D2,$D2,$7B,$00,$16</td>
+<td class="comment-1" rowspan="1">"go word from the word to get to the word"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45261"></span>B0CD</td>
+<td class="instruction">DEFB $8A,$E3,$CB,$26,$7F,$6D,$B8,$29</td>
+<td class="comment-1" rowspan="1">"someone strangles you from behind."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45269"></span>B0D5</td>
+<td class="instruction">DEFB $07,$85,$88,$53,$20,$22,$FA,$52,$20,$22,$14</td>
+<td class="comment-1" rowspan="1">"the thing sayS " no ""</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45280"></span>B0E0</td>
+<td class="instruction">DEFB $72,$67,$64,$76,$4E,$2C,$67,$64</td>
+<td class="comment-1" rowspan="10">"it cannot be seeN, cannot be felt cannot be heard, cannot be smelt. it lies behind stars and under hills, and ..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45288"></span>B0E8</td>
+<td class="instruction">DEFB $89,$15,$0D,$F0,$EE,$64,$C9,$85</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45296"></span>B0F0</td>
+<td class="instruction">DEFB $2C,$67,$64,$8A,$DE,$2E,$0D,$F3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45304"></span>B0F8</td>
+<td class="instruction">DEFB $A2,$C9,$DB,$88,$29,$CB,$0F,$61</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45312"></span>B100</td>
+<td class="instruction">DEFB $8B,$9B,$83,$46,$2C,$0D,$F0,$5B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45320"></span>B108</td>
+<td class="instruction">DEFB $D2,$2C,$83,$61,$53,$72,$C2,$65</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45328"></span>B110</td>
+<td class="instruction">DEFB $2E,$0D,$F3,$A2,$C8,$75,$89,$1C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45336"></span>B118</td>
+<td class="instruction">DEFB $61,$C2,$89,$80,$49,$2C,$0D,$C8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45344"></span>B120</td>
+<td class="instruction">DEFB $D5,$89,$DF,$2C,$C3,$AC,$89,$D3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45352"></span>B128</td>
+<td class="instruction">DEFB $2E,$16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45354"></span>B12A</td>
+<td class="instruction">DEFB $88,$3C,$2C,$84,$17,$63,$7A,$21</td>
+<td class="comment-1" rowspan="3">"blimey, look at this!! can yer cook'EM?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45362"></span>B132</td>
+<td class="instruction">DEFB $21,$F0,$EB,$8B,$E7,$88,$8F,$27</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45370"></span>B13A</td>
+<td class="instruction">DEFB $45,$4D,$3F,$16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45374"></span>B13E</td>
+<td class="instruction">DEFB $8B,$E7,$80,$EB,$8B,$90,$2C,$66</td>
+<td class="comment-1" rowspan="3">"yer can try, but he wouldN'T make above a mouthfull"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45382"></span>B146</td>
+<td class="instruction">DEFB $89,$82,$8B,$E2,$4E,$27,$54,$89</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45390"></span>B14E</td>
+<td class="instruction">DEFB $F9,$87,$B9,$60,$AA,$3E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45396"></span>B154</td>
+<td class="instruction">DEFB $70,$60,$81,$27,$7E,$8B,$98,$86,$45,$A7,$01</td>
+<td class="comment-1" rowspan="1">"in a clearing with two stone trolls"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45407"></span>B15F</td>
+<td class="instruction">DEFB $10,$8B,$46,$82,$96,$87,$CC,$78,$B4,$F5</td>
+<td class="comment-1" rowspan="1">"you are swept forcefully against the portcullis."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45417"></span>B169</td>
+<td class="instruction">DEFB $79,$71,$60,$89,$EC,$81,$51,$61</td>
+<td class="comment-1" rowspan="6">"there is a loud crack and a hole appears about three feet from the ground. you are standing in front of the si..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45425"></span>B171</td>
+<td class="instruction">DEFB $60,$83,$61,$C7,$EE,$87,$B4,$8B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45433"></span>B179</td>
+<td class="instruction">DEFB $76,$82,$61,$6D,$78,$89,$65,$2E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45441"></span>B181</td>
+<td class="instruction">DEFB $0D,$F7,$AC,$62,$CB,$0A,$70,$89</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45449"></span>B189</td>
+<td class="instruction">DEFB $40,$74,$78,$85,$AA,$6A,$7B,$78</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45457"></span>B191</td>
+<td class="instruction">DEFB $F4,$0D,$F4,$52,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45462"></span>B196</td>
+<td class="instruction">DEFB $78,$83,$61,$CB,$A3,$15</td>
+<td class="comment-1" rowspan="1">"the hole vanishes."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45468"></span>B19C</td>
+<td class="instruction">DEFB $F6,$A3,$84,$28,$6A,$CB,$B4,$74,$82,$21,$C7,$F4,$15</td>
+<td class="comment-1" rowspan="1">"the magic door warns of elves approaching."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45481"></span>B1A9</td>
+<td class="instruction">DEFB $8B,$D1,$71,$78,$87,$E8,$86,$9F</td>
+<td class="comment-1" rowspan="5">"which is the animal that has four feet in the morning, two at midday and three in the evening ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45489"></span>B1B1</td>
+<td class="instruction">DEFB $89,$7B,$89,$3C,$82,$61,$70,$78</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45497"></span>B1B9</td>
+<td class="instruction">DEFB $CA,$3A,$2C,$8B,$98,$63,$8A,$1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45505"></span>B1C1</td>
+<td class="instruction">DEFB $61,$8B,$76,$70,$78,$88,$EA,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45513"></span>B1C9</td>
+<td class="instruction">DEFB $3F,$16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45515"></span>B1CB</td>
+<td class="instruction">DEFB $7D,$89,$7B,$72,$89,$62,$70,$89,$AB,$CA,$83,$20,$3F,$16</td>
+<td class="comment-1" rowspan="1">"what has it got in its pockets ?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45529"></span>B1D9</td>
+<td class="instruction">DEFB $8A,$4F,$88,$34,$8A,$98,$20,$22</td>
+<td class="comment-1" rowspan="4">"my birthday present " how did we lose it. my precious ""</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45537"></span>B1E1</td>
+<td class="instruction">DEFB $89,$93,$88,$B8,$8B,$C1,$89,$E8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45545"></span>B1E9</td>
+<td class="instruction">DEFB $72,$2E,$0D,$8A,$4F,$8A,$89,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45553"></span>B1F1</td>
+<td class="instruction">DEFB $22,$16</td>
+</tr>
+<tr>
+<td class="address-2"><span id="45555"></span>B1F3</td>
+<td class="instruction">DEFB $06,$67,$83,$A5,$84,$B4,$07,$6D,$6E,$15</td>
+<td class="comment-1" rowspan="1">"you cannot jump onto the thing from here."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45565"></span>B1FD</td>
+<td class="instruction">DEFB $88,$A3,$C8,$9F,$B0,$00</td>
+<td class="comment-1" rowspan="1">"day dawns."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45571"></span>B203</td>
+<td class="instruction">DEFB $06,$76,$77,$8A,$70,$88,$58,$82,$4F,$CB,$13,$63,$06,$15</td>
+<td class="comment-1" rowspan="1">"you see some pale bulbous eyes staring at you."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45585"></span>B211</td>
+<td class="instruction">DEFB $77,$86,$B4,$47,$C1,$EC,$6D,$87,$B9,$61,$CB,$21,$15</td>
+<td class="comment-1" rowspan="1">"some thinG drops from above and stings."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45598"></span>B21E</td>
+<td class="instruction">DEFB $7F,$62,$8B,$7B,$84,$B4,$78,$88,$22,$74,$78,$84,$13,$B3,$BB</td>
+<td class="comment-1" rowspan="1">"you are thrown onto the bank of the long lake."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45613"></span>B22D</td>
+<td class="instruction">DEFB $20,$20,$20,$20,$20,$EA,$5D</td>
+<td class="comment-1" rowspan="1">"nothing"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45620"></span>B234</td>
+<td class="instruction">DEFB $8B,$17,$20,$54,$41,$50,$45,$86</td>
+<td class="comment-1" rowspan="3">"start TAPE then PRESS ANY key."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45628"></span>B23C</td>
+<td class="instruction">DEFB $A6,$20,$50,$52,$45,$53,$53,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45636"></span>B244</td>
+<td class="instruction">DEFB $41,$4E,$59,$B3,$A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45641"></span>B249</td>
+<td class="instruction">DEFB $54,$41,$50,$45,$20,$45,$52,$52</td>
+<td class="comment-1" rowspan="6">"TAPE ERROR - hit ANY key to RESTART PROGRAM."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45649"></span>B251</td>
+<td class="instruction">DEFB $4F,$52,$20,$2D,$20,$20,$20,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45657"></span>B259</td>
+<td class="instruction">DEFB $83,$4B,$20,$41,$4E,$59,$83,$A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45665"></span>B261</td>
+<td class="instruction">DEFB $7B,$20,$52,$45,$53,$54,$41,$52</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45673"></span>B269</td>
+<td class="instruction">DEFB $54,$20,$50,$52,$4F,$47,$52,$41</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45681"></span>B271</td>
+<td class="instruction">DEFB $4D,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45683"></span>B273</td>
+<td class="instruction">DEFB $54,$41,$50,$45,$20,$45,$52,$52</td>
+<td class="comment-1" rowspan="5">"TAPE ERROR - hit ANY key to CONTINUE."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45691"></span>B27B</td>
+<td class="instruction">DEFB $4F,$52,$20,$2D,$20,$20,$20,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45699"></span>B283</td>
+<td class="instruction">DEFB $83,$4B,$20,$41,$4E,$59,$83,$A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45707"></span>B28B</td>
+<td class="instruction">DEFB $7B,$20,$43,$4F,$4E,$54,$49,$4E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45715"></span>B293</td>
+<td class="instruction">DEFB $55,$45,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45718"></span>B296</td>
+<td class="instruction">DEFB $52,$45,$57,$49,$4E,$44,$61,$20</td>
+<td class="comment-1" rowspan="7">"REWIND and PREPARE TAPE for VERIFICATION -- then hit ANY key."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45726"></span>B29E</td>
+<td class="instruction">DEFB $50,$52,$45,$50,$41,$52,$45,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45734"></span>B2A6</td>
+<td class="instruction">DEFB $54,$41,$50,$45,$82,$93,$20,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45742"></span>B2AE</td>
+<td class="instruction">DEFB $20,$20,$20,$56,$45,$52,$49,$46</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45750"></span>B2B6</td>
+<td class="instruction">DEFB $49,$43,$41,$54,$49,$4F,$4E,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45758"></span>B2BE</td>
+<td class="instruction">DEFB $20,$2D,$2D,$86,$A6,$83,$4B,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45766"></span>B2C6</td>
+<td class="instruction">DEFB $41,$4E,$59,$B3,$A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45771"></span>B2CB</td>
+<td class="instruction">DEFB $0D,$0D,$0D,$60,$20,$43,$48,$45</td>
+<td class="comment-1" rowspan="16">"a CHEERING CROWD of DWARVES, HOBBITS and elves appears. LED by gandalf THEY carry you off into the SUNSET, PRO..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45779"></span>B2D3</td>
+<td class="instruction">DEFB $45,$52,$49,$4E,$47,$20,$43,$52</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45787"></span>B2DB</td>
+<td class="instruction">DEFB $4F,$57,$44,$74,$20,$44,$57,$41</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45795"></span>B2E3</td>
+<td class="instruction">DEFB $52,$56,$45,$53,$2C,$20,$48,$4F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45803"></span>B2EB</td>
+<td class="instruction">DEFB $42,$42,$49,$54,$53,$61,$82,$21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45811"></span>B2F3</td>
+<td class="instruction">DEFB $C7,$EE,$2E,$20,$4C,$45,$44,$88</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45819"></span>B2FB</td>
+<td class="instruction">DEFB $5F,$82,$C1,$20,$54,$48,$45,$59</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45827"></span>B303</td>
+<td class="instruction">DEFB $81,$0D,$7F,$84,$A3,$83,$92,$78</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45835"></span>B30B</td>
+<td class="instruction">DEFB $20,$53,$55,$4E,$53,$45,$54,$2C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45843"></span>B313</td>
+<td class="instruction">DEFB $20,$50,$52,$4F,$43,$4C,$41,$49</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45851"></span>B31B</td>
+<td class="instruction">DEFB $4D,$49,$4E,$47,$7F,$20,$20,$48</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45859"></span>B323</td>
+<td class="instruction">DEFB $45,$52,$4F,$74,$20,$48,$45,$52</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45867"></span>B32B</td>
+<td class="instruction">DEFB $4F,$45,$53,$61,$20,$4D,$41,$53</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45875"></span>B333</td>
+<td class="instruction">DEFB $54,$45,$52,$20,$41,$44,$56,$45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45883"></span>B33B</td>
+<td class="instruction">DEFB $4E,$54,$55,$52,$45,$20,$21,$21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45891"></span>B343</td>
+<td class="instruction">DEFB $21,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45893"></span>B345</td>
+<td class="instruction">DEFB $7F,$89,$7E,$20,$4D,$41,$53,$54,$45,$52,$45,$44,$20,$16</td>
+<td class="comment-1" rowspan="1">"you have MASTERED"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45907"></span>B353</td>
+<td class="instruction">DEFB $25,$74,$7A,$B7,$BE</td>
+<td class="comment-1" rowspan="1">"% of this adventure."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45912"></span>B358</td>
+<td class="instruction">DEFB $20,$59,$4F,$55,$27,$52,$45,$20</td>
+<td class="comment-1" rowspan="3">"YOU'RE DOING FINE."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45920"></span>B360</td>
+<td class="instruction">DEFB $44,$4F,$49,$4E,$47,$20,$46,$49</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45928"></span>B368</td>
+<td class="instruction">DEFB $4E,$45,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45931"></span>B36B</td>
+<td class="instruction">DEFB $60,$87,$01,$81,$C4,$20,$4E,$45,$45,$44,$53,$60,$87,$01,$B3,$A9</td>
+<td class="comment-1" rowspan="1">"a trolls door NEEDS a trolls key."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45947"></span>B37B</td>
+<td class="instruction">DEFB $82,$21,$62,$20,$47,$4F,$4F,$44,$63,$85,$34,$49,$4E,$47,$B6,$89</td>
+<td class="comment-1" rowspan="1">"elves are GOOD at readING symbols."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45963"></span>B38B</td>
+<td class="instruction">DEFB $60,$87,$90,$20,$53,$48,$4F,$55</td>
+<td class="comment-1" rowspan="5">"a window SHOULD be no OBSTACLE to a thief with FRIENDS."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45971"></span>B393</td>
+<td class="instruction">DEFB $4C,$44,$64,$8A,$52,$20,$4F,$42</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45979"></span>B39B</td>
+<td class="instruction">DEFB $53,$54,$41,$43,$4C,$45,$7B,$60</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45987"></span>B3A3</td>
+<td class="instruction">DEFB $86,$AF,$7E,$20,$46,$52,$49,$45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45995"></span>B3AB</td>
+<td class="instruction">DEFB $4E,$44,$53,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="45999"></span>B3AF</td>
+<td class="instruction">DEFB $80,$B8,$53,$80,$EB,$83,$22,$2E,$F4,$17,$B0,$FD</td>
+<td class="comment-1" rowspan="1">"boatS can help. look carefully."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46011"></span>B3BB</td>
+<td class="instruction">DEFB $87,$5A,$87,$FC,$61,$8B,$87,$8B,$EA,$20,$45,$58,$49,$54,$B0,$FD</td>
+<td class="comment-1" rowspan="1">"wait around and time your EXIT carefully."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46027"></span>B3CB</td>
+<td class="instruction">DEFB $20,$54,$49,$4D,$49,$4E,$47,$71</td>
+<td class="comment-1" rowspan="4">"TIMING is CRITICAL, REMEMBER barrelS float."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46035"></span>B3D3</td>
+<td class="instruction">DEFB $20,$43,$52,$49,$54,$49,$43,$41</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46043"></span>B3DB</td>
+<td class="instruction">DEFB $4C,$2C,$20,$52,$45,$4D,$45,$4D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46051"></span>B3E3</td>
+<td class="instruction">DEFB $42,$45,$52,$80,$84,$53,$B9,$26</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46059"></span>B3EB</td>
+<td class="instruction">DEFB $87,$5A,$60,$20,$57,$48,$49,$4C,$45,$15</td>
+<td class="comment-1" rowspan="1">"wait a WHILE."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46069"></span>B3F5</td>
+<td class="instruction">DEFB $86,$90,$20,$43,$41,$52,$45,$7B</td>
+<td class="comment-1" rowspan="3">"take CARE to leave at the RIGHT time."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46077"></span>B3FD</td>
+<td class="instruction">DEFB $83,$C8,$63,$78,$20,$52,$49,$47</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46085"></span>B405</td>
+<td class="instruction">DEFB $48,$54,$BB,$87</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46089"></span>B409</td>
+<td class="instruction">DEFB $60,$20,$4C,$49,$56,$49,$4E,$47</td>
+<td class="comment-1" rowspan="3">"a LIVING dragon is DEADLY, look to bard."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46097"></span>B411</td>
+<td class="instruction">DEFB $6B,$71,$20,$44,$45,$41,$44,$4C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46105"></span>B419</td>
+<td class="instruction">DEFB $59,$2C,$84,$17,$7B,$B0,$80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46112"></span>B420</td>
+<td class="instruction">DEFB $20,$44,$4F,$4E,$27,$54,$20,$53,$54,$41,$59,$6E,$7C,$B4,$13</td>
+<td class="comment-1" rowspan="1">"DON'T STAY here too long."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46127"></span>B42F</td>
+<td class="instruction">DEFB $87,$5A,$82,$93,$78,$20,$4E,$45</td>
+<td class="comment-1" rowspan="3">"wait for the NEW day DAWNING."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46135"></span>B437</td>
+<td class="instruction">DEFB $57,$88,$A3,$20,$44,$41,$57,$4E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46143"></span>B43F</td>
+<td class="instruction">DEFB $49,$4E,$47,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46147"></span>B443</td>
+<td class="instruction">DEFB $79,$DA,$B2,$7B,$64,$77,$86,$89</td>
+<td class="comment-1" rowspan="3">"there seem to be some symbols on it but you cannot read them."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46155"></span>B44B</td>
+<td class="instruction">DEFB $75,$72,$66,$06,$67,$85,$34,$BB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46163"></span>B453</td>
+<td class="instruction">DEFB $5D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46164"></span>B454</td>
+<td class="instruction">DEFB $7F,$76,$60,$82,$57,$82,$82,$80</td>
+<td class="comment-1" rowspan="3">"you see a fast flowing black river not very wide across."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46172"></span>B45C</td>
+<td class="instruction">DEFB $A5,$85,$4E,$73,$87,$41,$87,$81</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46180"></span>B464</td>
+<td class="instruction">DEFB $B0,$43</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46182"></span>B466</td>
+<td class="instruction">DEFB $60,$81,$3F,$87,$07,$83,$DE,$A3,$0D</td>
+<td class="comment-1" rowspan="1">"a comfortable tunnel like hall"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46191"></span>B46F</td>
+<td class="instruction">DEFB $60,$82,$DC,$82,$2C,$83,$BF,$7E,$81,$E1,$83,$46,$A7,$D3</td>
+<td class="comment-1" rowspan="1">"a gloomy empty land with dreary hills ahead"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46205"></span>B47D</td>
+<td class="instruction">DEFB $60,$83,$35,$84,$D8,$7E,$87,$01,$89,$31,$84,$FF,$53,$16</td>
+<td class="comment-1" rowspan="1">"a hidden path with trolls foot printS"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46219"></span>B48B</td>
+<td class="instruction">DEFB $78,$87,$01,$A1,$12</td>
+<td class="comment-1" rowspan="1">"the trolls cave"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46224"></span>B490</td>
+<td class="instruction">DEFB $60,$83,$1A,$81,$85,$84,$D8,$70,$78,$84,$44,$A4,$5A</td>
+<td class="comment-1" rowspan="1">"a hard dangerous path in the misty mountains"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46237"></span>B49D</td>
+<td class="instruction">DEFB $60,$84,$68,$D4,$EA,$7E,$60,$81</td>
+<td class="comment-1" rowspan="3">"a narrow place with a dreadful drop into adim valley"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46245"></span>B4A5</td>
+<td class="instruction">DEFB $D9,$81,$EC,$83,$92,$60,$88,$BB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46253"></span>B4AD</td>
+<td class="instruction">DEFB $A7,$33</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46255"></span>B4AF</td>
+<td class="instruction">DEFB $60,$84,$68,$81,$85,$A4,$D8</td>
+<td class="comment-1" rowspan="1">"a narrow dangerous path"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46262"></span>B4B6</td>
+<td class="instruction">DEFB $60,$83,$C3,$81,$F0,$81,$12,$8B,$D1,$71,$85,$20,$A1,$3F</td>
+<td class="comment-1" rowspan="1">"a large dry cave which is quite comfortable"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46276"></span>B4C4</td>
+<td class="instruction">DEFB $60,$80,$A2,$81,$16,$7E,$86,$DB</td>
+<td class="comment-1" rowspan="3">"a big cavern with torchES along the wallS"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46284"></span>B4CC</td>
+<td class="instruction">DEFB $45,$53,$87,$E3,$78,$87,$5E,$53</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46292"></span>B4D4</td>
+<td class="instruction">DEFB $16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46293"></span>B4D5</td>
+<td class="instruction">DEFB $78,$88,$4A,$74,$60,$81,$96,$81,$8E,$8B,$9B,$89,$65,$A3,$BB</td>
+<td class="comment-1" rowspan="1">"the brink of a deep dark under ground lake"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46308"></span>B4E4</td>
+<td class="instruction">DEFB $78,$82,$EC,$A2,$C8</td>
+<td class="comment-1" rowspan="1">"the goblins gate"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46313"></span>B4E9</td>
+<td class="instruction">DEFB $78,$82,$C8,$7B,$A4,$3C</td>
+<td class="comment-1" rowspan="1">"the gate to mirkwood"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46319"></span>B4EF</td>
+<td class="instruction">DEFB $60,$80,$99,$82,$DC,$84,$EA,$8B</td>
+<td class="comment-1" rowspan="3">"a bewitched gloomy place surrounded by thick trees (not used)"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46327"></span>B4F7</td>
+<td class="instruction">DEFB $36,$88,$5F,$86,$AA,$C6,$F0,$A0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46335"></span>B4FF</td>
+<td class="instruction">DEFB $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46336"></span>B500</td>
+<td class="instruction">DEFB $60,$84,$EA,$74,$80,$A5,$86,$27,$53,$16</td>
+<td class="comment-1" rowspan="1">"a place of black spiderS"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46346"></span>B50A</td>
+<td class="instruction">DEFB $60,$82,$A4,$74,$86,$98,$85,$F7,$C6,$F0,$16</td>
+<td class="comment-1" rowspan="1">"a forest of tangled smothering trees"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46357"></span>B515</td>
+<td class="instruction">DEFB $60,$4E,$82,$26,$81,$27,$7E,$83,$D0,$89,$65,$61,$A4,$00</td>
+<td class="comment-1" rowspan="1">"aN elvish clearing with levelled ground and logs"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46371"></span>B523</td>
+<td class="instruction">DEFB $60,$81,$8E,$81,$F3,$70,$78,$82,$17,$A3,$11</td>
+<td class="comment-1" rowspan="1">"a dark dungeon in the elvenkings halls"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46382"></span>B52E</td>
+<td class="instruction">DEFB $78,$81,$1C,$8B,$CC,$78,$83,$B2</td>
+<td class="comment-1" rowspan="3">"the cellar where the king keeps his barrelS of wine"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46390"></span>B536</td>
+<td class="instruction">DEFB $89,$BA,$89,$90,$80,$84,$53,$74</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46398"></span>B53E</td>
+<td class="instruction">DEFB $A7,$96</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46400"></span>B540</td>
+<td class="instruction">DEFB $60,$87,$A6,$86,$E0,$70,$78,$8A,$19,$74,$84,$13,$A3,$BB</td>
+<td class="comment-1" rowspan="1">"a wooden town in the middle of long lake"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46414"></span>B54E</td>
+<td class="instruction">DEFB $60,$86,$68,$85,$4E,$3A,$78,$88</td>
+<td class="comment-1" rowspan="3">"a strong river: the current is now too strong to move against"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46422"></span>B556</td>
+<td class="instruction">DEFB $93,$71,$8A,$64,$7C,$86,$68,$7B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46430"></span>B55E</td>
+<td class="instruction">DEFB $8A,$47,$A7,$CC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46434"></span>B562</td>
+<td class="instruction">DEFB $60,$80,$AA,$80,$8A,$83,$BF,$86,$9F,$8B,$B8,$8A,$67,$A3,$08</td>
+<td class="comment-1" rowspan="1">"a bleak barren land that was once green"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46449"></span>B571</td>
+<td class="instruction">DEFB $78,$85,$6B,$74,$78,$86,$E0,$74,$A1,$81</td>
+<td class="comment-1" rowspan="1">"the ruins of the town of dale"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46459"></span>B57B</td>
+<td class="instruction">DEFB $78,$89,$40,$82,$C8,$74,$78,$84,$0D,$A4,$52</td>
+<td class="comment-1" rowspan="1">"the front gate of the lonely mountain"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46470"></span>B586</td>
+<td class="instruction">DEFB $78,$87,$7D,$85,$AA,$74,$A5,$25</td>
+<td class="comment-1" rowspan="1">"the west side of ravenhill"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46478"></span>B58E</td>
+<td class="instruction">DEFB $78,$83,$11,$8B,$CC,$78,$6B,$C5,$CE,$16</td>
+<td class="comment-1" rowspan="1">"the halls where the dragon sleeps"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46488"></span>B598</td>
+<td class="instruction">DEFB $60,$83,$E7,$86,$40,$80,$90,$2C</td>
+<td class="comment-1" rowspan="3">"a little steep bay, still and quiet, with an over hanging cliff"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46496"></span>B5A0</td>
+<td class="instruction">DEFB $8B,$1C,$61,$85,$17,$2C,$7E,$80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46504"></span>B5A8</td>
+<td class="instruction">DEFB $58,$84,$CD,$89,$74,$A8,$70</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46511"></span>B5AF</td>
+<td class="instruction">DEFB $60,$85,$F1,$86,$4A,$A4,$D1</td>
+<td class="comment-1" rowspan="1">"a smooth straight passage"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46518"></span>B5B6</td>
+<td class="instruction">DEFB $78,$84,$0D,$A4,$52</td>
+<td class="comment-1" rowspan="1">"the lonely mountain"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46523"></span>B5BB</td>
+<td class="instruction">DEFB $78,$87,$7D,$02,$04</td>
+<td class="comment-1" rowspan="1">"the west bank of a black river"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46528"></span>B5C0</td>
+<td class="instruction">DEFB $78,$82,$02,$88,$22,$74,$60,$80,$A5,$A5,$4E</td>
+<td class="comment-1" rowspan="1">"the east bank of a black river"</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="44081.html">AC31</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#44145">Map</a></td>
+<td class="next">
+Next: <a href="46539.html">B5CB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

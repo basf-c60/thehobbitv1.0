@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at C6CC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50863.html">C6AF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50892">Map</a></td>
+<td class="next">
+Next: <a href="50905.html">C6D9</a>
+</td>
+</tr>
+</table>
+<div class="description">C6CC: Room-entry handler: the forest (rooms 2 and 3)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called when Bilbo enters the forest road (room 2) or the forest (room 3). It records the room he has just entered (from $8D17, set by <a href="36121.html">8D19</a>) in $B5E4, and starts the 'pale bulbous eyes' timer at <a href="51571.html#51627">C9AB</a> by copying its reload value (4) into its count.
+</div>
+<div class="paragraph">
+The rest of the mechanism is in <a href="43539.html">AA13</a> and <a href="43566.html">AA2E</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50892"></span>C6CC</td>
+<td class="instruction">LD A,($8D17)</td>
+<td class="comment-1" rowspan="1">Remember which room the timer started in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50895"></span>C6CF</td>
+<td class="instruction">LD ($B5E4),A</td>
+<td class="comment-1" rowspan="1">Store A in the room where the eyes timer started</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50898"></span>C6D2</td>
+<td class="instruction">LD A,($C9AB)</td>
+<td class="comment-1" rowspan="1">Start the eyes timer (count = 4)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50901"></span>C6D5</td>
+<td class="instruction">LD ($C9AC),A</td>
+<td class="comment-1" rowspan="1">Store A in timer 8's count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50904"></span>C6D8</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50863.html">C6AF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50892">Map</a></td>
+<td class="next">
+Next: <a href="50905.html">C6D9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

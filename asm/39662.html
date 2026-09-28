@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9AEE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39644.html">9ADC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39662">Map</a></td>
+<td class="next">
+Next: <a href="39684.html">9B04</a>
+</td>
+</tr>
+</table>
+<div class="description">9AEE: Get the next entry of a 3-byte table</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Moves IX on to the next 3-byte entry of a table such as the object index (<a href="48979.html">BF53</a>), returning the key in A and the address it holds in IY. Returns with Z set at the end of the table ($FF). The alternate registers are used so that BC, DE and HL are preserved.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39662"></span>9AEE</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch to the alternate registers, so this does not disturb the caller's own BC, DE and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39663"></span>9AEF</td>
+<td class="instruction">LD DE,$0003</td>
+<td class="comment-1" rowspan="1">DE = 3, the size of one entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39666"></span>9AF2</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">Move IX on to the next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39668"></span>9AF4</td>
+<td class="instruction">LD D,(IX+$02)</td>
+<td class="comment-1" rowspan="2">DE = the 16-bit value stored in this entry (e.g. a record address)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39671"></span>9AF7</td>
+<td class="instruction">LD E,(IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39674"></span>9AFA</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">...moved into IY for the caller to use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39675"></span>9AFB</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39677"></span>9AFD</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = this entry's own key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39680"></span>9B00</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it the table's $FF terminator?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39682"></span>9B02</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch back to the caller's own registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39683"></span>9B03</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z set means the terminator was reached; NZ means a genuine entry was found</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39644.html">9ADC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39662">Map</a></td>
+<td class="next">
+Next: <a href="39684.html">9B04</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

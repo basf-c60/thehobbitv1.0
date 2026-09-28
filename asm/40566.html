@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9E76</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40561.html">9E71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40566">Map</a></td>
+<td class="next">
+Next: <a href="40595.html">9E93</a>
+</td>
+</tr>
+</table>
+<div class="description">9E76: Find the exit that leads to a room</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the actor's room for an exit whose destination (byte 2) is room A; see <a href="40561.html">9E71</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40566"></span>9E76</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">FIND EXIT TO A ROOM: save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40567"></span>9E77</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="1">2 picks out an exit's DESTINATION byte instead</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="40569"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="40561.html">9E71</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40569"></span>9E79</td>
+<td class="instruction">LD ($9E8B),A</td>
+<td class="comment-1" rowspan="1">Poke that choice into the instruction below, so the very same code can compare either byte depending on which entry point was used</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40572"></span>9E7C</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40573"></span>9E7D</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Save the caller's BC and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40574"></span>9E7E</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40576"></span>9E80</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the door (or destination room) we are looking for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40577"></span>9E81</td>
+<td class="instruction">CALL <a href="40414.html">$9DDE</a></td>
+<td class="comment-1" rowspan="1">IX = the start of the actor's room's exits</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40580"></span>9E84</td>
+<td class="instruction">CALL <a href="39662.html">$9AEE</a></td>
+<td class="comment-1" rowspan="1">Look at the next exit; Z set once there are no more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40583"></span>9E87</td>
+<td class="instruction">JR Z,$9E8F</td>
+<td class="comment-1" rowspan="1">No more exits: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40585"></span>9E89</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1">A = this exit's door, or its destination, whichever this call was asked to check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40588"></span>9E8C</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Does it match?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40589"></span>9E8D</td>
+<td class="instruction">JR NZ,$9E84</td>
+<td class="comment-1" rowspan="1">No: try the next exit</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40591"></span>9E8F</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="3">Found it (or ran out): restore the caller's IY and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40593"></span>9E91</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40594"></span>9E92</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40561.html">9E71</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40566">Map</a></td>
+<td class="next">
+Next: <a href="40595.html">9E93</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

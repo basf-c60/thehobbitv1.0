@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 894D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35079.html">8907</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35149">Map</a></td>
+<td class="next">
+Next: <a href="35172.html">8964</a>
+</td>
+</tr>
+</table>
+<div class="description">894D: Cancel a character's orders</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Clears every slot of the orders buffer (<a href="46632.html">B628</a>) that is addressed to character A. Used when a character cannot carry out an order and when a character dies (<a href="38621.html">96DD</a>).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35149"></span>894D</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Save HL, DE and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35150"></span>894E</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35151"></span>894F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35152"></span>8950</td>
+<td class="instruction">LD HL,$B628</td>
+<td class="comment-1" rowspan="1">HL = the start of the orders buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35155"></span>8953</td>
+<td class="instruction">LD DE,$0019</td>
+<td class="comment-1" rowspan="1">DE = 25, the size of one slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35158"></span>8956</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="1">Eight slots to check</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35160"></span>8958</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Is this slot addressed to character A?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35161"></span>8959</td>
+<td class="instruction">JR NZ,$895D</td>
+<td class="comment-1" rowspan="1">No: leave it alone</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35163"></span>895B</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-1" rowspan="1">Yes: free the slot</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35165"></span>895D</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Move on to the next slot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35166"></span>895E</td>
+<td class="instruction">DJNZ $8958</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35168"></span>8960</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="4">Restore BC, DE and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35169"></span>8961</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35170"></span>8962</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35171"></span>8963</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35079.html">8907</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35149">Map</a></td>
+<td class="next">
+Next: <a href="35172.html">8964</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

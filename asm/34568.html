@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8708</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34541.html">86ED</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34568">Map</a></td>
+<td class="next">
+Next: <a href="34629.html">8745</a>
+</td>
+</tr>
+</table>
+<div class="description">8708: Find the next candidate instrument</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+As <a href="34492.html">86BC</a>, for the instrument; the position is kept at $8341, and the candidate goes into $B5DA.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34568"></span>8708</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Assume reach does not matter, for now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34569"></span>8709</td>
+<td class="instruction">LD ($B5FF),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34572"></span>870C</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34574"></span>870E</td>
+<td class="instruction">LD IX,($8341)</td>
+<td class="comment-1" rowspan="1">IX = where the instrument search last left off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34578"></span>8712</td>
+<td class="instruction">LD A,($B5F0)</td>
+<td class="comment-1" rowspan="2">Is the instrument actually meant to be a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34581"></span>8715</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34582"></span>8716</td>
+<td class="instruction">JR Z,$873A</td>
+<td class="comment-1" rowspan="1">Yes: search rooms instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34584"></span>8718</td>
+<td class="instruction">LD IY,$9D2E</td>
+<td class="comment-1" rowspan="1">No: IY = the object-search routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34588"></span>871C</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="3">A = the action's own filter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34591"></span>871F</td>
+<td class="instruction">AND $03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34593"></span>8721</td>
+<td class="instruction">LD ($B600),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34596"></span>8724</td>
+<td class="instruction">CALL <a href="34629.html">$8745</a></td>
+<td class="comment-1" rowspan="2">Find the next candidate object for which it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34599"></span>8727</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34601"></span>8729</td>
+<td class="instruction">LD ($8341),IX</td>
+<td class="comment-1" rowspan="1">Remember where the search has got to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34605"></span>872D</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34607"></span>872F</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save the result for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34608"></span>8730</td>
+<td class="instruction">LD A,($B60D)</td>
+<td class="comment-1" rowspan="3">Does this particular action say reach does not matter?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34611"></span>8733</td>
+<td class="instruction">AND $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34613"></span>8735</td>
+<td class="instruction">LD ($B5FF),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34616"></span>8738</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">Restore the result</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34617"></span>8739</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34618"></span>873A</td>
+<td class="instruction">LD IY,$9DE9</td>
+<td class="comment-1" rowspan="1">Rooms: IY = the room-search routine instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34622"></span>873E</td>
+<td class="instruction">CALL <a href="34629.html">$8745</a></td>
+<td class="comment-1" rowspan="3">Find the next candidate room for which it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34625"></span>8741</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34627"></span>8743</td>
+<td class="instruction">JR $8729</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34541.html">86ED</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34568">Map</a></td>
+<td class="next">
+Next: <a href="34629.html">8745</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

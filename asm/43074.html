@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A842</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43034.html">A81A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43074">Map</a></td>
+<td class="next">
+Next: <a href="43109.html">A865</a>
+</td>
+</tr>
+</table>
+<div class="description">A842: Character routine: a character eats Bilbo</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the character is in Bilbo's room, it 'eats' him: the EAT action is reported with Bilbo as the target (<a href="40639.html">9EBF</a>), the food code is run (<a href="37382.html#37407">921F</a>) and Bilbo dies (<a href="36924.html">903C</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43074"></span>A842</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="1">A = the room the character started this turn in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43077"></span>A845</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is Bilbo in that same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43080"></span>A848</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43081"></span>A849</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43082"></span>A84A</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43085"></span>A84D</td>
+<td class="instruction">LD A,$1B</td>
+<td class="comment-1" rowspan="2">A = the EAT action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43087"></span>A84F</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43090"></span>A852</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="2">The target is Bilbo (object 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43092"></span>A854</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43095"></span>A857</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">No instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43097"></span>A859</td>
+<td class="instruction">LD ($B5DA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43100"></span>A85C</td>
+<td class="instruction">CALL <a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Report it in words ("the hideous troll eats you.")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43103"></span>A85F</td>
+<td class="instruction">CALL <a href="37382.html#37407">$921F</a></td>
+<td class="comment-1" rowspan="1">Run the ordinary eating code (for its side effects)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43106"></span>A862</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Bilbo dies</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43034.html">A81A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43074">Map</a></td>
+<td class="next">
+Next: <a href="43109.html">A865</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

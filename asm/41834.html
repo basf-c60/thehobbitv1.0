@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A36A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41750.html">A316</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41834">Map</a></td>
+<td class="next">
+Next: <a href="41923.html">A3C3</a>
+</td>
+</tr>
+</table>
+<div class="description">A36A: A dead goblin comes back</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Chained after the normal ATTACK handler in each goblin's object record (action 15 runs <a href="37083.html">90DB</a>, then this). If the attack killed the goblin, it comes straight back: the dead flag is cleared, its number is written back into its slot in the character table (so it acts again), it is moved to another room and given a new adjective, all from its 6-byte entry in the table at $A3C3. The game prints 'the goblin falls down a hole and vanishes.'
+</div>
+<div class="paragraph">
+It then means to announce '- another goblin' if the goblin's new room is Bilbo's, but compares Bilbo's room with register B, which this routine never sets; B holds whatever the attack routine left there (the attack value), so the announcement depends on chance.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41834"></span>A36A</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the goblin's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41838"></span>A36E</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Did the attack kill it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41842"></span>A372</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41843"></span>A373</td>
+<td class="instruction">RES 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Bring it back to life</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41847"></span>A377</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="7">Find its entry in the table at $A3C3 (6 bytes each)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41850"></span>A37A</td>
+<td class="instruction">LD IY,$A3C3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41854"></span>A37E</td>
+<td class="instruction">LD A,($B5D9)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41857"></span>A381</td>
+<td class="instruction">CP (IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41860"></span>A384</td>
+<td class="instruction">JR Z,$A38A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41862"></span>A386</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41864"></span>A388</td>
+<td class="instruction">JR $A381</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41866"></span>A38A</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">HL = the entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41868"></span>A38C</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41869"></span>A38D</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="4">DE = its slot in the character table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41870"></span>A38E</td>
+<td class="instruction">LD E,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41871"></span>A38F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41872"></span>A390</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41873"></span>A391</td>
+<td class="instruction">LD (DE),A</td>
+<td class="comment-1" rowspan="1">Put the goblin back in the slot: it will act again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41874"></span>A392</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Move it to its new room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41875"></span>A393</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41876"></span>A394</td>
+<td class="instruction">LD (IX+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41879"></span>A397</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="6">Give it a new adjective</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41880"></span>A398</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41881"></span>A399</td>
+<td class="instruction">LD (IX+$0A),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41884"></span>A39C</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41885"></span>A39D</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41886"></span>A39E</td>
+<td class="instruction">LD (IX+$0B),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41889"></span>A3A1</td>
+<td class="instruction">LD HL,$AF5A</td>
+<td class="comment-1" rowspan="2">"the goblin falls down a hole and vanishes."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41892"></span>A3A4</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41895"></span>A3A7</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the room it went to? (B is never set here: see above)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41898"></span>A3AA</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41899"></span>A3AB</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41900"></span>A3AC</td>
+<td class="instruction">LD A,$2D</td>
+<td class="comment-1" rowspan="2">Print "-"...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41902"></span>A3AE</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41905"></span>A3B1</td>
+<td class="instruction">LD DE,$005E</td>
+<td class="comment-1" rowspan="2">...ANOTHER...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41908"></span>A3B4</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41911"></span>A3B7</td>
+<td class="instruction">LD DE,$02E6</td>
+<td class="comment-1" rowspan="2">...GOBLIN...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41914"></span>A3BA</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41917"></span>A3BD</td>
+<td class="instruction">LD HL,$AF0B</td>
+<td class="comment-1" rowspan="2">...and the rest of the sentence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41920"></span>A3C0</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41750.html">A316</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41834">Map</a></td>
+<td class="next">
+Next: <a href="41923.html">A3C3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

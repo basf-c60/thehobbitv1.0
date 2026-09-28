@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A69E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42616.html">A678</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42654">Map</a></td>
+<td class="next">
+Next: <a href="42680.html">A6B8</a>
+</td>
+</tr>
+</table>
+<div class="description">A69E: Timer 4: sinking into the bog</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Both the tick and the expire routine of timer 4 (<a href="50856.html">C6A8</a>). If Bilbo is in the deep bog (room 29) the timer is stopped (count 0). Then '&lt;actor&gt; is slowly sinking into the bog.' is printed, and if the count is now 0, Bilbo dies.
+</div>
+<div class="paragraph">
+In practice the tick runs at the end of the turn Bilbo entered the bog, while he is still there, so it always kills him. The other path - printing the message but surviving because the count is still 1 - would only be taken if he had somehow left within the same turn. (The message is printed even then, although he is no longer in the bog.)
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42654"></span>A69E</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the deep bog (room 29)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42657"></span>A6A1</td>
+<td class="instruction">CP $1D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42659"></span>A6A3</td>
+<td class="instruction">JR NZ,$A6A9</td>
+<td class="comment-1" rowspan="1">No: just print the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42661"></span>A6A5</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Yes: stop the timer (count 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42662"></span>A6A6</td>
+<td class="instruction">LD ($C990),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42665"></span>A6A9</td>
+<td class="instruction">LD HL,$B045</td>
+<td class="comment-1" rowspan="2">"you are slowly sinking into the bog."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42668"></span>A6AC</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42671"></span>A6AF</td>
+<td class="instruction">LD A,($C990)</td>
+<td class="comment-1" rowspan="2">Is the count 0?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42674"></span>A6B2</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42676"></span>A6B4</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: he survives this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42677"></span>A6B5</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">Yes: Bilbo is dead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42616.html">A678</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42654">Map</a></td>
+<td class="next">
+Next: <a href="42680.html">A6B8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

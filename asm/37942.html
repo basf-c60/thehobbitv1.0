@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9436</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37892.html">9404</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37942">Map</a></td>
+<td class="next">
+Next: <a href="37999.html">946F</a>
+</td>
+</tr>
+</table>
+<div class="description">9436: Could the action apply to this target?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used while choosing between candidate objects (<a href="34541.html">86ED</a>). Sets $B5EC to 1 if the action could possibly apply to the target: either there is a default handler for the action (<a href="50719.html">C61F</a>), or the target itself has a handler for it (<a href="39644.html">9ADC</a>). The checks in <a href="41216.html">A100</a> are also applied. Sets $B5EC to 0 if the action is not possible at all, for example when the target is the actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37942"></span>9436</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Save the caller's IX and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37944"></span>9438</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37945"></span>9439</td>
+<td class="instruction">CALL <a href="39583.html">$9A9F</a></td>
+<td class="comment-1" rowspan="1">Does the action even make sense (not done to yourself, for instance)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37948"></span>943C</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1">Assume not</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37950"></span>943E</td>
+<td class="instruction">JR Z,$9468</td>
+<td class="comment-1" rowspan="1">It does not: record that and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37952"></span>9440</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the action being tried</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37955"></span>9443</td>
+<td class="instruction">LD IX,$C61F</td>
+<td class="comment-1" rowspan="2">Is there a default handler for it (one that applies to any object)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37959"></span>9447</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37962"></span>944A</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">(A is left holding either the action, if found, or $FF if there is no default handler)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37964"></span>944C</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">Assume it could apply</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37966"></span>944E</td>
+<td class="instruction">JR NZ,$9468</td>
+<td class="comment-1" rowspan="1">A default handler exists: that settles it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37968"></span>9450</td>
+<td class="instruction">CALL <a href="41216.html">$A100</a></td>
+<td class="comment-1" rowspan="1">No default handler: is this one of the actions that uses the instrument's own handlers rather than the target's?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37971"></span>9453</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">Assume it could apply</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37973"></span>9455</td>
+<td class="instruction">JR Z,$9468</td>
+<td class="comment-1" rowspan="1">Yes: accept it for now (the instrument itself gets checked properly later)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37975"></span>9457</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="4">No: does the TARGET itself carry a handler for this action?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37978"></span>945A</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37981"></span>945D</td>
+<td class="instruction">LD A,($B5D8)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37984"></span>9460</td>
+<td class="instruction">CALL <a href="39644.html">$9ADC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37987"></span>9463</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">Assume it could apply</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37989"></span>9465</td>
+<td class="instruction">JR C,$9468</td>
+<td class="comment-1" rowspan="1">It does (found): that settles it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37991"></span>9467</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="1">No handler anywhere: it could not apply after all</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37992"></span>9468</td>
+<td class="instruction">LD ($B5EC),A</td>
+<td class="comment-1" rowspan="1">Record the answer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37995"></span>946B</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="3">Restore the caller's HL and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37996"></span>946C</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37998"></span>946E</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37892.html">9404</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37942">Map</a></td>
+<td class="next">
+Next: <a href="37999.html">946F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

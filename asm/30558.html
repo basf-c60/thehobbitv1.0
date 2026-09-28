@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 775E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30548.html">7754</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30558">Map</a></td>
+<td class="next">
+Next: <a href="30652.html">77BC</a>
+</td>
+</tr>
+</table>
+<div class="description">775E: Scroll the story window up</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Scrolls the top 17 character rows of the screen ($4000 onwards, down to $5020) up by one character row, pixel line by pixel line, taking care of the Spectrum's awkward screen layout at the boundaries between the thirds of the screen. The attributes of those rows are scrolled too (so that a picture's colours move with it). Finally the bottom row of the story window at $5020 is cleared by printing 42 spaces in the 6-pixel font.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30558"></span>775E</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="4">Save the registers this uses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30559"></span>775F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30560"></span>7760</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30561"></span>7761</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30562"></span>7762</td>
+<td class="instruction">LD HL,$4020</td>
+<td class="comment-1" rowspan="1">HL = the second pixel row of the story window...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30565"></span>7765</td>
+<td class="instruction">LD DE,$4000</td>
+<td class="comment-1" rowspan="1">...DE = the first, where it is moving to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30568"></span>7768</td>
+<td class="instruction">LD A,$11</td>
+<td class="comment-1" rowspan="2">17 character rows make up the whole story window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30570"></span>776A</td>
+<td class="instruction">LD B,$00</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30572"></span>776C</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Save the row addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30573"></span>776D</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30574"></span>776E</td>
+<td class="instruction">LD C,$08</td>
+<td class="comment-1" rowspan="1">Eight pixel lines per character row</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30576"></span>7770</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="3">Save this pixel line's addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30577"></span>7771</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30578"></span>7772</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30579"></span>7773</td>
+<td class="instruction">LD C,$20</td>
+<td class="comment-1" rowspan="1">32 bytes per pixel line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30581"></span>7775</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy it up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30583"></span>7777</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore the counters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30584"></span>7778</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30585"></span>7779</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30586"></span>777A</td>
+<td class="instruction">INC H</td>
+<td class="comment-1" rowspan="2">Move down to the next pixel line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30587"></span>777B</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30588"></span>777C</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="2">One fewer pixel line to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30589"></span>777D</td>
+<td class="instruction">JR NZ,$7770</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30591"></span>777F</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the row addresses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30592"></span>7780</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30593"></span>7781</td>
+<td class="instruction">LD C,$20</td>
+<td class="comment-1" rowspan="5">Move both addresses on to the next character row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30595"></span>7783</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30596"></span>7784</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30597"></span>7785</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30598"></span>7786</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30599"></span>7787</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="3">The screen's odd memory layout means a plain add sometimes lands in the wrong third of the screen, so check and correct that:</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30600"></span>7788</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30601"></span>7789</td>
+<td class="instruction">AND $07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30603"></span>778B</td>
+<td class="instruction">JR Z,$7791</td>
+<td class="comment-1" rowspan="2">DE is already fine as it is...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30605"></span>778D</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30606"></span>778E</td>
+<td class="instruction">ADD A,$07</td>
+<td class="comment-1" rowspan="2">...otherwise nudge it on to the next third</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30608"></span>7790</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30609"></span>7791</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="6">Do the same correction for HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30610"></span>7792</td>
+<td class="instruction">AND $07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30612"></span>7794</td>
+<td class="instruction">JR Z,$779A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30614"></span>7796</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30615"></span>7797</td>
+<td class="instruction">ADD A,$07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30617"></span>7799</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30618"></span>779A</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30619"></span>779B</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">One fewer character row to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30620"></span>779C</td>
+<td class="instruction">JR NZ,$776C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30622"></span>779E</td>
+<td class="instruction">LD HL,$5820</td>
+<td class="comment-1" rowspan="3">The attributes need to move up one row too...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30625"></span>77A1</td>
+<td class="instruction">LD DE,$5800</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30628"></span>77A4</td>
+<td class="instruction">LD BC,$0220</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30631"></span>77A7</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">...so that a picture's colours scroll along with it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30633"></span>77A9</td>
+<td class="instruction">LD B,$2A</td>
+<td class="comment-1" rowspan="6">The bottom row is now empty: clear it with 42 spaces, a full line of the 6-pixel font</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30635"></span>77AB</td>
+<td class="instruction">LD HL,$5020</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30638"></span>77AE</td>
+<td class="instruction">LD C,$01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30640"></span>77B0</td>
+<td class="instruction">LD A,$20</td>
+</tr>
+<tr>
+<td class="address-2"><span id="30642"></span>77B2</td>
+<td class="instruction">CALL <a href="30652.html">$77BC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="30645"></span>77B5</td>
+<td class="instruction">DJNZ $77B2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30647"></span>77B7</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="5">Restore the saved registers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30648"></span>77B8</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30649"></span>77B9</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30650"></span>77BA</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="30651"></span>77BB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30548.html">7754</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#30558">Map</a></td>
+<td class="next">
+Next: <a href="30652.html">77BC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

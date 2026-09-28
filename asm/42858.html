@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A76A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42850.html">A762</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42858">Map</a></td>
+<td class="next">
+Next: <a href="42898.html">A792</a>
+</td>
+</tr>
+</table>
+<div class="description">A76A: Handler for the rope: PULL</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the boat is tied to the rope, pulling it brings it over: 'the boat glides across the river and lands on this side.' The boat moves between room 66 and room 67 (the east bank), is untied, and takes whatever is in it along (<a href="39736.html">9B38</a>). This is the way across the enchanted river - the HELP message at the river is 'boats can help. look carefully.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42858"></span>A76A</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42861"></span>A76D</td>
+<td class="instruction">LD A,($C50B)</td>
+<td class="comment-1" rowspan="2">Is the boat actually tied to the rope (the flag set by <a href="42760.html">A708</a>)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42864"></span>A770</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42866"></span>A772</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing to pull</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42867"></span>A773</td>
+<td class="instruction">LD HL,$AE85</td>
+<td class="comment-1" rowspan="1">"the boat glides across the river and lands on this side."</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="42870"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="42898.html">A792</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42870"></span>A776</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">}</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42873"></span>A779</td>
+<td class="instruction">LD A,($C51A)</td>
+<td class="comment-1" rowspan="1">A = where the boat currently is</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42876"></span>A77C</td>
+<td class="instruction">CP $42</td>
+<td class="comment-1" rowspan="2">Is it on this side already (room 66)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42878"></span>A77E</td>
+<td class="instruction">LD A,$42</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42880"></span>A780</td>
+<td class="instruction">JR NZ,$A784</td>
+<td class="comment-1" rowspan="1">No: it will end up on this side (room 66)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42882"></span>A782</td>
+<td class="instruction">LD A,$43</td>
+<td class="comment-1" rowspan="1">Yes (an odd case): send it to the OTHER side instead (room 67)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42884"></span>A784</td>
+<td class="instruction">LD ($C51A),A</td>
+<td class="comment-1" rowspan="1">The boat moves there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42887"></span>A787</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = that room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42888"></span>A788</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">The rope is no longer tied to it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42890"></span>A78A</td>
+<td class="instruction">LD ($C50B),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42893"></span>A78D</td>
+<td class="instruction">LD A,$29</td>
+<td class="comment-1" rowspan="1">A = the boat's own object number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42895"></span>A78F</td>
+<td class="instruction">JP <a href="39736.html">$9B38</a></td>
+<td class="comment-1" rowspan="1">Move it (and anything in it) there, reporting it if seen</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42850.html">A762</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42858">Map</a></td>
+<td class="next">
+Next: <a href="42898.html">A792</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

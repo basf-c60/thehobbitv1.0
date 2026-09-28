@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7FDE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32709.html">7FC5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32734">Map</a></td>
+<td class="next">
+Next: <a href="32750.html">7FEE</a>
+</td>
+</tr>
+</table>
+<div class="description">7FDE: Parser: store the verb</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Clears bit 1 of E (no more verbs allowed) and stores the token BC at offset 0 of the current frame. The entry at $7FE2 stores BC at offset L instead (used for the particle at offset 2).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Token</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">Updated state</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32734"></span>7FDE</td>
+<td class="instruction">RES 1,E</td>
+<td class="comment-1" rowspan="1">No more verbs allowed on this line, until the next command starts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32736"></span>7FE0</td>
+<td class="instruction">LD L,$00</td>
+<td class="comment-1" rowspan="1">L = the offset within the frame to store at (0 for the verb, or wherever the caller set it for the particle)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32738"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="32182.html">7DB6</a> and <a href="32251.html">7DFB</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32738"></span>7FE2</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32739"></span>7FE3</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="4">HL = the current frame, plus that offset...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32741"></span>7FE5</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32742"></span>7FE6</td>
+<td class="instruction">LD H,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32744"></span>7FE8</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32745"></span>7FE9</td>
+<td class="instruction">LD (HL),C</td>
+<td class="comment-1" rowspan="2">Store the word's low byte...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32746"></span>7FEA</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32747"></span>7FEB</td>
+<td class="instruction">LD (HL),B</td>
+<td class="comment-1" rowspan="1">...then its high byte (with the class in the top nibble)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32748"></span>7FEC</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32749"></span>7FED</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32709.html">7FC5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32734">Map</a></td>
+<td class="next">
+Next: <a href="32750.html">7FEE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

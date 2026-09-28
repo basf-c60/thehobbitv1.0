@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at C6A8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50849.html">C6A1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50856">Map</a></td>
+<td class="next">
+Next: <a href="50863.html">C6AF</a>
+</td>
+</tr>
+</table>
+<div class="description">C6A8: Room-entry handler: the deep bog (room 29) starts timer 4</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Starts timer 4 (count 2). Its threshold is also 2, so at the end of the very turn Bilbo steps into the bog, the count drops to 1 and the tick routine (<a href="42654.html">A69E</a>) runs: he is 'slowly sinking into the bog', and dies. The deep bog is simply a death trap - the way to deal with it is not to go in.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50856"></span>C6A8</td>
+<td class="instruction">LD A,($C98F)</td>
+<td class="comment-1" rowspan="1">Timer 4's reload value (2)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50859"></span>C6AB</td>
+<td class="instruction">LD ($C990),A</td>
+<td class="comment-1" rowspan="2">...becomes its count: the timer starts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50862"></span>C6AE</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50849.html">C6A1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50856">Map</a></td>
+<td class="next">
+Next: <a href="50863.html">C6AF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

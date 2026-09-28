@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 96DD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38618.html">96DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38621">Map</a></td>
+<td class="next">
+Next: <a href="38667.html">970B</a>
+</td>
+</tr>
+</table>
+<div class="description">96DD: Kill a character</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If A is 0, it is Bilbo who has died, and <a href="36924.html">903C</a> ends the game. Otherwise the character's dead flag (bit 3) is set, everything it carries is dropped where it stands (<a href="40104.html">9CA8</a>), it is removed from the character table (<a href="51642.html">C9BA</a>) so it no longer acts, its adjectives are replaced by DEAD (<a href="41148.html">A0BC</a>), and any orders waiting for it are cancelled (<a href="35149.html">894D</a>).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Character</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38621"></span>96DD</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is it Bilbo (object 0)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38622"></span>96DE</td>
+<td class="instruction">JP Z,<a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="4">Yes: the game is over</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38625"></span>96E1</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38626"></span>96E2</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38628"></span>96E4</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38630"></span>96E6</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = the character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38631"></span>96E7</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38634"></span>96EA</td>
+<td class="instruction">SET 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Mark it dead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38638"></span>96EE</td>
+<td class="instruction">CALL <a href="40104.html">$9CA8</a></td>
+<td class="comment-1" rowspan="2">It drops everything it carries</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38641"></span>96F1</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38642"></span>96F2</td>
+<td class="instruction">CALL <a href="39392.html">$99E0</a></td>
+<td class="comment-1" rowspan="3">Find it in the character table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38645"></span>96F5</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38647"></span>96F7</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38648"></span>96F8</td>
+<td class="instruction">JR Z,$96FE</td>
+<td class="comment-1" rowspan="1">Not there: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38650"></span>96FA</td>
+<td class="instruction">LD (IY+$00),$00</td>
+<td class="comment-1" rowspan="1">Clear its slot: it will never act again</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38654"></span>96FE</td>
+<td class="instruction">CALL <a href="41148.html">$A0BC</a></td>
+<td class="comment-1" rowspan="2">Its adjective becomes DEAD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38657"></span>9701</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38658"></span>9702</td>
+<td class="instruction">CALL <a href="35149.html">$894D</a></td>
+<td class="comment-1" rowspan="5">Cancel any orders it was given</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38661"></span>9705</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38663"></span>9707</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38665"></span>9709</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38666"></span>970A</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38618.html">96DA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38621">Map</a></td>
+<td class="next">
+Next: <a href="38667.html">970B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

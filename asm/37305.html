@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 91B9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37296.html">91B0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37305">Map</a></td>
+<td class="next">
+Next: <a href="37382.html">9206</a>
+</td>
+</tr>
+</table>
+<div class="description">91B9: PUT IN, PUT ON and DROP IN</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The handler for putting the target into (or on) a container, the instrument. The target must be something that can be picked up (<a href="35974.html#36026">8CBA</a>), and not already in the container ('I cannot do that'). Except for PUT ON, the container must be open ('the chest is closed'). There must be room: the container's size (byte 2), minus the target's size, minus the size of what is already inside (<a href="39997.html">9C3D</a>), must be positive ('the chest is too full'). Then the target takes the container's location and the container becomes its holder.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37305"></span>91B9</td>
+<td class="instruction">CALL <a href="35974.html#36026">$8CBA</a></td>
+<td class="comment-1" rowspan="1">Is the target something that can even be picked up at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37308"></span>91BC</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">Is the instrument (the container) actually the same object as the target's own holder already?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37311"></span>91BF</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37314"></span>91C2</td>
+<td class="instruction">JP Z,<a href="29381.html">$72C5</a></td>
+<td class="comment-1" rowspan="1">Yes: "I cannot do that." (it's already there)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37317"></span>91C5</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's (the container's) own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37321"></span>91C9</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="2">Is this actually PUT ON (action 18), rather than PUT IN or DROP IN?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37324"></span>91CC</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37326"></span>91CE</td>
+<td class="instruction">JR Z,$91D6</td>
+<td class="comment-1" rowspan="1">PUT ON: no need for the container to be open</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37328"></span>91D0</td>
+<td class="instruction">BIT 5,(IY+$07)</td>
+<td class="comment-1" rowspan="1">PUT IN or DROP IN: is the container open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37332"></span>91D4</td>
+<td class="instruction">JR Z,$9201</td>
+<td class="comment-1" rowspan="1">No: say so and stop, below</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37334"></span>91D6</td>
+<td class="instruction">LD A,(IY+$02)</td>
+<td class="comment-1" rowspan="1">A = the container's own capacity (its size)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37337"></span>91D9</td>
+<td class="instruction">SUB (IX+$02)</td>
+<td class="comment-1" rowspan="1">Subtract the target's own size</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37340"></span>91DC</td>
+<td class="instruction">JR C,$91E8</td>
+<td class="comment-1" rowspan="1">Already too big even on its own: fail, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37342"></span>91DE</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save what is left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37343"></span>91DF</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="3">A = how much the container already holds</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37346"></span>91E2</td>
+<td class="instruction">CALL <a href="39997.html">$9C3D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37349"></span>91E5</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37350"></span>91E6</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">Subtract that too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37351"></span>91E7</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37352"></span>91E8</td>
+<td class="instruction">LD HL,$AD0D</td>
+<td class="comment-1" rowspan="1">"the X is too full."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37355"></span>91EB</td>
+<td class="instruction">JP C,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Not enough room at all: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37358"></span>91EE</td>
+<td class="instruction">JP Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Exactly full, with no room to spare: likewise</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37361"></span>91F1</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37364"></span>91F4</td>
+<td class="instruction">LD A,(IY+$10)</td>
+<td class="comment-1" rowspan="2">The target moves to the container's own room...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37367"></span>91F7</td>
+<td class="instruction">LD (IX+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37370"></span>91FA</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="3">...and the container becomes its new holder</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37373"></span>91FD</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37376"></span>9200</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37377"></span>9201</td>
+<td class="instruction">LD A,$05</td>
+<td class="comment-1" rowspan="1">A = the state code for OPEN/CLOSED</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37379"></span>9203</td>
+<td class="instruction">JP <a href="41108.html">$A094</a></td>
+<td class="comment-1" rowspan="1">"the X is closed."</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37296.html">91B0</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37305">Map</a></td>
+<td class="next">
+Next: <a href="37382.html">9206</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

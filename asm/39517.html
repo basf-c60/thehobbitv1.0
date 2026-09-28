@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9A5D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39464.html">9A28</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39517">Map</a></td>
+<td class="next">
+Next: <a href="39537.html">9A71</a>
+</td>
+</tr>
+</table>
+<div class="description">9A5D: Prepare for the characters' turn</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Notes the room Bilbo is in ($B5E6, <a href="40651.html">9ECB</a>) and whether it is dark there ($976A). It is also the default handler for action 0 in <a href="50719.html">C61F</a>, which makes it a harmless 'do nothing special' routine.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39517"></span>9A5D</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1">A = 0 (Bilbo)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39519"></span>9A5F</td>
+<td class="instruction">CALL <a href="40651.html">$9ECB</a></td>
+<td class="comment-1" rowspan="1">A = Bilbo's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39522"></span>9A62</td>
+<td class="instruction">LD ($B5E6),A</td>
+<td class="comment-1" rowspan="1">Remember it, for <a href="39464.html">9A28</a> and the character loop to compare against</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39525"></span>9A65</td>
+<td class="instruction">CALL <a href="38221.html">$954D</a></td>
+<td class="comment-1" rowspan="1">Is it too dark for Bilbo to see?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39528"></span>9A68</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="2">Assume not</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39530"></span>9A6A</td>
+<td class="instruction">JR NC,$9A6D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39532"></span>9A6C</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">It is dark</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39533"></span>9A6D</td>
+<td class="instruction">LD ($976A),A</td>
+<td class="comment-1" rowspan="2">Remember whether Bilbo is in the dark, for the rest of this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39536"></span>9A70</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39464.html">9A28</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39517">Map</a></td>
+<td class="next">
+Next: <a href="39537.html">9A71</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

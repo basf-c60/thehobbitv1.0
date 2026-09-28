@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C00B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="48979.html">BF53</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#49163">Map</a></td>
+<td class="next">
+Next: <a href="50719.html">C61F</a>
+</td>
+</tr>
+</table>
+<div class="description">C00B: Object records</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Every object, character and door in the game has a record here. They are backed up at start-up and restored when the game restarts. As an example, the short strong sword (object 14) at $C1F4 in the original game:
+</div>
+<div class="paragraph">
+$01,$FF,$03,$04,$00,$40,$80,$94, $84,$06,$9D,$05,$68,$06,$00,$00, $07, $0B,$57,$92,$FF
+</div>
+<div class="paragraph">
+Byte 0: the number of locations the object occupies. Ordinary objects and characters have 1; doors have 2 (one on each side).
+</div>
+<div class="paragraph">
+Byte 1: who is holding it, or what it is inside: an object number, or $FF for nobody. The curious map starts with 62 (Gandalf) here, the large key with 71 (a troll), the food with 33 (the cupboard). In my modified tape the sword has 0 here: Bilbo.
+</div>
+<div class="paragraph">
+Byte 2: size. Byte 3: weight, which for a character is also how much it can carry. Byte 4: attributes, used in three ways. Bits 0-3 say how the object's contents are described (<a href="40841.html">9F89</a>): 0 in, 1 on, 2 behind, 3 under, 4 tied to; only contents 'in' or 'on' something fall out when it is broken (<a href="37463.html">9257</a>). Bits 4-6 are the character's side (1 Bilbo and his friends, 2 goblins and Gollum, 4 elves; Elrond has both 1 and 4): characters on the same side cannot attack or capture each other (<a href="37044.html">90B4</a>, <a href="41750.html">A316</a>). Bit 7, on a door or window, means Bilbo cannot pass through it unaided (<a href="36121.html">8D19</a>).
+</div>
+<div class="paragraph">
+Byte 5: STRENGTH, byte 6: DEFENCE (see <a href="37083.html">90DB</a>). The sword's strength is $40 (64).
+</div>
+<div class="paragraph">
+Byte 7: flags. Bit 0 locked; bit 1 'pours' (a liquid, which evaporates when dropped); bit 2 full; bit 3 broken (for a character: dead); bit 4 on (lit); bit 5 open; bit 6 alive (a character); bit 7 visible. The words for these states come from the tables at <a href="41275.html">A13B</a>: LOCKED/UNLOCKED, FULL/EMPTY, BROKEN, ON/OFF, OPEN/CLOSED, ALIVE/DEAD.
+</div>
+<div class="paragraph">
+Bytes 8-15: four word slots (little-endian references, offsets from <a href="24576.html">6000</a>): the noun followed by adjectives. For the sword: $0684 SWORD, $059D SHORT, $0668 STRONG, 0.
+</div>
+<div class="paragraph">
+Then one location byte per location (byte 0 says how many): here room 7, the trolls' cave. Changing this byte (at $C204) moves the sword; I changed it to 1 so that the sword starts with Bilbo.
+</div>
+<div class="paragraph">
+Then a list of the object's own action handlers, three bytes each: an action number (see <a href="43591.html">AA47</a>) and the address of a routine to run when that action is done to the object. An entry with action 0 straight after a matching entry is run as well, so several routines can be chained. The list ends with $FF. The sword's list has one entry: action 11 (STRIKE) runs $9257. The wine's has action 33 (DRINK) followed by action 0 running <a href="43501.html">A9ED</a>, which is what makes Bilbo drunk. Actions that an object has no handler for fall back on the default handlers at <a href="50719.html">C61F</a> (see <a href="37999.html">946F</a>).
+</div>
+<div class="paragraph">
+Offset 16 (the first location byte) is what the movement routine updates (<a href="36121.html">8D19</a>). For Bilbo, this is $C01B.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49163"></span>C00B</td>
+<td class="instruction">DEFB $01,$FF,$10,$40,$10,$40,$40,$E0</td>
+<td class="comment-1" rowspan="3">Object 0: you (strength 64, defence 64)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49171"></span>C013</td>
+<td class="instruction">DEFB $AC,$87,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49179"></span>C01B</td>
+<td class="instruction">DEFB $01,$1B,$1F,$92,$00,$3C,$90,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49187"></span>C023</td>
+<td class="instruction">DEFB $01,$FF,$C0,$60,$00,$C0,$C0,$E0</td>
+<td class="comment-1" rowspan="3">Object 60: red golden dragon (strength 192, defence 192)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49195"></span>C02B</td>
+<td class="instruction">DEFB $CC,$01,$3A,$05,$F7,$02,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49203"></span>C033</td>
+<td class="instruction">DEFB $29,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49205"></span>C035</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$00,$10,$80</td>
+<td class="comment-1" rowspan="6">Object 5: round green door (strength 0, defence 16)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49213"></span>C03D</td>
+<td class="instruction">DEFB $C4,$01,$63,$05,$08,$03,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49221"></span>C045</td>
+<td class="instruction">DEFB $01,$04,$0B,$57,$92,$0C,$A2,$90</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49229"></span>C04D</td>
+<td class="instruction">DEFB $10,$78,$90,$18,$4E,$8E,$1E,$9D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49237"></span>C055</td>
+<td class="instruction">DEFB $8E,$25,$88,$A2,$26,$88,$A2,$2C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49245"></span>C05D</td>
+<td class="instruction">DEFB $04,$94,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49248"></span>C060</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$00,$90,$81</td>
+<td class="comment-1" rowspan="6">Object 1: heavy rock door (strength 0, defence 144)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49256"></span>C068</td>
+<td class="instruction">DEFB $C4,$01,$2B,$03,$57,$05,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49264"></span>C070</td>
+<td class="instruction">DEFB $07,$06,$0B,$57,$92,$0C,$A2,$90</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49272"></span>C078</td>
+<td class="instruction">DEFB $10,$78,$90,$18,$4E,$8E,$1E,$9D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49280"></span>C080</td>
+<td class="instruction">DEFB $8E,$25,$68,$A2,$26,$68,$A2,$2C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49288"></span>C088</td>
+<td class="instruction">DEFB $04,$94,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49291"></span>C08B</td>
+<td class="instruction">DEFB $01,$FF,$00,$00,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 43: golden key (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49299"></span>C093</td>
+<td class="instruction">DEFB $A9,$03,$F7,$02,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49307"></span>C09B</td>
+<td class="instruction">DEFB $4F,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49309"></span>C09D</td>
+<td class="instruction">DEFB $01,$1F,$00,$00,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 2: small curious key (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49317"></span>C0A5</td>
+<td class="instruction">DEFB $A9,$03,$E5,$05,$63,$01,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49325"></span>C0AD</td>
+<td class="instruction">DEFB $0D,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49327"></span>C0AF</td>
+<td class="instruction">DEFB $01,$47,$01,$01,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 4: large key (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49335"></span>C0B7</td>
+<td class="instruction">DEFB $A9,$03,$C3,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49343"></span>C0BF</td>
+<td class="instruction">DEFB $05,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49345"></span>C0C1</td>
+<td class="instruction">DEFB $01,$3E,$02,$00,$00,$00,$02,$80</td>
+<td class="comment-1" rowspan="3">Object 3: curious map (strength 0, defence 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49353"></span>C0C9</td>
+<td class="instruction">DEFB $30,$14,$63,$01,$00,$00,$43,$B4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49361"></span>C0D1</td>
+<td class="instruction">DEFB $01,$1C,$B8,$A6,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49366"></span>C0D6</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$FF,$00,$80</td>
+<td class="comment-1" rowspan="4">Object 6: small insignificant crack (strength 255, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49374"></span>C0DE</td>
+<td class="instruction">DEFB $51,$01,$E5,$05,$85,$03,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49382"></span>C0E6</td>
+<td class="instruction">DEFB $0E,$0F,$10,$98,$A2,$0C,$A2,$90</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49390"></span>C0EE</td>
+<td class="instruction">DEFB $1E,$9D,$8E,$18,$4E,$8E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49397"></span>C0F5</td>
+<td class="instruction">DEFB $05,$FF,$A0,$50,$00,$40,$40,$80</td>
+<td class="comment-1" rowspan="4">Object 7: spider web (strength 64, defence 64)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49405"></span>C0FD</td>
+<td class="instruction">DEFB $7A,$07,$27,$06,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49413"></span>C105</td>
+<td class="instruction">DEFB $1A,$1C,$1B,$1D,$32,$0B,$57,$92</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49421"></span>C10D</td>
+<td class="instruction">DEFB $00,$A7,$A2,$1E,$9D,$8E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49428"></span>C114</td>
+<td class="instruction">DEFB $03,$FF,$FF,$FF,$00,$00,$00,$81</td>
+<td class="comment-1" rowspan="6">Object 8: red door (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49436"></span>C11C</td>
+<td class="instruction">DEFB $C4,$01,$3A,$05,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49444"></span>C124</td>
+<td class="instruction">DEFB $1F,$1E,$20,$10,$78,$90,$0C,$A2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49452"></span>C12C</td>
+<td class="instruction">DEFB $90,$18,$4E,$8E,$1E,$9D,$8E,$25</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49460"></span>C134</td>
+<td class="instruction">DEFB $64,$A2,$26,$64,$A2,$2C,$04,$94</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49468"></span>C13C</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49469"></span>C13D</td>
+<td class="instruction">DEFB $03,$FF,$FF,$FF,$00,$00,$00,$86</td>
+<td class="comment-1" rowspan="4">Object 9: fast black river (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49477"></span>C145</td>
+<td class="instruction">DEFB $4E,$05,$57,$02,$A5,$00,$54,$B4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49485"></span>C14D</td>
+<td class="instruction">DEFB $42,$43,$19,$11,$92,$93,$0E,$92</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49493"></span>C155</td>
+<td class="instruction">DEFB $93,$19,$5A,$8E,$32,$40,$A2,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49501"></span>C15D</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$00,$00,$86</td>
+<td class="comment-1" rowspan="4">Object 42: fast river (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49509"></span>C165</td>
+<td class="instruction">DEFB $4E,$05,$57,$02,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49517"></span>C16D</td>
+<td class="instruction">DEFB $17,$21,$11,$92,$93,$0E,$92,$93</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49525"></span>C175</td>
+<td class="instruction">DEFB $19,$5A,$8E,$32,$FD,$A1,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49532"></span>C17C</td>
+<td class="instruction">DEFB $02,$FF,$40,$FF,$00,$50,$50,$80</td>
+<td class="comment-1" rowspan="5">Object 10: goblins back door (strength 80, defence 80)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49540"></span>C184</td>
+<td class="instruction">DEFB $C4,$01,$EC,$02,$7C,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49548"></span>C18C</td>
+<td class="instruction">DEFB $13,$14,$10,$78,$90,$0C,$A2,$90</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49556"></span>C194</td>
+<td class="instruction">DEFB $0B,$57,$92,$18,$4E,$8E,$1E,$9D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49564"></span>C19C</td>
+<td class="instruction">DEFB $8E,$2C,$04,$94,$0B,$57,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49572"></span>C1A4</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$00,$00,$01</td>
+<td class="comment-1" rowspan="5">Object 11: mountains side door (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49580"></span>C1AC</td>
+<td class="instruction">DEFB $C4,$01,$5A,$04,$AA,$05,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49588"></span>C1B4</td>
+<td class="instruction">DEFB $2A,$2B,$0C,$A2,$90,$00,$96,$A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49596"></span>C1BC</td>
+<td class="instruction">DEFB $26,$60,$A2,$00,$8E,$A2,$1E,$9D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49604"></span>C1C4</td>
+<td class="instruction">DEFB $8E,$18,$4E,$8E,$2C,$04,$94,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49612"></span>C1CC</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$00,$30,$80</td>
+<td class="comment-1" rowspan="5">Object 12: large trap door (strength 0, defence 48)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49620"></span>C1D4</td>
+<td class="instruction">DEFB $C4,$01,$C3,$03,$E4,$06,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49628"></span>C1DC</td>
+<td class="instruction">DEFB $20,$21,$10,$77,$A5,$0C,$77,$A5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49636"></span>C1E4</td>
+<td class="instruction">DEFB $0B,$57,$92,$18,$4E,$8E,$1E,$9D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49644"></span>C1EC</td>
+<td class="instruction">DEFB $8E,$2C,$04,$94,$00,$DB,$A4,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49652"></span>C1F4</td>
+<td class="instruction">DEFB $01,$FF,$03,$04,$00,$40,$80,$94</td>
+<td class="comment-1" rowspan="3">Object 14: short strong sword (strength 64, defence 128)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49660"></span>C1FC</td>
+<td class="instruction">DEFB $84,$06,$9D,$05,$68,$06,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49668"></span>C204</td>
+<td class="instruction">DEFB $07,$0B,$57,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49673"></span>C209</td>
+<td class="instruction">DEFB $01,$FF,$00,$00,$00,$FF,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 16: valuable golden ring (strength 255, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49681"></span>C211</td>
+<td class="instruction">DEFB $41,$05,$39,$07,$F7,$02,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49689"></span>C219</td>
+<td class="instruction">DEFB $3D,$28,$C0,$A2,$16,$EC,$A2,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49697"></span>C221</td>
+<td class="instruction">DEFB $01,$42,$02,$02,$00,$02,$02,$80</td>
+<td class="comment-1" rowspan="3">Object 15: red key (strength 2, defence 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49705"></span>C229</td>
+<td class="instruction">DEFB $A9,$03,$3A,$05,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49713"></span>C231</td>
+<td class="instruction">DEFB $20,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49715"></span>C233</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$FF,$FF,$80</td>
+<td class="comment-1" rowspan="5">Object 17: goblins door (strength 255, defence 255)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49723"></span>C23B</td>
+<td class="instruction">DEFB $C4,$01,$EC,$02,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49731"></span>C243</td>
+<td class="instruction">DEFB $10,$0D,$10,$E7,$A3,$0C,$A2,$90</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49739"></span>C24B</td>
+<td class="instruction">DEFB $1E,$9D,$8E,$18,$4E,$8E,$2C,$04</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49747"></span>C253</td>
+<td class="instruction">DEFB $94,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49749"></span>C255</td>
+<td class="instruction">DEFB $01,$FF,$02,$02,$04,$20,$05,$80</td>
+<td class="comment-1" rowspan="4">Object 18: rope (strength 32, defence 5)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49757"></span>C25D</td>
+<td class="instruction">DEFB $5F,$05,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49765"></span>C265</td>
+<td class="instruction">DEFB $07,$2B,$08,$A7,$2E,$78,$A1,$31</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49773"></span>C26D</td>
+<td class="instruction">DEFB $6A,$A7,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49776"></span>C270</td>
+<td class="instruction">DEFB $02,$FF,$FF,$FF,$00,$FF,$FF,$80</td>
+<td class="comment-1" rowspan="4">Object 13: magic door (strength 255, defence 255)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49784"></span>C278</td>
+<td class="instruction">DEFB $C4,$01,$28,$04,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49792"></span>C280</td>
+<td class="instruction">DEFB $1E,$1C,$1E,$9D,$8E,$18,$4E,$8E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49800"></span>C288</td>
+<td class="instruction">DEFB $2C,$04,$94,$1C,$14,$A6,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49807"></span>C28F</td>
+<td class="instruction">DEFB $01,$FF,$15,$60,$10,$70,$88,$E0</td>
+<td class="comment-1" rowspan="3">Object 62: gandalf (strength 112, defence 136)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49815"></span>C297</td>
+<td class="instruction">DEFB $C1,$82,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49823"></span>C29F</td>
+<td class="instruction">DEFB $01,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49825"></span>C2A1</td>
+<td class="instruction">DEFB $01,$FF,$1D,$50,$10,$68,$78,$E0</td>
+<td class="comment-1" rowspan="3">Object 63: thorin (strength 104, defence 120)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49833"></span>C2A9</td>
+<td class="instruction">DEFB $B8,$86,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49841"></span>C2B1</td>
+<td class="instruction">DEFB $01,$0F,$DB,$90,$00,$31,$A6,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49849"></span>C2B9</td>
+<td class="instruction">DEFB $01,$FF,$70,$FF,$40,$40,$30,$E0</td>
+<td class="comment-1" rowspan="3">Object 64: wood elf (strength 64, defence 48)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49857"></span>C2C1</td>
+<td class="instruction">DEFB $0E,$02,$A2,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49865"></span>C2C9</td>
+<td class="instruction">DEFB $1C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49867"></span>C2CB</td>
+<td class="instruction">DEFB $01,$FF,$20,$30,$50,$40,$40,$E0</td>
+<td class="comment-1" rowspan="3">Object 65: elrond (strength 64, defence 64)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49875"></span>C2D3</td>
+<td class="instruction">DEFB $11,$82,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49883"></span>C2DB</td>
+<td class="instruction">DEFB $09,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49885"></span>C2DD</td>
+<td class="instruction">DEFB $01,$FF,$20,$03,$00,$20,$20,$84</td>
+<td class="comment-1" rowspan="6">Object 19: barrel (strength 32, defence 32)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49893"></span>C2E5</td>
+<td class="instruction">DEFB $84,$10,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49901"></span>C2ED</td>
+<td class="instruction">DEFB $20,$10,$78,$90,$0C,$A2,$90,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49909"></span>C2F5</td>
+<td class="instruction">DEFB $B9,$91,$23,$D3,$8E,$22,$6E,$93</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49917"></span>C2FD</td>
+<td class="instruction">DEFB $38,$1B,$A9,$36,$86,$A4,$0B,$57</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49925"></span>C305</td>
+<td class="instruction">DEFB $92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49927"></span>C307</td>
+<td class="instruction">DEFB $01,$13,$1F,$05,$00,$00,$00,$82</td>
+<td class="comment-1" rowspan="3">Object 20: wine (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49935"></span>C30F</td>
+<td class="instruction">DEFB $96,$37,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49943"></span>C317</td>
+<td class="instruction">DEFB $20,$21,$06,$92,$00,$ED,$A9,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49951"></span>C31F</td>
+<td class="instruction">DEFB $01,$FF,$30,$30,$40,$20,$70,$60</td>
+<td class="comment-1" rowspan="3">Object 66: butler (strength 32, defence 112)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49959"></span>C327</td>
+<td class="instruction">DEFB $DC,$00,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49967"></span>C32F</td>
+<td class="instruction">DEFB $20,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49969"></span>C331</td>
+<td class="instruction">DEFB $01,$FF,$30,$30,$00,$37,$37,$E0</td>
+<td class="comment-1" rowspan="3">Object 67: vicious warg (strength 55, defence 55)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49977"></span>C339</td>
+<td class="instruction">DEFB $9E,$07,$45,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49985"></span>C341</td>
+<td class="instruction">DEFB $15,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49987"></span>C343</td>
+<td class="instruction">DEFB $01,$FF,$1F,$05,$00,$00,$00,$82</td>
+<td class="comment-1" rowspan="3">Object 21: water (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="49995"></span>C34B</td>
+<td class="instruction">DEFB $62,$37,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50003"></span>C353</td>
+<td class="instruction">DEFB $00,$21,$06,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50008"></span>C358</td>
+<td class="instruction">DEFB $01,$FF,$1F,$05,$00,$00,$00,$82</td>
+<td class="comment-1" rowspan="3">Object 22: black water (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50016"></span>C360</td>
+<td class="instruction">DEFB $62,$07,$A5,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50024"></span>C368</td>
+<td class="instruction">DEFB $00,$21,$58,$A2,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50029"></span>C36D</td>
+<td class="instruction">DEFB $08,$FF,$00,$05,$00,$00,$00,$82</td>
+<td class="comment-1" rowspan="4">Object 23: water (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50037"></span>C375</td>
+<td class="instruction">DEFB $62,$07,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50045"></span>C37D</td>
+<td class="instruction">DEFB $08,$21,$22,$24,$31,$2D,$11,$17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50053"></span>C385</td>
+<td class="instruction">DEFB $21,$74,$A1,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50057"></span>C389</td>
+<td class="instruction">DEFB $03,$FF,$1F,$05,$00,$00,$00,$82</td>
+<td class="comment-1" rowspan="3">Object 24: black water (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50065"></span>C391</td>
+<td class="instruction">DEFB $62,$07,$A5,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50073"></span>C399</td>
+<td class="instruction">DEFB $19,$42,$43,$21,$58,$A2,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50080"></span>C3A0</td>
+<td class="instruction">DEFB $01,$FF,$05,$05,$20,$20,$40,$E0</td>
+<td class="comment-1" rowspan="3">Object 68: gollum (strength 32, defence 64)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50088"></span>C3A8</td>
+<td class="instruction">DEFB $FD,$82,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50096"></span>C3B0</td>
+<td class="instruction">DEFB $11,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50098"></span>C3B2</td>
+<td class="instruction">DEFB $01,$FF,$30,$10,$10,$60,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 70: bard (strength 96, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50106"></span>C3BA</td>
+<td class="instruction">DEFB $80,$80,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50114"></span>C3C2</td>
+<td class="instruction">DEFB $23,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50116"></span>C3C4</td>
+<td class="instruction">DEFB $01,$46,$05,$03,$00,$10,$10,$80</td>
+<td class="comment-1" rowspan="3">Object 25: bow (strength 16, defence 16)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50124"></span>C3CC</td>
+<td class="instruction">DEFB $C3,$10,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50132"></span>C3D4</td>
+<td class="instruction">DEFB $23,$0B,$57,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50137"></span>C3D9</td>
+<td class="instruction">DEFB $01,$46,$02,$01,$00,$10,$10,$80</td>
+<td class="comment-1" rowspan="3">Object 26: strong arrow (strength 16, defence 16)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50145"></span>C3E1</td>
+<td class="instruction">DEFB $6B,$10,$68,$06,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50153"></span>C3E9</td>
+<td class="instruction">DEFB $23,$0B,$57,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50158"></span>C3EE</td>
+<td class="instruction">DEFB $02,$FF,$60,$FF,$80,$70,$70,$80</td>
+<td class="comment-1" rowspan="5">Object 27: window (strength 112, defence 112)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50166"></span>C3F6</td>
+<td class="instruction">DEFB $90,$07,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50174"></span>C3FE</td>
+<td class="instruction">DEFB $0D,$12,$1E,$78,$A6,$0B,$78,$A6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50182"></span>C406</td>
+<td class="instruction">DEFB $10,$55,$A6,$0C,$55,$A6,$18,$78</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50190"></span>C40E</td>
+<td class="instruction">DEFB $A6,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50192"></span>C410</td>
+<td class="instruction">DEFB $02,$FF,$05,$05,$00,$80,$80,$94</td>
+<td class="comment-1" rowspan="3">Object 28: torch (strength 128, defence 128)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50200"></span>C418</td>
+<td class="instruction">DEFB $DB,$16,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50208"></span>C420</td>
+<td class="instruction">DEFB $10,$1E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50211"></span>C423</td>
+<td class="instruction">DEFB $01,$FF,$65,$65,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 29: sand (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50219"></span>C42B</td>
+<td class="instruction">DEFB $80,$35,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50227"></span>C433</td>
+<td class="instruction">DEFB $0D,$39,$CF,$8F,$11,$B9,$91,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50235"></span>C43B</td>
+<td class="instruction">DEFB $01,$1D,$FF,$FF,$03,$80,$80,$81</td>
+<td class="comment-1" rowspan="4">Object 30: trap door (strength 128, defence 128)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50243"></span>C443</td>
+<td class="instruction">DEFB $C4,$01,$E4,$06,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50251"></span>C44B</td>
+<td class="instruction">DEFB $0D,$0B,$57,$92,$26,$88,$A2,$10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50259"></span>C453</td>
+<td class="instruction">DEFB $78,$90,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50262"></span>C456</td>
+<td class="instruction">DEFB $01,$1E,$FF,$FF,$00,$00,$00,$A0</td>
+<td class="comment-1" rowspan="3">Object 31: goblins cache (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50270"></span>C45E</td>
+<td class="instruction">DEFB $E2,$00,$EC,$02,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50278"></span>C466</td>
+<td class="instruction">DEFB $0D,$11,$B9,$91,$14,$75,$8C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50286"></span>C46E</td>
+<td class="instruction">DEFB $01,$FF,$FF,$FF,$02,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 32: heavy curtain (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50294"></span>C476</td>
+<td class="instruction">DEFB $6A,$11,$2B,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50302"></span>C47E</td>
+<td class="instruction">DEFB $16,$10,$78,$90,$0C,$A2,$90,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50310"></span>C486</td>
+<td class="instruction">DEFB $01,$24,$FF,$FF,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="5">Object 33: large cupboard (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50318"></span>C48E</td>
+<td class="instruction">DEFB $5B,$11,$C3,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50326"></span>C496</td>
+<td class="instruction">DEFB $16,$10,$78,$90,$0C,$A2,$90,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50334"></span>C49E</td>
+<td class="instruction">DEFB $B9,$91,$14,$75,$8C,$0B,$57,$92</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50342"></span>C4A6</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50343"></span>C4A7</td>
+<td class="instruction">DEFB $01,$21,$05,$05,$00,$01,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 34: food (strength 1, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50351"></span>C4AF</td>
+<td class="instruction">DEFB $8F,$32,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50359"></span>C4B7</td>
+<td class="instruction">DEFB $16,$1B,$1F,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50364"></span>C4BC</td>
+<td class="instruction">DEFB $01,$FF,$20,$20,$00,$05,$05,$80</td>
+<td class="comment-1" rowspan="3">Object 35: valuable treasure (strength 5, defence 5)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50372"></span>C4C4</td>
+<td class="instruction">DEFB $E8,$06,$39,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50380"></span>C4CC</td>
+<td class="instruction">DEFB $29,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50382"></span>C4CE</td>
+<td class="instruction">DEFB $01,$20,$FF,$FF,$00,$00,$00,$A0</td>
+<td class="comment-1" rowspan="3">Object 36: wall (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50390"></span>C4D6</td>
+<td class="instruction">DEFB $5E,$17,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50398"></span>C4DE</td>
+<td class="instruction">DEFB $16,$11,$00,$00,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50403"></span>C4E3</td>
+<td class="instruction">DEFB $01,$FF,$40,$FF,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="5">Object 37: wooden chest (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50411"></span>C4EB</td>
+<td class="instruction">DEFB $22,$01,$A6,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50419"></span>C4F3</td>
+<td class="instruction">DEFB $01,$10,$78,$90,$0C,$A2,$90,$11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50427"></span>C4FB</td>
+<td class="instruction">DEFB $B9,$91,$0E,$B9,$91,$14,$75,$8C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50435"></span>C503</td>
+<td class="instruction">DEFB $0B,$57,$92,$36,$86,$A4,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50442"></span>C50A</td>
+<td class="instruction">DEFB $01,$FF,$40,$FF,$00,$00,$00,$A0</td>
+<td class="comment-1" rowspan="5">Object 41: wooden boat (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50450"></span>C512</td>
+<td class="instruction">DEFB $B8,$00,$A6,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50458"></span>C51A</td>
+<td class="instruction">DEFB $43,$11,$B9,$91,$0E,$B9,$91,$14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50466"></span>C522</td>
+<td class="instruction">DEFB $75,$8C,$0B,$57,$92,$36,$86,$A4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50474"></span>C52A</td>
+<td class="instruction">DEFB $00,$92,$A7,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50478"></span>C52E</td>
+<td class="instruction">DEFB $01,$FF,$90,$90,$00,$A0,$A0,$E0</td>
+<td class="comment-1" rowspan="3">Object 71: hideous troll (strength 160, defence 160)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50486"></span>C536</td>
+<td class="instruction">DEFB $FC,$06,$3B,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50494"></span>C53E</td>
+<td class="instruction">DEFB $05,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50496"></span>C540</td>
+<td class="instruction">DEFB $01,$FF,$90,$90,$00,$A0,$A0,$E0</td>
+<td class="comment-1" rowspan="3">Object 72: vicious troll (strength 160, defence 160)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50504"></span>C548</td>
+<td class="instruction">DEFB $FC,$06,$45,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50512"></span>C550</td>
+<td class="instruction">DEFB $05,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50514"></span>C552</td>
+<td class="instruction">DEFB $01,$FF,$05,$05,$00,$01,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 38: lunch (strength 1, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50522"></span>C55A</td>
+<td class="instruction">DEFB $23,$34,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50530"></span>C562</td>
+<td class="instruction">DEFB $00,$1B,$1F,$92,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50535"></span>C567</td>
+<td class="instruction">DEFB $02,$FF,$90,$FF,$00,$00,$00,$80</td>
+<td class="comment-1" rowspan="3">Object 39: strong portcullis (strength 0, defence 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50543"></span>C56F</td>
+<td class="instruction">DEFB $F5,$04,$68,$06,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50551"></span>C577</td>
+<td class="instruction">DEFB $21,$22,$1E,$9D,$8E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50557"></span>C57D</td>
+<td class="instruction">DEFB $01,$FF,$FE,$FE,$00,$FF,$FF,$80</td>
+<td class="comment-1" rowspan="3">Object 40: stone (strength 255, defence 255)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50565"></span>C585</td>
+<td class="instruction">DEFB $45,$36,$00,$00,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50573"></span>C58D</td>
+<td class="instruction">DEFB $2F,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50575"></span>C58F</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 61: nasty goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50583"></span>C597</td>
+<td class="instruction">DEFB $E6,$02,$6E,$04,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50591"></span>C59F</td>
+<td class="instruction">DEFB $0F,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50599"></span>C5A7</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 69: hideous goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50607"></span>C5AF</td>
+<td class="instruction">DEFB $E6,$02,$3B,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50615"></span>C5B7</td>
+<td class="instruction">DEFB $3A,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50623"></span>C5BF</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 73: horrible goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50631"></span>C5C7</td>
+<td class="instruction">DEFB $E6,$02,$65,$03,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50639"></span>C5CF</td>
+<td class="instruction">DEFB $12,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50647"></span>C5D7</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 74: mean goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50655"></span>C5DF</td>
+<td class="instruction">DEFB $E6,$02,$38,$04,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50663"></span>C5E7</td>
+<td class="instruction">DEFB $38,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50671"></span>C5EF</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 75: vicious goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50679"></span>C5F7</td>
+<td class="instruction">DEFB $E6,$02,$45,$07,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50687"></span>C5FF</td>
+<td class="instruction">DEFB $40,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50695"></span>C607</td>
+<td class="instruction">DEFB $01,$FF,$40,$30,$20,$48,$60,$E0</td>
+<td class="comment-1" rowspan="3">Object 76: disgusting goblin (strength 72, defence 96)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50703"></span>C60F</td>
+<td class="instruction">DEFB $E6,$02,$B6,$01,$00,$00,$00,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50711"></span>C617</td>
+<td class="instruction">DEFB $10,$0F,$DB,$90,$00,$6A,$A3,$FF</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="48979.html">BF53</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#49163">Map</a></td>
+<td class="next">
+Next: <a href="50719.html">C61F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

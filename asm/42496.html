@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A600</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42453.html">A5D5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42496">Map</a></td>
+<td class="next">
+Next: <a href="42516.html">A614</a>
+</td>
+</tr>
+</table>
+<div class="description">A600: Unused routine</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes its three bytes, presumably meaning to seal up a way through once something (perhaps the boat) is no longer there to use. But nothing in the game calls it: it is not wired into any object's handler list, any room-entry handler, or any timer, and no other routine calls or jumps to it. Like <a href="41182.html">A0DE</a>, it appears to be leftover or abandoned code.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42496"></span>A600</td>
+<td class="instruction">CALL <a href="40558.html">$9E6E</a></td>
+<td class="comment-1" rowspan="1">Find the exit that passes through the target (presumably meant to be the boat)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42499"></span>A603</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is there no such exit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42501"></span>A605</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">If so, there is nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42502"></span>A606</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="4">Clear the exit's three bytes - sealing up the way, presumably once the boat is no longer there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42503"></span>A607</td>
+<td class="instruction">LD (IX+$00),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42507"></span>A60B</td>
+<td class="instruction">LD (IX+$01),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42511"></span>A60F</td>
+<td class="instruction">LD (IX+$02),$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42515"></span>A613</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">(This routine is never actually called by anything in the game - see the note above)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42453.html">A5D5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42496">Map</a></td>
+<td class="next">
+Next: <a href="42516.html">A614</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

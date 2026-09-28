@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8B2F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35622.html">8B26</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35631">Map</a></td>
+<td class="next">
+Next: <a href="35731.html">8B93</a>
+</td>
+</tr>
+</table>
+<div class="description">8B2F: Draw a line</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Draws a line of L+1 pixels from (D,E) in one of eight directions (bits 0-2 of C). Bit 0 says whether the line is mostly vertical or mostly horizontal; bits 1 and 2 give the vertical and horizontal directions. The line moves one pixel along its main direction every step, and one pixel along the other direction every B steps, so lines have slopes of 1, 1/2, 1/3 and so on rather than arbitrary angles. Drawing stops early at the edge of the picture area.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Direction</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Steps per sideways move</td>
+</tr>
+<tr>
+<td class="register">L</td>
+<td class="register-desc">Length</td>
+</tr>
+<tr>
+<td class="register">D,E</td>
+<td class="register-desc">Start</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35631"></span>8B2F</td>
+<td class="instruction">BIT 0,C</td>
+<td class="comment-1" rowspan="1">Mostly vertical (bit 0 set)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35633"></span>8B31</td>
+<td class="instruction">JR NZ,$8B63</td>
+<td class="comment-1" rowspan="1">Yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35635"></span>8B33</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">MOSTLY HORIZONTAL:</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35636"></span>8B34</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35637"></span>8B35</td>
+<td class="instruction">CALL <a href="35731.html">$8B93</a></td>
+<td class="comment-1" rowspan="1">Plot the pixel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35640"></span>8B38</td>
+<td class="instruction">BIT 2,C</td>
+<td class="comment-1" rowspan="2">Leftwards (bit 2)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35642"></span>8B3A</td>
+<td class="instruction">JR Z,$8B43</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35644"></span>8B3C</td>
+<td class="instruction">CALL <a href="35622.html">$8B26</a></td>
+<td class="comment-1" rowspan="1">Step left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35647"></span>8B3F</td>
+<td class="instruction">JR Z,$8B60</td>
+<td class="comment-1" rowspan="2">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35649"></span>8B41</td>
+<td class="instruction">JR $8B48</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35651"></span>8B43</td>
+<td class="instruction">CALL <a href="35615.html">$8B1F</a></td>
+<td class="comment-1" rowspan="1">Step right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35654"></span>8B46</td>
+<td class="instruction">JR Z,$8B60</td>
+<td class="comment-1" rowspan="1">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35656"></span>8B48</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Time for a vertical step?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35657"></span>8B49</td>
+<td class="instruction">JR NZ,$8B5D</td>
+<td class="comment-1" rowspan="1">Not yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35659"></span>8B4B</td>
+<td class="instruction">BIT 1,C</td>
+<td class="comment-1" rowspan="2">Downwards (bit 1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35661"></span>8B4D</td>
+<td class="instruction">JR Z,$8B56</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35663"></span>8B4F</td>
+<td class="instruction">CALL <a href="35608.html">$8B18</a></td>
+<td class="comment-1" rowspan="1">Step down</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35666"></span>8B52</td>
+<td class="instruction">JR Z,$8B60</td>
+<td class="comment-1" rowspan="2">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35668"></span>8B54</td>
+<td class="instruction">JR $8B5B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35670"></span>8B56</td>
+<td class="instruction">CALL <a href="35593.html">$8B09</a></td>
+<td class="comment-1" rowspan="1">Step up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35673"></span>8B59</td>
+<td class="instruction">JR Z,$8B60</td>
+<td class="comment-1" rowspan="1">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35675"></span>8B5B</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Reload the step counter B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35676"></span>8B5C</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35677"></span>8B5D</td>
+<td class="instruction">DEC L</td>
+<td class="comment-1" rowspan="1">One pixel fewer to draw</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35678"></span>8B5E</td>
+<td class="instruction">JR NZ,$8B35</td>
+<td class="comment-1" rowspan="4">Loop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35680"></span>8B60</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35681"></span>8B61</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35682"></span>8B62</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35683"></span>8B63</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">MOSTLY VERTICAL:</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35684"></span>8B64</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35685"></span>8B65</td>
+<td class="instruction">CALL <a href="35731.html">$8B93</a></td>
+<td class="comment-1" rowspan="1">Plot the pixel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35688"></span>8B68</td>
+<td class="instruction">BIT 1,C</td>
+<td class="comment-1" rowspan="2">Downwards (bit 1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35690"></span>8B6A</td>
+<td class="instruction">JR Z,$8B73</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35692"></span>8B6C</td>
+<td class="instruction">CALL <a href="35608.html">$8B18</a></td>
+<td class="comment-1" rowspan="1">Step down</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35695"></span>8B6F</td>
+<td class="instruction">JR Z,$8B90</td>
+<td class="comment-1" rowspan="2">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35697"></span>8B71</td>
+<td class="instruction">JR $8B78</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35699"></span>8B73</td>
+<td class="instruction">CALL <a href="35593.html">$8B09</a></td>
+<td class="comment-1" rowspan="1">Step up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35702"></span>8B76</td>
+<td class="instruction">JR Z,$8B90</td>
+<td class="comment-1" rowspan="1">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35704"></span>8B78</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Time for a sideways step?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35705"></span>8B79</td>
+<td class="instruction">JR NZ,$8B8D</td>
+<td class="comment-1" rowspan="1">Not yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35707"></span>8B7B</td>
+<td class="instruction">BIT 2,C</td>
+<td class="comment-1" rowspan="2">Leftwards (bit 2)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35709"></span>8B7D</td>
+<td class="instruction">JR Z,$8B86</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35711"></span>8B7F</td>
+<td class="instruction">CALL <a href="35622.html">$8B26</a></td>
+<td class="comment-1" rowspan="1">Step left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35714"></span>8B82</td>
+<td class="instruction">JR Z,$8B90</td>
+<td class="comment-1" rowspan="2">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35716"></span>8B84</td>
+<td class="instruction">JR $8B8B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35718"></span>8B86</td>
+<td class="instruction">CALL <a href="35615.html">$8B1F</a></td>
+<td class="comment-1" rowspan="1">Step right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35721"></span>8B89</td>
+<td class="instruction">JR Z,$8B90</td>
+<td class="comment-1" rowspan="1">Stop at the edge</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35723"></span>8B8B</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Reload the step counter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35724"></span>8B8C</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35725"></span>8B8D</td>
+<td class="instruction">DEC L</td>
+<td class="comment-1" rowspan="1">One pixel fewer to draw</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35726"></span>8B8E</td>
+<td class="instruction">JR NZ,$8B65</td>
+<td class="comment-1" rowspan="4">Loop</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35728"></span>8B90</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35729"></span>8B91</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35730"></span>8B92</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35622.html">8B26</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35631">Map</a></td>
+<td class="next">
+Next: <a href="35731.html">8B93</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

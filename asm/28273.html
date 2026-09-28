@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6E71</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28230.html">6E46</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28273">Map</a></td>
+<td class="next">
+Next: <a href="28290.html">6E82</a>
+</td>
+</tr>
+</table>
+<div class="description">6E71: Repeat the last command</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called by <a href="28109.html">6DCD</a> when the first key of a line is '@' (SYMBOL SHIFT + 2).
+</div>
+<div class="paragraph">
+If the game is waiting for the answer to a question such as 'which key?' (the flag at $B60A, set by <a href="34661.html">8765</a>), the '@' is thrown away and the line editor goes back to waiting for a key.
+</div>
+<div class="paragraph">
+Otherwise two backspaces are printed to rub out the '&gt; ' prompt, and the routine returns with the Z flag set. (<a href="28109.html">6DCD</a> jumps here rather than calling it, so this return goes straight back to the main loop.) The main loop (<a href="27914.html">6D0A</a>) then skips tokenising and hands the old contents of the token buffer (<a href="28819.html">7093</a>) straight back to the parser. The effect is that '@' repeats the previous command, without it appearing on the screen again.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set to repeat the last command</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28273"></span>6E71</td>
+<td class="instruction">LD A,($B60A)</td>
+<td class="comment-1" rowspan="1">Is a command still pending?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28276"></span>6E74</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28277"></span>6E75</td>
+<td class="instruction">JP NZ,<a href="28109.html#28140">$6DEC</a></td>
+<td class="comment-1" rowspan="1">Yes: ignore the key and carry on reading the line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28280"></span>6E78</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="1">Rub out the "&gt; " prompt</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28282"></span>6E7A</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28285"></span>6E7D</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28288"></span>6E80</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">Return with Z set: repeat the last command</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28289"></span>6E81</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28230.html">6E46</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28273">Map</a></td>
+<td class="next">
+Next: <a href="28290.html">6E82</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

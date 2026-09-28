@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 80CD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32949.html">80B5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32973">Map</a></td>
+<td class="next">
+Next: <a href="33097.html">8149</a>
+</td>
+</tr>
+</table>
+<div class="description">80CD: Quotation mark</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+A quotation mark (class $90, word 0) arrives here from <a href="32777.html">8009</a>. If no quotation is open, it is an opening quote (<a href="32949.html">80B5</a>). Otherwise it closes the quotation: $B60B is decreased, and the frames that were parsed inside it are moved to the orders buffer at <a href="46632.html">B628</a> so that the character spoken to can act on them later.
+</div>
+<div class="paragraph">
+The orders buffer has eight slots of 25 bytes. Each command is put in the first free slot: the slot's first byte is set to $FF (in use) and the 24-byte frame is copied after it. An ALL EXCEPT exception frame (bit 6) is stored as an empty order. $B627 is set to the number of orders stored. The parser state saved at the opening quote is then restored.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32973"></span>80CD</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="2">Are we already inside a quotation?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32976"></span>80D0</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32977"></span>80D1</td>
+<td class="instruction">JR Z,<a href="32949.html">$80B5</a></td>
+<td class="comment-1" rowspan="1">No: this is an OPENING quote (<a href="32949.html">80B5</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32979"></span>80D3</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Yes: this closes it - one level shallower</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32980"></span>80D4</td>
+<td class="instruction">LD ($B60B),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32983"></span>80D7</td>
+<td class="instruction">LD A,($8008)</td>
+<td class="comment-1" rowspan="2">A = the frame count as it was when the quotation opened</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32986"></span>80DA</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32987"></span>80DB</td>
+<td class="instruction">LD A,($B5F7)</td>
+<td class="comment-1" rowspan="3">Subtract that from the frame count now, giving how many frames were built INSIDE the quotation</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32990"></span>80DE</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32991"></span>80DF</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32992"></span>80E0</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1">C will count how many orders are actually stored</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32994"></span>80E2</td>
+<td class="instruction">JR Z,$8130</td>
+<td class="comment-1" rowspan="1">None at all (an empty quotation): tidy up and finish, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32996"></span>80E4</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="2">Restore IY to the frame just before the quotation opened...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32998"></span>80E6</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33000"></span>80E8</td>
+<td class="instruction">LD DE,$FFE8</td>
+<td class="comment-1" rowspan="2">...then move up to the FIRST frame built inside it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33003"></span>80EB</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33005"></span>80ED</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = how many frames to process</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33006"></span>80EE</td>
+<td class="instruction">LD IX,$B628</td>
+<td class="comment-1" rowspan="1">IX = the start of the orders buffer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33010"></span>80F2</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="9">Find the first free slot (marked with a 0 in its first byte)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33011"></span>80F3</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33012"></span>80F4</td>
+<td class="instruction">LD DE,$0019</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33015"></span>80F7</td>
+<td class="instruction">LD B,$08</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33017"></span>80F9</td>
+<td class="instruction">LD A,(IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33020"></span>80FC</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33021"></span>80FD</td>
+<td class="instruction">JR Z,$8103</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33023"></span>80FF</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33025"></span>8101</td>
+<td class="instruction">DJNZ $80F9</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33027"></span>8103</td>
+<td class="instruction">LD (IX+$00),$FF</td>
+<td class="comment-1" rowspan="1">...mark it in use (properly addressed later, in <a href="34983.html">88A7</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33031"></span>8107</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Move past the slot's own marker byte, to where the frame goes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33033"></span>8109</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore the frame counter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33034"></span>810A</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33035"></span>810B</td>
+<td class="instruction">JR NZ,$8130</td>
+<td class="comment-1" rowspan="1">No free slot was found: the rest of the orders are simply lost</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33037"></span>810D</td>
+<td class="instruction">BIT 6,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Is this frame only an ALL EXCEPT exception, with no command of its own?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33041"></span>8111</td>
+<td class="instruction">JR Z,$8119</td>
+<td class="comment-1" rowspan="1">No: copy it properly, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33043"></span>8113</td>
+<td class="instruction">LD (IX-$01),$00</td>
+<td class="comment-1" rowspan="2">Yes: store it as an empty order instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33047"></span>8117</td>
+<td class="instruction">JR $812B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33049"></span>8119</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="8">Copy the whole 24-byte frame into the order slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33050"></span>811A</td>
+<td class="instruction">LD B,$18</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33052"></span>811C</td>
+<td class="instruction">LD A,(IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33055"></span>811F</td>
+<td class="instruction">LD (IX+$00),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33058"></span>8122</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33060"></span>8124</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33062"></span>8126</td>
+<td class="instruction">DJNZ $811C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33064"></span>8128</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33065"></span>8129</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1">Move IY on to the next frame that was inside the quotation</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33067"></span>812B</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1">(the exception-frame path joins here too, at the same offset)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33069"></span>812D</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">One more order stored</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33070"></span>812E</td>
+<td class="instruction">DJNZ $80EE</td>
+<td class="comment-1" rowspan="1">Repeat for every frame that was built inside the quotation</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33072"></span>8130</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">No ALL or ALL EXCEPT is in force any more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33073"></span>8131</td>
+<td class="instruction">LD ($B609),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33076"></span>8134</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Remember how many orders were actually stored</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33077"></span>8135</td>
+<td class="instruction">LD ($B627),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33080"></span>8138</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore the frame pointer from before the quotation opened</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33082"></span>813A</td>
+<td class="instruction">LD A,($8008)</td>
+<td class="comment-1" rowspan="2">Restore the frame count too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33085"></span>813D</td>
+<td class="instruction">LD ($B5F7),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33088"></span>8140</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore BC and DE, saved when the quotation opened</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33089"></span>8141</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33090"></span>8142</td>
+<td class="instruction">LD A,($8007)</td>
+<td class="comment-1" rowspan="2">Restore the word class the parser had reached</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33093"></span>8145</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33094"></span>8146</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Go back to reading the next word, as if the whole quotation had been a single word</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32949.html">80B5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32973">Map</a></td>
+<td class="next">
+Next: <a href="33097.html">8149</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

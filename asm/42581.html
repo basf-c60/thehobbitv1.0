@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A655</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42545.html">A631</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42581">Map</a></td>
+<td class="next">
+Next: <a href="42616.html">A678</a>
+</td>
+</tr>
+</table>
+<div class="description">A655: Handler for the window: OPEN and CLOSE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Bilbo cannot reach the window if he is not being held up (byte 1 of his record is $FF): 'you cannot reach the window'. Characters can open and close it normally.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42581"></span>A655</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42584"></span>A658</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42586"></span>A65A</td>
+<td class="instruction">JR NZ,$A66A</td>
+<td class="comment-1" rowspan="1">No (a character): they can always reach the window, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42588"></span>A65C</td>
+<td class="instruction">LD A,($C00C)</td>
+<td class="comment-1" rowspan="1">Yes - is Bilbo currently being held up by something?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42591"></span>A65F</td>
+<td class="instruction">LD HL,$B00D</td>
+<td class="comment-1" rowspan="2">"you cannot reach the window."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42594"></span>A662</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42596"></span>A664</td>
+<td class="instruction">JP Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Held by nobody: he cannot reach it - say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42599"></span>A667</td>
+<td class="instruction">JP <a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Held by something, but the action still failed some other way: fail normally</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42602"></span>A66A</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="2">Is this CLOSE (action 12)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42605"></span>A66D</td>
+<td class="instruction">CP $0C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42607"></span>A66F</td>
+<td class="instruction">JP Z,<a href="37026.html">$90A2</a></td>
+<td class="comment-1" rowspan="1">Yes: close it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42610"></span>A672</td>
+<td class="instruction">CP $10</td>
+<td class="comment-1" rowspan="1">Is it OPEN (action 16)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42612"></span>A674</td>
+<td class="instruction">JP Z,<a href="36984.html">$9078</a></td>
+<td class="comment-1" rowspan="1">Yes: open it as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42615"></span>A677</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Anything else: do nothing further here</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42545.html">A631</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42581">Map</a></td>
+<td class="next">
+Next: <a href="42616.html">A678</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9C3D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39933.html">9BFD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39997">Map</a></td>
+<td class="next">
+Next: <a href="40002.html">9C42</a>
+</td>
+</tr>
+</table>
+<div class="description">9C3D: Total size of an object's contents</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+As <a href="40002.html">9C42</a>, but adding up the objects' sizes (byte 2) instead of their weights.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39997"></span>9C3D</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">TOTAL SIZE: save the caller's BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39998"></span>9C3E</td>
+<td class="instruction">LD B,$01</td>
+<td class="comment-1" rowspan="1">B=1 tells the shared routine below to add up sizes rather than weights</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40000"></span>9C40</td>
+<td class="instruction">JR <a href="40002.html#40005">$9C45</a></td>
+<td class="comment-1" rowspan="1">Join the weight routine, which does the actual work</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39933.html">9BFD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39997">Map</a></td>
+<td class="next">
+Next: <a href="40002.html">9C42</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

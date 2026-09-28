@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 808A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32882.html">8072</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32906">Map</a></td>
+<td class="next">
+Next: <a href="32922.html">809A</a>
+</td>
+</tr>
+</table>
+<div class="description">808A: ALL</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets $B609 to 1 (ALL in force) unless ALL EXCEPT is already in force.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32906"></span>808A</td>
+<td class="instruction">LD A,($B609)</td>
+<td class="comment-1" rowspan="2">Is ALL EXCEPT already in force?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32909"></span>808D</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32911"></span>808F</td>
+<td class="instruction">JP Z,<a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Yes: a second ALL changes nothing - just carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32914"></span>8092</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">No: switch plain ALL on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32916"></span>8094</td>
+<td class="instruction">LD ($B609),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32919"></span>8097</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Go back to reading the next word</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32882.html">8072</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32906">Map</a></td>
+<td class="next">
+Next: <a href="32922.html">809A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

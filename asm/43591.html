@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at AA47</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43566.html">AA2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43591">Map</a></td>
+<td class="next">
+Next: <a href="44063.html">AC1F</a>
+</td>
+</tr>
+</table>
+<div class="description">AA47: Action table</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The 59 actions the game knows, 8 bytes each, numbered from 1 (<a href="28895.html">70DF</a> works out the address). Each entry is four word references, low byte first: the verb, a particle, a preposition, and a fourth word (GO for the ten movement actions). The parser's command is matched against these by <a href="34191.html">858F</a>, so an action is really a verb plus the little words that go with it: TAKE, TAKE OUT OF, TAKE FROM and TAKE OFF are four different actions.
+</div>
+<div class="paragraph">
+The top nibble of each word's high byte holds flags (collected by <a href="28906.html">70EA</a> and decoded by <a href="34153.html">8569</a>): whether a target and an instrument are needed, whether they can be rooms, whether the action can be done in the dark, and how it is reported.
+</div>
+<div class="paragraph">
+Only the verbs appearing here do anything. Any other verb in the dictionary (WAIT, JUMP, SING...) just produces 'you wait. time passes...' (<a href="34191.html">858F</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43591"></span>AA47</td>
+<td class="instruction">DEFB $84,$04,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 1: north go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43599"></span>AA4F</td>
+<td class="instruction">DEFB $0B,$06,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 2: south go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43607"></span>AA57</td>
+<td class="instruction">DEFB $02,$02,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 3: east go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43615"></span>AA5F</td>
+<td class="instruction">DEFB $7D,$07,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 4: west go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43623"></span>AA67</td>
+<td class="instruction">DEFB $89,$04,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 5: northeast go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43631"></span>AA6F</td>
+<td class="instruction">DEFB $92,$04,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 6: northwest go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43639"></span>AA77</td>
+<td class="instruction">DEFB $10,$06,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 7: southeast go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43647"></span>AA7F</td>
+<td class="instruction">DEFB $19,$06,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 8: southwest go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43655"></span>AA87</td>
+<td class="instruction">DEFB $29,$07,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 9: up go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43663"></span>AA8F</td>
+<td class="instruction">DEFB $C8,$01,$00,$00,$00,$00,$E2,$02</td>
+<td class="comment-1" rowspan="1">Action 10: down go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43671"></span>AA97</td>
+<td class="instruction">DEFB $5C,$E6,$00,$00,$9A,$07,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 11: strike with</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43679"></span>AA9F</td>
+<td class="instruction">DEFB $34,$81,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 12: close</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43687"></span>AAA7</td>
+<td class="instruction">DEFB $EC,$81,$00,$00,$00,$80,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 13: drop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43695"></span>AAAF</td>
+<td class="instruction">DEFB $EC,$C1,$00,$00,$7C,$03,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 14: drop in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43703"></span>AAB7</td>
+<td class="instruction">DEFB $73,$E0,$00,$00,$9A,$47,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 15: attack with</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43711"></span>AABF</td>
+<td class="instruction">DEFB $B8,$84,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 16: open</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43719"></span>AAC7</td>
+<td class="instruction">DEFB $0C,$C5,$00,$00,$7C,$03,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 17: put in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43727"></span>AACF</td>
+<td class="instruction">DEFB $0C,$C5,$00,$00,$AE,$04,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 18: put on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43735"></span>AAD7</td>
+<td class="instruction">DEFB $90,$86,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 19: take</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43743"></span>AADF</td>
+<td class="instruction">DEFB $90,$C6,$C3,$04,$A0,$04,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 20: take out of</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43751"></span>AAE7</td>
+<td class="instruction">DEFB $90,$C6,$B9,$02,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 21: take from</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43759"></span>AAEF</td>
+<td class="instruction">DEFB $90,$96,$A3,$24,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 22: take off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43767"></span>AAF7</td>
+<td class="instruction">DEFB $17,$04,$00,$10,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 23: look</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43775"></span>AAFF</td>
+<td class="instruction">DEFB $17,$84,$C5,$26,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 24: look through</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43783"></span>AB07</td>
+<td class="instruction">DEFB $17,$84,$43,$20,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 25: look across</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43791"></span>AB0F</td>
+<td class="instruction">DEFB $96,$03,$00,$10,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 26: inventory</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43799"></span>AB17</td>
+<td class="instruction">DEFB $06,$82,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 27: eat</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43807"></span>AB1F</td>
+<td class="instruction">DEFB $42,$82,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 28: examine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43815"></span>AB27</td>
+<td class="instruction">DEFB $D8,$C2,$D5,$06,$00,$10,$00,$60</td>
+<td class="comment-1" rowspan="1">Action 29: give to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43823"></span>AB2F</td>
+<td class="instruction">DEFB $E2,$82,$C5,$26,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 30: go through</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43831"></span>AB37</td>
+<td class="instruction">DEFB $31,$82,$00,$80,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 31: enter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43839"></span>AB3F</td>
+<td class="instruction">DEFB $E2,$82,$92,$A3,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 32: go into</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43847"></span>AB47</td>
+<td class="instruction">DEFB $E7,$81,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 33: drink</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43855"></span>AB4F</td>
+<td class="instruction">DEFB $2C,$82,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 34: empty</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43863"></span>AB57</td>
+<td class="instruction">DEFB $65,$C2,$00,$00,$9A,$07,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 35: fill with</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43871"></span>AB5F</td>
+<td class="instruction">DEFB $70,$05,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 36: run</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43879"></span>AB67</td>
+<td class="instruction">DEFB $F6,$C3,$00,$00,$9A,$07,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 37: lock with</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43887"></span>AB6F</td>
+<td class="instruction">DEFB $16,$C7,$00,$00,$9A,$07,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 38: unlock with</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43895"></span>AB77</td>
+<td class="instruction">DEFB $89,$92,$00,$00,$00,$40,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 39: follow</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43903"></span>AB7F</td>
+<td class="instruction">DEFB $76,$87,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 40: wear</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43911"></span>AB87</td>
+<td class="instruction">DEFB $CC,$86,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 41: throw</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43919"></span>AB8F</td>
+<td class="instruction">DEFB $CC,$C6,$00,$00,$70,$20,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 42: throw at</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43927"></span>AB97</td>
+<td class="instruction">DEFB $CC,$C6,$00,$00,$43,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 43: throw across</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43935"></span>AB9F</td>
+<td class="instruction">DEFB $CC,$C6,$00,$00,$C5,$06,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 44: throw through</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43943"></span>ABA7</td>
+<td class="instruction">DEFB $D3,$80,$00,$00,$00,$40,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 45: burn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43951"></span>ABAF</td>
+<td class="instruction">DEFB $D1,$C6,$00,$00,$D5,$06,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 46: tie to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43959"></span>ABB7</td>
+<td class="instruction">DEFB $78,$81,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 47: cut</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43967"></span>ABBF</td>
+<td class="instruction">DEFB $F4,$80,$00,$00,$00,$40,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 48: capture</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43975"></span>ABC7</td>
+<td class="instruction">DEFB $04,$85,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 49: pull</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43983"></span>ABCF</td>
+<td class="instruction">DEFB $80,$86,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 50: swim</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43991"></span>ABD7</td>
+<td class="instruction">DEFB $24,$87,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 51: untie</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43999"></span>ABDF</td>
+<td class="instruction">DEFB $2F,$81,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 52: climb</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44007"></span>ABE7</td>
+<td class="instruction">DEFB $94,$86,$D5,$26,$00,$40,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 53: talk to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44015"></span>ABEF</td>
+<td class="instruction">DEFB $2F,$81,$92,$23,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 54: climb into</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44023"></span>ABF7</td>
+<td class="instruction">DEFB $2F,$81,$C3,$24,$A0,$04,$00,$80</td>
+<td class="comment-1" rowspan="1">Action 55: climb out of</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44031"></span>ABFF</td>
+<td class="instruction">DEFB $A5,$93,$B4,$24,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Action 56: jump onto</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44039"></span>AC07</td>
+<td class="instruction">DEFB $A9,$81,$00,$00,$00,$00,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 57: dig</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44047"></span>AC0F</td>
+<td class="instruction">DEFB $98,$85,$00,$00,$00,$40,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 58: shoot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="44055"></span>AC17</td>
+<td class="instruction">DEFB $0D,$81,$00,$00,$00,$80,$00,$40</td>
+<td class="comment-1" rowspan="1">Action 59: carry</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43566.html">AA2E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43591">Map</a></td>
+<td class="next">
+Next: <a href="44063.html">AC1F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

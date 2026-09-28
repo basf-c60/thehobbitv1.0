@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8158</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33097.html">8149</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33112">Map</a></td>
+<td class="next">
+Next: <a href="33157.html">8185</a>
+</td>
+</tr>
+</table>
+<div class="description">8158: HELP</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+HELP gives a hint that depends on where Bilbo is. His room is looked up in the table at <a href="33157.html">8185</a>; if it is there, that message is printed, otherwise the general one at $B358: 'you're doing fine.' The message goes to the lower window. HELP is ignored if a character is the actor (for example inside SAY TO).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33112"></span>8158</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the current actor Bilbo, not a character (e.g. during SAY TO)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33115"></span>815B</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33116"></span>815C</td>
+<td class="instruction">JP NZ,<a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Not Bilbo: ignore HELP entirely and carry on parsing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33119"></span>815F</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Save HL and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33120"></span>8160</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33122"></span>8162</td>
+<td class="instruction">LD HL,$B358</td>
+<td class="comment-1" rowspan="1">"you're doing fine." - the general hint</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33125"></span>8165</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="1">A = Bilbo's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33128"></span>8168</td>
+<td class="instruction">LD IX,$8185</td>
+<td class="comment-1" rowspan="2">Is there a specific hint for this room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33132"></span>816C</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33135"></span>816F</td>
+<td class="instruction">JR Z,$8177</td>
+<td class="comment-1" rowspan="1">No: keep the general hint</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33137"></span>8171</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Yes: HL = that room's own hint instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33140"></span>8174</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33143"></span>8177</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">Print it in the lower window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33145"></span>8179</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33148"></span>817C</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33151"></span>817F</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">Restore IX and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33153"></span>8181</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33154"></span>8182</td>
+<td class="instruction">JP <a href="32875.html">$806B</a></td>
+<td class="comment-1" rowspan="1">Carry on parsing</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33097.html">8149</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33112">Map</a></td>
+<td class="next">
+Next: <a href="33157.html">8185</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

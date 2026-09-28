@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 73B4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29606.html">73A6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29620">Map</a></td>
+<td class="next">
+Next: <a href="29630.html">73BE</a>
+</td>
+</tr>
+</table>
+<div class="description">73B4: Message codes $08 and $09</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Code $08 ($73B4) prints a backspace, so that a word can be joined to the one before it (for example to add a suffix). Code $09 ($73B9) sets the 'print an article' flag and prints the instrument with its article, continuing into <a href="29630.html">73BE</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29620"></span>73B4</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">CODE $08: print a backspace, joining this word onto the one before it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29623"></span>73B7</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Nothing further to print</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29624"></span>73B8</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29625"></span>73B9</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">CODE $09: an article is wanted...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29627"></span>73BB</td>
+<td class="instruction">LD ($B5F4),A</td>
+<td class="comment-1" rowspan="1">...then fall into the shared code below, which prints the instrument</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29606.html">73A6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29620">Map</a></td>
+<td class="next">
+Next: <a href="29630.html">73BE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

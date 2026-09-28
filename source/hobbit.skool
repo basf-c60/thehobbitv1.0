@@ -4336,8 +4336,12 @@ c$81A7 CALL $81AD    ; Print the score
 
 ; Print the score
 ;
-; Prints 'you have mastered xx.x% of this adventure.' The score is kept at $B5E8 in tenths of a percent (so 1000 would be 100.0%). The hundreds and tens are
-; printed with #R$81E6 (a leading zero in the hundreds is suppressed), then a decimal point and the tenths digit.
+; Prints 'you have mastered xx.x% of this adventure.' The score is kept at $B5E8 in tenths of a percent. The hundreds and tens are printed with #R$81E6 (a
+; leading zero in the hundreds is suppressed), then a decimal point and the tenths digit.
+; .
+; The hundreds-digit routine only ever prints a single character ('0' plus the digit), so a score of 1000 or more would print a stray ':' rather than '10' - I
+; checked this in the emulator by poking the score directly. It cannot happen in an ordinary game, though: the highest score obtainable is 750, or 75.0%
+; (#R$8CEA), safely below the point where this would show.
 c$81AD PUSH HL       ; {Save HL and DE
  $81AE PUSH DE       ; }
  $81AF XOR A         ; {Print in the lower window
@@ -4997,8 +5001,14 @@ c$858F PUSH IY       ; Save the caller's IY, the current frame
 ; Assign the noun phrases to target and instrument
 ;
 ; Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's
-; flags. So 'hit thorin with the sword' and 'with the sword hit thorin' both work. The target's words are copied to $8333 and also to $B5D1 (for IT), and the
-; instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase actually has a noun.
+; flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase
+; actually has a noun.
+; .
+; I originally described this as also making 'with the sword hit thorin' work alongside 'hit thorin with the sword'. Testing it in the emulator shows that is
+; not so: putting the prepositional phrase before the plain noun - 'with sword hit thorin', 'hit with sword thorin', 'with large key unlock heavy door' - always
+; fails, usually with a nonsensical result such as 'you cannot attack the short strong sword.' (the sword having been read as the target). Only the ordinary
+; phrasing works reliably. What the crossing test in #R$8614 is actually for is not fully confirmed; it may cover cases within the two fixed phrase slots that
+; ordinary play does not exercise, such as an action whose own table entry could match the two collected prepositions either way round.
 c$8614 AND A         ; Did #R$71EA find the two words in the natural order (A=0) or crossed over (A=1)?
  $8615 JR Z,$8625    ; Natural order: nothing to undo
  $8617 LD HL,($834B) ; {Crossed over: swap the two prepositions collected by #R$858F...
@@ -9922,14 +9932,15 @@ c$A4CA CALL $9C99    ; Dry run? Then stop here: it always works
 
 ; Handler for the trap door: the barrel escape
 ;
-; When the large trap door is opened and the barrel (object 19) is the target and is in room 33, timer 0 (#R$C973) is set to 2. Two turns later #R$A4F4 floats
-; the barrel away.
-c$A4DB LD A,($B5D9)  ; {Is the target the barrel (object 19)?
+; Chained after the trap door's own THROW THROUGH handler (action 44, #R$9404), not after OPEN as I first assumed - it is throwing the barrel through the door,
+; not merely opening the door, that starts the escape. If the object just thrown through is the barrel (object 19) and it has landed in room 33 (the forest
+; river below the cellar), timer 0 (#R$C973) is set to 2. Two turns later #R$A4F4 floats the barrel away.
+c$A4DB LD A,($B5D9)  ; {Is the object just thrown through the door the barrel (object 19)?
  $A4DE CP $13        ; }
  $A4E0 RET NZ        ; No: this handler does nothing
- $A4E1 CALL $975D    ; Only if this is really happening (opening the trap door)
+ $A4E1 CALL $975D    ; Only if this is really happening (chained after the trap door's own THROW THROUGH, #R$9404, which has already moved the barrel)
  $A4E4 LD IX,$C2DD   ; IX = the barrel's own record
- $A4E8 LD A,(IX+$10) ; {Is it in room 33 (the cellar)?
+ $A4E8 LD A,(IX+$10) ; {Did it land in room 33, the forest river below?
  $A4EB CP $21        ; }
  $A4ED RET NZ        ; No: nothing happens
  $A4EE LD A,$02      ; {Yes: start timer 0 with a count of 2
@@ -9938,10 +9949,10 @@ c$A4DB LD A,($B5D9)  ; {Is the target the barrel (object 19)?
 
 ; Timer 0: the barrel floats down the river
 ;
-; The expiry routine of timer 0, two turns after the trap door is opened with the barrel in the cellar (#R$A4DB). If Bilbo is in the barrel he reads 'you are
-; thrown onto the bank of the long lake.' Everything in the barrel is moved to room 34 on the long lake (#R$9B38) and tipped out there (#R$9CA8), silently. The
-; barrel itself goes back to the cellar (room 32), closed and full, and the wine (object 20) is put back in it. This is the book's escape from the Elvenking's
-; halls, and the game resets it so the barrel is ready again.
+; The expiry routine of timer 0, two turns after the barrel is thrown through the trap door into the forest river below the cellar (#R$A4DB). If Bilbo is in the
+; barrel he reads 'you are thrown onto the bank of the long lake.' Everything in the barrel is moved to room 34 on the long lake (#R$9B38) and tipped out there
+; (#R$9CA8), silently. The barrel itself goes back to the cellar (room 32), closed and full, and the wine (object 20) is put back in it. This is the book's
+; escape from the Elvenking's halls, and the game resets it so the barrel is ready again.
 c$A4F4 SUB A           ; {Let other timers expire this turn too
  $A4F5 LD ($B5E1),A    ; }
  $A4F8 LD A,($C00C)    ; {Is Bilbo in the barrel (object 19)?
@@ -10085,17 +10096,19 @@ c$A5D5 LD A,($C4CC)   ; {Is the treasure still in room 41?
  $A5FA CALL $72D4     ; }
  $A5FD JP $903C       ; Bilbo is dead
 
-; Handler for the wooden boat
+; Unused routine
 ;
-; Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes it by clearing its three bytes.
-c$A600 CALL $9E6E      ; Find the exit that passes through the boat
+; Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes its three bytes, presumably meaning to seal up a way
+; through once something (perhaps the boat) is no longer there to use. But nothing in the game calls it: it is not wired into any object's handler list, any
+; room-entry handler, or any timer, and no other routine calls or jumps to it. Like #R$A0DE, it appears to be leftover or abandoned code.
+c$A600 CALL $9E6E      ; Find the exit that passes through the target (presumably meant to be the boat)
  $A603 CP $FF          ; Is there no such exit?
  $A605 RET Z           ; If so, there is nothing to do
- $A606 SUB A           ; {Clear the exit's three bytes - the way through the boat is removed
+ $A606 SUB A           ; {Clear the exit's three bytes - sealing up the way, presumably once the boat is no longer there
  $A607 LD (IX+$00),$00 ;
  $A60B LD (IX+$01),$00 ;
- $A60F LD (IX+$02),$00 ;
- $A613 RET             ; }
+ $A60F LD (IX+$02),$00 ; }
+ $A613 RET             ; (This routine is never actually called by anything in the game - see the note above)
 
 ; Handler for the magic door
 ;
@@ -12360,7 +12373,8 @@ b$C71C DEFB $00,$31,$C7,$0F,$8D,$C7,$FF             ; Reaction table for the nas
 ; .
 ; #TABLE(default)
 ; { =h Timer | =h Started by | =h Runs for | =h What happens }
-; { 0 | opening the trap door with the barrel in the cellar (#R$A4DB) | 2 turns | the barrel floats off to the long lake with whatever is in it (#R$A4F4) }
+; { 0 | the barrel is thrown through the trap door into the forest river (#R$A4DB) | 2 turns | the barrel floats off to the long lake with whatever is in it
+; (#R$A4F4) }
 ; { 1 | breaking the spider web (#R$A2A7) | 2 turns | 'some spiders start mending the broken web'; the web is whole again and twice as strong (#R$A950) }
 ; { 2 | entering the place of black spiders, room 26 (#R$C6A1) | the turn of arrival and 3 more | if Bilbo is still there, 'the spider web is slowly smothering
 ; you' and he dies (#R$AA04) }

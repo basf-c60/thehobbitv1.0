@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A985</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43368.html">A968</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43397">Map</a></td>
+<td class="next">
+Next: <a href="43414.html">A996</a>
+</td>
+</tr>
+</table>
+<div class="description">A985: Timer 9 tick: the side door appears</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The tick routine of timer 9, run when its count is down to 1. The side door is made visible, and if Bilbo is in room 42 he reads 'there is a loud crack and a hole appears about three feet from the ground. you are standing in front of the side door to the lonely mountain.' Next turn the timer expires (<a href="43368.html">A968</a>), and unless Bilbo has opened the door by then, it vanishes again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43397"></span>A985</td>
+<td class="instruction">LD HL,$C1AB</td>
+<td class="comment-1" rowspan="1">HL = the side door's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43400"></span>A988</td>
+<td class="instruction">SET 7,(HL)</td>
+<td class="comment-1" rowspan="1">Make it visible</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43402"></span>A98A</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo at the side door (room 42)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43405"></span>A98D</td>
+<td class="instruction">CP $2A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43407"></span>A98F</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43408"></span>A990</td>
+<td class="instruction">LD HL,$B169</td>
+<td class="comment-1" rowspan="2">"there is a loud crack and a hole appears about three feet from the ground..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43411"></span>A993</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43368.html">A968</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43397">Map</a></td>
+<td class="next">
+Next: <a href="43414.html">A996</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

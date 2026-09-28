@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8312</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33412.html">8284</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33554">Map</a></td>
+<td class="next">
+Next: <a href="33582.html">832E</a>
+</td>
+</tr>
+</table>
+<div class="description">8312: Verify a block</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Calls the ROM's LD-BYTES in verify mode. On failure it prints 'tape error - hit any key to continue' and abandons the verification; the game carries on.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33554"></span>8312</td>
+<td class="instruction">CALL $0556</td>
+<td class="comment-1" rowspan="1">The ROM's own LD-BYTES routine, in verify mode</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33557"></span>8315</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Verified correctly: carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33558"></span>8316</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Failed: print in the lower window</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33560"></span>8318</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33563"></span>831B</td>
+<td class="instruction">LD HL,$B273</td>
+<td class="comment-1" rowspan="2">"tape error - hit any key to continue."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33566"></span>831E</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="33569"></span>8321</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33570"></span>8322</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33572"></span>8324</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33574"></span>8326</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33576"></span>8328</td>
+<td class="instruction">JR Z,$8321</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33578"></span>832A</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Abandon the verification, but carry on with the rest of the game (unlike a LOAD failure, this is not fatal)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33579"></span>832B</td>
+<td class="instruction">JP <a href="33412.html#33547">$830B</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33412.html">8284</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33554">Map</a></td>
+<td class="next">
+Next: <a href="33582.html">832E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

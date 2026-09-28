@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9B6C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39736.html">9B38</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39788">Map</a></td>
+<td class="next">
+Next: <a href="39830.html">9B96</a>
+</td>
+</tr>
+</table>
+<div class="description">9B6C: Move the contents of an object</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets the location of every object held by object A to room B, and does the same for their contents. Clears $9B37 if Bilbo (object 0) is one of them.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39788"></span>9B6C</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Save IY and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39790"></span>9B6E</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39792"></span>9B70</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">IX = just before the start of the object index</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39796"></span>9B74</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+<td class="comment-1" rowspan="1">Look at the next object; IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39799"></span>9B77</td>
+<td class="instruction">JR Z,$9B91</td>
+<td class="comment-1" rowspan="1">No more objects: finished</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39801"></span>9B79</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">Is it held by the object we are moving?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39804"></span>9B7C</td>
+<td class="instruction">JR NZ,$9B74</td>
+<td class="comment-1" rowspan="1">No: try the next one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39806"></span>9B7E</td>
+<td class="instruction">LD (IY+$10),B</td>
+<td class="comment-1" rowspan="1">Yes: its own location becomes room B too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39809"></span>9B81</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save this object's number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39810"></span>9B82</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Is this object Bilbo himself?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39813"></span>9B85</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39814"></span>9B86</td>
+<td class="instruction">JR NZ,$9B8B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39816"></span>9B88</td>
+<td class="instruction">LD ($9B37),A</td>
+<td class="comment-1" rowspan="1">If so, clear the "Bilbo moved" flag: he has now genuinely been placed in the new room</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39819"></span>9B8B</td>
+<td class="instruction">CALL $9B6C</td>
+<td class="comment-1" rowspan="1">Recursively move whatever THIS object holds too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39822"></span>9B8E</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the object's number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39823"></span>9B8F</td>
+<td class="instruction">JR $9B74</td>
+<td class="comment-1" rowspan="1">Look for more things held by the original object</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39825"></span>9B91</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="3">Restore IX and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39827"></span>9B93</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39829"></span>9B95</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39736.html">9B38</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39788">Map</a></td>
+<td class="next">
+Next: <a href="39830.html">9B96</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

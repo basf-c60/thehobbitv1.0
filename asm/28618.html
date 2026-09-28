@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6FCA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28593.html">6FB1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28618">Map</a></td>
+<td class="next">
+Next: <a href="28649.html">6FE9</a>
+</td>
+</tr>
+</table>
+<div class="description">6FCA: Clear the screen</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Sets the border to white, clears the whole display file ($4000-$57FF) to 0 and sets all 768 attributes ($5800-$5AFF) to $38: black ink on white paper, the colours The Hobbit uses throughout. Called once at start-up (<a href="27687.html">6C27</a>) before the frame and first text are drawn.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28618"></span>6FCA</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28619"></span>6FCB</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28620"></span>6FCC</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Save BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28621"></span>6FCD</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="1">White border</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28623"></span>6FCF</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="1">Write to the port (border colour, beeper or printer)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28625"></span>6FD1</td>
+<td class="instruction">LD HL,$4000</td>
+<td class="comment-1" rowspan="1">Clear the pixels</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28628"></span>6FD4</td>
+<td class="instruction">LD DE,$4001</td>
+<td class="comment-1" rowspan="1">DE = $4001</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28631"></span>6FD7</td>
+<td class="instruction">LD BC,$1800</td>
+<td class="comment-1" rowspan="1">BC = $1800</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28634"></span>6FDA</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-1" rowspan="1">Store $00 at (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28636"></span>6FDC</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28638"></span>6FDE</td>
+<td class="instruction">LD BC,$0300</td>
+<td class="comment-1" rowspan="1">Black on white attributes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28641"></span>6FE1</td>
+<td class="instruction">LD (HL),$38</td>
+<td class="comment-1" rowspan="1">Store $38 at (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28643"></span>6FE3</td>
+<td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy BC bytes from HL to DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28645"></span>6FE5</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28646"></span>6FE6</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28647"></span>6FE7</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28648"></span>6FE8</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28593.html">6FB1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28618">Map</a></td>
+<td class="next">
+Next: <a href="28649.html">6FE9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

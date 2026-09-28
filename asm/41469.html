@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A1FD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41444.html">A1E4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41469">Map</a></td>
+<td class="next">
+Next: <a href="41522.html">A232</a>
+</td>
+</tr>
+</table>
+<div class="description">A1FD: Handler for the fast river: SWIM</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Swimming across the fast river: the exit through the river is found (<a href="40558.html">9E6E</a>); if it leads anywhere, the river is opened for a moment and the actor goes through it with an ordinary move (<a href="36121.html">8D19</a>, at $8D27), then the river is closed again. The entry at $A20C is the handler used by many doors and containers for their OPEN action when they are chained to a movement.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41469"></span>A1FD</td>
+<td class="instruction">CALL <a href="40558.html">$9E6E</a></td>
+<td class="comment-1" rowspan="1">Find the exit that passes through the river</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41472"></span>A200</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">Does it lead anywhere?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41475"></span>A203</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41477"></span>A205</td>
+<td class="instruction">JR NZ,$A20B</td>
+<td class="comment-1" rowspan="1">Yes: swim across, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41479"></span>A207</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">No: dry run? Then stop here: the attempt itself is possible</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41482"></span>A20A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">(falls through to failing normally otherwise)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41483"></span>A20B</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the exit's own direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41486"></span>A20E</td>
+<td class="instruction">LD HL,($B5D8)</td>
+<td class="comment-1" rowspan="2">Save the current action for a moment...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41489"></span>A211</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41490"></span>A212</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">...and use the direction as the movement action instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41493"></span>A215</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the river's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41497"></span>A219</td>
+<td class="instruction">SET 5,(IX+$07)</td>
+<td class="comment-1" rowspan="2">Open it, just long enough to move through it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41501"></span>A21D</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41503"></span>A21F</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">No specific target - just moving</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41505"></span>A221</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41508"></span>A224</td>
+<td class="instruction">CALL <a href="36121.html#36135">$8D27</a></td>
+<td class="comment-1" rowspan="1">Carry out the move</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41511"></span>A227</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the river's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41513"></span>A229</td>
+<td class="instruction">RES 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Close it again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41517"></span>A22D</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="3">Restore the original action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41518"></span>A22E</td>
+<td class="instruction">LD ($B5D8),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41521"></span>A231</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41444.html">A1E4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41469">Map</a></td>
+<td class="next">
+Next: <a href="41522.html">A232</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

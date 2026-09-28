@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A7C6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42911.html">A79F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42950">Map</a></td>
+<td class="next">
+Next: <a href="42986.html">A7EA</a>
+</td>
+</tr>
+</table>
+<div class="description">A7C6: Character routine: Gollum asks his riddle</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Gollum (whose location is at $C3B0) is in Bilbo's room and Bilbo is visible, he asks the riddle chosen at the start of the game (<a href="38667.html">970B</a>, <a href="50923.html">C6EB</a>), and $B5EA is set to show he is waiting for an answer.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42950"></span>A7C6</td>
+<td class="instruction">LD A,($C3B0)</td>
+<td class="comment-1" rowspan="1">A = Gollum's own location</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42953"></span>A7C9</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42956"></span>A7CC</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42957"></span>A7CD</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42958"></span>A7CE</td>
+<td class="instruction">LD HL,$C012</td>
+<td class="comment-1" rowspan="2">Is Bilbo actually visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42961"></span>A7D1</td>
+<td class="instruction">BIT 7,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42963"></span>A7D3</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No (he is wearing the ring): Gollum cannot see him to ask</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42964"></span>A7D4</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42967"></span>A7D7</td>
+<td class="instruction">LD HL,($B5DF)</td>
+<td class="comment-1" rowspan="1">HL = the riddle chosen at the start of the game...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42970"></span>A7DA</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">...moved on 2 bytes, to the riddle's own text</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42971"></span>A7DB</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42972"></span>A7DC</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="3">DE = the riddle's address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42973"></span>A7DD</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42974"></span>A7DE</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42975"></span>A7DF</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">HL = that address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42976"></span>A7E0</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42977"></span>A7E1</td>
+<td class="instruction">CALL <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Gollum asks it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42980"></span>A7E4</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">Remember that he is now waiting for the answer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42982"></span>A7E6</td>
+<td class="instruction">LD ($B5EA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42985"></span>A7E9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42911.html">A79F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42950">Map</a></td>
+<td class="next">
+Next: <a href="42986.html">A7EA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

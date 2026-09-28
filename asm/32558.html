@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F2E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32553.html">7F29</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32558">Map</a></td>
+<td class="next">
+Next: <a href="32573.html">7F3D</a>
+</td>
+</tr>
+</table>
+<div class="description">7F2E: Parser: clear the current frame</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Clears the 24 bytes of the frame at IY, and the two bytes of the verb of the frame after it (at IY-24), so that the next frame starts empty.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32558"></span>7F2E</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">HL = the current frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32560"></span>7F30</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32561"></span>7F31</td>
+<td class="instruction">LD B,$18</td>
+<td class="comment-1" rowspan="1">24 bytes to clear: the whole frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32563"></span>7F33</td>
+<td class="instruction">CALL <a href="28889.html">$70D9</a></td>
+<td class="comment-1" rowspan="1">Clear it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32566"></span>7F36</td>
+<td class="instruction">LD (IY-$18),B</td>
+<td class="comment-1" rowspan="1">Also clear the verb of the frame that comes after this one (2 bytes, 24 further along)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32569"></span>7F39</td>
+<td class="instruction">LD (IY-$17),B</td>
+<td class="comment-1" rowspan="2">...(B is 0 here, left over from the clearing loop) so it starts empty too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32572"></span>7F3C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32553.html">7F29</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32558">Map</a></td>
+<td class="next">
+Next: <a href="32573.html">7F3D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

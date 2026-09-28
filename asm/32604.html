@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F5C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32598.html">7F56</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32604">Map</a></td>
+<td class="next">
+Next: <a href="32617.html">7F69</a>
+</td>
+</tr>
+</table>
+<div class="description">7F5C: Parser: step on to the next frame</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Decrements B, finds the next frame (<a href="32617.html">7F69</a>, 24 bytes lower) and swaps IX and IY, so that IY is the next frame and IX the one we came from. The entry at $7F5D does not decrement B.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32604"></span>7F5C</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">One frame fewer to go</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32605"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="31936.html">7CC0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32605"></span>7F5D</td>
+<td class="instruction">CALL <a href="32617.html">$7F69</a></td>
+<td class="comment-1" rowspan="1">IX = the next frame (24 bytes lower)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32608"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="32598.html">7F56</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32608"></span>7F60</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="3">Swap IX and IY...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32610"></span>7F62</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32612"></span>7F64</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32614"></span>7F66</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="2">...so IY is the new frame and IX the old one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32616"></span>7F68</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32598.html">7F56</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32604">Map</a></td>
+<td class="next">
+Next: <a href="32617.html">7F69</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

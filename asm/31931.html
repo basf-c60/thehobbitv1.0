@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7CBB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31926.html">7CB6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31931">Map</a></td>
+<td class="next">
+Next: <a href="31936.html">7CC0</a>
+</td>
+</tr>
+</table>
+<div class="description">7CBB: Is the parser inside a quotation?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z reset if $B60B is non-zero (inside a quotation), Z set otherwise.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31931"></span>7CBB</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="1">A = how many levels of quotation we are inside</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31934"></span>7CBE</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is that zero (not inside any quotation at all)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31935"></span>7CBF</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z set means not in a quotation; NZ means we are</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="31926.html">7CB6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31931">Map</a></td>
+<td class="next">
+Next: <a href="31936.html">7CC0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

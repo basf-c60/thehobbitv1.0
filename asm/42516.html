@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A614</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42496.html">A600</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42516">Map</a></td>
+<td class="next">
+Next: <a href="42545.html">A631</a>
+</td>
+</tr>
+</table>
+<div class="description">A614: Handler for the magic door</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+When the magic door is examined: if the actor can see it clearly (bit 7 of its flags), 'you see nothing special'. Otherwise timer 5 is started (by copying its reload value) and 'the magic door warns of elves approaching.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42516"></span>A614</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42519"></span>A617</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42523"></span>A61B</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the actor visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42527"></span>A61F</td>
+<td class="instruction">LD HL,$AEE6</td>
+<td class="comment-1" rowspan="1">"X sees nothing special."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42530"></span>A622</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Visible: nothing more happens - just an ordinary EXAMINE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42533"></span>A625</td>
+<td class="instruction">LD A,($C996)</td>
+<td class="comment-1" rowspan="2">Invisible (wearing the ring): start timer 5 (copy its reload value into its count)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42536"></span>A628</td>
+<td class="instruction">LD ($C997),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42539"></span>A62B</td>
+<td class="instruction">LD HL,$B19C</td>
+<td class="comment-1" rowspan="2">"the magic door warns of elves approaching."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42542"></span>A62E</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42496.html">A600</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42516">Map</a></td>
+<td class="next">
+Next: <a href="42545.html">A631</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

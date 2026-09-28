@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A9ED</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43476.html">A9D4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43501">Map</a></td>
+<td class="next">
+Next: <a href="43519.html">A9FF</a>
+</td>
+</tr>
+</table>
+<div class="description">A9ED: Handler for the wine: Bilbo gets drunk</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Attached to the wine's DRINK handler. If the drinker is Bilbo, the flag at $B5F1 is set and timer 7 started, so that for five turns every S he sees is followed by an H (<a href="30080.html">7580</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43501"></span>A9ED</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the drinker Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43504"></span>A9F0</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43506"></span>A9F2</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No (a character): nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43507"></span>A9F3</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Yes: set the "drunk" flag...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43509"></span>A9F5</td>
+<td class="instruction">LD ($B5F1),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43512"></span>A9F8</td>
+<td class="instruction">LD A,($C9A4)</td>
+<td class="comment-1" rowspan="3">...and start timer 7 (copy its reload value into its count)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43515"></span>A9FB</td>
+<td class="instruction">LD ($C9A5),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43518"></span>A9FE</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43476.html">A9D4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43501">Map</a></td>
+<td class="next">
+Next: <a href="43519.html">A9FF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

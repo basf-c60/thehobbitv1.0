@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9686</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38417.html">9611</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38534">Map</a></td>
+<td class="next">
+Next: <a href="38618.html">96DA</a>
+</td>
+</tr>
+</table>
+<div class="description">9686: Is the object within the player's reach?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Stops the player using something that another character is holding. Characters are not subject to this check, and neither are objects that nobody is holding or that Bilbo himself is holding (directly or inside something he carries).
+</div>
+<div class="paragraph">
+If object A is held by a living character, and Bilbo is visible, the game says, for example, 'gandalf is carrying the curious map.' and returns with Z reset: the action is not allowed. But if Bilbo is invisible - wearing the ring clears bit 7 of his flags - the check is skipped, and he can take things straight out of other characters' hands.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z reset if the object is out of reach</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38534"></span>9686</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Nothing at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38536"></span>9688</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="4">Then there is nothing to check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38537"></span>9689</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38539"></span>968B</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38541"></span>968D</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38542"></span>968E</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38543"></span>968F</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38546"></span>9692</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38548"></span>9694</td>
+<td class="instruction">JR Z,$9699</td>
+<td class="comment-1" rowspan="1">Yes: check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38550"></span>9696</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">A character: always allowed (Z set)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38551"></span>9697</td>
+<td class="instruction">JR $96D4</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38553"></span>9699</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38554"></span>969A</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38557"></span>969D</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Is anyone holding it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38560"></span>96A0</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38562"></span>96A2</td>
+<td class="instruction">JR Z,$96D4</td>
+<td class="comment-1" rowspan="2">No: allowed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38564"></span>96A4</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38565"></span>96A5</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">IY = the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38567"></span>96A7</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38569"></span>96A9</td>
+<td class="instruction">CALL <a href="39885.html#39888">$9BD0</a></td>
+<td class="comment-1" rowspan="1">Is Bilbo holding it (perhaps inside something)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38572"></span>96AC</td>
+<td class="instruction">JR C,$96D4</td>
+<td class="comment-1" rowspan="1">Yes: allowed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38574"></span>96AE</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the holder's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38577"></span>96B1</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the holder a living character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38581"></span>96B5</td>
+<td class="instruction">JR Z,$96D4</td>
+<td class="comment-1" rowspan="1">No (a box, a table): allowed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38583"></span>96B7</td>
+<td class="instruction">LD A,($C012)</td>
+<td class="comment-1" rowspan="2">Is Bilbo visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38586"></span>96BA</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38588"></span>96BC</td>
+<td class="instruction">JR Z,$96D4</td>
+<td class="comment-1" rowspan="1">No - he is wearing the ring: allowed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38590"></span>96BE</td>
+<td class="instruction">LD L,(IY+$08)</td>
+<td class="comment-1" rowspan="3">Push the object's name...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38593"></span>96C1</td>
+<td class="instruction">LD H,(IY+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38596"></span>96C4</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38597"></span>96C5</td>
+<td class="instruction">LD L,(IX+$08)</td>
+<td class="comment-1" rowspan="3">...and the holder's</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38600"></span>96C8</td>
+<td class="instruction">LD H,(IX+$09)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38603"></span>96CB</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38604"></span>96CC</td>
+<td class="instruction">LD HL,$AED6</td>
+<td class="comment-1" rowspan="2">"gandalf is carrying the curious map."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38607"></span>96CF</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="38610"></span>96D2</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="5">Not allowed: return with Z reset</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38612"></span>96D4</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38613"></span>96D5</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38615"></span>96D7</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38617"></span>96D9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38417.html">9611</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38534">Map</a></td>
+<td class="next">
+Next: <a href="38618.html">96DA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

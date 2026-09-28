@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at C6D9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50892.html">C6CC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50905">Map</a></td>
+<td class="next">
+Next: <a href="50923.html">C6EB</a>
+</td>
+</tr>
+</table>
+<div class="description">C6D9: Room-entry handler: the forest river (room 33) - only in a barrel</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The forest river outside the Elvenking's halls, reached by going down through the trap door in the cellar, is only survivable in a barrel. If Bilbo enters it any other way - for example by jumping through the trap door on his own - the room is described and then 'you are swept forcefully against the portcullis.', and he dies.
+</div>
+<div class="paragraph">
+If he is inside the barrel (object 19 is his holder), nothing happens here: he floats on, and two turns after the trap door was opened the barrel timer (<a href="42228.html">A4F4</a>) carries him out onto the bank of the long lake. This is the book's escape in the barrels, turned into a rule you cannot get round.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50905"></span>C6D9</td>
+<td class="instruction">LD A,($C00C)</td>
+<td class="comment-1" rowspan="1">A = whatever is holding Bilbo</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50908"></span>C6DC</td>
+<td class="instruction">CP $13</td>
+<td class="comment-1" rowspan="1">Is he inside the barrel (object 19)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50910"></span>C6DE</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: he is safe</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50911"></span>C6DF</td>
+<td class="instruction">CALL <a href="36121.html#36328">$8DE8</a></td>
+<td class="comment-1" rowspan="1">No: first describe the river (so he sees where he is)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50914"></span>C6E2</td>
+<td class="instruction">LD HL,$B15F</td>
+<td class="comment-1" rowspan="2">"you are swept forcefully against the portcullis."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50917"></span>C6E5</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50920"></span>C6E8</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">...and Bilbo is dead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50892.html">C6CC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50905">Map</a></td>
+<td class="next">
+Next: <a href="50923.html">C6EB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

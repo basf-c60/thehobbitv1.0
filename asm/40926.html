@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9FDE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40841.html">9F89</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40926">Map</a></td>
+<td class="next">
+Next: <a href="40938.html">9FEA</a>
+</td>
+</tr>
+</table>
+<div class="description">9FDE: Get the start of a room's exits</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns IX pointing seven bytes into room A's record and BC=3, ready for stepping through its exits.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40926"></span>9FDE</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = room A's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40929"></span>9FE1</td>
+<td class="instruction">LD BC,$0007</td>
+<td class="comment-1" rowspan="2">A room's exits start 7 bytes into its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40932"></span>9FE4</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40934"></span>9FE6</td>
+<td class="instruction">LD BC,$0003</td>
+<td class="comment-1" rowspan="2">BC = 3: the size of one exit, ready for the caller to step through them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40937"></span>9FE9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40841.html">9F89</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40926">Map</a></td>
+<td class="next">
+Next: <a href="40938.html">9FEA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

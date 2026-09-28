@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6E8E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28290.html">6E82</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28302">Map</a></td>
+<td class="next">
+Next: <a href="28455.html">6F27</a>
+</td>
+</tr>
+</table>
+<div class="description">6E8E: Turn the next word of the input into a token</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the next word or punctuation mark, and returns its class in A and a two-byte token in B (high) and C (low). HL is left after the word, ready for the next call. The address of the start of the word is stored at $B5CB so that an 'I don't know the word' message can quote it.
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Input</th>
+<th colspan="1" rowspan="1">A</th>
+<th colspan="1" rowspan="1">BC</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">End of line (ENTER)</td>
+<td class="" colspan="1" rowspan="1">$C0</td>
+<td class="" colspan="1" rowspan="1">$C000</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Full stop</td>
+<td class="" colspan="1" rowspan="1">$B0</td>
+<td class="" colspan="1" rowspan="1">$B000</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Comma</td>
+<td class="" colspan="1" rowspan="1">$A0</td>
+<td class="" colspan="1" rowspan="1">$A000</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Double quote</td>
+<td class="" colspan="1" rowspan="1">$90</td>
+<td class="" colspan="1" rowspan="1">$9000</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">A dictionary word</td>
+<td class="" colspan="1" rowspan="1">its class</td>
+<td class="" colspan="1" rowspan="1">class in the top nibble of B, then the 12-bit offset of the word from <a href="24576.html">6000</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">An unknown word</td>
+<td class="" colspan="1" rowspan="1">$D0</td>
+<td class="" colspan="1" rowspan="1">undefined</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+The search works like this:
+</div>
+<div class="paragraph">
+1. <a href="28478.html">6F3E</a> copies the typed letters (keeping only their low five bits, so case does not matter) into the buffer at <a href="28785.html">7071</a> and their count into $7081. It then uses the letter index at <a href="24576.html">6000</a> to find the first dictionary word beginning with the same letter, and unpacks that word into the buffer at <a href="28785.html#28802">7082</a> (count in $7092). If there are no words for that letter, the word is unknown.
+</div>
+<div class="paragraph">
+2. <a href="28593.html">6FB1</a> compares the typed letters with the dictionary word, over the length of the shorter of the two.
+</div>
+<div class="paragraph">
+3. If they differ, <a href="28478.html#28521">6F69</a> unpacks the next word in the dictionary and the comparison is repeated. The search gives up (unknown word) as soon as it reaches a word with a different first letter.
+</div>
+<div class="paragraph">
+4. If they agree, the lengths decide ($6EB7). If the dictionary word is at least as long as what was typed, it is accepted. So any abbreviation matches the first word that starts with those letters: this is why N means NORTH, but also why EX finds EXAMINE and not EXCEPT. If the player typed MORE letters than the dictionary word has, and the dictionary word is 1-3 letters long, it is rejected and the search moves on (so typing EASTWARD does not match E). If the dictionary word is 4 letters or longer, the game looks at the following dictionary word (<a href="28478.html#28525">6F6D</a>, without moving the current position); if that one also matches the typed letters, the search moves on to it, otherwise the current word is accepted. So extra letters after a long enough word are ignored: SWORDS finds SWORD, and TROLLS finds TROLLS rather than TROLL.
+</div>
+<div class="paragraph">
+5. For the accepted word ($6EE2), the end of the word is found. If bit 6 of the last letter is set, the word is a synonym and the next two bytes give the offset of the real word; HL is switched to that word, so for example HIT is returned as ATTACK. The class is then assembled from bits 5 and 6 of the real word's first two bytes (see <a href="24640.html">6040</a>), and $A000 is added to the word's address to turn it into an offset from $6000 (because $6000 + $A000 = $10000).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Position in the input buffer</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Word class</td>
+</tr>
+<tr>
+<td class="register">BC</td>
+<td class="register-desc">Token</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Position after the word</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28302"></span>6E8E</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28303"></span>6E8F</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Skip spaces</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28304"></span>6E90</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28305"></span>6E91</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">Is it " "?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28307"></span>6E93</td>
+<td class="instruction">JR Z,$6E8F</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28302.html#28303">6E8F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28309"></span>6E95</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrement HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28310"></span>6E96</td>
+<td class="instruction">LD ($B5CB),HL</td>
+<td class="comment-1" rowspan="1">Remember where the word starts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28313"></span>6E99</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="1">End of the line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28315"></span>6E9B</td>
+<td class="instruction">JR Z,$6ED5</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28302.html#28373">6ED5</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28317"></span>6E9D</td>
+<td class="instruction">CALL <a href="28455.html">$6F27</a></td>
+<td class="comment-1" rowspan="1">Punctuation?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28320"></span>6EA0</td>
+<td class="instruction">JR Z,$6EDA</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z set, go to <a href="28302.html#28378">6EDA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28322"></span>6EA2</td>
+<td class="instruction">CALL <a href="28478.html">$6F3E</a></td>
+<td class="comment-1" rowspan="1">Copy the typed word and find the first dictionary word with the same first letter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28325"></span>6EA5</td>
+<td class="instruction">JR NZ,$6EB3</td>
+<td class="comment-1" rowspan="1">No words start with this letter: unknown word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28327"></span>6EA7</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28328"></span>6EA8</td>
+<td class="instruction">CALL <a href="28593.html">$6FB1</a></td>
+<td class="comment-1" rowspan="1">Compare the typed word with the dictionary word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28331"></span>6EAB</td>
+<td class="instruction">JR Z,$6EB7</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z set, go to <a href="28302.html#28343">6EB7</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28333"></span>6EAD</td>
+<td class="instruction">CALL <a href="28478.html#28521">$6F69</a></td>
+<td class="comment-1" rowspan="1">Different: try the next dictionary word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28336"></span>6EB0</td>
+<td class="instruction">JR Z,$6EA8</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z set, go to <a href="28302.html#28328">6EA8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28338"></span>6EB2</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28339"></span>6EB3</td>
+<td class="instruction">LD A,$D0</td>
+<td class="comment-1" rowspan="1">Class $D0: unknown word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28341"></span>6EB5</td>
+<td class="instruction">JR $6ED7</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28302.html#28375">6ED7</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28343"></span>6EB7</td>
+<td class="instruction">LD A,($7081)</td>
+<td class="comment-1" rowspan="1">Letters agree. Is the dictionary word at least as long as the typed word?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28346"></span>6EBA</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28347"></span>6EBB</td>
+<td class="instruction">LD A,($7092)</td>
+<td class="comment-1" rowspan="1">A = the dictionary word length</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28350"></span>6EBE</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Compare with B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28351"></span>6EBF</td>
+<td class="instruction">JR NC,$6EE2</td>
+<td class="comment-1" rowspan="1">If carry clear, go to <a href="28302.html#28386">6EE2</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28353"></span>6EC1</td>
+<td class="instruction">CP $04</td>
+<td class="comment-1" rowspan="1">No: reject dictionary words of 1-3 letters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28355"></span>6EC3</td>
+<td class="instruction">JR C,$6EAD</td>
+<td class="comment-1" rowspan="1">If A &lt; 4, go to <a href="28302.html#28333">6EAD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28357"></span>6EC5</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28359"></span>6EC7</td>
+<td class="instruction">CALL <a href="28478.html#28525">$6F6D</a></td>
+<td class="comment-1" rowspan="1">Otherwise, does the next dictionary word also fit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28362"></span>6ECA</td>
+<td class="instruction">JR NZ,$6EE0</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z reset, go to <a href="28302.html#28384">6EE0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28364"></span>6ECC</td>
+<td class="instruction">CALL <a href="28593.html">$6FB1</a></td>
+<td class="comment-1" rowspan="1">Call: Compare the typed word with a dictionary word (<a href="28593.html">6FB1</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28367"></span>6ECF</td>
+<td class="instruction">JR NZ,$6EE0</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z reset, go to <a href="28302.html#28384">6EE0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28369"></span>6ED1</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28371"></span>6ED3</td>
+<td class="instruction">JR $6EAD</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28302.html#28333">6EAD</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28373"></span>6ED5</td>
+<td class="instruction">LD A,$C0</td>
+<td class="comment-1" rowspan="1">End of line: class $C0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28375"></span>6ED7</td>
+<td class="instruction">LD BC,$0000</td>
+<td class="comment-1" rowspan="1">BC = 0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28378"></span>6EDA</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Put the class into the top of B and return it in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28379"></span>6EDB</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">D = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28380"></span>6EDC</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1">Add A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28381"></span>6EDD</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28382"></span>6EDE</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">A = D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28383"></span>6EDF</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28384"></span>6EE0</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28386"></span>6EE2</td>
+<td class="instruction">LD IX,($B607)</td>
+<td class="comment-1" rowspan="1">Accept the dictionary word at (B607): find its last letter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28390"></span>6EE6</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28392"></span>6EE8</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28393"></span>6EE9</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increment IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28395"></span>6EEB</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Increment A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28396"></span>6EEC</td>
+<td class="instruction">BIT 7,(IX-$01)</td>
+<td class="comment-1" rowspan="1">Test bit 7 of (IX-$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28400"></span>6EF0</td>
+<td class="instruction">JR Z,$6EE9</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="28302.html#28393">6EE9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28402"></span>6EF2</td>
+<td class="instruction">CP $02</td>
+<td class="comment-1" rowspan="1">Compare with 2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28404"></span>6EF4</td>
+<td class="instruction">JR Z,$6EE9</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28302.html#28393">6EE9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28406"></span>6EF6</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1">Compare with 3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28408"></span>6EF8</td>
+<td class="instruction">JR NZ,$6F00</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="28302.html#28416">6F00</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28410"></span>6EFA</td>
+<td class="instruction">BIT 7,(IX-$02)</td>
+<td class="comment-1" rowspan="1">Test bit 7 of (IX-$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28414"></span>6EFE</td>
+<td class="instruction">JR NZ,$6EE9</td>
+<td class="comment-1" rowspan="1">If the bit is set, go to <a href="28302.html#28393">6EE9</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28416"></span>6F00</td>
+<td class="instruction">BIT 6,(IX-$01)</td>
+<td class="comment-1" rowspan="1">Is it a synonym?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28420"></span>6F04</td>
+<td class="instruction">JR Z,$6F11</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="28302.html#28433">6F11</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28422"></span>6F06</td>
+<td class="instruction">LD L,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Yes: switch to the word it stands for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28425"></span>6F09</td>
+<td class="instruction">LD H,(IX+$01)</td>
+<td class="comment-1" rowspan="1">H = (IX+1)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28428"></span>6F0C</td>
+<td class="instruction">LD DE,$6000</td>
+<td class="comment-1" rowspan="1">DE = Dictionary letter index (<a href="24576.html">6000</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28431"></span>6F0F</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Add HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28432"></span>6F10</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">Swap HL with the value on top of the stack</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28433"></span>6F11</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28434"></span>6F12</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Build the class from bits 5-6 of the first two bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28435"></span>6F13</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1">Rotate A left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28436"></span>6F14</td>
+<td class="instruction">AND $C0</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $C0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28438"></span>6F16</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28439"></span>6F17</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28440"></span>6F18</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28441"></span>6F19</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1">Rotate A right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28442"></span>6F1A</td>
+<td class="instruction">AND $30</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $30</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28444"></span>6F1C</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1">Add A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28445"></span>6F1D</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrement HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28446"></span>6F1E</td>
+<td class="instruction">LD DE,$A000</td>
+<td class="comment-1" rowspan="1">Turn the address into an offset from $6000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28449"></span>6F21</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Add HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28450"></span>6F22</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28451"></span>6F23</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28452"></span>6F24</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28453"></span>6F25</td>
+<td class="instruction">JR $6EDA</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28302.html#28378">6EDA</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28290.html">6E82</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28302">Map</a></td>
+<td class="next">
+Next: <a href="28455.html">6F27</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A8CA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43185.html">A8B1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43210">Map</a></td>
+<td class="next">
+Next: <a href="43225.html">A8D9</a>
+</td>
+</tr>
+</table>
+<div class="description">A8CA: Has the game been won?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called at the end of every turn (from <a href="38417.html">9611</a>). If the valuable treasure (object 35) is in the wooden chest (object 37, back at Bilbo's home), the game is won: 'a cheering crowd of dwarves, hobbits and elves appear. led by gandalf they carry you off into the sunset, proclaiming you hero of heroes and master adventurer!!!' The score is then printed and the game ends ($9049).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43210"></span>A8CA</td>
+<td class="instruction">LD A,($C4BD)</td>
+<td class="comment-1" rowspan="1">A = the treasure's holder</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43213"></span>A8CD</td>
+<td class="instruction">CP $25</td>
+<td class="comment-1" rowspan="1">Is it the wooden chest (object 37)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43215"></span>A8CF</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: the game goes on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43216"></span>A8D0</td>
+<td class="instruction">LD HL,$B2CB</td>
+<td class="comment-1" rowspan="2">"a cheering crowd of dwarves, hobbits and elves appear..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43219"></span>A8D3</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43222"></span>A8D6</td>
+<td class="instruction">JP <a href="36924.html#36937">$9049</a></td>
+<td class="comment-1" rowspan="1">Print the score and end the game</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43185.html">A8B1</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43210">Map</a></td>
+<td class="next">
+Next: <a href="43225.html">A8D9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

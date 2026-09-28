@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A865</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43074.html">A842</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43109">Map</a></td>
+<td class="next">
+Next: <a href="43185.html">A8B1</a>
+</td>
+</tr>
+</table>
+<div class="description">A865: Character routine: dawn in the trolls' clearing</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The trolls turn to stone at dawn. Both trolls (objects 71 and 72) are killed (<a href="38621.html">96DD</a>) and made invisible, and whatever they carried - including the large key - is left behind (<a href="40104.html">9CA8</a>). The trolls' clearing (room 5) gets a new description script, 'in a clearing with two stone trolls', and the game announces 'day dawns.'
+</div>
+<div class="paragraph">
+The first two bytes of the room 5 picture (the border and paper colours, see <a href="35817.html">8BE9</a>) are set to 5 and $28: cyan. At the start of a game (<a href="27687.html">6C27</a>) they are set to 0, so the clearing is drawn in black until dawn, and in daylight colours afterwards.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43109"></span>A865</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43112"></span>A868</td>
+<td class="instruction">LD A,$47</td>
+<td class="comment-1" rowspan="2">Kill the hideous troll (object 71)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43114"></span>A86A</td>
+<td class="instruction">CALL <a href="38621.html">$96DD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43117"></span>A86D</td>
+<td class="instruction">LD A,$48</td>
+<td class="comment-1" rowspan="2">...and the vicious troll (object 72) too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43119"></span>A86F</td>
+<td class="instruction">CALL <a href="38621.html">$96DD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43122"></span>A872</td>
+<td class="instruction">LD HL,$C535</td>
+<td class="comment-1" rowspan="2">The hideous troll becomes invisible...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43125"></span>A875</td>
+<td class="instruction">RES 7,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43127"></span>A877</td>
+<td class="instruction">LD HL,$C547</td>
+<td class="comment-1" rowspan="2">...and so does the vicious troll</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43130"></span>A87A</td>
+<td class="instruction">RES 7,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43132"></span>A87C</td>
+<td class="instruction">LD HL,$B154</td>
+<td class="comment-1" rowspan="1">"in a clearing with two stone trolls"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43135"></span>A87F</td>
+<td class="instruction">LD ($B9B4),HL</td>
+<td class="comment-1" rowspan="1">This becomes the clearing's new description script</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43138"></span>A882</td>
+<td class="instruction">LD HL,$B9AC</td>
+<td class="comment-1" rowspan="1">The clearing's "visited" flag is cleared...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43141"></span>A885</td>
+<td class="instruction">RES 6,(HL)</td>
+<td class="comment-1" rowspan="1">...so it will be described in full again, with the new text</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43143"></span>A887</td>
+<td class="instruction">LD A,$47</td>
+<td class="comment-1" rowspan="2">Everything the hideous troll was carrying is left behind...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43145"></span>A889</td>
+<td class="instruction">CALL <a href="40104.html">$9CA8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43148"></span>A88C</td>
+<td class="instruction">LD A,$48</td>
+<td class="comment-1" rowspan="2">...and likewise for the vicious troll</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43150"></span>A88E</td>
+<td class="instruction">CALL <a href="40104.html">$9CA8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43153"></span>A891</td>
+<td class="instruction">LD HL,$B1FD</td>
+<td class="comment-1" rowspan="1">"day dawns."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43156"></span>A894</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">Make sure Bilbo sees this, wherever he is</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43158"></span>A896</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43161"></span>A899</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43164"></span>A89C</td>
+<td class="instruction">LD IX,$CC00</td>
+<td class="comment-1" rowspan="3">Find the clearing's own picture...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43168"></span>A8A0</td>
+<td class="instruction">LD A,$05</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43170"></span>A8A2</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43173"></span>A8A5</td>
+<td class="instruction">LD L,(IX+$01)</td>
+<td class="comment-1" rowspan="2">HL = its address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43176"></span>A8A8</td>
+<td class="instruction">LD H,(IX+$02)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43179"></span>A8AB</td>
+<td class="instruction">LD (HL),$05</td>
+<td class="comment-1" rowspan="2">Its border colour becomes cyan...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43181"></span>A8AD</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43182"></span>A8AE</td>
+<td class="instruction">LD (HL),$28</td>
+<td class="comment-1" rowspan="2">...and so does its background, so it is drawn in daylight from now on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43184"></span>A8B0</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43074.html">A842</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43109">Map</a></td>
+<td class="next">
+Next: <a href="43185.html">A8B1</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

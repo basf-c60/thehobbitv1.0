@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 72BA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29324.html">728C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29370">Map</a></td>
+<td class="next">
+Next: <a href="29381.html">72C5</a>
+</td>
+</tr>
+</table>
+<div class="description">72BA: Print a character from a message</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the message interpreter for literal characters and control code $0D. The character is printed (<a href="30080.html">7580</a>) and, if it was a carriage return, the 'last punctuation' flag at $B5F5 is cleared.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29370"></span>72BA</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29373"></span>72BD</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="1">Was it a new line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29375"></span>72BF</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing more to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29376"></span>72C0</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Yes: a fresh line has begun, so clear the "last punctuation" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29377"></span>72C1</td>
+<td class="instruction">LD ($B5F5),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29380"></span>72C4</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29324.html">728C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29370">Map</a></td>
+<td class="next">
+Next: <a href="29381.html">72C5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

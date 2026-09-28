@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A8D9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43210.html">A8CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43225">Map</a></td>
+<td class="next">
+Next: <a href="43291.html">A91B</a>
+</td>
+</tr>
+</table>
+<div class="description">A8D9: Character routine: Elrond gives Bilbo lunch</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Elrond is in Bilbo's room and object 38 (lunch) has not yet been handed over, it is placed with Elrond and he gives it to Bilbo (<a href="37640.html">9308</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43225"></span>A8D9</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="1">A = the room the character started this turn in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43228"></span>A8DC</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is Bilbo in that same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43231"></span>A8DF</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43232"></span>A8E0</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43233"></span>A8E1</td>
+<td class="instruction">LD IX,$C552</td>
+<td class="comment-1" rowspan="1">IX = the lunch's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43237"></span>A8E5</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="2">Has it already been placed anywhere (i.e. already given)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43240"></span>A8E8</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43242"></span>A8EA</td>
+<td class="instruction">JR Z,$A8F2</td>
+<td class="comment-1" rowspan="1">No (still nowhere): give it now, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43244"></span>A8EC</td>
+<td class="instruction">LD A,$41</td>
+<td class="comment-1" rowspan="2">Yes - is it still held by Elrond himself?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43246"></span>A8EE</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43249"></span>A8F1</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No (already handed over): nothing more to do</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43250"></span>A8F2</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43253"></span>A8F5</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="2">The lunch appears in this room...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43256"></span>A8F8</td>
+<td class="instruction">LD (IX+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43259"></span>A8FB</td>
+<td class="instruction">LD (IX+$01),$41</td>
+<td class="comment-1" rowspan="1">...held by Elrond</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43263"></span>A8FF</td>
+<td class="instruction">LD BC,$0026</td>
+<td class="comment-1" rowspan="2">The lunch (object 38) is the target...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43266"></span>A902</td>
+<td class="instruction">LD ($B5D9),BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43270"></span>A906</td>
+<td class="instruction">LD A,$1D</td>
+<td class="comment-1" rowspan="2">The action is GIVE TO</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43272"></span>A908</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43275"></span>A90B</td>
+<td class="instruction">LD ($B5F8),IX</td>
+<td class="comment-1" rowspan="1">IX = the lunch's own record, for GIVE TO to use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43279"></span>A90F</td>
+<td class="instruction">LD HL,$C00B</td>
+<td class="comment-1" rowspan="2">Bilbo (object 0) is the instrument (the receiver)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43282"></span>A912</td>
+<td class="instruction">LD ($B5FA),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43285"></span>A915</td>
+<td class="instruction">CALL <a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Report it in words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43288"></span>A918</td>
+<td class="instruction">JP <a href="37640.html">$9308</a></td>
+<td class="comment-1" rowspan="1">Actually carry out the GIVE TO</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43210.html">A8CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43225">Map</a></td>
+<td class="next">
+Next: <a href="43291.html">A91B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

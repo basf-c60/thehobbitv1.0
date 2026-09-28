@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A968</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43344.html">A950</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43368">Map</a></td>
+<td class="next">
+Next: <a href="43397.html">A985</a>
+</td>
+</tr>
+</table>
+<div class="description">A968: Timer 9 expires: the side door vanishes</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The expiry routine of timer 9 (<a href="51571.html#51634">C9B2</a>). If the side door of the Lonely Mountain (object 11, flags at $C1AB) has been opened, nothing happens and the timer stops: the door stays. Otherwise the timer is restarted at its reload value (5), the door is made invisible, and if Bilbo is at the side door (room 42) he reads 'the hole vanishes.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43368"></span>A968</td>
+<td class="instruction">LD HL,$C1AB</td>
+<td class="comment-1" rowspan="1">HL = the side door's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43371"></span>A96B</td>
+<td class="instruction">BIT 5,(HL)</td>
+<td class="comment-1" rowspan="1">Has it been opened?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43373"></span>A96D</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: it stays open and visible; the timer stops</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43374"></span>A96E</td>
+<td class="instruction">LD A,($C9B2)</td>
+<td class="comment-1" rowspan="3">No: restart the timer (count = 5)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43377"></span>A971</td>
+<td class="instruction">LD ($C9B3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43380"></span>A974</td>
+<td class="instruction">LD HL,$C1AB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43383"></span>A977</td>
+<td class="instruction">RES 7,(HL)</td>
+<td class="comment-1" rowspan="1">Make the door invisible</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43385"></span>A979</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo at the side door (room 42)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43388"></span>A97C</td>
+<td class="instruction">CP $2A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43390"></span>A97E</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: done</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="43391"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="43414.html">A996</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43391"></span>A97F</td>
+<td class="instruction">LD HL,$B196</td>
+<td class="comment-1" rowspan="2">"the hole vanishes."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43394"></span>A982</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43344.html">A950</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43368">Map</a></td>
+<td class="next">
+Next: <a href="43397.html">A985</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

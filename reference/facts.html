@@ -57,6 +57,7 @@
 <li><a href="#allies">Hitting a friend makes an enemy for good</a></li>
 <li><a href="#score75">The best possible score is 75%</a></li>
 <li><a href="#ringbrawl">Why Thorin and Gandalf fight when an invisible Bilbo hits Thorin</a></li>
+<li><a href="#deadcode">Two routines that nothing ever calls</a></li>
 </ul>
 <div><span id="eyes"></span></div>
 <div class="box box-1">
@@ -370,6 +371,13 @@ The score (at $B5E8, in tenths of a percent) is set to 0 at the start of a game 
 <div class="box-title">Why Thorin and Gandalf fight when an invisible Bilbo hits Thorin</div>
 <div class="paragraph">
 Three rules combine. Hitting Thorin clears his 'Bilbo's side' bit for good (<a href="../asm/37044.html">90B4</a>), so he no longer shares a side with Gandalf. Being attacked switches Thorin to the general fight-back program (<a href="../asm/50972.html">C71C</a>, at $C94D), whose first instruction is simply 'attack', leaving the game to choose the target as it does for the player (<a href="../asm/33797.html">8405</a>). And the choice only considers things Thorin can see (<a href="../asm/40338.html">9D92</a>, which needs bit 7 of the candidate's flags): with the ring on, Bilbo is invisible, so the only candidate is Gandalf. Once Gandalf has been attacked he switches to the same fight-back program, and since Thorin is no longer on his side he can attack Thorin - and they carry on until one of them dies. In the emulator, with the ring kept on and Gandalf held in the room, 'hit thorin' was followed by 'thorin attacks gandalf. gandalf attacks thorin...' every time, ending in one case with 'with one well placed blow gandalf cleaves his skull. thorin is dead.'
+</div>
+</div>
+<div><span id="deadcode"></span></div>
+<div class="box box-1">
+<div class="box-title">Two routines that nothing ever calls</div>
+<div class="paragraph">
+The finished game contains two complete routines that are never reached from anywhere: <a href="../asm/41182.html">A0DE</a>, which looks up whoever holds a given object, and <a href="../asm/42496.html">A600</a>, which finds and seals up an exit (its own reuse of <a href="../asm/40558.html">9E6E</a> suggests it was meant for the boat). Neither is called by any other routine, referenced in any object's handler list, or used by any room-entry handler or timer. They read like abandoned code - perhaps an earlier approach to a puzzle that was solved a different way by the time the game shipped.
 </div>
 </div>
 <footer>

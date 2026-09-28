@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7FF9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32750.html">7FEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32761">Map</a></td>
+<td class="next">
+Next: <a href="32775.html">8007</a>
+</td>
+</tr>
+</table>
+<div class="description">7FF9: Print "what?"</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints 'what?' (the message at $AC93) in the lower window, and returns with Z reset so that the command is abandoned.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32761"></span>7FF9</td>
+<td class="instruction">LD HL,$AC93</td>
+<td class="comment-1" rowspan="1">"what?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32764"></span>7FFC</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Send it to the lower (input) window...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32766"></span>7FFE</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32769"></span>8001</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">...and print it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32772"></span>8004</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32774"></span>8006</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...so the main loop knows this command has failed</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32750.html">7FEE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32761">Map</a></td>
+<td class="next">
+Next: <a href="32775.html">8007</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

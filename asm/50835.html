@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at C693</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50813.html">C67D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50835">Map</a></td>
+<td class="next">
+Next: <a href="50849.html">C6A1</a>
+</td>
+</tr>
+</table>
+<div class="description">C693: Room-entry handler: Beorn's house (room 22) wakes the butler</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Not every character is active from the start. The butler (object 66) begins the game in the Elvenking's cellar (room 32), invisible (bit 7 of his flags clear), and his slot in the character table at $C9D6 holds 0, so <a href="38764.html">976C</a> passes him by and he does nothing at all.
+</div>
+<div class="paragraph">
+The first time Bilbo walks into Beorn's house - roughly half way through the journey - this handler switches him on: his object number $42 is written into that slot, which already holds the address of his behaviour program ($C83F) and reaction table ($C835), and he is made visible. From then on he goes about his business in the cellar every turn (unlocking and locking the red door, drinking wine, throwing barrels through the trap door, capturing intruders; see <a href="50972.html">C71C</a>), so that by the time Bilbo arrives in the Elvenking's halls the butler is already at work.
+</div>
+<div class="paragraph">
+If the butler has been killed (bit 3 of his flags), nothing happens. Because the slot is simply overwritten, entering Beorn's house again later does no harm: it writes the same value again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="50835"></span>C693</td>
+<td class="instruction">LD HL,$C326</td>
+<td class="comment-1" rowspan="1">HL = the butler's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50838"></span>C696</td>
+<td class="instruction">BIT 3,(HL)</td>
+<td class="comment-1" rowspan="1">Is the butler dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50840"></span>C698</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: leave him be</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50841"></span>C699</td>
+<td class="instruction">LD A,$42</td>
+<td class="comment-1" rowspan="1">Put the butler (object 66) into his empty slot in the character table...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50843"></span>C69B</td>
+<td class="instruction">LD ($C9D6),A</td>
+<td class="comment-1" rowspan="1">...so that from now on he acts every turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50846"></span>C69E</td>
+<td class="instruction">SET 7,(HL)</td>
+<td class="comment-1" rowspan="2">...and make him visible</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50848"></span>C6A0</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50813.html">C67D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50835">Map</a></td>
+<td class="next">
+Next: <a href="50849.html">C6A1</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

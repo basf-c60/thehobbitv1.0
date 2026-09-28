@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8009</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32775.html">8007</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32777">Map</a></td>
+<td class="next">
+Next: <a href="32809.html">8029</a>
+</td>
+</tr>
+</table>
+<div class="description">8009: Parser: special words</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Looks the special word up in the table at <a href="32809.html">8029</a> and jumps to its handler. DE (the word's class and the parser's state) is saved on the stack at $800C and restored at $8027 before the jump.
+</div>
+<div class="paragraph">
+If the word is not in the table, the jump at $801C goes back into the parser WITHOUT restoring DE, leaving two bytes on the stack. Every special word except DO is in the table, so in practice this happens only when the player types DO - and then the game loses control completely (see the bug note).
+</div>
+<div class="paragraph">
+The special words are ALL, EXCEPT, IT, ONE, the game commands PRINT, NOPRINT, LOAD, SAVE, QUIT, HELP, SCORE and PAUSE, and a quotation mark (which has class $90 and a word of 0, and matches the first entry, <a href="32973.html">80CD</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32777"></span>8009</td>
+<td class="instruction">LD HL,$8029</td>
+<td class="comment-1" rowspan="1">HL = the table of special words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32780"></span>800C</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save the class and the parser state...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32781"></span>800D</td>
+<td class="instruction">LD D,$0D</td>
+<td class="comment-1" rowspan="1">Thirteen entries to check</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32783"></span>800F</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Compare the low byte of the word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32784"></span>8010</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32785"></span>8011</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32786"></span>8012</td>
+<td class="instruction">JR NZ,$8018</td>
+<td class="comment-1" rowspan="1">No match: next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32788"></span>8014</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Compare the high nibble</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32789"></span>8015</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32790"></span>8016</td>
+<td class="instruction">JR Z,$801F</td>
+<td class="comment-1" rowspan="1">Found it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32792"></span>8018</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32793"></span>8019</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32794"></span>801A</td>
+<td class="instruction">JR NZ,$800F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32796"></span>801C</td>
+<td class="instruction">JP <a href="31823.html#31850">$7C6A</a></td>
+<td class="comment-1" rowspan="1">Not in the table: carry on parsing - but DE is never restored, so two bytes are left on the stack (see the bug note)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32799"></span>801F</td>
+<td class="instruction">LD DE,$0019</td>
+<td class="comment-1" rowspan="2">Found: the handlers are 25 bytes further on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32802"></span>8022</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32803"></span>8023</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="4">HL = the handler</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32804"></span>8024</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32805"></span>8025</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32806"></span>8026</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32807"></span>8027</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">...restore the class and state</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32808"></span>8028</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Jump to the handler</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32775.html">8007</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32777">Map</a></td>
+<td class="next">
+Next: <a href="32809.html">8029</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

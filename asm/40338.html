@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9D92</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40326.html">9D86</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40338">Map</a></td>
+<td class="next">
+Next: <a href="40392.html">9DC8</a>
+</td>
+</tr>
+</table>
+<div class="description">9D92: Are two objects in the same place?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z reset if the object at IY is visible (bit 7 of its flags) and is in the same place as the object at IX.
+</div>
+<div class="paragraph">
+Each object's outermost holder is found with <a href="40392.html">9DC8</a>, which returns $FF for an object lying loose in a room and 0 for one that is shut inside something (or held by a living character). If the results differ, the objects are not together. If both are loose, IX's room must be one of IY's locations. If both are 0, the room comparison is skipped and they count as together - see the bug note.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40338"></span>9D92</td>
+<td class="instruction">BIT 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Is the IY object visible at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40342"></span>9D96</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="4">No: return with Z set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40343"></span>9D97</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40345"></span>9D99</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40347"></span>9D9B</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40348"></span>9D9C</td>
+<td class="instruction">LD C,(IX+$10)</td>
+<td class="comment-1" rowspan="2">C = the IX object's room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40351"></span>9D9F</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40353"></span>9DA1</td>
+<td class="instruction">CALL <a href="40392.html">$9DC8</a></td>
+<td class="comment-1" rowspan="3">Where is the IY object ultimately?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40356"></span>9DA4</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40357"></span>9DA5</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40359"></span>9DA7</td>
+<td class="instruction">CALL <a href="40392.html">$9DC8</a></td>
+<td class="comment-1" rowspan="1">Where is the IX object ultimately?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40362"></span>9DAA</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">The same answer?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40363"></span>9DAB</td>
+<td class="instruction">JR NZ,$9DBD</td>
+<td class="comment-1" rowspan="1">No: not together</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40365"></span>9DAD</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">Both shut inside something ($00)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40366"></span>9DAE</td>
+<td class="instruction">JR NZ,$9DC0</td>
+<td class="comment-1" rowspan="1">Then count them as together</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40368"></span>9DB0</td>
+<td class="instruction">LD B,(IY+$00)</td>
+<td class="comment-1" rowspan="3">Both loose: is the IX object's room one of the IY object's locations?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40371"></span>9DB3</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40372"></span>9DB4</td>
+<td class="instruction">CP (IY+$10)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40375"></span>9DB7</td>
+<td class="instruction">JR Z,$9DC0</td>
+<td class="comment-1" rowspan="3">Yes: together</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40377"></span>9DB9</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40379"></span>9DBB</td>
+<td class="instruction">DJNZ $9DB4</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40381"></span>9DBD</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Not together: Z set</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40382"></span>9DBE</td>
+<td class="instruction">JR $9DC2</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40384"></span>9DC0</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="5">Together: Z reset</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40386"></span>9DC2</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40387"></span>9DC3</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40389"></span>9DC5</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40391"></span>9DC7</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40326.html">9D86</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40338">Map</a></td>
+<td class="next">
+Next: <a href="40392.html">9DC8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

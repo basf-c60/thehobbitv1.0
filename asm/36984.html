@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9078</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36949.html">9055</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36984">Map</a></td>
+<td class="next">
+Next: <a href="37026.html">90A2</a>
+</td>
+</tr>
+</table>
+<div class="description">9078: OPEN</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Checks that the target is not locked or already open (<a href="41257.html">A129</a>; if it is, <a href="41116.html">A09C</a> says so, e.g. 'the door is locked'). Then sets bit 5 (open) of its flags. If the target is an ordinary object (a container rather than a door) and has something in it, the contents are listed (<a href="40696.html">9EF8</a>) unless the actor is in the dark (<a href="40841.html">9F89</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36984"></span>9078</td>
+<td class="instruction">CALL <a href="41257.html">$A129</a></td>
+<td class="comment-1" rowspan="1">Is the target locked, or already open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36987"></span>907B</td>
+<td class="instruction">JP NZ,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">If either, explain why it cannot be opened ("the door is locked."/"the chest is open.")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36990"></span>907E</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36993"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="36815.html">8FCF</a> and <a href="41614.html">A28E</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36993"></span>9081</td>
+<td class="instruction">SET 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Open it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36997"></span>9085</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="2">Is the target an ordinary, single-place object (not a door, which needs no further reply)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37000"></span>9088</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37001"></span>9089</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">A door: nothing more to say</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37002"></span>908A</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="3">An ordinary container: does it hold anything visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37005"></span>908D</td>
+<td class="instruction">CALL <a href="40172.html">$9CEC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37008"></span>9090</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37009"></span>9091</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Nothing inside: nothing more to say</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37010"></span>9092</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Something inside: print the heading for it ("in the chest there is")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37013"></span>9095</td>
+<td class="instruction">CALL <a href="40841.html">$9F89</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37016"></span>9098</td>
+<td class="instruction">RET C</td>
+<td class="comment-1" rowspan="1">Nothing worth listing after all: stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37017"></span>9099</td>
+<td class="instruction">LD B,(IX+$10)</td>
+<td class="comment-1" rowspan="1">B = the target's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37020"></span>909C</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">List everything it holds</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37023"></span>909F</td>
+<td class="instruction">JP <a href="40696.html">$9EF8</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36949.html">9055</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36984">Map</a></td>
+<td class="next">
+Next: <a href="37026.html">90A2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

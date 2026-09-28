@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at 6000</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-w">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+</td>
+<td class="up">Up: <a href="../maps/all.html#24576">Map</a></td>
+<td class="next">
+Next: <a href="24640.html">6040</a>
+</td>
+</tr>
+</table>
+<div class="description">6000: Dictionary letter index</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Before the vocabulary proper there is a small index of 16-bit little-endian offsets. Entry n (n=1 for A, 2 for B ... 26 for Z) gives the offset from <a href="24576.html">6000</a> of the first dictionary word that begins with that letter. For example the entry for A is $0040, so the A-words start at <a href="24640.html">6040</a>; the entry for G is $02C1, which is where GANDALF lives. The parser uses this to jump straight to the right part of the dictionary instead of scanning the whole thing.
+</div>
+<div class="paragraph">
+Entry 0 is unused ($0000). After Z come a few more words, including $07AC, which points into the second (message-only) dictionary at <a href="26544.html">67B0</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24576"></span>6000</td>
+<td class="instruction">DEFW $0000</td>
+<td class="comment-1" rowspan="32">Offsets from $6000 of each letter group</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24578"></span>6002</td>
+<td class="instruction">DEFW $0040</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24580"></span>6004</td>
+<td class="instruction">DEFW $007C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24582"></span>6006</td>
+<td class="instruction">DEFW $00E2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24584"></span>6008</td>
+<td class="instruction">DEFW $017C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24586"></span>600A</td>
+<td class="instruction">DEFW $01FA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24588"></span>600C</td>
+<td class="instruction">DEFW $0253</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24590"></span>600E</td>
+<td class="instruction">DEFW $02C1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24592"></span>6010</td>
+<td class="instruction">DEFW $030D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24594"></span>6012</td>
+<td class="instruction">DEFW $0377</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24596"></span>6014</td>
+<td class="instruction">DEFW $03A5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24598"></span>6016</td>
+<td class="instruction">DEFW $03A9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24600"></span>6018</td>
+<td class="instruction">DEFW $03B6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24602"></span>601A</td>
+<td class="instruction">DEFW $0428</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24604"></span>601C</td>
+<td class="instruction">DEFW $0463</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24606"></span>601E</td>
+<td class="instruction">DEFW $04A0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24608"></span>6020</td>
+<td class="instruction">DEFW $04D1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24610"></span>6022</td>
+<td class="instruction">DEFW $0510</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24612"></span>6024</td>
+<td class="instruction">DEFW $0525</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24614"></span>6026</td>
+<td class="instruction">DEFW $057B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24616"></span>6028</td>
+<td class="instruction">DEFW $0690</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24618"></span>602A</td>
+<td class="instruction">DEFW $0711</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24620"></span>602C</td>
+<td class="instruction">DEFW $072C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24622"></span>602E</td>
+<td class="instruction">DEFW $0755</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24624"></span>6030</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24626"></span>6032</td>
+<td class="instruction">DEFW $07AC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24628"></span>6034</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24630"></span>6036</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24632"></span>6038</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24634"></span>603A</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24636"></span>603C</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="24638"></span>603E</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+</td>
+<td class="up">Up: <a href="../maps/all.html#24576">Map</a></td>
+<td class="next">
+Next: <a href="24640.html">6040</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8CC8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35974.html">8C86</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36040">Map</a></td>
+<td class="next">
+Next: <a href="36074.html">8CEA</a>
+</td>
+</tr>
+</table>
+<div class="description">8CC8: TAKE and CARRY</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the actor already has the target: 'you are already carrying the X.' Otherwise, after the weight checks (<a href="35974.html">8C86</a>), the actor becomes the object's holder (byte 1 of its record). Taking the rope also takes anything tied to it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36040"></span>8CC8</td>
+<td class="instruction">CALL <a href="39885.html">$9BCD</a></td>
+<td class="comment-1" rowspan="1">Is the actor already holding the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36043"></span>8CCB</td>
+<td class="instruction">LD HL,$AD04</td>
+<td class="comment-1" rowspan="1">"you are already carrying the X."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36046"></span>8CCE</td>
+<td class="instruction">JP C,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Yes: say so</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="36049"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="35957.html">8C75</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36049"></span>8CD1</td>
+<td class="instruction">CALL <a href="35974.html">$8C86</a></td>
+<td class="comment-1" rowspan="1">Check the weights</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36052"></span>8CD4</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36055"></span>8CD7</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">The actor becomes the target's holder</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36058"></span>8CDA</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36061"></span>8CDD</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Was it the rope (object 18)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36064"></span>8CE0</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36066"></span>8CE2</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36067"></span>8CE3</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="3">Yes: whatever is tied to the rope goes with it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36070"></span>8CE6</td>
+<td class="instruction">LD ($C256),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36073"></span>8CE9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35974.html">8C86</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36040">Map</a></td>
+<td class="next">
+Next: <a href="36074.html">8CEA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

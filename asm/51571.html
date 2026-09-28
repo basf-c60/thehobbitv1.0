@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C973</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50972.html">C71C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51571">Map</a></td>
+<td class="next">
+Next: <a href="51642.html">C9BA</a>
+</td>
+</tr>
+</table>
+<div class="description">C973: Turn timers</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Ten 7-byte entries processed at the end of every turn by <a href="38417.html">9611</a>, terminated by $FF. Each entry is: a reload value (copied into the count to start the timer), the count (0 = not running), the address of an 'expire' routine (run when the count reaches 0), a threshold, and the address of a 'tick' routine (run on each turn that the count is between 1 and the threshold; 0 = none). Only one timer may expire per turn.
+</div>
+<div class="paragraph">
+Every timer gives a delayed consequence to something the player did:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Timer</th>
+<th colspan="1" rowspan="1">Started by</th>
+<th colspan="1" rowspan="1">Runs for</th>
+<th colspan="1" rowspan="1">What happens</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">0</td>
+<td class="" colspan="1" rowspan="1">the barrel is thrown through the trap door into the forest river (<a href="42203.html">A4DB</a>)</td>
+<td class="" colspan="1" rowspan="1">2 turns</td>
+<td class="" colspan="1" rowspan="1">the barrel floats off to the long lake with whatever is in it (<a href="42228.html">A4F4</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">breaking the spider web (<a href="41639.html">A2A7</a>)</td>
+<td class="" colspan="1" rowspan="1">2 turns</td>
+<td class="" colspan="1" rowspan="1">'some spiders start mending the broken web'; the web is whole again and twice as strong (<a href="43344.html">A950</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">2</td>
+<td class="" colspan="1" rowspan="1">entering the place of black spiders, room 26 (<a href="50849.html">C6A1</a>)</td>
+<td class="" colspan="1" rowspan="1">the turn of arrival and 3 more</td>
+<td class="" colspan="1" rowspan="1">if Bilbo is still there, 'the spider web is slowly smothering you' and he dies (<a href="43524.html">AA04</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">opening the goblins' door from the goblins' big cavern (<a href="41959.html">A3E7</a>)</td>
+<td class="" colspan="1" rowspan="1">2 turns</td>
+<td class="" colspan="1" rowspan="1">the door closes by itself (<a href="41984.html">A400</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">entering the deep bog, room 29 (<a href="50856.html">C6A8</a>)</td>
+<td class="" colspan="1" rowspan="1">1 turn</td>
+<td class="" colspan="1" rowspan="1">'you are slowly sinking into the bog', and Bilbo dies (<a href="42654.html">A69E</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">5</td>
+<td class="" colspan="1" rowspan="1">examining the magic door while invisible (<a href="42516.html">A614</a>)</td>
+<td class="" colspan="1" rowspan="1">4 turns</td>
+<td class="" colspan="1" rowspan="1">the door opens, 'an elf sweeps past', the ring comes off (<a href="43431.html">A9A7</a>); next turn the door closes (<a href="43465.html">A9C9</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">6</td>
+<td class="" colspan="1" rowspan="1">putting the ring on (<a href="41664.html">A2C0</a>)</td>
+<td class="" colspan="1" rowspan="1">2-10 turns, random</td>
+<td class="" colspan="1" rowspan="1">the ring comes off by itself (<a href="43476.html">A9D4</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">7</td>
+<td class="" colspan="1" rowspan="1">drinking the wine (<a href="43501.html">A9ED</a>)</td>
+<td class="" colspan="1" rowspan="1">5 turns</td>
+<td class="" colspan="1" rowspan="1">Bilbo sobers up (<a href="43519.html">A9FF</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">8</td>
+<td class="" colspan="1" rowspan="1">entering the forest road or forest, rooms 2 and 3 (<a href="50892.html">C6CC</a>)</td>
+<td class="" colspan="1" rowspan="1">4 turns</td>
+<td class="" colspan="1" rowspan="1">the pale bulbous eyes (<a href="43539.html">AA13</a>, <a href="43566.html">AA2E</a>)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">9</td>
+<td class="" colspan="1" rowspan="1">entering the Elvenking's cellar (<a href="50863.html">C6AF</a>), and closing the side door (<a href="43414.html">A996</a>)</td>
+<td class="" colspan="1" rowspan="1">repeats every 5 turns</td>
+<td class="" colspan="1" rowspan="1">the side door of the Lonely Mountain appears for a turn and vanishes again (<a href="43397.html">A985</a>, <a href="43368.html">A968</a>)</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51571"></span>C973</td>
+<td class="instruction">DEFB $02,$00,$F4,$A4,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 0: the barrel floats away</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51578"></span>C97A</td>
+<td class="instruction">DEFB $02,$00,$50,$A9,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 1: the spiders mend their web</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51585"></span>C981</td>
+<td class="instruction">DEFB $05,$00,$04,$AA,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 2: smothered in the spiders' place</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51592"></span>C988</td>
+<td class="instruction">DEFB $02,$00,$00,$A4,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 3: the goblins' door closes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51599"></span>C98F</td>
+<td class="instruction">DEFB $02,$00,$9E,$A6,$02,$9E,$A6</td>
+<td class="comment-1" rowspan="1">Timer 4: sinking in the bog</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51606"></span>C996</td>
+<td class="instruction">DEFB $04,$00,$C9,$A9,$01,$A7,$A9</td>
+<td class="comment-1" rowspan="1">Timer 5: the magic door and the elf</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51613"></span>C99D</td>
+<td class="instruction">DEFB $00,$00,$D4,$A9,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 6: the ring wears off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51620"></span>C9A4</td>
+<td class="instruction">DEFB $05,$00,$FF,$A9,$00,$00,$00</td>
+<td class="comment-1" rowspan="1">Timer 7: drunkenness wears off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51627"></span>C9AB</td>
+<td class="instruction">DEFB $04,$00,$2E,$AA,$03,$13,$AA</td>
+<td class="comment-1" rowspan="1">Timer 8: the pale bulbous eyes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51634"></span>C9B2</td>
+<td class="instruction">DEFB $05,$00,$68,$A9,$01,$85,$A9</td>
+<td class="comment-1" rowspan="1">Timer 9: the side door appears and vanishes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51641"></span>C9B9</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End marker</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50972.html">C71C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#51571">Map</a></td>
+<td class="next">
+Next: <a href="51642.html">C9BA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

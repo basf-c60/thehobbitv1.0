@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8869</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34917.html">8865</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34921">Map</a></td>
+<td class="next">
+Next: <a href="34965.html">8895</a>
+</td>
+</tr>
+</table>
+<div class="description">8869: Push the words of the action for a question</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Pushes the particle and the preposition of the current action (from the action table entry at $834F) on the stack, as parameters for a message such as 'take what?' or 'unlock the door with what?'. Words that should not appear are replaced by 0.
+</div>
+<div class="paragraph">
+This routine modifies itself: it writes A (the opcode for either JR NZ or JR Z) into the two conditional jumps at $887F and $888E before running them, so that the same code can test flag bits for either the target or the instrument. It then returns by jumping to its return address, which it had to move out of the way under the pushed words (the EX (SP),HL instructions).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34921"></span>8869</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="1">The opcode for JR NZ instead (the target version)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="34923"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="34917.html">8865</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34923"></span>886B</td>
+<td class="instruction">LD ($887F),A</td>
+<td class="comment-1" rowspan="1">Poke it into the first conditional jump below...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34926"></span>886E</td>
+<td class="instruction">LD ($888E),A</td>
+<td class="comment-1" rowspan="1">...and the second, so the very same code can test either the target's or the instrument's own flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34929"></span>8871</td>
+<td class="instruction">LD IX,($834F)</td>
+<td class="comment-1" rowspan="1">IX = the current action table entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34933"></span>8875</td>
+<td class="instruction">LD L,(IX+$04)</td>
+<td class="comment-1" rowspan="2">HL = its particle word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34936"></span>8878</td>
+<td class="instruction">LD H,(IX+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34939"></span>887B</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Does this action even have a particle worth mentioning?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34943"></span>887F</td>
+<td class="instruction">JR NZ,$8884</td>
+<td class="comment-1" rowspan="1">(rewritten JR NZ or JR Z, as poked in above)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34945"></span>8881</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="1">No: push 0 instead, so nothing gets printed for an empty word</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34948"></span>8884</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="2">Push the particle (or 0) as a message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34949"></span>8885</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34950"></span>8886</td>
+<td class="instruction">LD L,(IX+$02)</td>
+<td class="comment-1" rowspan="2">HL = the action's own preposition word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34953"></span>8889</td>
+<td class="instruction">LD H,(IX+$03)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34956"></span>888C</td>
+<td class="instruction">BIT 5,H</td>
+<td class="comment-1" rowspan="1">Does this action have a preposition worth mentioning?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34958"></span>888E</td>
+<td class="instruction">JR NZ,$8893</td>
+<td class="comment-1" rowspan="1">(rewritten JR NZ or JR Z)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34960"></span>8890</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="1">No: push 0 instead</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34963"></span>8893</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">Push the preposition as a message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34964"></span>8894</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Return to whichever routine called this one</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34917.html">8865</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34921">Map</a></td>
+<td class="next">
+Next: <a href="34965.html">8895</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

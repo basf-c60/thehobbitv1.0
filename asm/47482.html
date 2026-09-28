@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at B97A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="47472.html">B970</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#47482">Map</a></td>
+<td class="next">
+Next: <a href="48979.html">BF53</a>
+</td>
+</tr>
+</table>
+<div class="description">B97A: Room records</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+One record per room, in no particular order (the table at <a href="47312.html">B8D0</a> points to each one). The format, using room 2 (the forest road) as an example, whose record is at $BDC3 and reads $86,$FF,$53,$05,$A4,$02,$00,$00,$00,$00,$03,$00,$03,$04,$00,$2E,$FF:
+</div>
+<div class="paragraph">
+Byte 0: flags ($86). Bit 7 means the room is lit; bit 6 is set once Bilbo has visited it (<a href="36121.html">8D19</a>); bits 1-3 choose the preposition used to describe it (<a href="47472.html">B970</a>): here 3, ON. Byte 1: the room's capacity, used when something tries to move in (<a href="39830.html">9B96</a>); $FF means unlimited.
+</div>
+<div class="paragraph">
+Bytes 2-7: up to three word references (little-endian, offsets from <a href="24576.html">6000</a>) that make up the room's name: here $0553 ROAD and $02A4 FOREST, printed as 'you are on the forest road'. Unused slots are 0.
+</div>
+<div class="paragraph">
+Bytes 8-9: the address of an extra description script, or 0 if there is none. Room 7, the trolls' cave, uses this for its extra text.
+</div>
+<div class="paragraph">
+Then any number of 3-byte exits: direction, a door/condition byte (non-zero when the way is through a door or has some other condition) and the destination room. Here: $03 (east) to room 3, and $04 (west) to room 46 ($2E). The list ends with $FF.
+</div>
+<div class="paragraph">
+These records are backed up at start-up and restored on restart (<a href="27648.html">6C00</a>), because doors and some descriptions change during play.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47482"></span>B97A</td>
+<td class="instruction">DEFB $FF,$FF,$C0,$02,$9D,$C0,$03,$C1,$C0,$04,$00,$00,$FF</td>
+<td class="comment-1" rowspan="1">Room 0: (no name)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47495"></span>B987</td>
+<td class="instruction">DEFB $84,$A0,$0D,$13,$07,$07,$DE,$03,$66,$B4,$03,$05,$04,$FF</td>
+<td class="comment-1" rowspan="1">Room 1: tunnel like hall. lit, "in". Exits: E to 4 through object 5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47509"></span>B995</td>
+<td class="instruction">DEFB $84,$FF,$04,$04,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 4: lonelands. lit, "in". Exits: W to 1 through object 5, E to 5, N to 5, NE to 6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47517"></span>B99D</td>
+<td class="instruction">DEFB $6F,$B4,$04,$05,$01,$03,$00,$05</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47525"></span>B9A5</td>
+<td class="instruction">DEFB $01,$00,$05,$05,$00,$06,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47532"></span>B9AC</td>
+<td class="instruction">DEFB $84,$FF,$27,$01,$01,$07,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 5: trolls clearing. lit, "in". Exits: SW to 4, SE to 9, N to 6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47540"></span>B9B4</td>
+<td class="instruction">DEFB $00,$00,$08,$00,$04,$07,$00,$09</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47548"></span>B9BC</td>
+<td class="instruction">DEFB $01,$00,$06,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47552"></span>B9C0</td>
+<td class="instruction">DEFB $84,$FF,$D8,$04,$01,$07,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 6: trolls path. lit, "in". Exits: S to 5, N to 7 through object 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47560"></span>B9C8</td>
+<td class="instruction">DEFB $7D,$B4,$02,$00,$05,$01,$01,$07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47568"></span>B9D0</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47569"></span>B9D1</td>
+<td class="instruction">DEFB $84,$FF,$12,$01,$01,$07,$00,$00,$8B,$B4,$02,$01,$06,$FF</td>
+<td class="comment-1" rowspan="1">Room 7: trolls cave. lit, "in". Exits: S to 6 through object 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47583"></span>B9DF</td>
+<td class="instruction">DEFB $84,$FF,$45,$85,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 9: rivendell. lit, "in". Exits: E to 10, W to 5</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47591"></span>B9E7</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$0A,$04,$00,$05</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47599"></span>B9EF</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47600"></span>B9F0</td>
+<td class="instruction">DEFB $86,$FF,$52,$04,$44,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 10: misty mountain. lit, "on". Exits: E to 11, N to 68, W to 9, S to 73</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47608"></span>B9F8</td>
+<td class="instruction">DEFB $90,$B4,$03,$00,$0B,$01,$00,$44</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47616"></span>BA00</td>
+<td class="instruction">DEFB $04,$00,$09,$02,$00,$49,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47623"></span>BA07</td>
+<td class="instruction">DEFB $84,$FF,$EA,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 11: narrow place. lit, "in". Exits: E to 12, W to 10, N to 14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47631"></span>BA0F</td>
+<td class="instruction">DEFB $9D,$B4,$03,$00,$0C,$04,$00,$0A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47639"></span>BA17</td>
+<td class="instruction">DEFB $01,$00,$0E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47643"></span>BA1B</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$85,$01,$68,$04</td>
+<td class="comment-1" rowspan="3">Room 12: dangerous narrow path. lit, "on". Exits: E to 22, W to 11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47651"></span>BA23</td>
+<td class="instruction">DEFB $AF,$B4,$03,$00,$16,$04,$00,$0B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47659"></span>BA2B</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47660"></span>BA2C</td>
+<td class="instruction">DEFB $84,$FF,$12,$11,$C3,$03,$F0,$01</td>
+<td class="comment-1" rowspan="3">Room 14: large dry cave. lit, "in". Exits: D to 15 through object 6, S to 11</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47668"></span>BA34</td>
+<td class="instruction">DEFB $B6,$B4,$0A,$06,$0F,$02,$00,$0B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47676"></span>BA3C</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47677"></span>BA3D</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 15: dark stuffy passage. dark, "in". Exits: U to 14 through object 6, S to 52, NE to 58</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47685"></span>BA45</td>
+<td class="instruction">DEFB $00,$00,$09,$06,$0E,$02,$00,$34</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47693"></span>BA4D</td>
+<td class="instruction">DEFB $05,$00,$3A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47697"></span>BA51</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 52: dark stuffy passage. dark, "in". Exits: N to 15, D to 53, U to 54</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47705"></span>BA59</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$0F,$0A,$00,$35</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47713"></span>BA61</td>
+<td class="instruction">DEFB $09,$00,$36,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47717"></span>BA65</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06,$00,$00,$09,$00,$34,$FF</td>
+<td class="comment-1" rowspan="1">Room 53: dark stuffy passage. dark, "in". Exits: U to 52</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47731"></span>BA73</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 54: dark stuffy passage. dark, "in". Exits: D to 52, SE to 55, S to 64, SW to 17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47739"></span>BA7B</td>
+<td class="instruction">DEFB $00,$00,$0A,$00,$34,$07,$00,$37</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47747"></span>BA83</td>
+<td class="instruction">DEFB $02,$00,$40,$08,$00,$11,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47754"></span>BA8A</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 55: dark stuffy passage. dark, "in". Exits: S to 17, NE to 54, SW to 61, W to 60</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47762"></span>BA92</td>
+<td class="instruction">DEFB $00,$00,$02,$00,$11,$05,$00,$36</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47770"></span>BA9A</td>
+<td class="instruction">DEFB $08,$00,$3D,$04,$00,$3C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47777"></span>BAA1</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06,$00,$00,$08,$00,$3C,$FF</td>
+<td class="comment-1" rowspan="1">Room 56: dark stuffy passage. dark, "in". Exits: SW to 60</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47791"></span>BAAF</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 57: dark stuffy passage. dark, "in". Exits: U to 16, W to 65, N to 58</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47799"></span>BAB7</td>
+<td class="instruction">DEFB $00,$00,$09,$00,$10,$04,$00,$41</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47807"></span>BABF</td>
+<td class="instruction">DEFB $01,$00,$3A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47811"></span>BAC3</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 58: dark stuffy passage. dark, "in". Exits: SE to 62, E to 15, S to 57, U to 59</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47819"></span>BACB</td>
+<td class="instruction">DEFB $00,$00,$07,$00,$3E,$03,$00,$0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47827"></span>BAD3</td>
+<td class="instruction">DEFB $02,$00,$39,$09,$00,$3B,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47834"></span>BADA</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 59: dark stuffy passage. dark, "in". Exits: D to 58, S to 60</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47842"></span>BAE2</td>
+<td class="instruction">DEFB $00,$00,$0A,$00,$3A,$02,$00,$3C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47850"></span>BAEA</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47851"></span>BAEB</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 60: dark stuffy passage. dark, "in". Exits: SE to 61, N to 59, NW to 56</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47859"></span>BAF3</td>
+<td class="instruction">DEFB $00,$00,$07,$00,$3D,$01,$00,$3B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47867"></span>BAFB</td>
+<td class="instruction">DEFB $06,$00,$38,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47871"></span>BAFF</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 61: dark stuffy passage. dark, "in". Exits: N to 54, NW to 60</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47879"></span>BB07</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$36,$06,$00,$3C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47887"></span>BB0F</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47888"></span>BB10</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06,$00,$00,$03,$00,$3D,$FF</td>
+<td class="comment-1" rowspan="1">Room 62: dark stuffy passage. dark, "in". Exits: E to 61</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47902"></span>BB1E</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 63: dark stuffy passage. dark, "in". Exits: U to 64, N to 18, E to 58</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47910"></span>BB26</td>
+<td class="instruction">DEFB $00,$00,$09,$00,$40,$01,$00,$12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47918"></span>BB2E</td>
+<td class="instruction">DEFB $03,$00,$3A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47922"></span>BB32</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 64: dark stuffy passage. dark, "in". Exits: NW to 65, W to 54, SW to 63</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47930"></span>BB3A</td>
+<td class="instruction">DEFB $00,$00,$06,$00,$41,$04,$00,$36</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47938"></span>BB42</td>
+<td class="instruction">DEFB $08,$00,$3F,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47942"></span>BB46</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$6E,$06</td>
+<td class="comment-1" rowspan="3">Room 65: dark stuffy passage. dark, "in". Exits: N to 64, SE to 57, E to 19</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47950"></span>BB4E</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$40,$07,$00,$39</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47958"></span>BB56</td>
+<td class="instruction">DEFB $03,$00,$13,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47962"></span>BB5A</td>
+<td class="instruction">DEFB $04,$FF,$16,$01,$A2,$00,$EC,$02</td>
+<td class="comment-1" rowspan="3">Room 16: big goblins cavern. dark, "in". Exits: D to 57, NE to 18, SE to 13 through object 17</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47970"></span>BB62</td>
+<td class="instruction">DEFB $C4,$B4,$0A,$00,$39,$05,$00,$12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47978"></span>BB6A</td>
+<td class="instruction">DEFB $07,$11,$0D,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47982"></span>BB6E</td>
+<td class="instruction">DEFB $08,$FF,$BB,$03,$96,$01,$8E,$01,$D5,$B4,$01,$00,$37,$FF</td>
+<td class="comment-1" rowspan="1">Room 17: deep dark lake. dark, "at". Exits: N to 55</td>
+</tr>
+<tr>
+<td class="address-1"><span id="47996"></span>BB7C</td>
+<td class="instruction">DEFB $04,$FF,$D1,$04,$8E,$01,$89,$07</td>
+<td class="comment-1" rowspan="3">Room 18: dark winding passage. dark, "in". Exits: SW to 16, SE to 63, N to 13 through object 27</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48004"></span>BB84</td>
+<td class="instruction">DEFB $00,$00,$08,$00,$10,$07,$00,$3F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48012"></span>BB8C</td>
+<td class="instruction">DEFB $01,$1B,$0D,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48016"></span>BB90</td>
+<td class="instruction">DEFB $02,$FF,$C8,$82,$7F,$03,$EC,$02</td>
+<td class="comment-1" rowspan="6">Room 19: inside goblins gate. dark, "inside". Exits: W to 16, N to 16, S to 16, U to 20 through object 10, E to 16, SE to 16, SW to 16, D to 16, NE to 65, NW to 16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48024"></span>BB98</td>
+<td class="instruction">DEFB $E4,$B4,$04,$00,$10,$01,$00,$10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48032"></span>BBA0</td>
+<td class="instruction">DEFB $02,$00,$10,$09,$0A,$14,$03,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48040"></span>BBA8</td>
+<td class="instruction">DEFB $10,$07,$00,$10,$08,$00,$10,$0A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48048"></span>BBB0</td>
+<td class="instruction">DEFB $00,$10,$05,$00,$41,$06,$00,$10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48056"></span>BBB8</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48057"></span>BBB9</td>
+<td class="instruction">DEFB $80,$FF,$C8,$82,$C6,$04,$EC,$02</td>
+<td class="comment-1" rowspan="3">Room 20: outside goblins gate. lit, "outside". Exits: D to 19 through object 10, E to 21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48065"></span>BBC1</td>
+<td class="instruction">DEFB $E4,$B4,$0A,$0A,$13,$03,$00,$15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48073"></span>BBC9</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48074"></span>BBCA</td>
+<td class="instruction">DEFB $04,$FF,$F3,$01,$EC,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 13: goblins dungeon. dark, "in". Exits: N to 16 through object 17, W to 18 through object 27</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48082"></span>BBD2</td>
+<td class="instruction">DEFB $00,$00,$01,$11,$10,$04,$1B,$12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48090"></span>BBDA</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48091"></span>BBDB</td>
+<td class="instruction">DEFB $84,$FF,$BC,$04,$F4,$06,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 21: treeless opening. lit, "in". Exits: E to 22, W to 20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48099"></span>BBE3</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$16,$04,$00,$14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48107"></span>BBEB</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48108"></span>BBEC</td>
+<td class="instruction">DEFB $84,$FF,$6D,$83,$93,$00,$00,$00</td>
+<td class="comment-1" rowspan="4">Room 22: beorns house. lit, "in". Exits: NE to 24, NW to 20, S to 46, SW to 12, N to 49</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48116"></span>BBF4</td>
+<td class="instruction">DEFB $00,$00,$05,$00,$18,$06,$00,$14</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48124"></span>BBFC</td>
+<td class="instruction">DEFB $02,$00,$2E,$08,$00,$0C,$01,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48132"></span>BC04</td>
+<td class="instruction">DEFB $31,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48134"></span>BC06</td>
+<td class="instruction">DEFB $88,$FF,$C8,$02,$A4,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 24: forest gate. lit, "at". Exits: W to 22, S to 46, E to 25</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48142"></span>BC0E</td>
+<td class="instruction">DEFB $E9,$B4,$04,$00,$16,$02,$00,$2E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48150"></span>BC16</td>
+<td class="instruction">DEFB $03,$00,$19,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48154"></span>BC1A</td>
+<td class="instruction">DEFB $84,$FF,$EA,$04,$99,$00,$DC,$02</td>
+<td class="comment-1" rowspan="3">Room 25: bewitched gloomy place. lit, "in". Exits: W to 24, E to 66</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48162"></span>BC22</td>
+<td class="instruction">DEFB $00,$00,$04,$00,$18,$03,$00,$42</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48170"></span>BC2A</td>
+<td class="instruction">DEFB $02,$09,$00,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48174"></span>BC2E</td>
+<td class="instruction">DEFB $84,$FF,$EA,$04,$27,$06,$BE,$06</td>
+<td class="comment-1" rowspan="3">Room 26: spider threads place. lit, "in". Exits: E to 29 through object 7, W to 50 through object 7, N to 28 through object 7, S to 27 through object 7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48182"></span>BC36</td>
+<td class="instruction">DEFB $00,$B5,$03,$07,$1D,$04,$07,$32</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48190"></span>BC3E</td>
+<td class="instruction">DEFB $01,$07,$1C,$02,$07,$1B,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48197"></span>BC45</td>
+<td class="instruction">DEFB $84,$FF,$A4,$02,$F7,$05,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 27: smothering forest. lit, "in". Exits: N to 26 through object 7, W to 50 through object 7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48205"></span>BC4D</td>
+<td class="instruction">DEFB $0A,$B5,$01,$07,$1A,$04,$07,$32</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48213"></span>BC55</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48214"></span>BC56</td>
+<td class="instruction">DEFB $84,$FF,$27,$11,$D0,$03,$26,$02</td>
+<td class="comment-1" rowspan="3">Room 28: levelled elvish clearing. lit, "in". Exits: W to 25, E to 26 through object 7, NE to 30 through object 13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48222"></span>BC5E</td>
+<td class="instruction">DEFB $15,$B5,$04,$00,$19,$03,$07,$1A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48230"></span>BC66</td>
+<td class="instruction">DEFB $05,$0D,$1E,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48234"></span>BC6A</td>
+<td class="instruction">DEFB $84,$FF,$BC,$00,$96,$01,$00,$00,$00,$00,$04,$07,$1A,$FF</td>
+<td class="comment-1" rowspan="1">Room 29: deep bog. lit, "in". Exits: W to 26 through object 7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48248"></span>BC78</td>
+<td class="instruction">DEFB $84,$FF,$11,$03,$17,$02,$03,$03</td>
+<td class="comment-1" rowspan="3">Room 30: elvenkings great halls. lit, "in". Exits: E to 31 through object 8, S to 32, W to 28 through object 13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48256"></span>BC80</td>
+<td class="instruction">DEFB $00,$00,$03,$08,$1F,$02,$00,$20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48264"></span>BC88</td>
+<td class="instruction">DEFB $04,$0D,$1C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48268"></span>BC8C</td>
+<td class="instruction">DEFB $04,$FF,$F3,$11,$8E,$01,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 31: dark dungeon. dark, "in". Exits: SW to 32 through object 8, W to 30 through object 8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48276"></span>BC94</td>
+<td class="instruction">DEFB $23,$B5,$08,$08,$20,$04,$08,$1E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48284"></span>BC9C</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48285"></span>BC9D</td>
+<td class="instruction">DEFB $84,$FF,$1C,$01,$17,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 32: elvenkings cellar. lit, "in". Exits: NE to 31 through object 8, N to 30, D to 33 through object 12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48293"></span>BCA5</td>
+<td class="instruction">DEFB $2E,$B5,$05,$08,$1F,$01,$00,$1E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48301"></span>BCAD</td>
+<td class="instruction">DEFB $0A,$0C,$21,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48305"></span>BCB1</td>
+<td class="instruction">DEFB $88,$FF,$AA,$82,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 33: forestriver. lit, "at". Exits: E to 34 through object 39</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48313"></span>BCB9</td>
+<td class="instruction">DEFB $00,$00,$03,$27,$22,$09,$0C,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48321"></span>BCC1</td>
+<td class="instruction">DEFB $02,$2A,$00,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48325"></span>BCC5</td>
+<td class="instruction">DEFB $88,$FF,$BB,$83,$13,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 34: long lake. lit, "at". Exits: N to 36, E to 35, NW to 33 through object 39, S to 45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48333"></span>BCCD</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$24,$03,$00,$23</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48341"></span>BCD5</td>
+<td class="instruction">DEFB $06,$27,$21,$02,$00,$2D,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48348"></span>BCDC</td>
+<td class="instruction">DEFB $84,$FF,$E0,$86,$BB,$03,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 35: lake town. lit, "in". Exits: N to 34, S to 34, E to 34, W to 34</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48356"></span>BCE4</td>
+<td class="instruction">DEFB $40,$B5,$01,$00,$22,$02,$00,$22</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48364"></span>BCEC</td>
+<td class="instruction">DEFB $03,$00,$22,$04,$00,$22,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48371"></span>BCF3</td>
+<td class="instruction">DEFB $86,$FF,$4E,$85,$74,$05,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 36: running river. lit, "on". Exits: U to 37, S to 34</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48379"></span>BCFB</td>
+<td class="instruction">DEFB $4E,$B5,$09,$00,$25,$02,$00,$22</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48387"></span>BD03</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48388"></span>BD04</td>
+<td class="instruction">DEFB $84,$FF,$9F,$01,$D2,$01,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 37: dragons desolation. lit, "in". Exits: N to 38, D to 36</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48396"></span>BD0C</td>
+<td class="instruction">DEFB $62,$B5,$01,$00,$26,$0A,$00,$24</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48404"></span>BD14</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48405"></span>BD15</td>
+<td class="instruction">DEFB $84,$FF,$33,$87,$81,$01,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 38: dale valley. lit, "in". Exits: N to 39, S to 37, NW to 40</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48413"></span>BD1D</td>
+<td class="instruction">DEFB $71,$B5,$01,$00,$27,$02,$00,$25</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48421"></span>BD25</td>
+<td class="instruction">DEFB $06,$00,$28,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48425"></span>BD29</td>
+<td class="instruction">DEFB $88,$FF,$C8,$02,$40,$09,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 39: front gate. lit, "at". Exits: N to 41, S to 38, W to 40</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48433"></span>BD31</td>
+<td class="instruction">DEFB $7B,$B5,$01,$00,$29,$02,$00,$26</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48441"></span>BD39</td>
+<td class="instruction">DEFB $04,$00,$28,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48445"></span>BD3D</td>
+<td class="instruction">DEFB $86,$FF,$25,$85,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 40: ravenhill. lit, "on". Exits: N to 42, SE to 37, E to 39</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48453"></span>BD45</td>
+<td class="instruction">DEFB $86,$B5,$01,$00,$2A,$07,$00,$25</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48461"></span>BD4D</td>
+<td class="instruction">DEFB $03,$00,$27,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48465"></span>BD51</td>
+<td class="instruction">DEFB $84,$FF,$11,$83,$1E,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 41: lower halls. lit, "in". Exits: S to 39, E to 43, U to 44</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48473"></span>BD59</td>
+<td class="instruction">DEFB $8E,$B5,$02,$00,$27,$03,$00,$2B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48481"></span>BD61</td>
+<td class="instruction">DEFB $09,$00,$2C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48485"></span>BD65</td>
+<td class="instruction">DEFB $84,$FF,$AE,$05,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 42: sidedoor. lit, "in". Exits: S to 40, E to 43 through object 11, N to 51</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48493"></span>BD6D</td>
+<td class="instruction">DEFB $98,$B5,$02,$00,$28,$03,$0B,$2B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48501"></span>BD75</td>
+<td class="instruction">DEFB $01,$00,$33,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48505"></span>BD79</td>
+<td class="instruction">DEFB $04,$B0,$D1,$14,$F1,$05,$4A,$06</td>
+<td class="comment-1" rowspan="3">Room 43: smooth straight passage. dark, "in". Exits: W to 42 through object 11, E to 41</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48513"></span>BD81</td>
+<td class="instruction">DEFB $AF,$B5,$04,$0B,$2A,$03,$00,$29</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48521"></span>BD89</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48522"></span>BD8A</td>
+<td class="instruction">DEFB $86,$FF,$52,$84,$0D,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 44: lonely mountain. lit, "on". Exits: D to 41, W to 42, S to 39, SW to 40</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48530"></span>BD92</td>
+<td class="instruction">DEFB $B6,$B5,$0A,$00,$29,$04,$00,$2A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48538"></span>BD9A</td>
+<td class="instruction">DEFB $02,$00,$27,$08,$00,$28,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48545"></span>BDA1</td>
+<td class="instruction">DEFB $86,$FF,$53,$05,$A4,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 46: forest road. lit, "on". Exits: E to 2, N to 24</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48553"></span>BDA9</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$02,$01,$00,$18</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48561"></span>BDB1</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48562"></span>BDB2</td>
+<td class="instruction">DEFB $88,$FF,$67,$07,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 45: waterfall. lit, "at". Exits: S to 8, W to 3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48570"></span>BDBA</td>
+<td class="instruction">DEFB $00,$00,$02,$00,$08,$04,$00,$03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48578"></span>BDC2</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48579"></span>BDC3</td>
+<td class="instruction">DEFB $86,$FF,$53,$05,$A4,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 2: forest road. lit, "on". Exits: E to 3, W to 46</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48587"></span>BDCB</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$03,$04,$00,$2E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48595"></span>BDD3</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48596"></span>BDD4</td>
+<td class="instruction">DEFB $84,$FF,$A4,$02,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 3: forest. lit, "in". Exits: W to 2, E to 45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48604"></span>BDDC</td>
+<td class="instruction">DEFB $00,$00,$04,$00,$02,$03,$00,$2D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48612"></span>BDE4</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48613"></span>BDE5</td>
+<td class="instruction">DEFB $88,$FF,$4E,$05,$74,$05,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 8: running river. lit, "at". Exits: N to 45, W to 3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48621"></span>BDED</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$2D,$04,$00,$03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48629"></span>BDF5</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48630"></span>BDF6</td>
+<td class="instruction">DEFB $88,$FF,$AA,$82,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 23: forestriver. lit, "at". Exits: SE to 33 through object 42, N to 48</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48638"></span>BDFE</td>
+<td class="instruction">DEFB $00,$00,$07,$2A,$21,$01,$00,$30</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48646"></span>BE06</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48647"></span>BE07</td>
+<td class="instruction">DEFB $86,$FF,$5A,$04,$00,$00,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 48: mountains. lit, "on". Exits: SW to 49, E to 47, SE to 23</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48655"></span>BE0F</td>
+<td class="instruction">DEFB $00,$00,$08,$00,$31,$03,$00,$2F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48663"></span>BE17</td>
+<td class="instruction">DEFB $07,$00,$17,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48667"></span>BE1B</td>
+<td class="instruction">DEFB $88,$FF,$4E,$05,$03,$03,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 49: great river. lit, "at". Exits: NE to 48, S to 22, E to 24, SW to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48675"></span>BE23</td>
+<td class="instruction">DEFB $00,$00,$05,$00,$30,$02,$00,$16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48683"></span>BE2B</td>
+<td class="instruction">DEFB $03,$00,$18,$08,$00,$0A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48690"></span>BE32</td>
+<td class="instruction">DEFB $84,$FE,$EA,$04,$2C,$02,$00,$00,$00,$00,$FF</td>
+<td class="comment-1" rowspan="1">Room 47: empty place. lit, "in". Exits: none</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48701"></span>BE3D</td>
+<td class="instruction">DEFB $84,$FF,$A4,$02,$08,$03,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 50: green forest. lit, "in". Exits: NE to 26 through object 7, W to 67</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48709"></span>BE45</td>
+<td class="instruction">DEFB $00,$00,$05,$07,$1A,$04,$00,$43</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48717"></span>BE4D</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48718"></span>BE4E</td>
+<td class="instruction">DEFB $84,$FF,$EA,$04,$2C,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 51: empty place. lit, "in". Exits: N to 47, S to 42, U to 44</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48726"></span>BE56</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$2F,$02,$00,$2A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48734"></span>BE5E</td>
+<td class="instruction">DEFB $09,$00,$2C,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48738"></span>BE62</td>
+<td class="instruction">DEFB $86,$FF,$22,$08,$7D,$07,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 66: west bank. lit, "on". Exits: W to 25, E to 67 through object 9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48746"></span>BE6A</td>
+<td class="instruction">DEFB $BB,$B5,$04,$00,$19,$03,$09,$43</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48754"></span>BE72</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48755"></span>BE73</td>
+<td class="instruction">DEFB $86,$FF,$22,$08,$02,$02,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 67: east bank. lit, "on". Exits: E to 50, W to 66 through object 9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48763"></span>BE7B</td>
+<td class="instruction">DEFB $C0,$B5,$03,$00,$32,$04,$09,$42</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48771"></span>BE83</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48772"></span>BE84</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 68: narrow path. lit, "on". Exits: E to 71, NE to 69, S to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48780"></span>BE8C</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$47,$05,$00,$45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48788"></span>BE94</td>
+<td class="instruction">DEFB $02,$00,$0A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48792"></span>BE98</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 69: narrow path. lit, "on". Exits: N to 70, SW to 68, S to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48800"></span>BEA0</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$46,$08,$00,$44</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48808"></span>BEA8</td>
+<td class="instruction">DEFB $02,$00,$0A,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48812"></span>BEAC</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 70: narrow path. lit, "on". Exits: SE to 72, S to 69</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48820"></span>BEB4</td>
+<td class="instruction">DEFB $00,$00,$07,$00,$48,$02,$00,$45</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48828"></span>BEBC</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48829"></span>BEBD</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 71: narrow path. lit, "on". Exits: NW to 69, S to 74, W to 68</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48837"></span>BEC5</td>
+<td class="instruction">DEFB $00,$00,$06,$00,$45,$02,$00,$4A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48845"></span>BECD</td>
+<td class="instruction">DEFB $04,$00,$44,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48849"></span>BED1</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 72: narrow path. lit, "on". Exits: NW to 70, SW to 71, D to 75</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48857"></span>BED9</td>
+<td class="instruction">DEFB $00,$00,$06,$00,$46,$08,$00,$47</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48865"></span>BEE1</td>
+<td class="instruction">DEFB $0A,$00,$4B,$FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48869"></span>BEE5</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 73: narrow path. lit, "on". Exits: E to 74, N to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48877"></span>BEED</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$4A,$01,$00,$0A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48885"></span>BEF5</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48886"></span>BEF6</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$68,$04,$00,$00</td>
+<td class="comment-1" rowspan="3">Room 74: narrow path. lit, "on". Exits: N to 71, W to 73</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48894"></span>BEFE</td>
+<td class="instruction">DEFB $00,$00,$01,$00,$47,$04,$00,$49</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48902"></span>BF06</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48903"></span>BF07</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$40,$06,$00,$00,$00,$00,$0A,$00,$4C,$FF</td>
+<td class="comment-1" rowspan="1">Room 75: steep path. lit, "on". Exits: D to 76</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48917"></span>BF15</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$40,$06,$00,$00,$00,$00,$0A,$00,$4D,$FF</td>
+<td class="comment-1" rowspan="1">Room 76: steep path. lit, "on". Exits: D to 77</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48931"></span>BF23</td>
+<td class="instruction">DEFB $86,$FF,$D8,$14,$40,$06,$00,$00,$00,$00,$0A,$00,$4E,$FF</td>
+<td class="comment-1" rowspan="1">Room 77: steep path. lit, "on". Exits: D to 78</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48945"></span>BF31</td>
+<td class="instruction">DEFB $84,$FF,$33,$17,$96,$01,$44,$04</td>
+<td class="comment-1" rowspan="3">Room 78: deep misty valley. lit, "in". Exits: E to 79, U to 77</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48953"></span>BF39</td>
+<td class="instruction">DEFB $00,$00,$03,$00,$4F,$09,$00,$4D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48961"></span>BF41</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48962"></span>BF42</td>
+<td class="instruction">DEFB $84,$FF,$33,$17,$96,$01,$44,$04</td>
+<td class="comment-1" rowspan="3">Room 79: deep misty valley. lit, "in". Exits: W to 78, U to 74</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48970"></span>BF4A</td>
+<td class="instruction">DEFB $00,$00,$04,$00,$4E,$09,$00,$4A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="48978"></span>BF52</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="47472.html">B970</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#47482">Map</a></td>
+<td class="next">
+Next: <a href="48979.html">BF53</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

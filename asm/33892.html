@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8464</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33797.html">8405</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33892">Map</a></td>
+<td class="next">
+Next: <a href="33938.html">8492</a>
+</td>
+</tr>
+</table>
+<div class="description">8464: ALL: find the next object</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+For a command with ALL, looks through the frames that follow (the exceptions, marked with bit 6) and checks that the target found is not one of the objects excluded by EXCEPT. Returns with Z reset if it is excluded.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33892"></span>8464</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="3">Save IY, DE and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33894"></span>8466</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33895"></span>8467</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33896"></span>8468</td>
+<td class="instruction">LD DE,$FFE8</td>
+<td class="comment-1" rowspan="2">Step back to the frame BEFORE the current one (24 bytes higher), since ALL EXCEPT exceptions are listed there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33899"></span>846B</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33901"></span>846D</td>
+<td class="instruction">BIT 6,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Is that an ALL EXCEPT exception frame?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33905"></span>8471</td>
+<td class="instruction">JR Z,$848D</td>
+<td class="comment-1" rowspan="1">No (we have run out of exceptions): give up, there is nothing more to try</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33907"></span>8473</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">Otherwise search every object...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33911"></span>8477</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="4">IY = the exception's own words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33913"></span>8479</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33914"></span>847A</td>
+<td class="instruction">LD DE,$0008</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33917"></span>847D</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33918"></span>847E</td>
+<td class="instruction">CALL <a href="40238.html">$9D2E</a></td>
+<td class="comment-1" rowspan="2">...for one that fits THIS exception</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33921"></span>8481</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33923"></span>8483</td>
+<td class="instruction">JR Z,$8468</td>
+<td class="comment-1" rowspan="1">None does: try the exception before that one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33925"></span>8485</td>
+<td class="instruction">LD HL,$B5D9</td>
+<td class="comment-1" rowspan="2">Found one - but is it the very object we were about to use as the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33928"></span>8488</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33929"></span>8489</td>
+<td class="instruction">JR NZ,$8477</td>
+<td class="comment-1" rowspan="1">No: that is fine, look for another match to this exception instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33931"></span>848B</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">It IS the one we were about to use: reject it (make A non-zero, so the caller skips this object)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33933"></span>848D</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="4">Restore HL, DE and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33934"></span>848E</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33935"></span>848F</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33937"></span>8491</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33797.html">8405</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33892">Map</a></td>
+<td class="next">
+Next: <a href="33938.html">8492</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

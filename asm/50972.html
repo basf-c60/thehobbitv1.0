@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C71C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50941.html">C6FD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50972">Map</a></td>
+<td class="next">
+Next: <a href="51571.html">C973</a>
+</td>
+</tr>
+</table>
+<div class="description">C71C: Character behaviour programs and reaction tables</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The programs that make the characters act on their own, run by <a href="38764.html">976C</a>. Every character has a pointer (in its entry in <a href="51642.html">C9BA</a>) to where it has got to in its program, and a reaction table. Each comment below decodes one instruction.
+</div>
+<div class="paragraph">
+HOW THE PROGRAMS RUN. On each of its turns a character works through its program until one instruction succeeds; that ends its turn, and next turn it carries on from the following instruction. An instruction that fails either falls through to the next one, or, if it has an 'if it fails go to' address, jumps there, in the same turn. A character gives up after six failures in one turn. 'Go to' instructions do not use up a turn. Actions without a target or instrument let the game choose suitable objects, exactly as it does for the player's commands, so 'attack' means 'attack whoever is here' and 'take' means 'pick up something'.
+</div>
+<div class="paragraph">
+Instruction formats (the low nibble of the first byte is the type; bit 4 means a failure address follows, bit 5 'once only', bit 6 'no orders from the player here'):
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Instruction</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">t, action, target, instrument</td>
+<td class="" colspan="1" rowspan="1">do an action with those objects ($FF = let the game choose)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">t+1, address, 0</td>
+<td class="" colspan="1" rowspan="1">call a special routine (the routines in $A406-$A91B)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">4, action</td>
+<td class="" colspan="1" rowspan="1">do an action and let the game choose any objects; action $FF means 'do nothing this turn'</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0E, address</td>
+<td class="" colspan="1" rowspan="1">go to</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0C, action</td>
+<td class="" colspan="1" rowspan="1">switch to the reaction for that action</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0F, n</td>
+<td class="" colspan="1" rowspan="1">switch to a randomly chosen entry of the reaction table</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">other</td>
+<td class="" colspan="1" rowspan="1">switch to the default entry of the reaction table and end the turn</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+REACTION TABLES are lists of 3-byte entries ending with $FF: an action and a program address. When something is done to a character, the entry for that action (if any) becomes its program (<a href="39419.html">99FB</a>); entries with action 0 are the default behaviours, used by 'switch to a random behaviour'. Common reactions are shared: $C94D is the general 'fight back' program (attack; attack again; run; repeat, or follow the attacker if it runs), $C96E the response to being given something ('thank you' or 'what do you expect me to do with this?'), and $C962 the response to being captured (go through an exit or door if possible, otherwise run).
+</div>
+<div class="paragraph">
+WHAT THE CHARACTERS DO:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>Gandalf ($C7A9) begins by giving Bilbo the curious map and opening the round green door. After that he is a random wanderer: five little routines ($C7B1, $C7BF, $C7C3, $C7C9, $C7CD) chosen at random make him run about, pick things up and ask 'what's this?', drop or give things away, open and close doors, and make small talk.</li>
+<li>Thorin ($C7DB) follows Bilbo whenever he can. When he cannot, he picks up the small curious key if he finds it (saying once 'this was thrains key'), asks 'where's the thief?' if Bilbo is invisible, or runs through his idle routine (<a href="42320.html">A550</a>): wait, 'hurry up', or sit down and sing about gold.</li>
+<li>The wood elf ($C80C) wanders at random capturing anyone it meets, who ends up in the Elvenking's dungeon (<a href="41750.html">A316</a>).</li>
+<li>The warg ($C817) attacks anyone it can; otherwise it follows its prey, or runs around Bilbo howling (<a href="42186.html">A4CA</a>), or runs off.</li>
+<li>The butler ($C83F) acts out the story from the book: he unlocks the red door with the red key, opens it, shuts it and locks it again; he opens a barrel and drinks the wine, closes the barrel, opens the trap door, throws the barrel through it into the river, and closes the trap door - capturing any intruder at every opportunity - and then starts again.</li>
+<li>Elrond ($C889) greets Bilbo when he arrives and gives him lunch (<a href="43225.html">A8D9</a>), and otherwise waits.</li>
+<li>The dragon ($C8A7) sleeps on the treasure until it is taken (<a href="42453.html">A5D5</a>); then, as long as the dragon itself is somewhere lit, each turn there is about a 1 in 6 chance that it descends and burns Bilbo to a crisp, otherwise 'in the distance you see the shape of a monstrous dragon flying after you.' Before that, if Bilbo comes into one of its three rooms it flies to him (<a href="42385.html">A591</a>), speaks (<a href="42427.html">A5BB</a>) and burns him.</li>
+<li>Bard ($C8CD) does nothing on his own: he waits for an order from the player (<a href="42911.html">A79F</a>), and then repeats that order every turn. His reaction to being attacked is to SHOOT ($C8D8).</li>
+<li>Gollum ($C8E6) asks his riddle when he meets Bilbo (<a href="42950.html">A7C6</a>), and kills him if the answer is wrong (<a href="42986.html">A7EA</a>); he mutters about his precious (<a href="43034.html">A81A</a>), paces north and south-west, drops and picks up the golden ring, and if attacked puts the ring on, becomes invisible and runs.</li>
+<li>The trolls ($C92A) wait until Bilbo comes into the clearing and then say their lines (<a href="43185.html">A8B1</a>). After that their program is: try to eat Bilbo, wait, eat, wait, eat, wait, eat, and then dawn (<a href="43109.html">A865</a>), which turns them to stone. So after the trolls have spoken, Bilbo must be out of the clearing on the turns they try to eat him; waiting outside for the new day dawning (as the HELP message says) is the way.</li>
+<li>The goblins patrol set routes (for example $C731: open the small insignificant crack, go up, down, close the crack, south, north), capturing anyone they meet on the way, who ends up in the goblins' dungeon; the last three goblins ($C784) just run about attacking and capturing.</li>
+</ul>
+</div>
+<div class="paragraph">
+One instruction in this area is changed during play: <a href="42911.html">A79F</a> rewrites the instruction at $C8D1 to hold Bard's latest order, which is why SAVE and LOAD take care to save three of its bytes (<a href="33412.html">8284</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50972"></span>C71C</td>
+<td class="instruction">DEFB $00,$31,$C7,$0F,$8D,$C7,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the nasty and hideous goblins: default $C731; on ATTACK WITH: $C78D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50979"></span>C723</td>
+<td class="instruction">DEFB $00,$60,$C7,$0F,$8D,$C7,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the vicious goblin: default $C760; on ATTACK WITH: $C78D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50986"></span>C72A</td>
+<td class="instruction">DEFB $00,$84,$C7,$0F,$8D,$C7,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the horrible, mean and disgusting goblins: default $C784; on ATTACK WITH: $C78D</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="50993"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the nasty and hideous goblins.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50993"></span>C731</td>
+<td class="instruction">DEFB $02,$10,$06,$FF</td>
+<td class="comment-1" rowspan="1">action 16 [open] target small insignificant crack, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50997"></span>C735</td>
+<td class="instruction">DEFB $14,$30,$3C,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C73C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51001"></span>C739</td>
+<td class="instruction">DEFB $0E,$35,$C7</td>
+<td class="comment-1" rowspan="1">go to $C735</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51004"></span>C73C</td>
+<td class="instruction">DEFB $04,$09</td>
+<td class="comment-1" rowspan="1">action 9 [up go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51006"></span>C73E</td>
+<td class="instruction">DEFB $14,$30,$45,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C745</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51010"></span>C742</td>
+<td class="instruction">DEFB $0E,$3E,$C7</td>
+<td class="comment-1" rowspan="1">go to $C73E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51013"></span>C745</td>
+<td class="instruction">DEFB $04,$0A</td>
+<td class="comment-1" rowspan="1">action 10 [down go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51015"></span>C747</td>
+<td class="instruction">DEFB $14,$30,$4E,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C74E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51019"></span>C74B</td>
+<td class="instruction">DEFB $0E,$47,$C7</td>
+<td class="comment-1" rowspan="1">go to $C747</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51022"></span>C74E</td>
+<td class="instruction">DEFB $02,$0C,$06,$FF</td>
+<td class="comment-1" rowspan="1">action 12 [close] target small insignificant crack, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51026"></span>C752</td>
+<td class="instruction">DEFB $04,$02</td>
+<td class="comment-1" rowspan="1">action 2 [south go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51028"></span>C754</td>
+<td class="instruction">DEFB $14,$30,$5B,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C75B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51032"></span>C758</td>
+<td class="instruction">DEFB $0E,$54,$C7</td>
+<td class="comment-1" rowspan="1">go to $C754</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51035"></span>C75B</td>
+<td class="instruction">DEFB $04,$01</td>
+<td class="comment-1" rowspan="1">action 1 [north go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51037"></span>C75D</td>
+<td class="instruction">DEFB $0E,$31,$C7</td>
+<td class="comment-1" rowspan="1">go to $C731</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51040"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the vicious goblin.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51040"></span>C760</td>
+<td class="instruction">DEFB $04,$06</td>
+<td class="comment-1" rowspan="1">action 6 [northwest go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51042"></span>C762</td>
+<td class="instruction">DEFB $14,$30,$69,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C769</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51046"></span>C766</td>
+<td class="instruction">DEFB $0E,$62,$C7</td>
+<td class="comment-1" rowspan="1">go to $C762</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51049"></span>C769</td>
+<td class="instruction">DEFB $04,$01</td>
+<td class="comment-1" rowspan="1">action 1 [north go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51051"></span>C76B</td>
+<td class="instruction">DEFB $14,$30,$72,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C772</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51055"></span>C76F</td>
+<td class="instruction">DEFB $0E,$6B,$C7</td>
+<td class="comment-1" rowspan="1">go to $C76B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51058"></span>C772</td>
+<td class="instruction">DEFB $04,$08</td>
+<td class="comment-1" rowspan="1">action 8 [southwest go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51060"></span>C774</td>
+<td class="instruction">DEFB $14,$30,$7B,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C77B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51064"></span>C778</td>
+<td class="instruction">DEFB $0E,$74,$C7</td>
+<td class="comment-1" rowspan="1">go to $C774</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51067"></span>C77B</td>
+<td class="instruction">DEFB $04,$09</td>
+<td class="comment-1" rowspan="1">action 9 [up go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51069"></span>C77D</td>
+<td class="instruction">DEFB $14,$30,$60,$C7</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C760</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51073"></span>C781</td>
+<td class="instruction">DEFB $0E,$7D,$C7</td>
+<td class="comment-1" rowspan="1">go to $C77D</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51076"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the horrible, mean and disgusting goblins.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51076"></span>C784</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51078"></span>C786</td>
+<td class="instruction">DEFB $04,$0F</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51080"></span>C788</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51082"></span>C78A</td>
+<td class="instruction">DEFB $0E,$84,$C7</td>
+<td class="comment-1" rowspan="1">go to $C784</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51085"></span>C78D</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51087"></span>C78F</td>
+<td class="instruction">DEFB $07</td>
+<td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51088"></span>C790</td>
+<td class="instruction">DEFB $00,$B1,$C7,$00,$BF,$C7,$00,$C3</td>
+<td class="comment-1" rowspan="4">Reaction table for Gandalf: default $C7B1; default $C7BF; default $C7C3; default $C7C9; default $C7CD; on GIVE TO: $C96E; on CAPTURE: $C962; on ATTACK WITH: $C94D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51096"></span>C798</td>
+<td class="instruction">DEFB $C7,$00,$C9,$C7,$00,$CD,$C7,$1D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51104"></span>C7A0</td>
+<td class="instruction">DEFB $6E,$C9,$30,$62,$C9,$0F,$4D,$C9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51112"></span>C7A8</td>
+<td class="instruction">DEFB $FF</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51113"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for Gandalf.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51113"></span>C7A9</td>
+<td class="instruction">DEFB $02,$1D,$03,$00</td>
+<td class="comment-1" rowspan="1">action 29 [give to] target curious map, with bilbo</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51117"></span>C7AD</td>
+<td class="instruction">DEFB $02,$10,$05,$FF</td>
+<td class="comment-1" rowspan="1">action 16 [open] target round green door, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51121"></span>C7B1</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51123"></span>C7B3</td>
+<td class="instruction">DEFB $14,$13,$BF,$C7</td>
+<td class="comment-1" rowspan="1">action 19 [take]; if it fails go to $C7BF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51127"></span>C7B7</td>
+<td class="instruction">DEFB $03,$1C,$A4,$00</td>
+<td class="comment-1" rowspan="1">call $A41C (Character routine: "what's this?")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51131"></span>C7BB</td>
+<td class="instruction">DEFB $04,$0C</td>
+<td class="comment-1" rowspan="1">action 12 [close]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51133"></span>C7BD</td>
+<td class="instruction">DEFB $04,$1D</td>
+<td class="comment-1" rowspan="1">action 29 [give to]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51135"></span>C7BF</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51137"></span>C7C1</td>
+<td class="instruction">DEFB $04,$0D</td>
+<td class="comment-1" rowspan="1">action 13 [drop]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51139"></span>C7C3</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51141"></span>C7C5</td>
+<td class="instruction">DEFB $03,$25,$A4,$00</td>
+<td class="comment-1" rowspan="1">call $A425 (Character routine: small talk)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51145"></span>C7C9</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51147"></span>C7CB</td>
+<td class="instruction">DEFB $04,$1D</td>
+<td class="comment-1" rowspan="1">action 29 [give to]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51149"></span>C7CD</td>
+<td class="instruction">DEFB $04,$10</td>
+<td class="comment-1" rowspan="1">action 16 [open]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51151"></span>C7CF</td>
+<td class="instruction">DEFB $0F,$04</td>
+<td class="comment-1" rowspan="1">switch to a random behaviour (1 of up to 4)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51153"></span>C7D1</td>
+<td class="instruction">DEFB $00,$DB,$C7,$1D,$6E,$C9,$0F,$4D,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for Thorin: default $C7DB; on GIVE TO: $C96E; on ATTACK WITH: $C94D</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51163"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for Thorin.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51163"></span>C7DB</td>
+<td class="instruction">DEFB $12,$27,$00,$FF,$E4,$C7</td>
+<td class="comment-1" rowspan="1">action 39 [follow] target bilbo, with -; if it fails go to $C7E4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51169"></span>C7E1</td>
+<td class="instruction">DEFB $0E,$DB,$C7</td>
+<td class="comment-1" rowspan="1">go to $C7DB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51172"></span>C7E4</td>
+<td class="instruction">DEFB $12,$13,$02,$FF,$EE,$C7</td>
+<td class="comment-1" rowspan="1">action 19 [take] target small curious key, with -; if it fails go to $C7EE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51178"></span>C7EA</td>
+<td class="instruction">DEFB $23,$43,$A4,$00</td>
+<td class="comment-1" rowspan="1">call $A443 (Character routine: "this was thrains key") (once)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51182"></span>C7EE</td>
+<td class="instruction">DEFB $13,$39,$A5,$00,$FB,$C7</td>
+<td class="comment-1" rowspan="1">call $A539 (Character routine: "where's the thief?"); if it fails go to $C7FB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51188"></span>C7F4</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51190"></span>C7F6</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51192"></span>C7F8</td>
+<td class="instruction">DEFB $0E,$DB,$C7</td>
+<td class="comment-1" rowspan="1">go to $C7DB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51195"></span>C7FB</td>
+<td class="instruction">DEFB $03,$50,$A5,$00</td>
+<td class="comment-1" rowspan="1">call $A550 (Character routine: Thorin)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51199"></span>C7FF</td>
+<td class="instruction">DEFB $0E,$DB,$C7</td>
+<td class="comment-1" rowspan="1">go to $C7DB</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51202"></span>C802</td>
+<td class="instruction">DEFB $00,$0C,$C8,$0F,$0C,$C8,$1D,$6E,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the wood elf: default $C80C; on ATTACK WITH: $C80C; on GIVE TO: $C96E</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51212"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the wood elf.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51212"></span>C80C</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51214"></span>C80E</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51216"></span>C810</td>
+<td class="instruction">DEFB $0E,$0C,$C8</td>
+<td class="comment-1" rowspan="1">go to $C80C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51219"></span>C813</td>
+<td class="instruction">DEFB $00,$17,$C8,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the warg: default $C817</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51223"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the warg.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51223"></span>C817</td>
+<td class="instruction">DEFB $14,$0F,$1E,$C8</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C81E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51227"></span>C81B</td>
+<td class="instruction">DEFB $0E,$17,$C8</td>
+<td class="comment-1" rowspan="1">go to $C817</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51230"></span>C81E</td>
+<td class="instruction">DEFB $14,$27,$29,$C8</td>
+<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to $C829</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51234"></span>C822</td>
+<td class="instruction">DEFB $03,$CA,$A4,$00</td>
+<td class="comment-1" rowspan="1">call $A4CA (Character routine: the warg)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51238"></span>C826</td>
+<td class="instruction">DEFB $0E,$17,$C8</td>
+<td class="comment-1" rowspan="1">go to $C817</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51241"></span>C829</td>
+<td class="instruction">DEFB $14,$24,$30,$C8</td>
+<td class="comment-1" rowspan="1">action 36 [run]; if it fails go to $C830</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51245"></span>C82D</td>
+<td class="instruction">DEFB $0E,$17,$C8</td>
+<td class="comment-1" rowspan="1">go to $C817</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51248"></span>C830</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51250"></span>C832</td>
+<td class="instruction">DEFB $0E,$17,$C8</td>
+<td class="comment-1" rowspan="1">go to $C817</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51253"></span>C835</td>
+<td class="instruction">DEFB $00,$3F,$C8,$0F,$4F,$C8,$1D,$6E,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the butler: default $C83F; on ATTACK WITH: $C84F; on GIVE TO: $C96E</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51263"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the butler.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51263"></span>C83F</td>
+<td class="instruction">DEFB $02,$26,$08,$0F</td>
+<td class="comment-1" rowspan="1">action 38 [unlock with] target red door, with red key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51267"></span>C843</td>
+<td class="instruction">DEFB $02,$10,$08,$FF</td>
+<td class="comment-1" rowspan="1">action 16 [open] target red door, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51271"></span>C847</td>
+<td class="instruction">DEFB $02,$0C,$08,$FF</td>
+<td class="comment-1" rowspan="1">action 12 [close] target red door, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51275"></span>C84B</td>
+<td class="instruction">DEFB $02,$25,$08,$0F</td>
+<td class="comment-1" rowspan="1">action 37 [lock with] target red door, with red key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51279"></span>C84F</td>
+<td class="instruction">DEFB $14,$30,$56,$C8</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C856</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51283"></span>C853</td>
+<td class="instruction">DEFB $0E,$4F,$C8</td>
+<td class="comment-1" rowspan="1">go to $C84F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51286"></span>C856</td>
+<td class="instruction">DEFB $02,$10,$13,$FF</td>
+<td class="comment-1" rowspan="1">action 16 [open] target barrel, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51290"></span>C85A</td>
+<td class="instruction">DEFB $02,$21,$14,$FF</td>
+<td class="comment-1" rowspan="1">action 33 [drink] target wine, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51294"></span>C85E</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51296"></span>C860</td>
+<td class="instruction">DEFB $02,$0C,$13,$FF</td>
+<td class="comment-1" rowspan="1">action 12 [close] target barrel, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51300"></span>C864</td>
+<td class="instruction">DEFB $02,$10,$0C,$FF</td>
+<td class="comment-1" rowspan="1">action 16 [open] target large trap door, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51304"></span>C868</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51306"></span>C86A</td>
+<td class="instruction">DEFB $02,$13,$13,$FF</td>
+<td class="comment-1" rowspan="1">action 19 [take] target barrel, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51310"></span>C86E</td>
+<td class="instruction">DEFB $02,$2C,$13,$0C</td>
+<td class="comment-1" rowspan="1">action 44 [throw through] target barrel, with large trap door</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51314"></span>C872</td>
+<td class="instruction">DEFB $04,$30</td>
+<td class="comment-1" rowspan="1">action 48 [capture]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51316"></span>C874</td>
+<td class="instruction">DEFB $02,$0C,$0C,$FF</td>
+<td class="comment-1" rowspan="1">action 12 [close] target large trap door, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51320"></span>C878</td>
+<td class="instruction">DEFB $14,$30,$3F,$C8</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C83F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51324"></span>C87C</td>
+<td class="instruction">DEFB $0E,$3F,$C8</td>
+<td class="comment-1" rowspan="1">go to $C83F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51327"></span>C87F</td>
+<td class="instruction">DEFB $00,$8F,$C8,$0F,$99,$C8,$1D,$6E,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for Elrond: default $C88F; on ATTACK WITH: $C899; on GIVE TO: $C96E</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51337"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for Elrond.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51337"></span>C889</td>
+<td class="instruction">DEFB $13,$4C,$A4,$00,$93,$C8</td>
+<td class="comment-1" rowspan="1">call $A44C (Character routine: greet Bilbo); if it fails go to $C893</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51343"></span>C88F</td>
+<td class="instruction">DEFB $03,$D9,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A8D9 (Character routine: Elrond gives Bilbo lunch)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51347"></span>C893</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51349"></span>C895</td>
+<td class="instruction">DEFB $14,$FF,$89,$C8</td>
+<td class="comment-1" rowspan="1">end turn and go to $C889</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51353"></span>C899</td>
+<td class="instruction">DEFB $14,$0F,$89,$C8</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C889</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51357"></span>C89D</td>
+<td class="instruction">DEFB $0E,$99,$C8</td>
+<td class="comment-1" rowspan="1">go to $C899</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51360"></span>C8A0</td>
+<td class="instruction">DEFB $00,$A7,$C8,$0F,$BC,$C8,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the dragon: default $C8A7; on ATTACK WITH: $C8BC</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51367"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the dragon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51367"></span>C8A7</td>
+<td class="instruction">DEFB $13,$D5,$A5,$00,$B0,$C8</td>
+<td class="comment-1" rowspan="1">call $A5D5 (Character routine: the dragon wakes); if it fails go to $C8B0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51373"></span>C8AD</td>
+<td class="instruction">DEFB $0E,$A7,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8A7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51376"></span>C8B0</td>
+<td class="instruction">DEFB $13,$91,$A5,$00,$C1,$C8</td>
+<td class="comment-1" rowspan="1">call $A591 (Character routine: the dragon comes for Bilbo); if it fails go to $C8C1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51382"></span>C8B6</td>
+<td class="instruction">DEFB $13,$BB,$A5,$00,$C1,$C8</td>
+<td class="comment-1" rowspan="1">call $A5BB (Character routine: the dragon speaks); if it fails go to $C8C1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51388"></span>C8BC</td>
+<td class="instruction">DEFB $04,$2D</td>
+<td class="comment-1" rowspan="1">action 45 [burn]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51390"></span>C8BE</td>
+<td class="instruction">DEFB $0E,$A7,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8A7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51393"></span>C8C1</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51395"></span>C8C3</td>
+<td class="instruction">DEFB $0E,$A7,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8A7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51398"></span>C8C6</td>
+<td class="instruction">DEFB $00,$CD,$C8,$0F,$D8,$C8,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for Bard: default $C8CD; on ATTACK WITH: $C8D8</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51405"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for Bard.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51405"></span>C8CD</td>
+<td class="instruction">DEFB $43,$9F,$A7,$00</td>
+<td class="comment-1" rowspan="1">call $A79F (Character routine: Bard remembers his orders) (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51409"></span>C8D1</td>
+<td class="instruction">DEFB $42,$13,$25,$FF</td>
+<td class="comment-1" rowspan="1">action 19 [take] target wooden chest, with - (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51413"></span>C8D5</td>
+<td class="instruction">DEFB $0E,$CD,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8CD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51416"></span>C8D8</td>
+<td class="instruction">DEFB $54,$3A,$4D,$C9</td>
+<td class="comment-1" rowspan="1">action 58 [shoot]; if it fails go to $C94D (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51420"></span>C8DC</td>
+<td class="instruction">DEFB $0E,$D8,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8D8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51423"></span>C8DF</td>
+<td class="instruction">DEFB $00,$E6,$C8,$0F,$1A,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for Gollum: default $C8E6; on ATTACK WITH: $C91A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51430"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for Gollum.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51430"></span>C8E6</td>
+<td class="instruction">DEFB $13,$C6,$A7,$00,$FF,$C8</td>
+<td class="comment-1" rowspan="1">call $A7C6 (Character routine: Gollum asks his riddle); if it fails go to $C8FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51436"></span>C8EC</td>
+<td class="instruction">DEFB $43,$EA,$A7,$00</td>
+<td class="comment-1" rowspan="1">call $A7EA (Character routine: Gollum waits for the answer) (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51440"></span>C8F0</td>
+<td class="instruction">DEFB $02,$0D,$10,$FF</td>
+<td class="comment-1" rowspan="1">action 13 [drop] target valuable golden ring, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51444"></span>C8F4</td>
+<td class="instruction">DEFB $14,$01,$10,$C9</td>
+<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to $C910</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51448"></span>C8F8</td>
+<td class="instruction">DEFB $02,$13,$10,$FF</td>
+<td class="comment-1" rowspan="1">action 19 [take] target valuable golden ring, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51452"></span>C8FC</td>
+<td class="instruction">DEFB $0E,$E6,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8E6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51455"></span>C8FF</td>
+<td class="instruction">DEFB $14,$01,$15,$C9</td>
+<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to $C915</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51459"></span>C903</td>
+<td class="instruction">DEFB $13,$1A,$A8,$00,$E6,$C8</td>
+<td class="comment-1" rowspan="1">call $A81A (Character routine: Gollum mutters); if it fails go to $C8E6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51465"></span>C909</td>
+<td class="instruction">DEFB $02,$13,$10,$FF</td>
+<td class="comment-1" rowspan="1">action 19 [take] target valuable golden ring, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51469"></span>C90D</td>
+<td class="instruction">DEFB $0E,$E6,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8E6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51472"></span>C910</td>
+<td class="instruction">DEFB $04,$08</td>
+<td class="comment-1" rowspan="1">action 8 [southwest go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51474"></span>C912</td>
+<td class="instruction">DEFB $0E,$F8,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8F8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51477"></span>C915</td>
+<td class="instruction">DEFB $04,$08</td>
+<td class="comment-1" rowspan="1">action 8 [southwest go]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51479"></span>C917</td>
+<td class="instruction">DEFB $0E,$03,$C9</td>
+<td class="comment-1" rowspan="1">go to $C903</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51482"></span>C91A</td>
+<td class="instruction">DEFB $02,$28,$10,$FF</td>
+<td class="comment-1" rowspan="1">action 40 [wear] target valuable golden ring, with -</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51486"></span>C91E</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51488"></span>C920</td>
+<td class="instruction">DEFB $0E,$E6,$C8</td>
+<td class="comment-1" rowspan="1">go to $C8E6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51491"></span>C923</td>
+<td class="instruction">DEFB $00,$30,$C9,$0F,$4D,$C9,$FF</td>
+<td class="comment-1" rowspan="1">Reaction table for the trolls: default $C930; on ATTACK WITH: $C94D</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51498"></span>
+<div class="comments">
+<div class="paragraph">
+Behaviour program for the trolls.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51498"></span>C92A</td>
+<td class="instruction">DEFB $13,$B1,$A8,$00,$2A,$C9</td>
+<td class="comment-1" rowspan="1">call $A8B1 (Character routine: the trolls talk); if it fails go to $C92A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51504"></span>C930</td>
+<td class="instruction">DEFB $03,$42,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51508"></span>C934</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51510"></span>C936</td>
+<td class="instruction">DEFB $03,$42,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51514"></span>C93A</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51516"></span>C93C</td>
+<td class="instruction">DEFB $03,$42,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51520"></span>C940</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51522"></span>C942</td>
+<td class="instruction">DEFB $03,$42,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51526"></span>C946</td>
+<td class="instruction">DEFB $03,$65,$A8,$00</td>
+<td class="comment-1" rowspan="1">call $A865 (Character routine: dawn in the trolls' clearing)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51530"></span>C94A</td>
+<td class="instruction">DEFB $0E,$30,$C9</td>
+<td class="comment-1" rowspan="1">go to $C930</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51533"></span>C94D</td>
+<td class="instruction">DEFB $54,$0F,$5A,$C9</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C95A (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51537"></span>C951</td>
+<td class="instruction">DEFB $54,$0F,$61,$C9</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C961 (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51541"></span>C955</td>
+<td class="instruction">DEFB $44,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run] (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51543"></span>C957</td>
+<td class="instruction">DEFB $0E,$4D,$C9</td>
+<td class="comment-1" rowspan="1">go to $C94D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51546"></span>C95A</td>
+<td class="instruction">DEFB $54,$27,$61,$C9</td>
+<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to $C961 (no orders)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51550"></span>C95E</td>
+<td class="instruction">DEFB $0E,$4D,$C9</td>
+<td class="comment-1" rowspan="1">go to $C94D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51553"></span>C961</td>
+<td class="instruction">DEFB $07</td>
+<td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51554"></span>C962</td>
+<td class="instruction">DEFB $14,$1E,$69,$C9</td>
+<td class="comment-1" rowspan="1">action 30 [go through]; if it fails go to $C969</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51558"></span>C966</td>
+<td class="instruction">DEFB $04,$24</td>
+<td class="comment-1" rowspan="1">action 36 [run]</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51560"></span>C968</td>
+<td class="instruction">DEFB $07</td>
+<td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51561"></span>C969</td>
+<td class="instruction">DEFB $04,$FF</td>
+<td class="comment-1" rowspan="1">do nothing this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51563"></span>C96B</td>
+<td class="instruction">DEFB $0E,$62,$C9</td>
+<td class="comment-1" rowspan="1">go to $C962</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51566"></span>C96E</td>
+<td class="instruction">DEFB $03,$06,$A4,$00</td>
+<td class="comment-1" rowspan="1">call $A406 (Character routine: react to being given something)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="51570"></span>C972</td>
+<td class="instruction">DEFB $07</td>
+<td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50941.html">C6FD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50972">Map</a></td>
+<td class="next">
+Next: <a href="51571.html">C973</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

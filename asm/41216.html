@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A100</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41208.html">A0F8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41216">Map</a></td>
+<td class="next">
+Next: <a href="41235.html">A113</a>
+</td>
+</tr>
+</table>
+<div class="description">A100: Should the instrument's handlers be used?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z set if the current action is one of the five listed at $A13B: DROP IN, PUT IN, PUT ON, TAKE OUT OF and THROW THROUGH. For these it is the instrument (the container, or the window) that knows what to do, so <a href="37999.html">946F</a> uses its handlers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41216"></span>A100</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Save the caller's HL and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41217"></span>A101</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41218"></span>A102</td>
+<td class="instruction">LD B,$05</td>
+<td class="comment-1" rowspan="1">Five actions to check against</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41220"></span>A104</td>
+<td class="instruction">LD HL,$A13B</td>
+<td class="comment-1" rowspan="1">HL = the list of actions that use the instrument's own handlers, rather than the target's</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41223"></span>A107</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="1">A = the action being carried out right now</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41226"></span>A10A</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Is it one of these five?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41227"></span>A10B</td>
+<td class="instruction">JR Z,$A110</td>
+<td class="comment-1" rowspan="1">Yes: stop here, with it found</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41229"></span>A10D</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">No: look at the next one in the list</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41230"></span>A10E</td>
+<td class="instruction">DJNZ $A10A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41232"></span>A110</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore the caller's BC and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41233"></span>A111</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41234"></span>A112</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41208.html">A0F8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41216">Map</a></td>
+<td class="next">
+Next: <a href="41235.html">A113</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

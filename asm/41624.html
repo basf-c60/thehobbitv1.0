@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A298</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41614.html">A28E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41624">Map</a></td>
+<td class="next">
+Next: <a href="41639.html">A2A7</a>
+</td>
+</tr>
+</table>
+<div class="description">A298: Handler for the crack: OPEN</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The small insignificant crack can only be opened from room 15; there it opens like a door (<a href="36984.html">9078</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41624"></span>A298</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41628"></span>A29C</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="2">Is the actor in room 15 (the only place the crack can be opened from)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41631"></span>A29F</td>
+<td class="instruction">CP $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41633"></span>A2A1</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No: fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41636"></span>A2A4</td>
+<td class="instruction">JP <a href="36984.html">$9078</a></td>
+<td class="comment-1" rowspan="1">Yes: open it as usual</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41614.html">A28E</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41624">Map</a></td>
+<td class="next">
+Next: <a href="41639.html">A2A7</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

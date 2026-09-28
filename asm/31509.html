@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7B15</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30741.html">7815</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31509">Map</a></td>
+<td class="next">
+Next: <a href="31595.html">7B6B</a>
+</td>
+</tr>
+</table>
+<div class="description">7B15: Copy a line of text to the ZX Printer</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The Hobbit can send its output to a ZX Printer (the PRINT and NOPRINT commands). If the flag at $B5E3 is set, this routine is called by <a href="30356.html">7694</a> at the end of every line of text, and it copies the 8 pixel rows of that line from the screen, starting at $5020, to the printer.
+</div>
+<div class="paragraph">
+The ZX Printer is driven directly through port $FB. For each pixel row, the 32 bytes are sent one bit at a time: for each dot the routine waits for the printer's encoder signal (bit 0 of the port) and then outputs the dot. D controls the motor speed: it starts at 1 (slow), and after the first two rows the value derived from E runs the motor at full speed. After the 8 rows the motor is stopped (OUT ($FB),4). If the printer is not connected (bit 7 of the port reads as 1) the routine gives up straight away.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31509"></span>7B15</td>
+<td class="instruction">LD A,($B5E3)</td>
+<td class="comment-1" rowspan="1">Is the printer switched on?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31512"></span>7B18</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31513"></span>7B19</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if it is zero</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31514"></span>7B1A</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31515"></span>7B1B</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31516"></span>7B1C</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Save BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31517"></span>7B1D</td>
+<td class="instruction">LD D,$01</td>
+<td class="comment-1" rowspan="1">Slow motor; HL = start of the line on the screen</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31519"></span>7B1F</td>
+<td class="instruction">LD HL,$5020</td>
+<td class="comment-1" rowspan="1">HL = $5020</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31522"></span>7B22</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31523"></span>7B23</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">E = A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31524"></span>7B24</td>
+<td class="instruction">OUT ($FB),A</td>
+<td class="comment-1" rowspan="1">Start the motor and wait for the printer to be ready</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31526"></span>7B26</td>
+<td class="instruction">IN A,($FB)</td>
+<td class="comment-1" rowspan="1">Read the keyboard/port</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31528"></span>7B28</td>
+<td class="instruction">ADD A,A</td>
+<td class="comment-1" rowspan="1">Add A,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31529"></span>7B29</td>
+<td class="instruction">JP M,$7B67</td>
+<td class="comment-1" rowspan="1">Bit 7 set: no printer connected</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31532"></span>7B2C</td>
+<td class="instruction">JR NC,$7B26</td>
+<td class="comment-1" rowspan="1">If carry clear, go to <a href="31509.html#31526">7B26</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31534"></span>7B2E</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31535"></span>7B2F</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31536"></span>7B30</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">A = D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31537"></span>7B31</td>
+<td class="instruction">CP $02</td>
+<td class="comment-1" rowspan="1">Compare with 2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31539"></span>7B33</td>
+<td class="instruction">SBC A,A</td>
+<td class="comment-1" rowspan="1">Subtract A,A with carry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31540"></span>7B34</td>
+<td class="instruction">AND E</td>
+<td class="comment-1" rowspan="1">Keep only the bits of E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31541"></span>7B35</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="1">Rotate A left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31542"></span>7B36</td>
+<td class="instruction">AND E</td>
+<td class="comment-1" rowspan="1">Keep only the bits of E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31543"></span>7B37</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">D = A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31544"></span>7B38</td>
+<td class="instruction">LD C,(HL)</td>
+<td class="comment-1" rowspan="1">C = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31545"></span>7B39</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31546"></span>7B3A</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="1">Send eight dots per screen byte</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31548"></span>7B3C</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">A = D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31549"></span>7B3D</td>
+<td class="instruction">RLC C</td>
+<td class="comment-1" rowspan="1">Shift/rotate C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31551"></span>7B3F</td>
+<td class="instruction">RRA</td>
+<td class="comment-1" rowspan="1">Rotate A right through carry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31552"></span>7B40</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1">H = A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31553"></span>7B41</td>
+<td class="instruction">IN A,($FB)</td>
+<td class="comment-1" rowspan="1">Wait for the encoder...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31555"></span>7B43</td>
+<td class="instruction">RRA</td>
+<td class="comment-1" rowspan="1">Rotate A right through carry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31556"></span>7B44</td>
+<td class="instruction">JR NC,$7B41</td>
+<td class="comment-1" rowspan="1">If carry clear, go to <a href="31509.html#31553">7B41</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31558"></span>7B46</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1">A = H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31559"></span>7B47</td>
+<td class="instruction">OUT ($FB),A</td>
+<td class="comment-1" rowspan="1">...and send the dot</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31561"></span>7B49</td>
+<td class="instruction">DJNZ $7B3C</td>
+<td class="comment-1" rowspan="1">Loop back until B reaches 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31563"></span>7B4B</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31564"></span>7B4C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Next byte, until all 32 have been done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31565"></span>7B4D</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1">A = L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31566"></span>7B4E</td>
+<td class="instruction">AND $1F</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31568"></span>7B50</td>
+<td class="instruction">JR NZ,$7B38</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="31509.html#31544">7B38</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="31570"></span>7B52</td>
+<td class="instruction">IN A,($FB)</td>
+<td class="comment-1" rowspan="1">Read the keyboard/port</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31572"></span>7B54</td>
+<td class="instruction">RRA</td>
+<td class="comment-1" rowspan="1">Rotate A right through carry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31573"></span>7B55</td>
+<td class="instruction">JR NC,$7B52</td>
+<td class="comment-1" rowspan="1">If carry clear, go to <a href="31509.html#31570">7B52</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31575"></span>7B57</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">A = D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31576"></span>7B58</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1">Rotate A right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31577"></span>7B59</td>
+<td class="instruction">OUT ($FB),A</td>
+<td class="comment-1" rowspan="1">Write to the port (border colour, beeper or printer)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31579"></span>7B5B</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31580"></span>7B5C</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31581"></span>7B5D</td>
+<td class="instruction">INC H</td>
+<td class="comment-1" rowspan="1">Next pixel row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31582"></span>7B5E</td>
+<td class="instruction">INC E</td>
+<td class="comment-1" rowspan="1">Increment E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31583"></span>7B5F</td>
+<td class="instruction">BIT 3,E</td>
+<td class="comment-1" rowspan="1">Test bit 3 of E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31585"></span>7B61</td>
+<td class="instruction">JR Z,$7B24</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="31509.html#31524">7B24</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="31587"></span>7B63</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="1">Stop the motor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31589"></span>7B65</td>
+<td class="instruction">OUT ($FB),A</td>
+<td class="comment-1" rowspan="1">Write to the port (border colour, beeper or printer)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="31591"></span>7B67</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31592"></span>7B68</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31593"></span>7B69</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="31594"></span>7B6A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="30741.html">7815</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#31509">Map</a></td>
+<td class="next">
+Next: <a href="31595.html">7B6B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

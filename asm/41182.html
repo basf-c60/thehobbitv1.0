@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A0DE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41148.html">A0BC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41182">Map</a></td>
+<td class="next">
+Next: <a href="41208.html">A0F8</a>
+</td>
+</tr>
+</table>
+<div class="description">A0DE: Look up the holder of an object (unused)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the object index for the holder of the object at IY and returns its number. Nothing in the game calls this routine.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41182"></span>A0DE</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Save IY and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41184"></span>A0E0</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41186"></span>A0E2</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="2">Search every object in the game...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41190"></span>A0E6</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41193"></span>A0E9</td>
+<td class="instruction">JR Z,$A0F0</td>
+<td class="comment-1" rowspan="1">No more objects: give up (below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41195"></span>A0EB</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">Is it held by the object whose holder we want?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41198"></span>A0EE</td>
+<td class="instruction">JR NZ,$A0E6</td>
+<td class="comment-1" rowspan="1">No: try the next one</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41200"></span>A0F0</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the object that holds it (or $FF if none was found)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41203"></span>A0F3</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="3">Restore IX and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41205"></span>A0F5</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41207"></span>A0F7</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41148.html">A0BC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41182">Map</a></td>
+<td class="next">
+Next: <a href="41208.html">A0F8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

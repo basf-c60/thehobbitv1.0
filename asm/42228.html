@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A4F4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42203.html">A4DB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42228">Map</a></td>
+<td class="next">
+Next: <a href="42297.html">A539</a>
+</td>
+</tr>
+</table>
+<div class="description">A4F4: Timer 0: the barrel floats down the river</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The expiry routine of timer 0, two turns after the barrel is thrown through the trap door into the forest river below the cellar (<a href="42203.html">A4DB</a>). If Bilbo is in the barrel he reads 'you are thrown onto the bank of the long lake.' Everything in the barrel is moved to room 34 on the long lake (<a href="39736.html">9B38</a>) and tipped out there (<a href="40104.html">9CA8</a>), silently. The barrel itself goes back to the cellar (room 32), closed and full, and the wine (object 20) is put back in it. This is the book's escape from the Elvenking's halls, and the game resets it so the barrel is ready again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42228"></span>A4F4</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Let other timers expire this turn too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42229"></span>A4F5</td>
+<td class="instruction">LD ($B5E1),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42232"></span>A4F8</td>
+<td class="instruction">LD A,($C00C)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the barrel (object 19)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42235"></span>A4FB</td>
+<td class="instruction">CP $13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42237"></span>A4FD</td>
+<td class="instruction">LD HL,$B21E</td>
+<td class="comment-1" rowspan="1">"you are thrown onto the bank of the long lake."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42240"></span>A500</td>
+<td class="instruction">CALL Z,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If so, say so</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42243"></span>A503</td>
+<td class="instruction">LD A,$22</td>
+<td class="comment-1" rowspan="3">Put the barrel in room 34, the long lake...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42245"></span>A505</td>
+<td class="instruction">LD ($C2ED),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42248"></span>A508</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42249"></span>A509</td>
+<td class="instruction">LD A,$13</td>
+<td class="comment-1" rowspan="2">...and take everything in it along</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42251"></span>A50B</td>
+<td class="instruction">CALL <a href="39736.html">$9B38</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42254"></span>A50E</td>
+<td class="instruction">LD IX,$C2DD</td>
+<td class="comment-1" rowspan="1">IX = the barrel's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42258"></span>A512</td>
+<td class="instruction">LD (IX+$10),$20</td>
+<td class="comment-1" rowspan="1">Put the barrel back in the cellar (room 32)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42262"></span>A516</td>
+<td class="instruction">RES 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Closed...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42266"></span>A51A</td>
+<td class="instruction">SET 2,(IX+$07)</td>
+<td class="comment-1" rowspan="1">...and full</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42270"></span>A51E</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">Quietly...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42271"></span>A51F</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42274"></span>A522</td>
+<td class="instruction">LD A,$13</td>
+<td class="comment-1" rowspan="2">...tip its contents out on the lake bank</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42276"></span>A524</td>
+<td class="instruction">CALL <a href="40104.html">$9CA8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42279"></span>A527</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Output back on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42281"></span>A529</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42284"></span>A52C</td>
+<td class="instruction">LD IY,$C307</td>
+<td class="comment-1" rowspan="1">IY = the wine's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42288"></span>A530</td>
+<td class="instruction">LD (IY+$10),$20</td>
+<td class="comment-1" rowspan="1">The wine is in the cellar...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42292"></span>A534</td>
+<td class="instruction">LD (IY+$01),$13</td>
+<td class="comment-1" rowspan="2">...inside the barrel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42296"></span>A538</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42203.html">A4DB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42228">Map</a></td>
+<td class="next">
+Next: <a href="42297.html">A539</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7F56</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32573.html">7F3D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32598">Map</a></td>
+<td class="next">
+Next: <a href="32604.html">7F5C</a>
+</td>
+</tr>
+</table>
+<div class="description">7F56: Parser: step back to the previous frame</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Decrements B (a frame counter), finds the previous frame (<a href="32623.html">7F6F</a>, 24 bytes higher) and swaps IX and IY, so that IY is the previous frame and IX the one we came from.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32598"></span>7F56</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">One frame fewer to go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32599"></span>7F57</td>
+<td class="instruction">CALL <a href="32623.html">$7F6F</a></td>
+<td class="comment-1" rowspan="1">IX = the previous frame (24 bytes higher)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32602"></span>7F5A</td>
+<td class="instruction">JR <a href="32604.html#32608">$7F60</a></td>
+<td class="comment-1" rowspan="1">Swap IX and IY</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32573.html">7F3D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32598">Map</a></td>
+<td class="next">
+Next: <a href="32604.html">7F5C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

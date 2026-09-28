@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 93ED</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37837.html">93CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37869">Map</a></td>
+<td class="next">
+Next: <a href="37892.html">9404</a>
+</td>
+</tr>
+</table>
+<div class="description">93ED: UNLOCK</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The target must be locked (bit 0 of its flags) or 'the door is unlocked'; the instrument must fit (<a href="41257.html#41268">A134</a>). Then the RES instruction is written into <a href="37837.html">93CD</a> and the lock is cleared there.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37869"></span>93ED</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37873"></span>93F1</td>
+<td class="instruction">BIT 0,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it actually locked?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37877"></span>93F5</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1">A = the state code for UNLOCKED</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37879"></span>93F7</td>
+<td class="instruction">JP Z,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No, already unlocked: say so</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37882"></span>93FA</td>
+<td class="instruction">CALL <a href="41257.html#41268">$A134</a></td>
+<td class="comment-1" rowspan="1">Locked: does the key fit (is the door open enough to check)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37885"></span>93FD</td>
+<td class="instruction">JP NZ,<a href="41116.html">$A09C</a></td>
+<td class="comment-1" rowspan="1">No: say why not</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37888"></span>9400</td>
+<td class="instruction">LD A,$86</td>
+<td class="comment-1" rowspan="1">A = $86, the machine-code for a RES instruction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37890"></span>9402</td>
+<td class="instruction">JR <a href="37837.html#37845">$93D5</a></td>
+<td class="comment-1" rowspan="1">Poke that into the shared instruction, then join <a href="37837.html">93CD</a>, which finishes the job by clearing the lock</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37837.html">93CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37869">Map</a></td>
+<td class="next">
+Next: <a href="37892.html">9404</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

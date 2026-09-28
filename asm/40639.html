@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9EBF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40595.html">9E93</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40639">Map</a></td>
+<td class="next">
+Next: <a href="40651.html">9ECB</a>
+</td>
+</tr>
+</table>
+<div class="description">9EBF: Report failure</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+During a dry run, sets $B5EC to 0 (the action would not work). When the action is really being done, reports it instead (<a href="28962.html">7122</a>), so the player sees 'you cannot ...'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40639"></span>9EBF</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="2">Is this action really happening (not just being tried out)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40642"></span>9EC2</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40643"></span>9EC3</td>
+<td class="instruction">JP Z,<a href="28962.html">$7122</a></td>
+<td class="comment-1" rowspan="1">Yes: report it as an outright failure ("you cannot ...")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40646"></span>9EC6</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">Only a trial: just note that it would not have worked, without printing anything</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40647"></span>9EC7</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40650"></span>9ECA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40595.html">9E93</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40639">Map</a></td>
+<td class="next">
+Next: <a href="40651.html">9ECB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

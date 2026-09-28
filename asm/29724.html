@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 741C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29699.html">7403</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29724">Map</a></td>
+<td class="next">
+Next: <a href="29732.html">7424</a>
+</td>
+</tr>
+</table>
+<div class="description">741C: Message code $11: target's name and IS/ARE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+See <a href="29699.html">7403</a>. The target is object $B5D9, and it gets an article.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29724"></span>741C</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target, rather than the actor</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29727"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29732.html">7424</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29727"></span>741F</td>
+<td class="instruction">EX AF,AF'</td>
+<td class="comment-1" rowspan="1">Keep it safe while the name is printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29728"></span>7420</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">(marks this as not the plain "actor" entry point, though nothing else reads it)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29730"></span>7422</td>
+<td class="instruction">JR <a href="29699.html#29704">$7408</a></td>
+<td class="comment-1" rowspan="1">Join the shared code above</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29699.html">7403</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29724">Map</a></td>
+<td class="next">
+Next: <a href="29732.html">7424</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

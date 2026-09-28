@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A9A7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43414.html">A996</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43431">Map</a></td>
+<td class="next">
+Next: <a href="43451.html">A9BB</a>
+</td>
+</tr>
+</table>
+<div class="description">A9A7: Timer 5 tick: the magic door opens and an elf sweeps past</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Timer 5 is started when an invisible Bilbo examines the magic door (<a href="42516.html">A614</a>: 'the magic door warns of elves approaching'). When its count reaches 1, the magic door (object 13) opens, and if Bilbo is in room 28 or 30 he sees 'the magic door opens.' and 'an elf sweeps past.' Then the ring check of timer 6 is run (<a href="43476.html">A9D4</a>), which takes the ring off anyone wearing it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43431"></span>A9A7</td>
+<td class="instruction">LD HL,$C277</td>
+<td class="comment-1" rowspan="1">HL = the magic door's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43434"></span>A9AA</td>
+<td class="instruction">SET 5,(HL)</td>
+<td class="comment-1" rowspan="1">Open it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43436"></span>A9AC</td>
+<td class="instruction">LD HL,$AF29</td>
+<td class="comment-1" rowspan="1">"the magic door opens."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43439"></span>A9AF</td>
+<td class="instruction">CALL <a href="43451.html">$A9BB</a></td>
+<td class="comment-1" rowspan="1">Print it if Bilbo is nearby</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43442"></span>A9B2</td>
+<td class="instruction">LD HL,$B005</td>
+<td class="comment-1" rowspan="2">"an elf sweeps past."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43445"></span>A9B5</td>
+<td class="instruction">CALL <a href="43451.html">$A9BB</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43448"></span>A9B8</td>
+<td class="instruction">JP <a href="43476.html">$A9D4</a></td>
+<td class="comment-1" rowspan="1">Take the ring off whoever is wearing it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43414.html">A996</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43431">Map</a></td>
+<td class="next">
+Next: <a href="43451.html">A9BB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

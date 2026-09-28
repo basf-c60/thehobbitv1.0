@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9308</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37463.html">9257</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37640">Map</a></td>
+<td class="next">
+Next: <a href="37700.html">9344</a>
+</td>
+</tr>
+</table>
+<div class="description">9308: GIVE TO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The actor must be carrying the target (<a href="39885.html">9BCD</a>; otherwise 'you are not carrying it'). The receiver must be able to carry it: the target's weight plus what the receiver already carries (<a href="40002.html">9C42</a>) must not exceed the receiver's capacity, or 'X is carrying too much'. Then the receiver becomes the target's holder, the target moves to the receiver's room, and <a href="39736.html">9B38</a> tells anyone who sees it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37640"></span>9308</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the instrument's (the receiver's) own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37644"></span>930C</td>
+<td class="instruction">CALL <a href="39885.html">$9BCD</a></td>
+<td class="comment-1" rowspan="1">Is the actor actually holding the target?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37647"></span>930F</td>
+<td class="instruction">LD HL,$ACE4</td>
+<td class="comment-1" rowspan="1">"you are not carrying it."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37650"></span>9312</td>
+<td class="instruction">JP NC,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">If not, say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37653"></span>9315</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">A = the receiver</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37656"></span>9318</td>
+<td class="instruction">CALL <a href="40002.html">$9C42</a></td>
+<td class="comment-1" rowspan="1">A = how much the receiver is already carrying</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37659"></span>931B</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37663"></span>931F</td>
+<td class="instruction">ADD A,(IX+$03)</td>
+<td class="comment-1" rowspan="1">Add the target's own weight to that</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37666"></span>9322</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="2">Keep the combined total for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37667"></span>9323</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37668"></span>9324</td>
+<td class="instruction">LD A,(IY+$03)</td>
+<td class="comment-1" rowspan="1">A = the receiver's own carrying capacity</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37671"></span>9327</td>
+<td class="instruction">SUB B</td>
+<td class="comment-1" rowspan="1">Subtract the combined total: would that go below zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37672"></span>9328</td>
+<td class="instruction">LD HL,$ACFF</td>
+<td class="comment-1" rowspan="1">"X is carrying too much."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37675"></span>932B</td>
+<td class="instruction">JP C,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Too much for them to take: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37678"></span>932E</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37681"></span>9331</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">The receiver becomes the target's new holder...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37684"></span>9334</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37687"></span>9337</td>
+<td class="instruction">LD A,(IY+$10)</td>
+<td class="comment-1" rowspan="2">...in the receiver's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37690"></span>933A</td>
+<td class="instruction">LD (IX+$10),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37693"></span>933D</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = that room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37694"></span>933E</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Move the target there, telling Bilbo about it if he can see it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37697"></span>9341</td>
+<td class="instruction">JP <a href="39736.html">$9B38</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37463.html">9257</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37640">Map</a></td>
+<td class="next">
+Next: <a href="37700.html">9344</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

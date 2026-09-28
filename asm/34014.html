@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 84DE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33993.html">84C9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34014">Map</a></td>
+<td class="next">
+Next: <a href="34022.html">84E6</a>
+</td>
+</tr>
+</table>
+<div class="description">84DE: Try the action (dry run)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Runs the action with <a href="37999.html">946F</a> and returns with Z set if it would not work ($B5EC is 0). Called while $B5EB is 0, so nothing actually happens and nothing is printed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34014"></span>84DE</td>
+<td class="instruction">CALL <a href="37999.html">$946F</a></td>
+<td class="comment-1" rowspan="1">Carry out the action, with nothing yet really happening</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34017"></span>84E1</td>
+<td class="instruction">LD A,($B5EC)</td>
+<td class="comment-1" rowspan="3">Did it say it would work?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34020"></span>84E4</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34021"></span>84E5</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33993.html">84C9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34014">Map</a></td>
+<td class="next">
+Next: <a href="34022.html">84E6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

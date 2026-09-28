@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9F10</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40696.html">9EF8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40720">Map</a></td>
+<td class="next">
+Next: <a href="40841.html">9F89</a>
+</td>
+</tr>
+</table>
+<div class="description">9F10: List objects, with their contents</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints each visible object held by A (A=$FF for loose objects) that is in room B, one per line, each followed by a full stop. After each one, its contents are listed by a recursive call, indented two more characters (D, stored at $7692 for <a href="30356.html">7694</a>), with a heading from <a href="40841.html">9F89</a> such as 'gandalf is carrying' or 'in the chest there is'. The actor's own possessions are not listed when looking round the room. C counts the objects printed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40720"></span>9F10</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save the caller's HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40721"></span>9F11</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1">L = the holder we are listing the contents of (or $FF for "lying loose")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40722"></span>9F12</td>
+<td class="instruction">LD A,($7692)</td>
+<td class="comment-1" rowspan="1">A = whatever indent is currently in use, from an earlier, outer call to this same routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40725"></span>9F15</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="1">H = that old indent, kept alongside the holder in L for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40726"></span>9F16</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="1">A = the new indent this call should use</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40727"></span>9F17</td>
+<td class="instruction">LD ($7692),A</td>
+<td class="comment-1" rowspan="1">Set it as the printer's current indent</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40730"></span>9F1A</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1">A = the holder again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40731"></span>9F1B</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">Swap: put (old indent, holder) safely on the stack, and get the real, original HL back</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40732"></span>9F1C</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40734"></span>9F1E</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">IX = just before the start of the object index, so the search below starts at its very first entry</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40738"></span>9F22</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+<td class="comment-1" rowspan="1">Look at the next object; IY = its own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40741"></span>9F25</td>
+<td class="instruction">JR Z,$9F7F</td>
+<td class="comment-1" rowspan="1">Have we run out of objects?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40743"></span>9F27</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">No: is this object held by the one we are listing the contents of?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40746"></span>9F2A</td>
+<td class="instruction">JR NZ,$9F22</td>
+<td class="comment-1" rowspan="1">It is not: try the next object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40748"></span>9F2C</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">It is: save this object's number for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40749"></span>9F2D</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Does it occupy only a single place (not a door or the like)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40751"></span>9F2F</td>
+<td class="instruction">CP (IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40754"></span>9F32</td>
+<td class="instruction">JR NZ,$9F76</td>
+<td class="comment-1" rowspan="1">No: doors and similar things are never listed as "contents"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40756"></span>9F34</td>
+<td class="instruction">LD A,(IY+$10)</td>
+<td class="comment-1" rowspan="1">A = this object's own room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40759"></span>9F37</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Is it really in the room we are listing (rather than, say, tucked inside something else there)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40760"></span>9F38</td>
+<td class="instruction">JR NZ,$9F76</td>
+<td class="comment-1" rowspan="1">No: skip it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40762"></span>9F3A</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the current actor the very object whose contents we are printing...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40765"></span>9F3D</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40768"></span>9F40</td>
+<td class="instruction">JR NZ,$9F47</td>
+<td class="comment-1" rowspan="1">...(if not, always list it - this next check is only about the actor's own belongings)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40770"></span>9F42</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">...and is this the outermost call, not one nested inside a container?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40772"></span>9F44</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40773"></span>9F45</td>
+<td class="instruction">JR Z,$9F76</td>
+<td class="comment-1" rowspan="1">Both true: this is the actor's own possession, and the room listing should not repeat it - skip it</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40775"></span>9F47</td>
+<td class="instruction">CALL <a href="40326.html">$9D86</a></td>
+<td class="comment-1" rowspan="1">Otherwise: can the actor actually see this object (is it close enough)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40778"></span>9F4A</td>
+<td class="instruction">JR Z,$9F76</td>
+<td class="comment-1" rowspan="1">No: skip it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40780"></span>9F4C</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Yes: count it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40781"></span>9F4D</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="2">No forced capital letter for this printing...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40782"></span>9F4E</td>
+<td class="instruction">LD ($B5F5),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40785"></span>9F51</td>
+<td class="instruction">LD ($B5F4),A</td>
+<td class="comment-1" rowspan="1">...and no article added before the whole name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40788"></span>9F54</td>
+<td class="instruction">CALL <a href="40464.html">$9E10</a></td>
+<td class="comment-1" rowspan="1">Print the object's name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40791"></span>9F57</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Are we listing what the CURRENT ACTOR is carrying (rather than something else)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40794"></span>9F5A</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40797"></span>9F5D</td>
+<td class="instruction">JR Z,$9F7A</td>
+<td class="comment-1" rowspan="1">If so, no full stop is wanted here - the actor's own heading handles that separately</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40799"></span>9F5F</td>
+<td class="instruction">LD A,$2E</td>
+<td class="comment-1" rowspan="2">Otherwise print a full stop...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40801"></span>9F61</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40804"></span>9F64</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the object just printed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40807"></span>9F67</td>
+<td class="instruction">CALL <a href="40841.html">$9F89</a></td>
+<td class="comment-1" rowspan="1">Print the heading for whatever IT holds ("X is carrying", "in the Y there is") - and find out whether it has anything worth listing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40810"></span>9F6A</td>
+<td class="instruction">JR C,$9F76</td>
+<td class="comment-1" rowspan="1">Nothing to list inside it (or it is closed): do not recurse</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40812"></span>9F6C</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the object again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40815"></span>9F6F</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save the indent (D) for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40816"></span>9F70</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="2">Indent two spaces further in, for its own contents...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40817"></span>9F71</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40818"></span>9F72</td>
+<td class="instruction">CALL $9F10</td>
+<td class="comment-1" rowspan="1">...and list them, calling this same routine again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40821"></span>9F75</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore the indent</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40822"></span>9F76</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the object's number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40823"></span>9F77</td>
+<td class="instruction">JP $9F22</td>
+<td class="comment-1" rowspan="1">Try the next object in the index</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40826"></span>9F7A</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="2">(Top-level listing: just a new line, with no full stop)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40829"></span>9F7D</td>
+<td class="instruction">JR $9F76</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40831"></span>9F7F</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Out of objects: restore the caller's IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40833"></span>9F81</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">Recover the (old indent, holder) pair saved earlier, putting the real HL safely back on the stack</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40834"></span>9F82</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="2">Restore the caller's own indent...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40835"></span>9F83</td>
+<td class="instruction">LD ($7692),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40838"></span>9F86</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1">...(A is left holding the holder, though nothing further uses it)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40839"></span>9F87</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore the caller's real HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40840"></span>9F88</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40696.html">9EF8</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40720">Map</a></td>
+<td class="next">
+Next: <a href="40841.html">9F89</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

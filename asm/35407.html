@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8A4F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35405.html">8A4D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35407">Map</a></td>
+<td class="next">
+Next: <a href="35532.html">8ACC</a>
+</td>
+</tr>
+</table>
+<div class="description">8A4F: Flood fill</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Fills the area around the point (D,E) with ink colour A (kept at $8C2C for <a href="35731.html">8B93</a>). It is a scan-line fill: from the starting point it moves left to the edge of the area, then works rightwards along the row, setting each pixel. At every pixel it looks at the pixel above and the pixel below: where an unfilled stretch begins in the row above or below, that position is pushed on the stack as a 'seed' to be filled later. The flags at $8A4D (above) and $8A4E (below) stop it pushing a seed for every pixel of the same stretch. When the row is done, the next seed is popped and the process repeats, until the marker $0080 pushed at the start comes back off the stack.
+</div>
+<div class="paragraph">
+Because each row is filled from its left-hand end, and seeds are only pushed at the starts of stretches, the fill needs very little stack even for large areas.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Colour</td>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">x</td>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">y</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35407"></span>8A4F</td>
+<td class="instruction">LD ($8C2C),A</td>
+<td class="comment-1" rowspan="3">Save the fill colour</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35410"></span>8A52</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35411"></span>8A53</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35412"></span>8A54</td>
+<td class="instruction">LD HL,$0080</td>
+<td class="comment-1" rowspan="2">Push the end marker (a y value of $80 is impossible)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35415"></span>8A57</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35416"></span>8A58</td>
+<td class="instruction">CALL <a href="35532.html">$8ACC</a></td>
+<td class="comment-1" rowspan="1">Is the pixel at (D,E) set?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35419"></span>8A5B</td>
+<td class="instruction">JR NZ,$8A64</td>
+<td class="comment-1" rowspan="1">Yes: we have found the left-hand boundary</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35421"></span>8A5D</td>
+<td class="instruction">CALL <a href="35622.html">$8B26</a></td>
+<td class="comment-1" rowspan="1">No: move left</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35424"></span>8A60</td>
+<td class="instruction">JR NZ,$8A58</td>
+<td class="comment-1" rowspan="1">Keep going until a set pixel or the edge</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35426"></span>8A62</td>
+<td class="instruction">JR $8A6A</td>
+<td class="comment-1" rowspan="1">At the left edge of the picture: start here</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35428"></span>8A64</td>
+<td class="instruction">CALL <a href="35731.html">$8B93</a></td>
+<td class="comment-1" rowspan="1">Colour the boundary pixel...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35431"></span>8A67</td>
+<td class="instruction">CALL <a href="35615.html">$8B1F</a></td>
+<td class="comment-1" rowspan="1">...and step right onto the first empty pixel</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35434"></span>8A6A</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="2">Not yet tracking a stretch above or below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35437"></span>8A6D</td>
+<td class="instruction">LD ($8A4D),HL</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35440"></span>8A70</td>
+<td class="instruction">CALL <a href="35593.html">$8B09</a></td>
+<td class="comment-1" rowspan="2">Look at the pixel above</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35443"></span>8A73</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35445"></span>8A75</td>
+<td class="instruction">JR Z,$8A8C</td>
+<td class="comment-1" rowspan="1">At the top edge: nothing to do above</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35447"></span>8A77</td>
+<td class="instruction">CALL <a href="35532.html">$8ACC</a></td>
+<td class="comment-1" rowspan="2">Is it set?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35450"></span>8A7A</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35452"></span>8A7C</td>
+<td class="instruction">JR NZ,$8A87</td>
+<td class="comment-1" rowspan="1">Set: not part of the area</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35454"></span>8A7E</td>
+<td class="instruction">LD A,($8A4D)</td>
+<td class="comment-1" rowspan="2">Empty. Already tracking this stretch above?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35457"></span>8A81</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35458"></span>8A82</td>
+<td class="instruction">JR NZ,$8A87</td>
+<td class="comment-1" rowspan="1">Yes: no new seed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35460"></span>8A84</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">No: push it as a seed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35461"></span>8A85</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">...and start tracking</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35463"></span>8A87</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35464"></span>8A88</td>
+<td class="instruction">CALL <a href="35608.html">$8B18</a></td>
+<td class="comment-1" rowspan="2">Back down to the current row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35467"></span>8A8B</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35468"></span>8A8C</td>
+<td class="instruction">LD ($8A4D),A</td>
+<td class="comment-1" rowspan="1">Remember whether we are tracking above</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35471"></span>8A8F</td>
+<td class="instruction">CALL <a href="35608.html">$8B18</a></td>
+<td class="comment-1" rowspan="2">Look at the pixel below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35474"></span>8A92</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35476"></span>8A94</td>
+<td class="instruction">JR Z,$8AAB</td>
+<td class="comment-1" rowspan="1">At the bottom edge: nothing to do below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35478"></span>8A96</td>
+<td class="instruction">CALL <a href="35532.html">$8ACC</a></td>
+<td class="comment-1" rowspan="2">Is it set?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35481"></span>8A99</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35483"></span>8A9B</td>
+<td class="instruction">JR NZ,$8AA6</td>
+<td class="comment-1" rowspan="1">Set: not part of the area</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35485"></span>8A9D</td>
+<td class="instruction">LD A,($8A4E)</td>
+<td class="comment-1" rowspan="2">Empty. Already tracking this stretch below?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35488"></span>8AA0</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35489"></span>8AA1</td>
+<td class="instruction">JR NZ,$8AA6</td>
+<td class="comment-1" rowspan="1">Yes: no new seed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35491"></span>8AA3</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">No: push it as a seed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35492"></span>8AA4</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">...and start tracking</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35494"></span>8AA6</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35495"></span>8AA7</td>
+<td class="instruction">CALL <a href="35593.html">$8B09</a></td>
+<td class="comment-1" rowspan="2">Back up to the current row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35498"></span>8AAA</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35499"></span>8AAB</td>
+<td class="instruction">LD ($8A4E),A</td>
+<td class="comment-1" rowspan="1">Remember whether we are tracking below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35502"></span>8AAE</td>
+<td class="instruction">CALL <a href="35731.html">$8B93</a></td>
+<td class="comment-1" rowspan="1">Fill this pixel</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35505"></span>8AB1</td>
+<td class="instruction">CALL <a href="35615.html">$8B1F</a></td>
+<td class="comment-1" rowspan="1">Step right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35508"></span>8AB4</td>
+<td class="instruction">JR Z,$8ABE</td>
+<td class="comment-1" rowspan="1">At the right edge: this row is done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35510"></span>8AB6</td>
+<td class="instruction">CALL <a href="35532.html">$8ACC</a></td>
+<td class="comment-1" rowspan="1">Is the next pixel set?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35513"></span>8AB9</td>
+<td class="instruction">JR Z,$8A70</td>
+<td class="comment-1" rowspan="1">No: carry on along the row</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35515"></span>8ABB</td>
+<td class="instruction">CALL <a href="35731.html">$8B93</a></td>
+<td class="comment-1" rowspan="1">Yes: colour the boundary pixel too</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35518"></span>8ABE</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Pop the next seed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35519"></span>8ABF</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="2">Is it the end marker?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35520"></span>8AC0</td>
+<td class="instruction">CP $80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35522"></span>8AC2</td>
+<td class="instruction">JR NZ,$8A58</td>
+<td class="comment-1" rowspan="1">No: fill from there</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35524"></span>8AC4</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="5">Done: reset the drawing colour</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35526"></span>8AC6</td>
+<td class="instruction">LD ($8C2C),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35529"></span>8AC9</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35530"></span>8ACA</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35531"></span>8ACB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35405.html">8A4D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35407">Map</a></td>
+<td class="next">
+Next: <a href="35532.html">8ACC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at AA2E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43539.html">AA13</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43566">Map</a></td>
+<td class="next">
+Next: <a href="43591.html">AA47</a>
+</td>
+</tr>
+</table>
+<div class="description">AA2E: Pale bulbous eyes: expire routine</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called by <a href="38417.html">9611</a> when the eyes timer reaches 0. If Bilbo is still in room 2 (the forest road) or room 3 (the forest), he has stayed too long: the eyes are shown, the thing drops from above and stings, and Bilbo dies. If he is anywhere else, nothing happens.
+</div>
+<div class="paragraph">
+Together with <a href="43539.html">AA13</a> and <a href="50892.html">C6CC</a>, this produces the well-known rule: on entering the forest, wait twice and move on the third turn. The timer is set to 4 on entry; the turn of entry leaves it at 3, the two waits take it to 2 and then 1 (the tick routine is happy each time because Bilbo is still there), and the move takes it to 0 with Bilbo already out of the forest. Wait a third time and the timer expires with Bilbo still there; move sooner and the tick routine sees him gone while the timer is still running.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43566"></span>AA2E</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="1">Is Bilbo in room 2 or room 3?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43569"></span>AA31</td>
+<td class="instruction">CP $02</td>
+<td class="comment-1" rowspan="1">Is it room 2?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43571"></span>AA33</td>
+<td class="instruction">JR Z,$AA38</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="43566.html#43576">AA38</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43573"></span>AA35</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1">Is it room 3?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43575"></span>AA37</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Return if no</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43576"></span>AA38</td>
+<td class="instruction">LD HL,$B203</td>
+<td class="comment-1" rowspan="1">Yes: eyes...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43579"></span>AA3B</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the message at HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="43582"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="43539.html">AA13</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43582"></span>AA3E</td>
+<td class="instruction">LD HL,$B211</td>
+<td class="comment-1" rowspan="1">...sting...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43585"></span>AA41</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the message at HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43588"></span>AA44</td>
+<td class="instruction">JP <a href="36924.html">$903C</a></td>
+<td class="comment-1" rowspan="1">...and death</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="43539.html">AA13</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43566">Map</a></td>
+<td class="next">
+Next: <a href="43591.html">AA47</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

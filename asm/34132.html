@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8554</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34022.html">84E6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34132">Map</a></td>
+<td class="next">
+Next: <a href="34153.html">8569</a>
+</td>
+</tr>
+</table>
+<div class="description">8554: Copy an object's or a room's words</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If B is not $FF, copies the six bytes of words (noun and two adjectives) of object B (or of room B, if A is non-zero) to DE.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34132"></span>8554</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Was there actually no object given at all ($FF)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34133"></span>8555</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">If so, there is nothing to copy</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34134"></span>8556</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Restore B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34135"></span>8557</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="3">Is the thing being named actually a room, rather than an object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34136"></span>8558</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34137"></span>8559</td>
+<td class="instruction">JR Z,$8560</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34139"></span>855B</td>
+<td class="instruction">CALL <a href="29132.html">$71CC</a></td>
+<td class="comment-1" rowspan="2">An object: HL = its own words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34142"></span>855E</td>
+<td class="instruction">JR $8563</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34144"></span>8560</td>
+<td class="instruction">CALL <a href="29145.html">$71D9</a></td>
+<td class="comment-1" rowspan="1">A room: HL = its own name words</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34147"></span>8563</td>
+<td class="instruction">LD BC,$0006</td>
+<td class="comment-1" rowspan="3">Copy all 6 bytes - the noun and its two adjectives</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34150"></span>8566</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34152"></span>8568</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34022.html">84E6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34132">Map</a></td>
+<td class="next">
+Next: <a href="34153.html">8569</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

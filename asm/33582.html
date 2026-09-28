@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at 832E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33554.html">8312</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33582">Map</a></td>
+<td class="next">
+Next: <a href="33617.html">8351</a>
+</td>
+</tr>
+</table>
+<div class="description">832E: Command execution work area</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by <a href="33703.html">83A7</a> and the routines after it while a command is being matched to objects. The first 17 bytes are cleared by <a href="33690.html">839A</a> for each command.
+</div>
+<div class="paragraph">
+<ul class="">
+<li>$832E, $832F: flags for the target and the instrument (bit 0: a noun was given; bit 1: a matching object has been found)</li>
+<li>$8330-$8332: counts of candidate objects and of those for which the action would work</li>
+<li>$8333-$8338 and $8339-$833E: the noun and adjectives given for the target and for the instrument</li>
+<li>$833F, $8341: where the search for the target and instrument has got to</li>
+<li>$8343: the ALL flag of the frame</li>
+<li>$8344: set when only one candidate is wanted</li>
+<li>$8345, $8346: frame offsets of the target and instrument phrases</li>
+<li>$8347, $8348: the candidate target and instrument</li>
+<li>$8349-$834E: the verb, particle and preposition used to find the action</li>
+<li>$834F: the action table entry</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33582"></span>832E</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33590"></span>8336</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33598"></span>833E</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33606"></span>8346</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$00,$00,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="33614"></span>834E</td>
+<td class="instruction">DEFB $00,$00,$00</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33554.html">8312</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33582">Map</a></td>
+<td class="next">
+Next: <a href="33617.html">8351</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

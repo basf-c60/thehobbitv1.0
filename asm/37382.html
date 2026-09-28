@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9206</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37305.html">91B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37382">Map</a></td>
+<td class="next">
+Next: <a href="37458.html">9252</a>
+</td>
+</tr>
+</table>
+<div class="description">9206: EAT and DRINK</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Eating food makes the actor stronger: 10 is added to their strength (byte 5 of their record). If the target is inside a container (for example a drink in a bottle), the container's 'full' flag (bit 2) is cleared and the actor gains only 1. The food or drink then vanishes: its holder is set to $FF and all its locations to 0.
+</div>
+<div class="paragraph">
+But there is a limit. If the new strength would be 128 or more, the game prints 'his foul gluttony has killed him' ('your foul gluttony has killed you' for Bilbo), and the actor dies (<a href="38621.html">96DD</a>). Bilbo starts with strength 64, so the seventh helping of food is fatal.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37382"></span>9206</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: eating and drinking always work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37385"></span>9209</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the food or drink's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37389"></span>920D</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Is it lying loose, or inside something (a bottle, say)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37392"></span>9210</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37394"></span>9212</td>
+<td class="instruction">JR Z,$921F</td>
+<td class="comment-1" rowspan="1">Loose: skip the container step below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37396"></span>9214</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">Inside something: IX = that container's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37399"></span>9217</td>
+<td class="instruction">RES 2,(IX+$07)</td>
+<td class="comment-1" rowspan="1">It is no longer full</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37403"></span>921B</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Drinking from a container only gives 1 point of strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37405"></span>921D</td>
+<td class="instruction">JR $9224</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="37407"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="43074.html">A842</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37407"></span>921F</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">(Reached only when the action is genuinely happening, so this always passes straight through)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37410"></span>9222</td>
+<td class="instruction">LD A,$0A</td>
+<td class="comment-1" rowspan="1">Eating or drinking on its own gives 10 points of strength</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37412"></span>9224</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37416"></span>9228</td>
+<td class="instruction">ADD A,(IX+$05)</td>
+<td class="comment-1" rowspan="1">Add the gain to the actor's current strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37419"></span>922B</td>
+<td class="instruction">CP $80</td>
+<td class="comment-1" rowspan="1">Would that take strength to 128 or more?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37421"></span>922D</td>
+<td class="instruction">JR NC,$9246</td>
+<td class="comment-1" rowspan="1">Yes: the meal proves fatal (see below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37423"></span>922F</td>
+<td class="instruction">LD (IX+$05),A</td>
+<td class="comment-1" rowspan="1">No: store the new, higher strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37426"></span>9232</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the food or drink's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37430"></span>9236</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">It is held by nobody now...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37434"></span>923A</td>
+<td class="instruction">LD B,(IX+$00)</td>
+<td class="comment-1" rowspan="1">...B = how many locations it has (normally 1)...</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37437"></span>923D</td>
+<td class="instruction">LD (IX+$10),$00</td>
+<td class="comment-1" rowspan="4">...and each of those locations becomes 0: it has vanished entirely</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37441"></span>9241</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37443"></span>9243</td>
+<td class="instruction">DJNZ $923D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37445"></span>9245</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37446"></span>9246</td>
+<td class="instruction">LD HL,$B038</td>
+<td class="comment-1" rowspan="2">"your foul gluttony has killed you."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37449"></span>9249</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37452"></span>924C</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="1">A = the actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37455"></span>924F</td>
+<td class="instruction">JP <a href="38621.html">$96DD</a></td>
+<td class="comment-1" rowspan="1">The actor dies</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37305.html">91B9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37382">Map</a></td>
+<td class="next">
+Next: <a href="37458.html">9252</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

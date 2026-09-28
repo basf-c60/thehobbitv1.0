@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 72D4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29386.html">72CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29396">Map</a></td>
+<td class="next">
+Next: <a href="29495.html">7337</a>
+</td>
+</tr>
+</table>
+<div class="description">72D4: Print a message (message bytecode interpreter)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Almost everything the game says is printed by this routine, which interprets a compact message 'bytecode' starting at the address in HL. Messages are not stored as ASCII; they are sequences of dictionary references and control codes, which is how The Hobbit fits so much text into 48K.
+</div>
+<div class="paragraph">
+The entry at $72D4 saves DE, IX and A (restored at the end, $7352) so callers do not lose them. If the command is only being tried ($B5EB is 0) the flag $B5EC is cleared.
+</div>
+<div class="paragraph">
+The loop at $72EB fetches a byte and decides what it is:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>$80-$FF: the first byte of a two-byte dictionary reference, high byte first. The low nibble of the first byte and all of the second give the word's offset from <a href="24576.html">6000</a>; the three remaining flag bits (bits 4-6) choose an ending. Flag values 2, 3 and 6 mean 'this is the last word of the message': 2 just stops, 3 adds a full stop and a new line, 6 adds a new line (<a href="29503.html">733F</a>). Other values are passed on to <a href="29880.html">74B8</a> as printing flags (for example 'add an S').</li>
+<li>$60-$7F: one of the 32 most common words, looked up in <a href="44081.html">AC31</a> by <a href="29834.html">748A</a>.</li>
+<li>$20-$5F: a literal character, printed by <a href="29370.html">72BA</a>.</li>
+<li>$00-$1F: a control code, dispatched through the table at <a href="29324.html">728C</a>.</li>
+</ul>
+</div>
+<div class="paragraph">
+Control codes below $14 are called as subroutines. A handler that returns with Z set lets the interpreter move on to the next byte; one that returns with Z reset asks it to print the dictionary word now in DE (so a handler can choose a word such as HIS or YOUR and have it printed). Codes $14 and above end the message.
+</div>
+<div class="paragraph">
+Several control codes take an extra parameter from the stack: the caller pushes an object address or a word before calling the interpreter, and the handler removes it (see <a href="29534.html">735E</a>).
+</div>
+<div class="paragraph">
+The same interpreter runs the little scripts attached to rooms and objects, which is why the room and object tables contain what look like fragments of messages.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Address of the message bytecode</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29396"></span>72D4</td>
+<td class="instruction">LD ($70D4),DE</td>
+<td class="comment-1" rowspan="1">Store DE at $70D4</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29400"></span>72D8</td>
+<td class="instruction">LD ($70D7),IX</td>
+<td class="comment-1" rowspan="1">Store IX at $70D7</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29404"></span>72DC</td>
+<td class="instruction">LD ($70D3),A</td>
+<td class="comment-1" rowspan="1">Store A at $70D3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29407"></span>72DF</td>
+<td class="instruction">LD A,($B5EB)</td>
+<td class="comment-1" rowspan="1">A = the "really do it" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29410"></span>72E2</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="1">Is A zero?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29411"></span>72E3</td>
+<td class="instruction">JR NZ,$72E8</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="29396.html#29416">72E8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29413"></span>72E5</td>
+<td class="instruction">LD ($B5EC),A</td>
+<td class="comment-1" rowspan="1">Store A in the "it would work" flag</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29416"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29655.html">73D7</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29416"></span>72E8</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29417"></span>72E9</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore IX</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29419"></span>72EB</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = (IX+0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29422"></span>72EE</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="1">Bit 7 set: a dictionary word reference</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29424"></span>72F0</td>
+<td class="instruction">JR Z,$730F</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="29396.html#29455">730F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29426"></span>72F2</td>
+<td class="instruction">AND $7F</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $7F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29428"></span>72F4</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">D = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29429"></span>72F5</td>
+<td class="instruction">LD E,(IX+$01)</td>
+<td class="comment-1" rowspan="1">E = (IX+1)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29432"></span>72F8</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increment IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29434"></span>72FA</td>
+<td class="instruction">AND $F0</td>
+<td class="comment-1" rowspan="1">Flag values 3, 2 and 6 end the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29436"></span>72FC</td>
+<td class="instruction">CP $30</td>
+<td class="comment-1" rowspan="1">Is it "0"?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29438"></span>72FE</td>
+<td class="instruction">JR Z,<a href="29503.html">$733F</a></td>
+<td class="comment-1" rowspan="1">If yes, go to Print the last word of a message and finish (<a href="29503.html">733F</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29440"></span>7300</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">Is it " "?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29442"></span>7302</td>
+<td class="instruction">JR Z,<a href="29503.html">$733F</a></td>
+<td class="comment-1" rowspan="1">If yes, go to Print the last word of a message and finish (<a href="29503.html">733F</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29444"></span>7304</td>
+<td class="instruction">CP $60</td>
+<td class="comment-1" rowspan="1">Is it "`"?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29446"></span>7306</td>
+<td class="instruction">JR Z,<a href="29503.html">$733F</a></td>
+<td class="comment-1" rowspan="1">If yes, go to Print the last word of a message and finish (<a href="29503.html">733F</a>)</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29448"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="29834.html">748A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29448"></span>7308</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">Print an ordinary dictionary word</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29451"></span>730B</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Increment IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29453"></span>730D</td>
+<td class="instruction">JR $72EB</td>
+<td class="comment-1" rowspan="1">Continue at <a href="29396.html#29419">72EB</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="29455"></span>730F</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">Otherwise: control code, abbreviation or literal character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29457"></span>7311</td>
+<td class="instruction">JR C,$731D</td>
+<td class="comment-1" rowspan="1">If A &lt; 32, go to <a href="29396.html#29469">731D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29459"></span>7313</td>
+<td class="instruction">CP $60</td>
+<td class="comment-1" rowspan="1">Is it "`"?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29461"></span>7315</td>
+<td class="instruction">JP NC,<a href="29834.html">$748A</a></td>
+<td class="comment-1" rowspan="1">$60-$7F: one-byte abbreviation</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29464"></span>7318</td>
+<td class="instruction">CALL <a href="29370.html">$72BA</a></td>
+<td class="comment-1" rowspan="1">Call: Print a character from a message (<a href="29370.html">72BA</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29467"></span>731B</td>
+<td class="instruction">JR $730B</td>
+<td class="comment-1" rowspan="1">Continue at <a href="29396.html#29451">730B</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="29469"></span>731D</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29470"></span>731E</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">E = A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29471"></span>731F</td>
+<td class="instruction">LD D,$00</td>
+<td class="comment-1" rowspan="1">D = 0</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29473"></span>7321</td>
+<td class="instruction">LD HL,$728C</td>
+<td class="comment-1" rowspan="1">$00-$1F: index into the control-code jump table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29476"></span>7324</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Add HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29477"></span>7325</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Add HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29478"></span>7326</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="1">E = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29479"></span>7327</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29480"></span>7328</td>
+<td class="instruction">LD D,(HL)</td>
+<td class="comment-1" rowspan="1">D = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29481"></span>7329</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">Swap DE and HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29482"></span>732A</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="1">Restore DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29483"></span>732B</td>
+<td class="instruction">CP $14</td>
+<td class="comment-1" rowspan="1">Codes $14 and above end the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29485"></span>732D</td>
+<td class="instruction">JR NC,$7336</td>
+<td class="comment-1" rowspan="1">If A &gt;= 20, go to <a href="29396.html#29494">7336</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29487"></span>732F</td>
+<td class="instruction">CALL $7336</td>
+<td class="comment-1" rowspan="1">Call the handler; Z set means carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29490"></span>7332</td>
+<td class="instruction">JR Z,$730B</td>
+<td class="comment-1" rowspan="1">If the routine returned with Z set, go to <a href="29396.html#29451">730B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29492"></span>7334</td>
+<td class="instruction">JR $7308</td>
+<td class="comment-1" rowspan="1">Z reset: print the word in DE, then carry on</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29494"></span>7336</td>
+<td class="instruction">JP (HL)</td>
+<td class="comment-1" rowspan="1">Jump to the address in HL</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29386.html">72CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29396">Map</a></td>
+<td class="next">
+Next: <a href="29495.html">7337</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

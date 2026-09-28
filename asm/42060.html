@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A44C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42051.html">A443</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42060">Map</a></td>
+<td class="next">
+Next: <a href="42077.html">A45D</a>
+</td>
+</tr>
+</table>
+<div class="description">A44C: Character routine: greet Bilbo</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the character is in the same room as Bilbo, says 'hello'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42060"></span>A44C</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="1">A = the room the character started this turn in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42063"></span>A44F</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is that the room Bilbo is in?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42066"></span>A452</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42067"></span>A453</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42068"></span>A454</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42071"></span>A457</td>
+<td class="instruction">LD HL,$AF51</td>
+<td class="comment-1" rowspan="1">"hello"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42074"></span>A45A</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Say it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42051.html">A443</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42060">Map</a></td>
+<td class="next">
+Next: <a href="42077.html">A45D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

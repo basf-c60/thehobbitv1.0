@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9ADC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39643.html">9ADB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39644">Map</a></td>
+<td class="next">
+Next: <a href="39662.html">9AEE</a>
+</td>
+</tr>
+</table>
+<div class="description">9ADC: Find an object's handler for an action</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the list of action handlers at the end of the object record at IX (after the header, the four word slots and its location bytes; see <a href="49163.html">C00B</a>) for action A, using <a href="40210.html">9D12</a>. As with <a href="40210.html">9D12</a>, the found/not-found sense is NZ/carry set = found, Z set = not found - the opposite of what the names Z and 'zero' suggest. Returns IX at the matching entry (or the list's $FF terminator).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Action</td>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Object record</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">NZ or carry set if the object has its own handler for the action; Z set if not</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39644"></span>9ADC</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">Save DE for the caller</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39645"></span>9ADD</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">D = the action we are looking for a handler for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39646"></span>9ADE</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the number of locations this object has (1 for most things, 2 for a door)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39649"></span>9AE1</td>
+<td class="instruction">ADD A,$10</td>
+<td class="comment-1" rowspan="1">...plus 16, the size of the record's fixed part: this gives the offset, from the start of the record, to where its own list of action handlers begins</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39651"></span>9AE3</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">E = that offset</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39652"></span>9AE4</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="2">D = the action again...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39653"></span>9AE5</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39655"></span>9AE7</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">IX = the start of this object's own list of handlers</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39657"></span>9AE9</td>
+<td class="instruction">CALL <a href="40210.html">$9D12</a></td>
+<td class="comment-1" rowspan="1">Search that list for the action (see <a href="40210.html">9D12</a>: NZ or carry set means found)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39660"></span>9AEC</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the caller's DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39661"></span>9AED</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39643.html">9ADB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39644">Map</a></td>
+<td class="next">
+Next: <a href="39662.html">9AEE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

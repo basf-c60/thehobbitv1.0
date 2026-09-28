@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8E34</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36121.html">8D19</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36404">Map</a></td>
+<td class="next">
+Next: <a href="36430.html">8E4E</a>
+</td>
+</tr>
+</table>
+<div class="description">8E34: Is an object shut inside something?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Follows the holders of object A upwards while they are open. Returns with Z set if it reaches a loose object (so the object is out in the open) and Z reset if it meets a closed container.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36404"></span>8E34</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36406"></span>8E36</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = object A's own record</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36409"></span>8E39</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = whoever is holding it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36412"></span>8E3C</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="2">Held by nobody at all: it is out in the open</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36414"></span>8E3E</td>
+<td class="instruction">JR Z,$8E4B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36416"></span>8E40</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">Held by something: IX = that holder's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36419"></span>8E43</td>
+<td class="instruction">BIT 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the holder open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36423"></span>8E47</td>
+<td class="instruction">JR NZ,$8E39</td>
+<td class="comment-1" rowspan="1">Yes: look inside IT in turn (and see who holds that)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36425"></span>8E49</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">No (shut away): make A non-zero</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36427"></span>8E4B</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="2">Restore IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36429"></span>8E4D</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36121.html">8D19</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36404">Map</a></td>
+<td class="next">
+Next: <a href="36430.html">8E4E</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

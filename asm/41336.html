@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A178</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41332.html">A174</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41336">Map</a></td>
+<td class="next">
+Next: <a href="41444.html">A1E4</a>
+</td>
+</tr>
+</table>
+<div class="description">A178: TIE TO</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Only the rope can be tied: TIE THE ROPE TO X is turned round into TIE X TO THE ROPE ($A1DE, <a href="40595.html">9E93</a>). The thing tied must not be something that pours, must be empty ('the rope is already tied'), and must not be a living character (a dead one is fine). It then becomes held by the rope.
+</div>
+<div class="paragraph">
+If the actor could pick the thing up, the rope stays in the actor's hands with the thing hanging from it; otherwise the rope is left lying, tied to it. Taking or dropping the rope takes or drops whatever is tied to it (<a href="36040.html">8CC8</a>, <a href="35909.html">8C45</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41336"></span>A178</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is the TARGET actually the rope (object 18)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41339"></span>A17B</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41341"></span>A17D</td>
+<td class="instruction">JR Z,$A1DE</td>
+<td class="comment-1" rowspan="1">Yes: "TIE THE ROPE TO X" - turn it round into "TIE X TO THE ROPE" (below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41343"></span>A17F</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">No: is the INSTRUMENT the rope instead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41346"></span>A182</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41348"></span>A184</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Neither: fail with the usual message - only the rope can be tied</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41351"></span>A187</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record (the thing being tied)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41355"></span>A18B</td>
+<td class="instruction">BIT 1,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Does it pour (is it a liquid)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41359"></span>A18F</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Yes: cannot tie up a liquid</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41362"></span>A192</td>
+<td class="instruction">CALL <a href="40172.html">$9CEC</a></td>
+<td class="comment-1" rowspan="2">Does it already hold anything visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41365"></span>A195</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41367"></span>A197</td>
+<td class="instruction">LD HL,$AF6F</td>
+<td class="comment-1" rowspan="1">"the X is already tied."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41370"></span>A19A</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Already holding something (i.e. already tied to something): say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41373"></span>A19D</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it dead (a corpse)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41377"></span>A1A1</td>
+<td class="instruction">JR NZ,$A1AA</td>
+<td class="comment-1" rowspan="1">Yes: a dead character may still be tied up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41379"></span>A1A3</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">No: is it a LIVING character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41383"></span>A1A7</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Yes: cannot tie up someone alive</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41386"></span>A1AA</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41389"></span>A1AD</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the rope's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41393"></span>A1B1</td>
+<td class="instruction">CALL <a href="39885.html">$9BCD</a></td>
+<td class="comment-1" rowspan="1">Is the actor already holding the thing being tied?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41396"></span>A1B4</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="2">It becomes held by the rope, either way...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41399"></span>A1B7</td>
+<td class="instruction">LD (IX+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41402"></span>A1BA</td>
+<td class="instruction">JR C,$A1D2</td>
+<td class="comment-1" rowspan="1">If the actor already held it, skip straight to deciding who holds the rope itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41404"></span>A1BC</td>
+<td class="instruction">SUB A</td>
+<td class="comment-1" rowspan="3">Otherwise: try to pick it up first (as an ordinary TAKE), but only as a trial for now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41405"></span>A1BD</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41408"></span>A1C0</td>
+<td class="instruction">CALL <a href="36040.html">$8CC8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41411"></span>A1C3</td>
+<td class="instruction">LD A,($B5EC)</td>
+<td class="comment-1" rowspan="2">Did the actor manage to pick it up?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41414"></span>A1C6</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41416"></span>A1C8</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">Either way, this really is happening now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41418"></span>A1CA</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41421"></span>A1CD</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41424"></span>A1D0</td>
+<td class="instruction">JR Z,$A1D9</td>
+<td class="comment-1" rowspan="1">Could not pick it up: leave the rope where it is, below</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41426"></span>A1D2</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="3">Could pick it up: the rope stays in the actor's own hands</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41429"></span>A1D5</td>
+<td class="instruction">LD (IY+$01),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41432"></span>A1D8</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41433"></span>A1D9</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="2">Left lying: the rope is held by nobody, tied to whatever is too heavy to lift</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41437"></span>A1DD</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41438"></span>A1DE</td>
+<td class="instruction">LD HL,$A178</td>
+<td class="comment-1" rowspan="1">"TIE THE ROPE TO X": run this same handler again...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41441"></span>A1E1</td>
+<td class="instruction">JP <a href="40595.html">$9E93</a></td>
+<td class="comment-1" rowspan="1">...with target and instrument swapped, so it becomes "TIE X TO THE ROPE"</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41332.html">A174</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41336">Map</a></td>
+<td class="next">
+Next: <a href="41444.html">A1E4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

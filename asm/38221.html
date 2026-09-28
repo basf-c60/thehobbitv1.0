@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 954D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38207.html">953F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38221">Map</a></td>
+<td class="next">
+Next: <a href="38281.html">9589</a>
+</td>
+</tr>
+</table>
+<div class="description">954D: Is it too dark for Bilbo to see?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with the carry flag set (and HL pointing at the message 'it is dark.') if the player is acting and cannot see. Characters are never affected: they can always see.
+</div>
+<div class="paragraph">
+Bilbo can see if he is inside something (<a href="40392.html">9DC8</a>) or if his room is lit (bit 7 of the first byte of its record). Otherwise he can only see if the short strong sword (object 14, record at <a href="49163.html">C00B</a> + $1E9 = $C1F4) is with him (<a href="40326.html">9D86</a>) and its flags have bit 2 set, bit 3 (broken) clear and bit 4 ('on') set. In other words, the sword is the game's only lamp: it glows, as Sting does in the book. The sword starts with these bits set, so carrying it lights up every dark place.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Carry set if it is too dark</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">"it is dark."</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38221"></span>954D</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the current actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38224"></span>9550</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38225"></span>9551</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No (a character): they can always see - return with no carry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38226"></span>9552</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Yes: save IX and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38228"></span>9554</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38229"></span>9555</td>
+<td class="instruction">LD IX,$C00B</td>
+<td class="comment-1" rowspan="1">IX = Bilbo's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38233"></span>9559</td>
+<td class="instruction">CALL <a href="40392.html">$9DC8</a></td>
+<td class="comment-1" rowspan="1">Is he shut inside something closed, or out in the open (or inside something open)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38236"></span>955C</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">($FF, "loose", becomes 0 here)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38237"></span>955D</td>
+<td class="instruction">JR NZ,$9568</td>
+<td class="comment-1" rowspan="1">Shut away: check the sword instead, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38239"></span>955F</td>
+<td class="instruction">CALL <a href="40076.html">$9C8C</a></td>
+<td class="comment-1" rowspan="1">Out in the open: IX = his own room's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38242"></span>9562</td>
+<td class="instruction">BIT 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Is the room lit?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38246"></span>9566</td>
+<td class="instruction">JR NZ,$9582</td>
+<td class="comment-1" rowspan="1">Yes: he can see (no carry)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38248"></span>9568</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">No, or shut away: save IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38250"></span>956A</td>
+<td class="instruction">LD IY,$C1F4</td>
+<td class="comment-1" rowspan="1">IY = the short strong sword's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38254"></span>956E</td>
+<td class="instruction">CALL <a href="40326.html">$9D86</a></td>
+<td class="comment-1" rowspan="1">Is the sword near Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38257"></span>9571</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38259"></span>9573</td>
+<td class="instruction">JR Z,$957E</td>
+<td class="comment-1" rowspan="1">It is not: dark, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38261"></span>9575</td>
+<td class="instruction">LD A,($C1FB)</td>
+<td class="comment-1" rowspan="1">It is near: A = the sword's own flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38264"></span>9578</td>
+<td class="instruction">XOR $F7</td>
+<td class="comment-1" rowspan="1">Flip every flag bit except "broken"...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38266"></span>957A</td>
+<td class="instruction">AND $1C</td>
+<td class="comment-1" rowspan="1">...then keep just "full", "broken" and "on": zero here means full=1, broken=0, on=1 - the sword is glowing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38268"></span>957C</td>
+<td class="instruction">JR Z,$9586</td>
+<td class="comment-1" rowspan="1">If so, he can see</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38270"></span>957E</td>
+<td class="instruction">LD HL,$AD12</td>
+<td class="comment-1" rowspan="1">"it is dark."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38273"></span>9581</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="1">Set the carry flag: it is too dark</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38274"></span>9582</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Restore BC and IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38275"></span>9583</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38277"></span>9585</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38278"></span>9586</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="2">Clear the carry flag: he can see after all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38279"></span>9587</td>
+<td class="instruction">JR $9582</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="38207.html">953F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38221">Map</a></td>
+<td class="next">
+Next: <a href="38281.html">9589</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

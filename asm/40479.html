@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9E1F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40464.html">9E10</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40479">Map</a></td>
+<td class="next">
+Next: <a href="40529.html">9E51</a>
+</td>
+</tr>
+</table>
+<div class="description">9E1F: Print a noun with its adjectives</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+IY points to a word list: noun, then up to two adjectives. The article is printed first (<a href="29750.html">7436</a>, unless $B5F4 is set), then the adjectives, and then the noun (with an article if $B5F4 is set). So 'curious map' comes out as 'a curious map'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40479"></span>9E1F</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="2">Save AF and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40480"></span>9E20</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40481"></span>9E21</td>
+<td class="instruction">LD A,($B5F4)</td>
+<td class="comment-1" rowspan="2">Does the caller want an article before the whole phrase (rather than before each adjective)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40484"></span>9E24</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40486"></span>9E26</td>
+<td class="instruction">JR NZ,$9E43</td>
+<td class="comment-1" rowspan="1">Yes: skip straight to printing the noun with its article</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40488"></span>9E28</td>
+<td class="instruction">LD D,(IY+$01)</td>
+<td class="comment-1" rowspan="2">No: DE = the first adjective, if there is one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40491"></span>9E2B</td>
+<td class="instruction">LD E,(IY+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40494"></span>9E2E</td>
+<td class="instruction">CALL <a href="29750.html">$7436</a></td>
+<td class="comment-1" rowspan="1">Print its article ("a curious ...")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40497"></span>9E31</td>
+<td class="instruction">LD E,(IY+$02)</td>
+<td class="comment-1" rowspan="2">DE = the first adjective word itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40500"></span>9E34</td>
+<td class="instruction">LD D,(IY+$03)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40503"></span>9E37</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">Print it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40506"></span>9E3A</td>
+<td class="instruction">LD E,(IY+$04)</td>
+<td class="comment-1" rowspan="2">DE = the second adjective, if there is one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40509"></span>9E3D</td>
+<td class="instruction">LD D,(IY+$05)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40512"></span>9E40</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">Print it (an empty slot simply prints nothing)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40515"></span>9E43</td>
+<td class="instruction">LD E,(IY+$00)</td>
+<td class="comment-1" rowspan="2">DE = the noun</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40518"></span>9E46</td>
+<td class="instruction">LD D,(IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40521"></span>9E49</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="2">Is there actually a noun here at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40522"></span>9E4A</td>
+<td class="instruction">OR E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40523"></span>9E4B</td>
+<td class="instruction">CALL NZ,<a href="29807.html">$746F</a></td>
+<td class="comment-1" rowspan="1">If so, print it (with an article too, if the caller asked for one before the whole phrase)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40526"></span>9E4E</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="3">Restore DE and AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40527"></span>9E4F</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40528"></span>9E50</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40464.html">9E10</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40479">Map</a></td>
+<td class="next">
+Next: <a href="40529.html">9E51</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

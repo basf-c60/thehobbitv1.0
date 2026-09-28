@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A0F8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41182.html">A0DE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41208">Map</a></td>
+<td class="next">
+Next: <a href="41216.html">A100</a>
+</td>
+</tr>
+</table>
+<div class="description">A0F8: Is the object alive?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z set if the object at IX is a living thing (bit 6 of its flags set) and not dead (bit 3 clear). Used by SHOOT (<a href="36832.html">8FE0</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41208"></span>A0F8</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="1">A = the object's own flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41211"></span>A0FB</td>
+<td class="instruction">AND $48</td>
+<td class="comment-1" rowspan="1">Keep just "alive" and "dead"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41213"></span>A0FD</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="1">Alive and not dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41215"></span>A0FF</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z reflects the answer</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41182.html">A0DE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41208">Map</a></td>
+<td class="next">
+Next: <a href="41216.html">A100</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

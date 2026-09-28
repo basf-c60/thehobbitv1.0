@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A4DB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42186.html">A4CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42203">Map</a></td>
+<td class="next">
+Next: <a href="42228.html">A4F4</a>
+</td>
+</tr>
+</table>
+<div class="description">A4DB: Handler for the trap door: the barrel escape</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Chained after the trap door's own THROW THROUGH handler (action 44, <a href="37892.html">9404</a>), not after OPEN as I first assumed - it is throwing the barrel through the door, not merely opening the door, that starts the escape. If the object just thrown through is the barrel (object 19) and it has landed in room 33 (the forest river below the cellar), timer 0 (<a href="51571.html">C973</a>) is set to 2. Two turns later <a href="42228.html">A4F4</a> floats the barrel away.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42203"></span>A4DB</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">Is the object just thrown through the door the barrel (object 19)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42206"></span>A4DE</td>
+<td class="instruction">CP $13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42208"></span>A4E0</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: this handler does nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42209"></span>A4E1</td>
+<td class="instruction">CALL <a href="38749.html">$975D</a></td>
+<td class="comment-1" rowspan="1">Only if this is really happening (chained after the trap door's own THROW THROUGH, <a href="37892.html">9404</a>, which has already moved the barrel)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42212"></span>A4E4</td>
+<td class="instruction">LD IX,$C2DD</td>
+<td class="comment-1" rowspan="1">IX = the barrel's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42216"></span>A4E8</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="2">Did it land in room 33, the forest river below?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42219"></span>A4EB</td>
+<td class="instruction">CP $21</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42221"></span>A4ED</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42222"></span>A4EE</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="3">Yes: start timer 0 with a count of 2</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42224"></span>A4F0</td>
+<td class="instruction">LD ($C974),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42227"></span>A4F3</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42186.html">A4CA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42203">Map</a></td>
+<td class="next">
+Next: <a href="42228.html">A4F4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

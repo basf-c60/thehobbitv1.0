@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A81A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42986.html">A7EA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43034">Map</a></td>
+<td class="next">
+Next: <a href="43074.html">A842</a>
+</td>
+</tr>
+</table>
+<div class="description">A81A: Character routine: Gollum mutters</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Gollum is in Bilbo's room: usually, if Gollum still has the golden ring (object 16), 'my birthday present, how did we lose it. my precious'; otherwise 'what has it got in its pocketses?'. The test at $A82A only rarely (a random 8) says the pocketses line regardless.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="43034"></span>A81A</td>
+<td class="instruction">LD A,($C3B0)</td>
+<td class="comment-1" rowspan="1">A = Gollum's own location</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43037"></span>A81D</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43040"></span>A820</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43041"></span>A821</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43042"></span>A822</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43045"></span>A825</td>
+<td class="instruction">LD HL,$B1CB</td>
+<td class="comment-1" rowspan="1">"what has it got in its pocketses?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43048"></span>A828</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43050"></span>A82A</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="43053"></span>A82D</td>
+<td class="instruction">JP NC,<a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Is it negative (the rare, skewed case)? If so, say that regardless</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43056"></span>A830</td>
+<td class="instruction">LD IX,$C209</td>
+<td class="comment-1" rowspan="1">Otherwise: IX = the golden ring's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43060"></span>A834</td>
+<td class="instruction">LD A,$44</td>
+<td class="comment-1" rowspan="2">Does Gollum (object 68) still hold it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43062"></span>A836</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43065"></span>A839</td>
+<td class="instruction">JP Z,<a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Yes: say the "pocketses" line anyway</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43068"></span>A83C</td>
+<td class="instruction">LD HL,$B1D9</td>
+<td class="comment-1" rowspan="1">"my birthday present, how did we lose it. my precious"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="43071"></span>A83F</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">No (he has lost it): say that instead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42986.html">A7EA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#43034">Map</a></td>
+<td class="next">
+Next: <a href="43074.html">A842</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

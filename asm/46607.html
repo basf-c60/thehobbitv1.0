@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Text at B60F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-t">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Messages</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="46539.html">B5CB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#46607">Map</a></td>
+<td class="next">
+Next: <a href="46632.html">B628</a>
+</td>
+</tr>
+</table>
+<div class="description">B60F: Verb endings</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Six 4-byte endings added to verbs by <a href="29880.html">74B8</a> when the subject is not 'you': S, ES, IES, a backspace and IES (the backspace rubs out a final Y: 'carry' becomes 'carries'), D and ING. The rest of the 32 bytes are unused, and are followed by the orders buffer at <a href="46632.html">B628</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46607"></span>B60F</td>
+<td class="instruction">DEFM "s"</td>
+<td class="comment-1" rowspan="1">S</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46608"></span>B610</td>
+<td class="instruction">DEFB $00,$00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="46611"></span>B613</td>
+<td class="instruction">DEFM "e"</td>
+<td class="comment-1" rowspan="2">ES</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46612"></span>B614</td>
+<td class="instruction">DEFM "s"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46613"></span>B615</td>
+<td class="instruction">DEFB $00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="46615"></span>B617</td>
+<td class="instruction">DEFM "i"</td>
+<td class="comment-1" rowspan="3">IES</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46616"></span>B618</td>
+<td class="instruction">DEFM "e"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46617"></span>B619</td>
+<td class="instruction">DEFM "s"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46618"></span>B61A</td>
+<td class="instruction">DEFB $00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="46619"></span>B61B</td>
+<td class="instruction">DEFB $08</td>
+<td class="comment-1" rowspan="1">Backspace</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46620"></span>B61C</td>
+<td class="instruction">DEFM "i"</td>
+<td class="comment-1" rowspan="3">IES</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46621"></span>B61D</td>
+<td class="instruction">DEFM "e"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46622"></span>B61E</td>
+<td class="instruction">DEFM "s"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46623"></span>B61F</td>
+<td class="instruction">DEFM "d"</td>
+<td class="comment-1" rowspan="1">D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46624"></span>B620</td>
+<td class="instruction">DEFB $00,$00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="46627"></span>B623</td>
+<td class="instruction">DEFM "i"</td>
+<td class="comment-1" rowspan="3">ING</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46628"></span>B624</td>
+<td class="instruction">DEFM "n"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46629"></span>B625</td>
+<td class="instruction">DEFM "g"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="46630"></span>B626</td>
+<td class="instruction">DEFB $00,$00</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="46539.html">B5CB</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#46607">Map</a></td>
+<td class="next">
+Next: <a href="46632.html">B628</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

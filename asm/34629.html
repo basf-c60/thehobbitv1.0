@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8745</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34568.html">8708</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34629">Map</a></td>
+<td class="next">
+Next: <a href="34652.html">875C</a>
+</td>
+</tr>
+</table>
+<div class="description">8745: Find the next candidate instrument for which the action works</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+As <a href="34541.html">86ED</a>, for the instrument.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34629"></span>8745</td>
+<td class="instruction">LD HL,$8339</td>
+<td class="comment-1" rowspan="1">HL = the instrument's own collected words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34632"></span>8748</td>
+<td class="instruction">CALL <a href="34490.html">$86BA</a></td>
+<td class="comment-1" rowspan="2">Search for the next object or room that fits them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34635"></span>874B</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34637"></span>874D</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">None left: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34638"></span>874E</td>
+<td class="instruction">LD ($B5DA),A</td>
+<td class="comment-1" rowspan="2">Found one: it becomes the instrument, provisionally</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34641"></span>8751</td>
+<td class="instruction">LD HL,$832F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34644"></span>8754</td>
+<td class="instruction">SET 1,(HL)</td>
+<td class="comment-1" rowspan="1">Remember we are still searching</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34646"></span>8756</td>
+<td class="instruction">CALL <a href="34014.html">$84DE</a></td>
+<td class="comment-1" rowspan="1">Would the whole action work with this instrument?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34649"></span>8759</td>
+<td class="instruction">JR Z,$8745</td>
+<td class="comment-1" rowspan="1">No: try the next candidate</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34651"></span>875B</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Yes: this is a workable candidate</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34568.html">8708</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34629">Map</a></td>
+<td class="next">
+Next: <a href="34652.html">875C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

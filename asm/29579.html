@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 738B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29572.html">7384</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29579">Map</a></td>
+<td class="next">
+Next: <a href="29594.html">739A</a>
+</td>
+</tr>
+</table>
+<div class="description">738B: Message code $04: print a word with an article</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Removes a word from the stack (as <a href="29549.html">736D</a>) and prints it with an article, by setting $B5F4 and calling <a href="29807.html">746F</a>. Returns with Z set.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29579"></span>738B</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Reach past the interpreter's own two return addresses...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29580"></span>738C</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29581"></span>738D</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">...to find the word the caller pushed, lifting it out...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29582"></span>738E</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">...and putting the two return addresses back</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29583"></span>738F</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">DE = that word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29584"></span>7390</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">This time an article is wanted first...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29586"></span>7392</td>
+<td class="instruction">LD ($B5F4),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29589"></span>7395</td>
+<td class="instruction">CALL <a href="29807.html">$746F</a></td>
+<td class="comment-1" rowspan="1">...so print it that way</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29592"></span>7398</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Already printed: tell the interpreter nothing more is needed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29593"></span>7399</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29572.html">7384</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29579">Map</a></td>
+<td class="next">
+Next: <a href="29594.html">739A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

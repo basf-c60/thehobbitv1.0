@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6E46</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28109.html">6DCD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28230">Map</a></td>
+<td class="next">
+Next: <a href="28273.html">6E71</a>
+</td>
+</tr>
+</table>
+<div class="description">6E46: Cursor-key shortcuts</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called by <a href="28109.html">6DCD</a> for the first key of a line only. If the key is one of the four cursor keys, this routine types a complete movement command on its own and ends the line, so that a single key press moves Bilbo. The key codes come from the keyboard tables at <a href="31726.html">7BEE</a> and <a href="31766.html">7C16</a>:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Key</th>
+<th colspan="1" rowspan="1">Code</th>
+<th colspan="1" rowspan="1">Command</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">7 (up)</td>
+<td class="" colspan="1" rowspan="1">$5B</td>
+<td class="" colspan="1" rowspan="1">N</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">6 (down)</td>
+<td class="" colspan="1" rowspan="1">$0A</td>
+<td class="" colspan="1" rowspan="1">S</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">8 (right)</td>
+<td class="" colspan="1" rowspan="1">$09</td>
+<td class="" colspan="1" rowspan="1">E</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">5 (left)</td>
+<td class="" colspan="1" rowspan="1">$08</td>
+<td class="" colspan="1" rowspan="1">W</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+The key works with or without CAPS SHIFT. The letter is stored in the input buffer and echoed, an ENTER ($0D) is stored after it, and the routine returns with A=$0D. The line editor then carries on as if the player had pressed ENTER: it prints the new line, stores a second (harmless) ENTER and finishes the line. So one key press both types and enters the command.
+</div>
+<div class="paragraph">
+For any other key the routine returns with A unchanged and the line editor deals with the key as usual. The code for the left cursor ($08) is also the backspace code; this is why cursor-left only means 'west' as the first key of a line, and means 'delete' afterwards. Cursor right and down later in a line are simply ignored.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Key code</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Current position in the input buffer</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Space left in the buffer</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">$0D if a movement command was typed, otherwise unchanged</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28230"></span>6E46</td>
+<td class="instruction">CP $09</td>
+<td class="comment-1" rowspan="1">Cursor right?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28232"></span>6E48</td>
+<td class="instruction">JR Z,$6E69</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28230.html#28265">6E69</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28234"></span>6E4A</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="1">Cursor left?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28236"></span>6E4C</td>
+<td class="instruction">JR Z,$6E6D</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28230.html#28269">6E6D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28238"></span>6E4E</td>
+<td class="instruction">CP $0A</td>
+<td class="comment-1" rowspan="1">Cursor down?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28240"></span>6E50</td>
+<td class="instruction">JR Z,$6E65</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28230.html#28261">6E65</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28242"></span>6E52</td>
+<td class="instruction">CP $5B</td>
+<td class="comment-1" rowspan="1">Cursor up (code $5B)? If not, return with A unchanged</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28244"></span>6E54</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Return if no</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28245"></span>6E55</td>
+<td class="instruction">LD A,$4E</td>
+<td class="comment-1" rowspan="1">Up: "N"</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28247"></span>6E57</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Store the letter...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28248"></span>6E58</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28249"></span>6E59</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">...and echo it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28252"></span>6E5C</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrement B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28253"></span>6E5D</td>
+<td class="instruction">LD A,$0D</td>
+<td class="comment-1" rowspan="1">Then store an ENTER</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28255"></span>6E5F</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Store A at (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28256"></span>6E60</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28257"></span>6E61</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrement B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28258"></span>6E62</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Return with A=$0D (ENTER)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28260"></span>6E64</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28261"></span>6E65</td>
+<td class="instruction">LD A,$53</td>
+<td class="comment-1" rowspan="1">Down: "S"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28263"></span>6E67</td>
+<td class="instruction">JR $6E57</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28230.html#28247">6E57</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28265"></span>6E69</td>
+<td class="instruction">LD A,$45</td>
+<td class="comment-1" rowspan="1">Right: "E"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28267"></span>6E6B</td>
+<td class="instruction">JR $6E57</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28230.html#28247">6E57</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28269"></span>6E6D</td>
+<td class="instruction">LD A,$57</td>
+<td class="comment-1" rowspan="1">Left: "W"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28271"></span>6E6F</td>
+<td class="instruction">JR $6E57</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28230.html#28247">6E57</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28109.html">6DCD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28230">Map</a></td>
+<td class="next">
+Next: <a href="28273.html">6E71</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

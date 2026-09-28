@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C67D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50719.html">C61F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50813">Map</a></td>
+<td class="next">
+Next: <a href="50835.html">C693</a>
+</td>
+</tr>
+</table>
+<div class="description">C67D: Room-entry handlers</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+3-byte entries: a room number and the address of a routine to call when the player enters that room (see <a href="36121.html">8D19</a>). Terminated by $FF.
+</div>
+<div class="paragraph">
+<ul class="">
+<li>Room 22 ($16, Beorn's house): <a href="50835.html">C693</a> - switches the butler on</li>
+<li>Room 26 ($1A, the place of black spiders): <a href="50849.html">C6A1</a> - starts timer <a href="51571.html#51585">C981</a></li>
+<li>Room 29 ($1D, the deep bog): <a href="50856.html">C6A8</a> - starts timer <a href="51571.html#51599">C98F</a></li>
+<li>Room 33 ($21, the forest river): <a href="50905.html">C6D9</a> - death unless Bilbo is in the barrel</li>
+<li>Room 2 ($02): <a href="50892.html">C6CC</a> - the pale bulbous eyes</li>
+<li>Room 3 ($03): <a href="50892.html">C6CC</a> - the pale bulbous eyes</li>
+<li>Room 32 ($20, the Elvenking's cellar): <a href="50863.html">C6AF</a> - switches the dragon and Bard on, and starts the side door timer</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50813"></span>C67D</td>
+<td class="instruction">DEFB $16,$93,$C6,$1A,$A1,$C6,$1D,$A8</td>
+<td class="comment-1" rowspan="3">Room, handler address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50821"></span>C685</td>
+<td class="instruction">DEFB $C6,$21,$D9,$C6,$02,$CC,$C6,$03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50829"></span>C68D</td>
+<td class="instruction">DEFB $CC,$C6,$20,$AF,$C6</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50834"></span>C692</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End marker</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="50719.html">C61F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50813">Map</a></td>
+<td class="next">
+Next: <a href="50835.html">C693</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at C61F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="49163.html">C00B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50719">Map</a></td>
+<td class="next">
+Next: <a href="50813.html">C67D</a>
+</td>
+</tr>
+</table>
+<div class="description">C61F: Default action handlers</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+3-byte entries: an action number (see <a href="43591.html">AA47</a>) and the routine that carries it out when the object involved has no handler of its own (<a href="37999.html">946F</a>). Terminated by $FF at $C67C.
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Action</th>
+<th colspan="1" rowspan="1">Handler</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">1-10 (movement)</td>
+<td class="" colspan="1" rowspan="1"><a href="36121.html">8D19</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">13 DROP</td>
+<td class="" colspan="1" rowspan="1"><a href="35909.html">8C45</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">15 ATTACK</td>
+<td class="" colspan="1" rowspan="1"><a href="37083.html">90DB</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">19 TAKE, 59 CARRY</td>
+<td class="" colspan="1" rowspan="1"><a href="36040.html">8CC8</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">23 LOOK</td>
+<td class="" colspan="1" rowspan="1"><a href="35885.html">8C2D</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">26 INVENTORY</td>
+<td class="" colspan="1" rowspan="1"><a href="36949.html">9055</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">28 EXAMINE</td>
+<td class="" colspan="1" rowspan="1"><a href="37700.html">9344</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">29 GIVE TO</td>
+<td class="" colspan="1" rowspan="1"><a href="37640.html">9308</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">31 ENTER, 32 GO INTO</td>
+<td class="" colspan="1" rowspan="1"><a href="36663.html">8F37</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">36 RUN</td>
+<td class="" colspan="1" rowspan="1"><a href="36631.html">8F17</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">39 FOLLOW</td>
+<td class="" colspan="1" rowspan="1"><a href="36672.html">8F40</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">42 THROW AT</td>
+<td class="" colspan="1" rowspan="1">$8F5F</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">45 BURN</td>
+<td class="" colspan="1" rowspan="1">$A232</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">46 TIE TO</td>
+<td class="" colspan="1" rowspan="1">$A178</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">48 CAPTURE</td>
+<td class="" colspan="1" rowspan="1"><a href="41750.html">A316</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">51 UNTIE</td>
+<td class="" colspan="1" rowspan="1">$A1E4</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">53 TALK TO</td>
+<td class="" colspan="1" rowspan="1"><a href="36766.html">8F9E</a></td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">55 CLIMB OUT OF</td>
+<td class="" colspan="1" rowspan="1">$A468</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">58 SHOOT</td>
+<td class="" colspan="1" rowspan="1">$8FE0</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">0</td>
+<td class="" colspan="1" rowspan="1"><a href="39517.html">9A5D</a></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Actions with no entry here and no object handler (OPEN, CLOSE, EAT and so on) can only be done to objects that provide a handler; otherwise the game says "I cannot do that".
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="50719"></span>C61F</td>
+<td class="instruction">DEFB $01,$19,$8D,$02,$19,$8D,$03,$19</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50727"></span>C627</td>
+<td class="instruction">DEFB $8D,$04,$19,$8D,$05,$19,$8D,$06</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50735"></span>C62F</td>
+<td class="instruction">DEFB $19,$8D,$07,$19,$8D,$08,$19,$8D</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50743"></span>C637</td>
+<td class="instruction">DEFB $09,$19,$8D,$0A,$19,$8D,$13,$C8</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50751"></span>C63F</td>
+<td class="instruction">DEFB $8C,$0D,$45,$8C,$0F,$DB,$90,$17</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50759"></span>C647</td>
+<td class="instruction">DEFB $2D,$8C,$1A,$55,$90,$1C,$44,$93</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50767"></span>C64F</td>
+<td class="instruction">DEFB $1D,$08,$93,$1F,$37,$8F,$20,$37</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50775"></span>C657</td>
+<td class="instruction">DEFB $8F,$24,$17,$8F,$27,$40,$8F,$2A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50783"></span>C65F</td>
+<td class="instruction">DEFB $5F,$8F,$30,$16,$A3,$00,$5D,$9A</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50791"></span>C667</td>
+<td class="instruction">DEFB $33,$E4,$A1,$2E,$78,$A1,$2D,$32</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50799"></span>C66F</td>
+<td class="instruction">DEFB $A2,$35,$9E,$8F,$3A,$E0,$8F,$3B</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50807"></span>C677</td>
+<td class="instruction">DEFB $C8,$8C,$37,$68,$A4</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50812"></span>C67C</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End marker</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="49163.html">C00B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#50719">Map</a></td>
+<td class="next">
+Next: <a href="50813.html">C67D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

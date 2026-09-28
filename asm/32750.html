@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7FEE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32734.html">7FDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32750">Map</a></td>
+<td class="next">
+Next: <a href="32761.html">7FF9</a>
+</td>
+</tr>
+</table>
+<div class="description">7FEE: Parser: syntax error</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called when a word turns up where it is not allowed. Inside a quotation the word is simply skipped. Otherwise the parser's own return address is discarded and <a href="32761.html">7FF9</a> prints 'what?'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32750"></span>7FEE</td>
+<td class="instruction">CALL <a href="31931.html">$7CBB</a></td>
+<td class="comment-1" rowspan="1">Are we inside a quotation (an order to a character)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32753"></span>7FF1</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: quietly ignore the bad word and let the order carry on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32754"></span>7FF2</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">No: throw away our own return address, since the rest of this line is being abandoned</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="32755"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="32182.html">7DB6</a>, <a href="32251.html">7DFB</a> and <a href="32882.html">8072</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32755"></span>7FF3</td>
+<td class="instruction">CALL <a href="31931.html">$7CBB</a></td>
+<td class="comment-1" rowspan="1">Check again (the same test, just to be sure)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32758"></span>7FF6</td>
+<td class="instruction">JP NZ,<a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">If it now looks like we ARE in a quotation after all, go back into the parser as if nothing had gone wrong; otherwise fall straight into <a href="32761.html">7FF9</a> below and print "what?"</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32734.html">7FDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32750">Map</a></td>
+<td class="next">
+Next: <a href="32761.html">7FF9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

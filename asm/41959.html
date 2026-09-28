@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A3E7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41923.html">A3C3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41959">Map</a></td>
+<td class="next">
+Next: <a href="41984.html">A400</a>
+</td>
+</tr>
+</table>
+<div class="description">A3E7: Handler for the goblins' door: OPEN</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The goblins' door (object 17) can only be opened by someone in the goblins' big cavern (room 16), in other words from the inside; from anywhere else the attempt fails (<a href="40639.html">9EBF</a>). It is then opened as usual (<a href="36984.html">9078</a>) and timer 3 is started, so two turns later it shuts itself (<a href="41984.html">A400</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41959"></span>A3E7</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the actor's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41963"></span>A3EB</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="2">Is the actor in the goblins' big cavern (room 16)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41966"></span>A3EE</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41968"></span>A3F0</td>
+<td class="instruction">JP NZ,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">No: it cannot be opened from this side</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41971"></span>A3F3</td>
+<td class="instruction">CALL <a href="36984.html">$9078</a></td>
+<td class="comment-1" rowspan="1">Open it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41974"></span>A3F6</td>
+<td class="instruction">CALL <a href="38749.html">$975D</a></td>
+<td class="comment-1" rowspan="1">Only if it really happened...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41977"></span>A3F9</td>
+<td class="instruction">LD A,($C988)</td>
+<td class="comment-1" rowspan="3">...start timer 3 (count 2)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41980"></span>A3FC</td>
+<td class="instruction">LD ($C989),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41983"></span>A3FF</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41923.html">A3C3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41959">Map</a></td>
+<td class="next">
+Next: <a href="41984.html">A400</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

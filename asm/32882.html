@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8072</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32875.html">806B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32882">Map</a></td>
+<td class="next">
+Next: <a href="32906.html">808A</a>
+</td>
+</tr>
+</table>
+<div class="description">8072: EXCEPT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+EXCEPT (or BUT) is only allowed straight after ALL ($B609=1). It sets $B609 to 2 and bit 7 of the current frame's verb, so that the command applies to everything except the objects that follow.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32882"></span>8072</td>
+<td class="instruction">LD A,($B609)</td>
+<td class="comment-1" rowspan="2">Is ALL actually in force?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32885"></span>8075</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32887"></span>8077</td>
+<td class="instruction">JP NZ,<a href="32750.html#32755">$7FF3</a></td>
+<td class="comment-1" rowspan="1">No: EXCEPT makes no sense here - syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32890"></span>807A</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="2">Yes: switch to ALL EXCEPT</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32892"></span>807C</td>
+<td class="instruction">LD ($B609),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32895"></span>807F</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="2">Mark the CURRENT frame's verb with the EXCEPT bit...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32898"></span>8082</td>
+<td class="instruction">OR $80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32900"></span>8084</td>
+<td class="instruction">LD (IY+$01),A</td>
+<td class="comment-1" rowspan="1">...so <a href="32364.html">7E6C</a> knows any further noun phrases are exceptions, not extra targets</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32903"></span>8087</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Go back to reading the next word</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32875.html">806B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32882">Map</a></td>
+<td class="next">
+Next: <a href="32906.html">808A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

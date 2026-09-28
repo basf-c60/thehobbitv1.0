@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8895</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34921.html">8869</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34965">Map</a></td>
+<td class="next">
+Next: <a href="34983.html">88A7</a>
+</td>
+</tr>
+</table>
+<div class="description">8895: "I do not know the verb ..."</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Pushes the verb, particle and preposition the player used and prints 'I do not know the verb "..."' ($ACA4): the verb is known, but not with those words (for example 'take through the door').
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34965"></span>8895</td>
+<td class="instruction">LD HL,($834D)</td>
+<td class="comment-1" rowspan="2">Push the second collected preposition...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34968"></span>8898</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34969"></span>8899</td>
+<td class="instruction">LD HL,($834B)</td>
+<td class="comment-1" rowspan="2">...and the first...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34972"></span>889C</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34973"></span>889D</td>
+<td class="instruction">LD HL,($8349)</td>
+<td class="comment-1" rowspan="2">...and the verb itself, as message parameters</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34976"></span>88A0</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34977"></span>88A1</td>
+<td class="instruction">LD HL,$ACA4</td>
+<td class="comment-1" rowspan="1">"I do not know the verb "..."."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34980"></span>88A4</td>
+<td class="instruction">JP <a href="34689.html">$8781</a></td>
+<td class="comment-1" rowspan="1">Print it and give up</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34921.html">8869</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34965">Map</a></td>
+<td class="next">
+Next: <a href="34983.html">88A7</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

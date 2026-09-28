@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A068</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41044.html">A054</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41064">Map</a></td>
+<td class="next">
+Next: <a href="41108.html">A094</a>
+</td>
+</tr>
+</table>
+<div class="description">A068: List the visible exits</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints 'visible exits are :' followed by the direction of every exit that has no door (<a href="41044.html">A054</a>), or nothing at all if there are none.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41064"></span>A068</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41066"></span>A06A</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41068"></span>A06C</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41069"></span>A06D</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41070"></span>A06E</td>
+<td class="instruction">CALL <a href="40926.html">$9FDE</a></td>
+<td class="comment-1" rowspan="1">IX = the room's exits</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41073"></span>A071</td>
+<td class="instruction">CALL <a href="41044.html">$A054</a></td>
+<td class="comment-1" rowspan="1">Find the first exit without a door</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41076"></span>A074</td>
+<td class="instruction">JR Z,$A08D</td>
+<td class="comment-1" rowspan="1">None: print nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41078"></span>A076</td>
+<td class="instruction">LD HL,$AF12</td>
+<td class="comment-1" rowspan="2">"visible exits are :"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41081"></span>A079</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="41084"></span>A07C</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the exit's direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41087"></span>A07F</td>
+<td class="instruction">CALL <a href="40938.html">$9FEA</a></td>
+<td class="comment-1" rowspan="1">DE = its word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41090"></span>A082</td>
+<td class="instruction">CALL <a href="29880.html">$74B8</a></td>
+<td class="comment-1" rowspan="1">Print it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41093"></span>A085</td>
+<td class="instruction">CALL <a href="41044.html">$A054</a></td>
+<td class="comment-1" rowspan="1">Next exit without a door</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41096"></span>A088</td>
+<td class="instruction">JR NZ,$A07C</td>
+<td class="comment-1" rowspan="1">Loop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41098"></span>A08A</td>
+<td class="instruction">CALL <a href="30072.html">$7578</a></td>
+<td class="comment-1" rowspan="6">New line</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41101"></span>A08D</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41102"></span>A08E</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41103"></span>A08F</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41105"></span>A091</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41107"></span>A093</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41044.html">A054</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41064">Map</a></td>
+<td class="next">
+Next: <a href="41108.html">A094</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

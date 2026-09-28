@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7282</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29248.html">7240</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29314">Map</a></td>
+<td class="next">
+Next: <a href="29320.html">7288</a>
+</td>
+</tr>
+</table>
+<div class="description">7282: Compare HL with DE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+A 16-bit comparison: compares H with D and, if they are equal, L with E. Returns with Z set if HL=DE, and the carry flag set if HL is less than DE. A is corrupted.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">First number</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Second number</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if equal, carry set if HL&lt;DE</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29314"></span>7282</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1">A = HL's high byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29315"></span>7283</td>
+<td class="instruction">SUB D</td>
+<td class="comment-1" rowspan="1">Subtract DE's high byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29316"></span>7284</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Different: HL and DE are not equal (the carry flag also shows which is bigger)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29317"></span>7285</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="3">Same high byte: now compare the low bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29318"></span>7286</td>
+<td class="instruction">SUB E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29319"></span>7287</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29248.html">7240</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29314">Map</a></td>
+<td class="next">
+Next: <a href="29320.html">7288</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8EA0</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36509.html">8E9D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36512">Map</a></td>
+<td class="next">
+Next: <a href="36563.html">8ED3</a>
+</td>
+</tr>
+</table>
+<div class="description">8EA0: Go through an exit</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Moves the actor through the exit at IX (see the room records at <a href="47482.html">B97A</a>): byte 0 the direction, byte 1 a door or other obstacle, byte 2 the destination. Exits with no destination cannot be used. If the exit has a door, the door must be open (bit 5 of its flags). The direction is then used as the action number and the move is made by <a href="36121.html">8D19</a> (at $8D27). If the exit cannot be used, <a href="40639.html">9EBF</a> reports it.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Exit</td>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">$FF if there is no exit</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36512"></span>8EA0</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is there no such exit at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36514"></span>8EA2</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Fail with the usual message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36517"></span>8EA5</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">A = where the exit leads</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36520"></span>8EA8</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36522"></span>8EAA</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Leads nowhere: fail</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36525"></span>8EAD</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Does the exit have a door?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36528"></span>8EB0</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36530"></span>8EB2</td>
+<td class="instruction">JR Z,$8EC2</td>
+<td class="comment-1" rowspan="1">No: go straight ahead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36532"></span>8EB4</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Yes: save the exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36534"></span>8EB6</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the door's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36537"></span>8EB9</td>
+<td class="instruction">BIT 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36541"></span>8EBD</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36543"></span>8EBF</td>
+<td class="instruction">JP Z,<a href="40639.html">$9EBF</a></td>
+<td class="comment-1" rowspan="1">Closed: fail ("you cannot go that way")</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36546"></span>8EC2</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36549"></span>8EC5</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="2">A = the exit's own direction, used as the movement action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36552"></span>8EC8</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36555"></span>8ECB</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">No specific target - just moving in this direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36557"></span>8ECD</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36560"></span>8ED0</td>
+<td class="instruction">JP <a href="36121.html#36135">$8D27</a></td>
+<td class="comment-1" rowspan="1">Carry out the move (joining the ordinary movement routine partway through)</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36509.html">8E9D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36512">Map</a></td>
+<td class="next">
+Next: <a href="36563.html">8ED3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

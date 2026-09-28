@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7E6C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32351.html">7E5F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32364">Map</a></td>
+<td class="next">
+Next: <a href="32467.html">7ED3</a>
+</td>
+</tr>
+</table>
+<div class="description">7E6C: Parser: a noun phrase</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Collects one noun phrase into the buffer at $7C45 (cleared by the main parser loop): up to two prepositions (<a href="32486.html">7EE6</a>; a third one is an error), any number of articles (skipped), up to two adjectives (<a href="32467.html">7ED3</a>; a third one is an error), and a noun, which ends the phrase ($7E9B stores it at $7C49). Adjectives enter at $7E93 and nouns at $7E9B. A phrase that ends without a noun (for example 'look through') is allowed and simply has no noun.
+</div>
+<div class="paragraph">
+The phrase is then stored in the frame by <a href="32501.html">7EF5</a>: the first phrase at offset 4 and the second at offset 14. When ALL EXCEPT is in force ($B609 = 2), each extra noun phrase instead starts a new frame (<a href="32546.html">7F22</a>), with bit 6 of its verb marked, so that 'take all except the sword and the key' produces one frame per exception.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32364"></span>7E6C</td>
+<td class="instruction">CALL <a href="32486.html">$7EE6</a></td>
+<td class="comment-1" rowspan="1">Store the preposition</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32367"></span>7E6F</td>
+<td class="instruction">CALL <a href="32573.html">$7F3D</a></td>
+<td class="comment-1" rowspan="1">Next word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32370"></span>7E72</td>
+<td class="instruction">CP $70</td>
+<td class="comment-1" rowspan="1">Another preposition?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32372"></span>7E74</td>
+<td class="instruction">JR Z,$7E6C</td>
+<td class="comment-1" rowspan="1">Yes: store it too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32374"></span>7E76</td>
+<td class="instruction">CP $80</td>
+<td class="comment-1" rowspan="2">An article?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32376"></span>7E78</td>
+<td class="instruction">JR NZ,$7E83</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32378"></span>7E7A</td>
+<td class="instruction">BIT 4,E</td>
+<td class="comment-1" rowspan="1">Are articles allowed here?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32380"></span>7E7C</td>
+<td class="instruction">CALL Z,<a href="32750.html">$7FEE</a></td>
+<td class="comment-1" rowspan="1">No: syntax error</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32383"></span>7E7F</td>
+<td class="instruction">RES 4,E</td>
+<td class="comment-1" rowspan="1">Only one article</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32385"></span>7E81</td>
+<td class="instruction">JR $7E6F</td>
+<td class="comment-1" rowspan="1">Next word</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32387"></span>7E83</td>
+<td class="instruction">CP $60</td>
+<td class="comment-1" rowspan="2">An adjective?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32389"></span>7E85</td>
+<td class="instruction">JR Z,$7E93</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32391"></span>7E87</td>
+<td class="instruction">CP $50</td>
+<td class="comment-1" rowspan="2">A noun?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32393"></span>7E89</td>
+<td class="instruction">JR Z,$7E9B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32395"></span>7E8B</td>
+<td class="instruction">LD HL,($B5CB)</td>
+<td class="comment-1" rowspan="3">Anything else ends the phrase: step back so it is read again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32398"></span>7E8E</td>
+<td class="instruction">LD ($B5CD),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32401"></span>7E91</td>
+<td class="instruction">JR $7EA1</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32403"></span>7E93</td>
+<td class="instruction">CALL <a href="32467.html">$7ED3</a></td>
+<td class="comment-1" rowspan="1">Store the adjective</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32406"></span>7E96</td>
+<td class="instruction">CALL <a href="32573.html">$7F3D</a></td>
+<td class="comment-1" rowspan="2">Next word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32409"></span>7E99</td>
+<td class="instruction">JR $7E83</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32411"></span>7E9B</td>
+<td class="instruction">LD HL,$7C49</td>
+<td class="comment-1" rowspan="4">Store the noun</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32414"></span>7E9E</td>
+<td class="instruction">LD (HL),C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32415"></span>7E9F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32416"></span>7EA0</td>
+<td class="instruction">LD (HL),B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32417"></span>7EA1</td>
+<td class="instruction">LD D,$50</td>
+<td class="comment-1" rowspan="4">The phrase is complete. Under ALL EXCEPT...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32419"></span>7EA3</td>
+<td class="instruction">LD A,($B609)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32422"></span>7EA6</td>
+<td class="instruction">CP $02</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32424"></span>7EA8</td>
+<td class="instruction">JR NZ,$7ECC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32426"></span>7EAA</td>
+<td class="instruction">LD HL,($7C45)</td>
+<td class="comment-1" rowspan="4">...a phrase without a preposition...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32429"></span>7EAD</td>
+<td class="instruction">LD A,H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32430"></span>7EAE</td>
+<td class="instruction">OR L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32431"></span>7EAF</td>
+<td class="instruction">JR NZ,$7EC9</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32433"></span>7EB1</td>
+<td class="instruction">BIT 6,(IY+$19)</td>
+<td class="comment-1" rowspan="2">...is an exception: is this frame already an exception frame?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32437"></span>7EB5</td>
+<td class="instruction">JR NZ,$7EBF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32439"></span>7EB7</td>
+<td class="instruction">LD BC,$FFE8</td>
+<td class="comment-1" rowspan="3">No: make a new frame for it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32442"></span>7EBA</td>
+<td class="instruction">ADD IY,BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32444"></span>7EBC</td>
+<td class="instruction">CALL <a href="32558.html">$7F2E</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="32447"></span>7EBF</td>
+<td class="instruction">CALL <a href="32501.html#32538">$7F1A</a></td>
+<td class="comment-1" rowspan="1">Store the phrase as its first noun phrase...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32450"></span>7EC2</td>
+<td class="instruction">LD (IY+$01),$40</td>
+<td class="comment-1" rowspan="1">...and mark the frame as an exception (bit 6)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32454"></span>7EC6</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Next noun phrase</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32457"></span>7EC9</td>
+<td class="instruction">CALL <a href="32546.html">$7F22</a></td>
+<td class="comment-1" rowspan="1">A phrase with a preposition under ALL EXCEPT: new frame</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32460"></span>7ECC</td>
+<td class="instruction">CALL <a href="32501.html">$7EF5</a></td>
+<td class="comment-1" rowspan="1">Store the phrase in the frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32463"></span>7ECF</td>
+<td class="instruction">JP Z,<a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="2">Next noun phrase</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32466"></span>7ED2</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32351.html">7E5F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32364">Map</a></td>
+<td class="next">
+Next: <a href="32467.html">7ED3</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

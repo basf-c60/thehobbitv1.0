@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A539</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42228.html">A4F4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42297">Map</a></td>
+<td class="next">
+Next: <a href="42320.html">A550</a>
+</td>
+</tr>
+</table>
+<div class="description">A539: Character routine: "where's the thief?"</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the character is in Bilbo's room but Bilbo cannot be seen (his visibility bit is clear), says 'where's the thief?'.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42297"></span>A539</td>
+<td class="instruction">LD A,($B5E7)</td>
+<td class="comment-1" rowspan="1">A = the room the character started this turn in</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42300"></span>A53C</td>
+<td class="instruction">LD HL,$B5E6</td>
+<td class="comment-1" rowspan="2">Is Bilbo in that same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42303"></span>A53F</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42304"></span>A540</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42305"></span>A541</td>
+<td class="instruction">LD A,($C012)</td>
+<td class="comment-1" rowspan="2">Yes - is Bilbo actually visible?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42308"></span>A544</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42310"></span>A546</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">He is: no need to ask</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42311"></span>A547</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Invisible: dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42314"></span>A54A</td>
+<td class="instruction">LD HL,$AFBD</td>
+<td class="comment-1" rowspan="1">"where's the thief?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42317"></span>A54D</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Say it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42228.html">A4F4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42297">Map</a></td>
+<td class="next">
+Next: <a href="42320.html">A550</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

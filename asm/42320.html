@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A550</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42297.html">A539</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42320">Map</a></td>
+<td class="next">
+Next: <a href="42359.html">A577</a>
+</td>
+</tr>
+</table>
+<div class="description">A550: Character routine: Thorin</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Thorin's idle behaviour. A random number from 0 to 8 (<a href="39924.html">9BF4</a>) decides: 5 or more, nothing; 3 or 4, 'thorin waits.'; 0, 'thorin sits down and starts singing about gold.'; 1 or 2, he says 'hurry up'.
+</div>
+<div class="paragraph">
+A fourth line, 'get us out of this one, thief!', is set up at $A563 but can never be printed: the JP Z that would print it tests the flags from CP 3, and Z can only be set there if A was 3, which the JP NC before it has already taken care of.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42320"></span>A550</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: this always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42323"></span>A553</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42325"></span>A555</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42328"></span>A558</td>
+<td class="instruction">CP $05</td>
+<td class="comment-1" rowspan="1">5 or more...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42330"></span>A55A</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="1">...do nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42331"></span>A55B</td>
+<td class="instruction">CP $03</td>
+<td class="comment-1" rowspan="1">3 or 4...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42333"></span>A55D</td>
+<td class="instruction">LD HL,$AFE6</td>
+<td class="comment-1" rowspan="2">"thorin waits."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42336"></span>A560</td>
+<td class="instruction">JP NC,<a href="38738.html">$9752</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42339"></span>A563</td>
+<td class="instruction">LD HL,$AFC7</td>
+<td class="comment-1" rowspan="2">"get us out of this one, thief!" (never reached: see the bug note)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42342"></span>A566</td>
+<td class="instruction">JP Z,<a href="41235.html">$A113</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42345"></span>A569</td>
+<td class="instruction">LD HL,$AFD7</td>
+<td class="comment-1" rowspan="1">"thorin sits down and starts singing about gold."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42348"></span>A56C</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="2">0?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42350"></span>A56E</td>
+<td class="instruction">JP Z,<a href="38738.html">$9752</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="42353"></span>A571</td>
+<td class="instruction">LD HL,$AF4D</td>
+<td class="comment-1" rowspan="2">1 or 2: he says "hurry up"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42356"></span>A574</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42297.html">A539</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42320">Map</a></td>
+<td class="next">
+Next: <a href="42359.html">A577</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

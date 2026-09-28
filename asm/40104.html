@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9CA8</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40101.html">9CA5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40104">Map</a></td>
+<td class="next">
+Next: <a href="40172.html">9CEC</a>
+</td>
+</tr>
+</table>
+<div class="description">9CA8: Drop everything an object holds</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Makes everything held by object A the property of A's own holder (so things a dead character carried stay where it was). Things that evaporate (bit 1 of their flags) vanish instead, with 'X evaporates.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40104"></span>9CA8</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40106"></span>9CAA</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40108"></span>9CAC</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40109"></span>9CAD</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40112"></span>9CB0</td>
+<td class="instruction">LD B,(IX+$01)</td>
+<td class="comment-1" rowspan="1">B = its holder: its things will belong to that</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40115"></span>9CB3</td>
+<td class="instruction">LD IX,$BF50</td>
+<td class="comment-1" rowspan="1">Go through every object</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40119"></span>9CB7</td>
+<td class="instruction">CALL <a href="39684.html">$9B04</a></td>
+<td class="comment-1" rowspan="1">Next object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40122"></span>9CBA</td>
+<td class="instruction">JR Z,$9CE6</td>
+<td class="comment-1" rowspan="1">End of the list</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40124"></span>9CBC</td>
+<td class="instruction">CP (IY+$01)</td>
+<td class="comment-1" rowspan="1">Is it held by this object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40127"></span>9CBF</td>
+<td class="instruction">JR NZ,$9CB7</td>
+<td class="comment-1" rowspan="1">No: next</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40129"></span>9CC1</td>
+<td class="instruction">BIT 1,(IY+$07)</td>
+<td class="comment-1" rowspan="1">Does it evaporate (bit 1)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40133"></span>9CC5</td>
+<td class="instruction">JR Z,$9CE0</td>
+<td class="comment-1" rowspan="2">No: pass it on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40135"></span>9CC7</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40136"></span>9CC8</td>
+<td class="instruction">LD (IY+$10),$00</td>
+<td class="comment-1" rowspan="1">Yes: it goes nowhere...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40140"></span>9CCC</td>
+<td class="instruction">LD (IY+$01),$FF</td>
+<td class="comment-1" rowspan="1">...belongs to nobody...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40144"></span>9CD0</td>
+<td class="instruction">RES 7,(IY+$07)</td>
+<td class="comment-1" rowspan="1">...and is invisible</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40148"></span>9CD4</td>
+<td class="instruction">CALL <a href="40464.html">$9E10</a></td>
+<td class="comment-1" rowspan="1">Print its name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40151"></span>9CD7</td>
+<td class="instruction">LD HL,$B035</td>
+<td class="comment-1" rowspan="3">"evaporates."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40154"></span>9CDA</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="40157"></span>9CDD</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40158"></span>9CDE</td>
+<td class="instruction">JR $9CB7</td>
+<td class="comment-1" rowspan="1">Next</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40160"></span>9CE0</td>
+<td class="instruction">LD (IY+$01),B</td>
+<td class="comment-1" rowspan="1">Give it to the object's own holder</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40163"></span>9CE3</td>
+<td class="instruction">JP $9CB7</td>
+<td class="comment-1" rowspan="5">Next</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40166"></span>9CE6</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40167"></span>9CE7</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40169"></span>9CE9</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40171"></span>9CEB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40101.html">9CA5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40104">Map</a></td>
+<td class="next">
+Next: <a href="40172.html">9CEC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

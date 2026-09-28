@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A406</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41984.html">A400</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41990">Map</a></td>
+<td class="next">
+Next: <a href="42012.html">A41C</a>
+</td>
+</tr>
+</table>
+<div class="description">A406: Character routine: react to being given something</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Says, at random, either 'thank you' or 'what do you expect me to do with this?'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41990"></span>A406</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41993"></span>A409</td>
+<td class="instruction">LD A,$0A</td>
+<td class="comment-1" rowspan="2">Pick a random number from 0 to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41995"></span>A40B</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="41998"></span>A40E</td>
+<td class="instruction">LD HL,$AF98</td>
+<td class="comment-1" rowspan="1">"what do you expect me to do with this?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42001"></span>A411</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="1">8 or more?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42003"></span>A413</td>
+<td class="instruction">JP NC,<a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Yes: say that</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42006"></span>A416</td>
+<td class="instruction">LD HL,$AF39</td>
+<td class="comment-1" rowspan="1">"thank you"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42009"></span>A419</td>
+<td class="instruction">JP <a href="41235.html">$A113</a></td>
+<td class="comment-1" rowspan="1">Otherwise: say that instead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41984.html">A400</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41990">Map</a></td>
+<td class="next">
+Next: <a href="42012.html">A41C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

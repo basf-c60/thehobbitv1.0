@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9BDF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39885.html">9BCD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39903">Map</a></td>
+<td class="next">
+Next: <a href="39924.html">9BF4</a>
+</td>
+</tr>
+</table>
+<div class="description">9BDF: Is object A inside the holder at (HL)?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Follows the chain of holders of object A upwards; returns with carry set if (HL) is one of them.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39903"></span>9BDF</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = object A's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39906"></span>9BE2</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save the object's number for later</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39907"></span>9BE3</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = whoever (or whatever) is holding it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39910"></span>9BE6</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">Is it held by nobody at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39912"></span>9BE8</td>
+<td class="instruction">JR Z,$9BF1</td>
+<td class="comment-1" rowspan="1">Yes: it cannot be inside the thing we are looking for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39914"></span>9BEA</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">No: throw away the saved object number from the stack (using IX only because it is a spare place to put it; A itself, still holding the holder's number, is untouched)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39916"></span>9BEC</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="1">Is that holder the very thing we are testing against (the byte stored at HL)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39917"></span>9BED</td>
+<td class="instruction">JR NZ,$9BDF</td>
+<td class="comment-1" rowspan="1">Not yet: look inside the holder in turn, in case the object is nested more than one level deep</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39919"></span>9BEF</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="2">Found it: set the carry flag to say so</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39920"></span>9BF0</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39921"></span>9BF1</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Not held by anybody: restore the stack (the AF we saved earlier)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39922"></span>9BF2</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="2">Clear the carry flag: not inside</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39923"></span>9BF3</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39885.html">9BCD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39903">Map</a></td>
+<td class="next">
+Next: <a href="39924.html">9BF4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

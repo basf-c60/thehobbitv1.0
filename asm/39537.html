@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9A71</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39517.html">9A5D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39537">Map</a></td>
+<td class="next">
+Next: <a href="39583.html">9A9F</a>
+</td>
+</tr>
+</table>
+<div class="description">9A71: A character tries to get out of something</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Called when a character is being held by an object (for example shut in a barrel or a cell). If the holder is dead or alive (i.e. another character is carrying this one), nothing special happens. If it is a closed object, the character does nothing this turn. If it is open, the character tries action 55, CLIMB OUT OF.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39537"></span>9A71</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="2">No instrument for this</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39539"></span>9A73</td>
+<td class="instruction">LD ($B5DA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39542"></span>9A76</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = whoever (or whatever) is holding the character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39545"></span>9A79</td>
+<td class="instruction">LD ($B5D9),A</td>
+<td class="comment-1" rowspan="1">That becomes the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39548"></span>9A7C</td>
+<td class="instruction">CALL <a href="39717.html">$9B25</a></td>
+<td class="comment-1" rowspan="1">IX = the holder's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39551"></span>9A7F</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the holder dead (e.g. another character just killed)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39555"></span>9A83</td>
+<td class="instruction">JP NZ,<a href="38764.html#38859">$97CB</a></td>
+<td class="comment-1" rowspan="1">Yes: the character can simply act as normal, as if not held at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39558"></span>9A86</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the holder actually alive (another character carrying this one)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39562"></span>9A8A</td>
+<td class="instruction">JP NZ,<a href="38764.html#38859">$97CB</a></td>
+<td class="comment-1" rowspan="1">Yes: likewise, act as normal</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39565"></span>9A8D</td>
+<td class="instruction">BIT 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Otherwise it is a container: is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39569"></span>9A91</td>
+<td class="instruction">JP Z,<a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">No: stuck for this turn - move on to the next character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39572"></span>9A94</td>
+<td class="instruction">LD A,$37</td>
+<td class="comment-1" rowspan="2">Yes: try to climb out (action 55)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39574"></span>9A96</td>
+<td class="instruction">LD ($B5D8),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39577"></span>9A99</td>
+<td class="instruction">CALL <a href="39201.html">$9921</a></td>
+<td class="comment-1" rowspan="1">Try it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39580"></span>9A9C</td>
+<td class="instruction">JP <a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">Then move on to the next character regardless</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39517.html">9A5D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39537">Map</a></td>
+<td class="next">
+Next: <a href="39583.html">9A9F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

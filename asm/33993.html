@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 84C9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33981.html">84BD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33993">Map</a></td>
+<td class="next">
+Next: <a href="34014.html">84DE</a>
+</td>
+</tr>
+</table>
+<div class="description">84C9: Does the action need an instrument?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns with Z reset if the action needs an instrument (bit 2 of $B60D) that has not yet been given. If bit 1 of $B60D is set, the instrument may be left out, and the routine returns with Z set.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33993"></span>84C9</td>
+<td class="instruction">LD A,($B60D)</td>
+<td class="comment-1" rowspan="1">A = the action's main flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33996"></span>84CC</td>
+<td class="instruction">BIT 2,A</td>
+<td class="comment-1" rowspan="1">Does it need an instrument at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33998"></span>84CE</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing more to check</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33999"></span>84CF</td>
+<td class="instruction">LD HL,$832F</td>
+<td class="comment-1" rowspan="2">Yes - has a genuine instrument noun actually been named?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34002"></span>84D2</td>
+<td class="instruction">BIT 0,(HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34004"></span>84D4</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">It has: an instrument is definitely needed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34005"></span>84D5</td>
+<td class="instruction">BIT 1,A</td>
+<td class="comment-1" rowspan="2">No instrument was named - but may this action be used without one?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34007"></span>84D7</td>
+<td class="instruction">JR NZ,$84DC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34009"></span>84D9</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="2">No, it may not: an instrument really is required</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34011"></span>84DB</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34012"></span>84DC</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Yes, it may: no instrument is required after all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34013"></span>84DD</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33981.html">84BD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33993">Map</a></td>
+<td class="next">
+Next: <a href="34014.html">84DE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8AFF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35573.html">8AF5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35583">Map</a></td>
+<td class="next">
+Next: <a href="35593.html">8B09</a>
+</td>
+</tr>
+</table>
+<div class="description">8AFF: Move an attribute address right</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Increases HL, unless that would move it out of the attribute file.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35583"></span>8AFF</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35584"></span>8B00</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Move HL one cell right</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35585"></span>8B01</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="3">Did that go past the right edge?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35586"></span>8B02</td>
+<td class="instruction">CP $5A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35588"></span>8B04</td>
+<td class="instruction">JR NZ,$8B07</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35590"></span>8B06</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">If so, undo the move: stay put</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35591"></span>8B07</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35592"></span>8B08</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35573.html">8AF5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35583">Map</a></td>
+<td class="next">
+Next: <a href="35593.html">8B09</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

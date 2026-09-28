@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 90B4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37026.html">90A2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37044">Map</a></td>
+<td class="next">
+Next: <a href="37083.html">90DB</a>
+</td>
+</tr>
+</table>
+<div class="description">90B4: Check that a target may be attacked (sides)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Characters on the same side do not fight each other. The target's side bits (4-6 of byte 4 of its record) are compared with the attacker's; if they have any in common, the attack is quietly ruled out: the 'would work' flag is cleared and the attack routine's caller is abandoned.
+</div>
+<div class="paragraph">
+But the player is allowed to attack a friend. When Bilbo is the attacker and the target is on his side (bit 4), that bit is cleared in the target's record first - permanently. So hitting Thorin or Gandalf takes them off Bilbo's side for the rest of the game, which is what lets them fight back (and, since no one is on the same side any more, lets other characters attack them too).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37044"></span>90B4</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37048"></span>90B8</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the attacker Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37051"></span>90BB</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37052"></span>90BC</td>
+<td class="instruction">JR NZ,$90C8</td>
+<td class="comment-1" rowspan="1">No: just compare sides</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37054"></span>90BE</td>
+<td class="instruction">BIT 4,(IX+$04)</td>
+<td class="comment-1" rowspan="1">Is the target on Bilbo's side (bit 4)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37058"></span>90C2</td>
+<td class="instruction">JR Z,$90C8</td>
+<td class="comment-1" rowspan="1">No</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37060"></span>90C4</td>
+<td class="instruction">RES 4,(IX+$04)</td>
+<td class="comment-1" rowspan="1">Yes: it is not any more - for good</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37064"></span>90C8</td>
+<td class="instruction">LD A,(IX+$04)</td>
+<td class="comment-1" rowspan="2">A = the target's side bits...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37067"></span>90CB</td>
+<td class="instruction">AND $70</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37069"></span>90CD</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the attacker's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37073"></span>90D1</td>
+<td class="instruction">AND (IX+$04)</td>
+<td class="comment-1" rowspan="1">...in common with the attacker's?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37076"></span>90D4</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">None: the attack may go ahead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37077"></span>90D5</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Same side: drop the caller's return address...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37078"></span>90D6</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">...and record that the attack would not work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37079"></span>90D7</td>
+<td class="instruction">LD ($B5EC),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37082"></span>90DA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37026.html">90A2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37044">Map</a></td>
+<td class="next">
+Next: <a href="37083.html">90DB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

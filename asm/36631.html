@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8F17</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36563.html">8ED3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36631">Map</a></td>
+<td class="next">
+Next: <a href="36663.html">8F37</a>
+</td>
+</tr>
+</table>
+<div class="description">8F17: RUN</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Running means going in a random direction. A random number from 1 to 9 is chosen (<a href="39924.html">9BF4</a>), and the exits of the room are tried from that direction onwards, cycling round, until one with a destination is found (<a href="40529.html">9E51</a>); the actor then moves that way (<a href="36121.html">8D19</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36631"></span>8F17</td>
+<td class="instruction">LD A,$0A</td>
+<td class="comment-1" rowspan="3">Pick a random direction from 1 to 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36633"></span>8F19</td>
+<td class="instruction">CALL <a href="39924.html">$9BF4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="36636"></span>8F1C</td>
+<td class="instruction">CP $00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36638"></span>8F1E</td>
+<td class="instruction">JR Z,$8F17</td>
+<td class="comment-1" rowspan="1">(0 is not a real direction: try again)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36640"></span>8F20</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = that direction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36641"></span>8F21</td>
+<td class="instruction">CALL <a href="40529.html">$9E51</a></td>
+<td class="comment-1" rowspan="2">Is there a usable exit that way?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36644"></span>8F24</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36645"></span>8F25</td>
+<td class="instruction">JR Z,$8F31</td>
+<td class="comment-1" rowspan="1">Yes: run that way</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36647"></span>8F27</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="4">No: try the next direction round instead...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36648"></span>8F28</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36649"></span>8F29</td>
+<td class="instruction">CP $0A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36651"></span>8F2B</td>
+<td class="instruction">JR C,$8F20</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36653"></span>8F2D</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">...wrapping back to 1 after 10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36655"></span>8F2F</td>
+<td class="instruction">JR $8F20</td>
+</tr>
+<tr>
+<td class="address-2"><span id="36657"></span>8F31</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">That direction becomes the movement action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="36660"></span>8F34</td>
+<td class="instruction">JP <a href="36121.html">$8D19</a></td>
+<td class="comment-1" rowspan="1">Move that way</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="36563.html">8ED3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#36631">Map</a></td>
+<td class="next">
+Next: <a href="36663.html">8F37</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

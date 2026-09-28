@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 86BC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34490.html">86BA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34492">Map</a></td>
+<td class="next">
+Next: <a href="34541.html">86ED</a>
+</td>
+</tr>
+</table>
+<div class="description">86BC: Find the next candidate target</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches for the next object (or room, if $B5EF is set) that fits the target's words, starting from where the last search left off ($833F). Only candidates for which the action would work are returned (<a href="34541.html">86ED</a>). Returns A=$FF when there are no more.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34492"></span>86BC</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34494"></span>86BE</td>
+<td class="instruction">LD IX,($833F)</td>
+<td class="comment-1" rowspan="1">IX = where the target search last left off</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34498"></span>86C2</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="2">Is the target actually meant to be a room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34501"></span>86C5</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34502"></span>86C6</td>
+<td class="instruction">JR Z,$86E2</td>
+<td class="comment-1" rowspan="1">Yes: search rooms instead, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34504"></span>86C8</td>
+<td class="instruction">LD IY,$9D2E</td>
+<td class="comment-1" rowspan="1">No: IY = the object-search routine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34508"></span>86CC</td>
+<td class="instruction">LD A,($B60E)</td>
+<td class="comment-1" rowspan="5">A = the action's own filter (characters only, objects only, or anything)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34511"></span>86CF</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34512"></span>86D0</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34513"></span>86D1</td>
+<td class="instruction">AND $03</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34515"></span>86D3</td>
+<td class="instruction">LD ($B600),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34518"></span>86D6</td>
+<td class="instruction">CALL <a href="34541.html">$86ED</a></td>
+<td class="comment-1" rowspan="2">Find the next candidate object for which the action would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34521"></span>86D9</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34523"></span>86DB</td>
+<td class="instruction">LD ($833F),IX</td>
+<td class="comment-1" rowspan="1">Remember where the search has got to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34527"></span>86DF</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="2">Restore the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34529"></span>86E1</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34530"></span>86E2</td>
+<td class="instruction">LD IY,$9DE9</td>
+<td class="comment-1" rowspan="1">Rooms: IY = the room-search routine instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34534"></span>86E6</td>
+<td class="instruction">CALL <a href="34541.html">$86ED</a></td>
+<td class="comment-1" rowspan="3">Find the next candidate room for which the action would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34537"></span>86E9</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34539"></span>86EB</td>
+<td class="instruction">JR $86DB</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34490.html">86BA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34492">Map</a></td>
+<td class="next">
+Next: <a href="34541.html">86ED</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

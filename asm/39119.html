@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 98CF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39043.html">9883</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39119">Map</a></td>
+<td class="next">
+Next: <a href="39201.html">9921</a>
+</td>
+</tr>
+</table>
+<div class="description">98CF: Character instruction: action without objects</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The byte after the instruction is an action with no target or instrument (typically a movement direction, so a character's program can be a route), tried with <a href="39201.html">9921</a>. An action of $FF means 'jump to the address that follows' if bit 4 is set. The entry at $9905 counts the instructions done this turn and follows jump addresses.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39119"></span>98CF</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="1">This instruction is 2 bytes long (plus a failure address)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39122"></span>98D2</td>
+<td class="instruction">CALL <a href="39027.html">$9873</a></td>
+<td class="comment-1" rowspan="1">Move the program pointer past it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39125"></span>98D5</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="1">A = the action</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39128"></span>98D8</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="1">$FF: no action at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39130"></span>98DA</td>
+<td class="instruction">JR Z,$98EF</td>
+<td class="comment-1" rowspan="1">Yes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39132"></span>98DC</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">Set the action...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39135"></span>98DF</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="3">...with no target or instrument: the game will choose them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39137"></span>98E1</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39140"></span>98E4</td>
+<td class="instruction">LD ($B5DA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39143"></span>98E7</td>
+<td class="instruction">CALL <a href="39201.html">$9921</a></td>
+<td class="comment-1" rowspan="1">Try it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39146"></span>98EA</td>
+<td class="instruction">JR Z,$9905</td>
+<td class="comment-1" rowspan="1">It failed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39148"></span>98EC</td>
+<td class="instruction">JP <a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">It worked: turn over</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39151"></span>98EF</td>
+<td class="instruction">BIT 4,(IX+$00)</td>
+<td class="comment-1" rowspan="1">No action. Is there an address after it (bit 4)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39155"></span>98F3</td>
+<td class="instruction">JP Z,<a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">No: just end the turn (the character waits)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39158"></span>98F6</td>
+<td class="instruction">LD L,(IX+$02)</td>
+<td class="comment-1" rowspan="4">Yes: jump there next turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39161"></span>98F9</td>
+<td class="instruction">LD H,(IX+$03)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39164"></span>98FC</td>
+<td class="instruction">LD (IY+$02),L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39167"></span>98FF</td>
+<td class="instruction">LD (IY+$03),H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39170"></span>9902</td>
+<td class="instruction">JP <a href="38764.html#39004">$985C</a></td>
+<td class="comment-1" rowspan="1">Turn over</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="39173"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="39043.html">9883</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39173"></span>9905</td>
+<td class="instruction">LD HL,$9769</td>
+<td class="comment-1" rowspan="2">FAILURE: count it (six failures end the turn)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39176"></span>9908</td>
+<td class="instruction">INC (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39177"></span>9909</td>
+<td class="instruction">BIT 4,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Is there a failure address (bit 4)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39181"></span>990D</td>
+<td class="instruction">JP Z,<a href="38764.html#38874">$97DA</a></td>
+<td class="comment-1" rowspan="1">No: go on to the next instruction</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39184"></span>9910</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="3">Yes: fetch it...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39186"></span>9912</td>
+<td class="instruction">LD H,(IX+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39189"></span>9915</td>
+<td class="instruction">LD L,(IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39192"></span>9918</td>
+<td class="instruction">LD (IY+$02),L</td>
+<td class="comment-1" rowspan="2">...make it the program position...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39195"></span>991B</td>
+<td class="instruction">LD (IY+$03),H</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39198"></span>991E</td>
+<td class="instruction">JP <a href="38764.html#38880">$97E0</a></td>
+<td class="comment-1" rowspan="1">...and carry on from there, in the same turn</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39043.html">9883</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39119">Map</a></td>
+<td class="next">
+Next: <a href="39201.html">9921</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

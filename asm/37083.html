@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 90DB</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37044.html">90B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37083">Map</a></td>
+<td class="next">
+Next: <a href="37245.html">917D</a>
+</td>
+</tr>
+</table>
+<div class="description">90DB: Attack (HIT, KILL, ATTACK, STRIKE, SMASH ...)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The fight routine. It is used both when the player attacks someone and when another character attacks (for example Thorin retaliating, or the trolls and goblins attacking Bilbo). The attacker's object record is pointed to by $B5FC, the target's by $B5F8, and the weapon's (if any) by $B5FA; $B5DA holds the weapon's object number, or $FF when there is none.
+</div>
+<div class="paragraph">
+It uses two bytes of the 8-byte object header (see <a href="49163.html">C00B</a>): byte 5 is STRENGTH and byte 6 is DEFENCE. Some starting values: Bilbo 64/64, Thorin 104/120, Gandalf 112/136, the trolls 160/160, the goblins 72/96, Bard 96/96, the dragon 192/192, and the short strong sword has strength 64 (255 in my modified tape).
+</div>
+<div class="paragraph">
+Step 1: 'you attack thorin' is printed ($90FE onwards), naming the weapon if one was used.
+</div>
+<div class="paragraph">
+Step 2: the attack value is the attacker's strength ($90F9), plus the weapon's strength if one was used ($9102-$9116), capped at 255. A weapon is only accepted if byte 0 of its record is 1 (an ordinary one-place object); otherwise the message at <a href="44145.html#44626">AE52</a> is printed.
+</div>
+<div class="paragraph">
+Step 3: the attack value is randomised by <a href="37245.html">917D</a> (roughly -10 to +10) and so is the target's defence ($9121-$912A).
+</div>
+<div class="paragraph">
+Step 4: if the randomised defence is greater than or equal to the attack, the blow does nothing: 'but the effort is wasted. his defense is too strong' (<a href="44145.html#44611">AE43</a>).
+</div>
+<div class="paragraph">
+Step 5: if the attack exceeds the defence by more than 16, the blow is fatal. The message at <a href="44145.html#44333">AD2D</a> ('with one well placed blow you cleave his skull') is printed and bit 3 of the target's flag byte (byte 7) is set, marking it dead ($9168).
+</div>
+<div class="paragraph">
+Step 6: otherwise the target is wounded. The difference d (1-16) selects a message from the table at <a href="37264.html">9190</a> - the larger the margin the nastier the description. The code then tries to reduce the target's strength by d/2+1 and its defence by d/4+1 ($914E-$9164), skipping either reduction if it would go below 0. It computes d/2 and d/4 with RRCA (rotate right) rather than SRL (shift right), though.
+</div>
+<div class="paragraph">
+BUG: RRCA moves the bit shifted out of the bottom back into the top, so the halving only works when the bit being shifted out is 0. With Thorin (strength 104, defence 120) the actual results are: margins 4, 8, 12 and 16 reduce both strength and defence as intended (for example margin 8 takes him to 99/117); margins 2, 6, 10 and 14 reduce strength only; margins 3, 7, 11 and 15 do nothing at all; and margins 1, 5, 9 and 13 leave strength alone but slash his defence by about 65, to 52-55, which makes the next blow very likely to kill him.
+</div>
+<div class="paragraph">
+BUG: the table at <a href="37264.html">9190</a> only has useful entries for differences 1 to 15. A difference of exactly 16 reads the two bytes at $91B0 (which are code, $DD $2A) as a message address, so the game interprets ROM at $2ADD as a message and prints garbage.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37083"></span>90DB</td>
+<td class="instruction">CALL <a href="37044.html">$90B4</a></td>
+<td class="comment-1" rowspan="1">Check the target is something that can be attacked</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37086"></span>90DE</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">Was a weapon named?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37089"></span>90E1</td>
+<td class="instruction">LD HL,$026F</td>
+<td class="comment-1" rowspan="2">HL = the word used when there is no weapon</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37092"></span>90E4</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37094"></span>90E6</td>
+<td class="instruction">JR Z,$90F2</td>
+<td class="comment-1" rowspan="1">No weapon: skip</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37096"></span>90E8</td>
+<td class="instruction">LD IX,($B5FA)</td>
+<td class="comment-1" rowspan="1">IX = the weapon's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37100"></span>90EC</td>
+<td class="instruction">LD L,(IX+$08)</td>
+<td class="comment-1" rowspan="2">HL = the weapon's noun (e.g. SWORD)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37103"></span>90EF</td>
+<td class="instruction">LD H,(IX+$09)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37106"></span>90F2</td>
+<td class="instruction">LD ($B5ED),HL</td>
+<td class="comment-1" rowspan="1">Keep it for the report ("...with the sword")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37109"></span>90F5</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the attacker's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37113"></span>90F9</td>
+<td class="instruction">LD B,(IX+$05)</td>
+<td class="comment-1" rowspan="1">B = the attacker's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37116"></span>90FC</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="1">Is there a weapon?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37119"></span>90FF</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">($FF + 1 = 0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37120"></span>9100</td>
+<td class="instruction">JR Z,$9119</td>
+<td class="comment-1" rowspan="1">No: attack with strength alone</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37122"></span>9102</td>
+<td class="instruction">LD IY,($B5FA)</td>
+<td class="comment-1" rowspan="1">IY = the weapon's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37126"></span>9106</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="2">Is it an ordinary object (one place)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37129"></span>9109</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37130"></span>910A</td>
+<td class="instruction">LD HL,$AE52</td>
+<td class="comment-1" rowspan="1">"you cannot kill with the X"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37133"></span>910D</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37136"></span>9110</td>
+<td class="instruction">LD A,(IY+$05)</td>
+<td class="comment-1" rowspan="1">A = the weapon's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37139"></span>9113</td>
+<td class="instruction">ADD A,B</td>
+<td class="comment-1" rowspan="1">Add the attacker's strength</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37140"></span>9114</td>
+<td class="instruction">JR NC,$9118</td>
+<td class="comment-1" rowspan="1">No overflow: fine</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37142"></span>9116</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">Overflow: cap it at 255</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37144"></span>9118</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="2">B = the attack value</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37145"></span>9119</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37146"></span>911A</td>
+<td class="instruction">CALL <a href="37245.html">$917D</a></td>
+<td class="comment-1" rowspan="2">Randomise the attack value by about +/-10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37149"></span>911D</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37150"></span>911E</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: the attack would happen</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37153"></span>9121</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37157"></span>9125</td>
+<td class="instruction">LD A,(IX+$06)</td>
+<td class="comment-1" rowspan="1">A = the target's defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37160"></span>9128</td>
+<td class="instruction">CALL <a href="37245.html">$917D</a></td>
+<td class="comment-1" rowspan="1">Randomise it too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37163"></span>912B</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Is the defence at least as big as the attack?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37164"></span>912C</td>
+<td class="instruction">LD HL,$AE43</td>
+<td class="comment-1" rowspan="1">"but the effort is wasted. his defense is too strong."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37167"></span>912F</td>
+<td class="instruction">JP NC,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Yes: the blow does nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37170"></span>9132</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">C = the defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37171"></span>9133</td>
+<td class="instruction">ADD A,$10</td>
+<td class="comment-1" rowspan="2">Defence + 16...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37173"></span>9135</td>
+<td class="instruction">JR NC,$9139</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37175"></span>9137</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="1">(capped at 255)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37177"></span>9139</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">...less than the attack?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37178"></span>913A</td>
+<td class="instruction">JR C,$9168</td>
+<td class="comment-1" rowspan="1">Yes: a fatal blow</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37180"></span>913C</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">A wound. A = the margin (attack - defence, 1-16)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37181"></span>913D</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37182"></span>913E</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="3">Double it to index the wound messages</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37183"></span>913F</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37184"></span>9140</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37186"></span>9142</td>
+<td class="instruction">LD IY,$9190</td>
+<td class="comment-1" rowspan="2">IY = the wound message table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37190"></span>9146</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37192"></span>9148</td>
+<td class="instruction">LD L,(IY+$00)</td>
+<td class="comment-1" rowspan="2">HL = the message for this margin (a margin of 16 runs off the end of the table)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37195"></span>914B</td>
+<td class="instruction">LD H,(IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37198"></span>914E</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="2">Halve the doubled margin twice with RRCA: margin/2, but with bit 0 rotated into bit 7 (see the bug note)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37199"></span>914F</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37200"></span>9150</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="1">B = the "half" margin</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37201"></span>9151</td>
+<td class="instruction">CPL</td>
+<td class="comment-1" rowspan="1">A = 255 - B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37202"></span>9152</td>
+<td class="instruction">ADD A,(IX+$05)</td>
+<td class="comment-1" rowspan="1">Add the target's strength: carry only if strength &gt; B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37205"></span>9155</td>
+<td class="instruction">JR NC,$915A</td>
+<td class="comment-1" rowspan="1">It would go negative: leave it alone</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37207"></span>9157</td>
+<td class="instruction">LD (IX+$05),A</td>
+<td class="comment-1" rowspan="1">Otherwise strength = strength - B - 1</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37210"></span>915A</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="1">A = the "half" margin again</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37211"></span>915B</td>
+<td class="instruction">RRCA</td>
+<td class="comment-1" rowspan="1">Halve it again (RRCA again)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37212"></span>915C</td>
+<td class="instruction">CPL</td>
+<td class="comment-1" rowspan="1">A = 255 - that</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37213"></span>915D</td>
+<td class="instruction">ADD A,(IX+$06)</td>
+<td class="comment-1" rowspan="1">Add the target's defence</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37216"></span>9160</td>
+<td class="instruction">JR NC,$9165</td>
+<td class="comment-1" rowspan="1">It would go negative: leave it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37218"></span>9162</td>
+<td class="instruction">LD (IX+$06),A</td>
+<td class="comment-1" rowspan="1">Otherwise defence = defence - (margin/4) - 1</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37221"></span>9165</td>
+<td class="instruction">JP <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">Print the wound message</td>
+</tr>
+<tr>
+<td class="address-2"><span id="37224"></span>9168</td>
+<td class="instruction">LD HL,$AD2D</td>
+<td class="comment-1" rowspan="2">"with one well placed blow &lt;actor&gt; cleaves &lt;his/your&gt; skull."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37227"></span>916B</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37230"></span>916E</td>
+<td class="instruction">SET 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Mark the target dead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37234"></span>9172</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37237"></span>9175</td>
+<td class="instruction">CALL <a href="38621.html">$96DD</a></td>
+<td class="comment-1" rowspan="1">Kill it: drop its things, remove it from the character table</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37240"></span>9178</td>
+<td class="instruction">LD A,$06</td>
+<td class="comment-1" rowspan="2">Then report "&lt;target&gt; is dead."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37242"></span>917A</td>
+<td class="instruction">JP <a href="41116.html">$A09C</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37044.html">90B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37083">Map</a></td>
+<td class="next">
+Next: <a href="37245.html">917D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

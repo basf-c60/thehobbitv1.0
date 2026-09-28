@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9B38</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39735.html">9B37</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39736">Map</a></td>
+<td class="next">
+Next: <a href="39788.html">9B6C</a>
+</td>
+</tr>
+</table>
+<div class="description">9B38: Move an object and everything it holds</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Moves everything held by object A (and everything they hold, recursively, <a href="39788.html">9B6C</a>) to room B. If Bilbo was among the things moved (for example he was inside the barrel when it floated away, or was carried off), the room he has arrived in is entered and described (the entry at $8DC1 in <a href="36121.html">8D19</a>).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Object</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Room</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="39736"></span>9B38</td>
+<td class="instruction">LD HL,$9B37</td>
+<td class="comment-1" rowspan="2">Assume, for now, that Bilbo is among the things being moved</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39739"></span>9B3B</td>
+<td class="instruction">LD (HL),$01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39741"></span>9B3D</td>
+<td class="instruction">CALL <a href="39788.html">$9B6C</a></td>
+<td class="comment-1" rowspan="1">Move everything object A holds into room B (this clears the flag above if Bilbo is not actually among them)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39744"></span>9B40</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Was Bilbo actually moved?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39745"></span>9B41</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39746"></span>9B42</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing more to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39747"></span>9B43</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Yes: save the flag's own address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39748"></span>9B44</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Save the current actor...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39751"></span>9B47</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39752"></span>9B48</td>
+<td class="instruction">LD HL,($B5FC)</td>
+<td class="comment-1" rowspan="2">...and the current actor's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39755"></span>9B4B</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39756"></span>9B4C</td>
+<td class="instruction">LD HL,$C00B</td>
+<td class="comment-1" rowspan="4">Make Bilbo the actor for a moment...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39759"></span>9B4F</td>
+<td class="instruction">LD ($B5FC),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39762"></span>9B52</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39763"></span>9B53</td>
+<td class="instruction">LD ($B5DB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39766"></span>9B56</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="2">...and pretend he has just moved in direction B (used only to set the "destination room" variable read below)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39767"></span>9B57</td>
+<td class="instruction">LD ($8D17),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39770"></span>9B5A</td>
+<td class="instruction">CALL <a href="36121.html#36289">$8DC1</a></td>
+<td class="comment-1" rowspan="1">Enter the new room and describe it, exactly as an ordinary move does</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39773"></span>9B5D</td>
+<td class="instruction">CALL <a href="39517.html">$9A5D</a></td>
+<td class="comment-1" rowspan="1">Update where Bilbo is, for the rest of this turn</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39776"></span>9B60</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore the real actor's record...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39777"></span>9B61</td>
+<td class="instruction">LD ($B5FC),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39780"></span>9B64</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">...and the real actor</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39781"></span>9B65</td>
+<td class="instruction">LD ($B5DB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39784"></span>9B68</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore the flag's address</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39785"></span>9B69</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Clear it, ready for next time</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39786"></span>9B6A</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="39787"></span>9B6B</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="39735.html">9B37</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#39736">Map</a></td>
+<td class="next">
+Next: <a href="39788.html">9B6C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

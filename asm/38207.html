@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 953F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37999.html">946F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38207">Map</a></td>
+<td class="next">
+Next: <a href="38221.html">954D</a>
+</td>
+</tr>
+</table>
+<div class="description">953F: Let a character react to what was done to it</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the object at IX is a living character (bit 6 of its flags set, bit 3 clear), <a href="39419.html">99FB</a> is called with the action number in B, which may switch the character to a new behaviour (for example, to fight back when attacked).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Object record</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Action number</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="38207"></span>953F</td>
+<td class="instruction">BIT 6,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is the object at IX a living character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38211"></span>9543</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: nothing reacts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38212"></span>9544</td>
+<td class="instruction">BIT 3,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it already dead?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38216"></span>9548</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Yes: the dead do not react either</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38217"></span>9549</td>
+<td class="instruction">CALL <a href="39419.html">$99FB</a></td>
+<td class="comment-1" rowspan="2">Give it a chance to switch its behaviour in response to what was just done to it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="38220"></span>954C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37999.html">946F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#38207">Map</a></td>
+<td class="next">
+Next: <a href="38221.html">954D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

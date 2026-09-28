@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 83A7</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33690.html">839A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33703">Map</a></td>
+<td class="next">
+Next: <a href="33797.html">8405</a>
+</td>
+</tr>
+</table>
+<div class="description">83A7: Find the action and objects for a command</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The target ($B5D9) and instrument ($B5DA) are set to $FF (none) and the work area is cleared. <a href="34191.html">858F</a> then finds the action table entry that matches the frame's verb, particle and preposition; if none does, the routine returns with Z set.
+</div>
+<div class="paragraph">
+The action number (1-59) is worked out from the entry's address and stored in $B5D8. The flags of the entry (<a href="34153.html">8569</a>) say whether the action needs a target and an instrument (bits 3 and 2 of $B60D). If it needs neither, the routine is done. Otherwise <a href="33797.html">8405</a> searches for suitable objects, trying each candidate with a dry run. If the objects cannot be decided, <a href="34733.html">87AD</a> deals with it (asking 'which key?', saying 'I do not see the key', and so on). With ALL, <a href="33892.html">8464</a> moves on to the next object.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if the command could not be matched</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33703"></span>83A7</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="3">No instrument or target chosen yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33705"></span>83A9</td>
+<td class="instruction">LD ($B5DA),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33708"></span>83AC</td>
+<td class="instruction">LD ($B5D9),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33711"></span>83AF</td>
+<td class="instruction">CALL <a href="33690.html">$839A</a></td>
+<td class="comment-1" rowspan="1">Clear the work area</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33714"></span>83B2</td>
+<td class="instruction">CALL <a href="34191.html">$858F</a></td>
+<td class="comment-1" rowspan="1">Find the action table entry that matches this frame's verb and words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33717"></span>83B5</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No such action exists: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33718"></span>83B6</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="6">Work out the action's own number...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33720"></span>83B8</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33722"></span>83BA</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33723"></span>83BB</td>
+<td class="instruction">LD DE,$AA47</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33726"></span>83BE</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33728"></span>83C0</td>
+<td class="instruction">JR Z,$83CA</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33730"></span>83C2</td>
+<td class="instruction">LD DE,$0008</td>
+<td class="comment-1" rowspan="4">...by counting how many 8-byte entries lie before it in the action table</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33733"></span>83C5</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33734"></span>83C6</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33736"></span>83C8</td>
+<td class="instruction">JR NZ,$83C5</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33738"></span>83CA</td>
+<td class="instruction">LD ($B5D8),A</td>
+<td class="comment-1" rowspan="1">Remember the action number</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33741"></span>83CD</td>
+<td class="instruction">LD ($B5D7),A</td>
+<td class="comment-1" rowspan="1">...(kept a second time, so <a href="42911.html">A79F</a> can read Bard's own last order from it later)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33744"></span>83D0</td>
+<td class="instruction">LD ($834F),IX</td>
+<td class="comment-1" rowspan="1">Remember the action table entry itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33748"></span>83D4</td>
+<td class="instruction">CALL <a href="34153.html">$8569</a></td>
+<td class="comment-1" rowspan="1">Work out what this action needs: a target, an instrument, whether it works in the dark</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33751"></span>83D7</td>
+<td class="instruction">CALL <a href="33938.html">$8492</a></td>
+<td class="comment-1" rowspan="1">Start searching for a target</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33754"></span>83DA</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">For now, everything is only a trial: nothing really happens yet</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33755"></span>83DB</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33758"></span>83DE</td>
+<td class="instruction">LD A,($B60D)</td>
+<td class="comment-1" rowspan="2">Does this action need a target, an instrument, or both?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33761"></span>83E1</td>
+<td class="instruction">AND $0C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33763"></span>83E3</td>
+<td class="instruction">JR Z,$8402</td>
+<td class="comment-1" rowspan="1">Neither: the action can go ahead with no objects at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33765"></span>83E5</td>
+<td class="instruction">LD A,($8343)</td>
+<td class="comment-1" rowspan="2">Is this whole command an ALL?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33768"></span>83E8</td>
+<td class="instruction">LD ($B60C),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33771"></span>83EB</td>
+<td class="instruction">RLCA</td>
+<td class="comment-1" rowspan="3">Is only a single candidate wanted, rather than every matching object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33772"></span>83EC</td>
+<td class="instruction">AND $01</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33774"></span>83EE</td>
+<td class="instruction">LD ($8344),A</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33777"></span>83F1</td>
+<td class="instruction">CALL <a href="33797.html">$8405</a></td>
+<td class="comment-1" rowspan="1">Search for a workable target and instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33780"></span>83F4</td>
+<td class="instruction">JP NZ,<a href="34733.html">$87AD</a></td>
+<td class="comment-1" rowspan="1">None found, or more than one possible: explain why, or ask "which key?"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33783"></span>83F7</td>
+<td class="instruction">LD A,($B60C)</td>
+<td class="comment-1" rowspan="2">Is this an ALL command, with more objects still to try?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33786"></span>83FA</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33787"></span>83FB</td>
+<td class="instruction">JR Z,$8402</td>
+<td class="comment-1" rowspan="1">No: this one candidate is the whole answer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33789"></span>83FD</td>
+<td class="instruction">CALL <a href="33892.html">$8464</a></td>
+<td class="comment-1" rowspan="1">Yes: is there another object ALL should also apply to?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33792"></span>8400</td>
+<td class="instruction">JR NZ,$83F1</td>
+<td class="comment-1" rowspan="1">If so, search again with it in mind</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33794"></span>8402</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33796"></span>8404</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...telling the caller a workable command was found</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33690.html">839A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33703">Map</a></td>
+<td class="next">
+Next: <a href="33797.html">8405</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

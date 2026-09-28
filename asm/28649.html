@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Text at 6FE9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-t">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Messages</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28618.html">6FCA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28649">Map</a></td>
+<td class="next">
+Next: <a href="28656.html">6FF0</a>
+</td>
+</tr>
+</table>
+<div class="description">6FE9: Initial prompt and command</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+'&gt; LOOK' followed by ENTER. At the start of a game (<a href="27687.html">6C27</a>) this is printed as though the player had typed it, and 'LOOK' plus ENTER are copied into the input buffer so that the first turn describes Bilbo's surroundings.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28649"></span>6FE9</td>
+<td class="instruction">DEFM "&gt;"</td>
+<td class="comment-1" rowspan="2">The prompt</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28650"></span>6FEA</td>
+<td class="instruction">DEFM " "</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28651"></span>6FEB</td>
+<td class="instruction">DEFM "L"</td>
+<td class="comment-1" rowspan="5">The first command (with ENTER)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28652"></span>6FEC</td>
+<td class="instruction">DEFM "O"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28653"></span>6FED</td>
+<td class="instruction">DEFM "O"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28654"></span>6FEE</td>
+<td class="instruction">DEFM "K"</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28655"></span>6FEF</td>
+<td class="instruction">DEFM $0D</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28618.html">6FCA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28649">Map</a></td>
+<td class="next">
+Next: <a href="28656.html">6FF0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

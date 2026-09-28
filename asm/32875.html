@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 806B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32861.html">805D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32875">Map</a></td>
+<td class="next">
+Next: <a href="32882.html">8072</a>
+</td>
+</tr>
+</table>
+<div class="description">806B: Special word finished: carry on parsing</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Restores the previous word class from $B5CF into D and goes back to the parser loop ($7C7E). Used by the game commands, which are not part of the command being parsed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32875"></span>806B</td>
+<td class="instruction">LD A,($B5CF)</td>
+<td class="comment-1" rowspan="1">A = the word class that came before this special word</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32878"></span>806E</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">Restore it, as if the special word had never been seen</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32879"></span>806F</td>
+<td class="instruction">JP <a href="31823.html#31870">$7C7E</a></td>
+<td class="comment-1" rowspan="1">Go back to reading the next word</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32861.html">805D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32875">Map</a></td>
+<td class="next">
+Next: <a href="32882.html">8072</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8149</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32973.html">80CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33097">Map</a></td>
+<td class="next">
+Next: <a href="33112.html">8158</a>
+</td>
+</tr>
+</table>
+<div class="description">8149: QUIT</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the score (<a href="33197.html">81AD</a>), waits for a key, and restarts the game (<a href="27687.html">6C27</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33097"></span>8149</td>
+<td class="instruction">CALL <a href="33197.html">$81AD</a></td>
+<td class="comment-1" rowspan="1">Print the score</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33100"></span>814C</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33101"></span>814D</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33103"></span>814F</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33105"></span>8151</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33107"></span>8153</td>
+<td class="instruction">JR Z,$814C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33109"></span>8155</td>
+<td class="instruction">JP <a href="27687.html">$6C27</a></td>
+<td class="comment-1" rowspan="1">Restart the game</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32973.html">80CD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33097">Map</a></td>
+<td class="next">
+Next: <a href="33112.html">8158</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

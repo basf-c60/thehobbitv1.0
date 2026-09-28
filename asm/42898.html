@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A792</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42858.html">A76A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42898">Map</a></td>
+<td class="next">
+Next: <a href="42911.html">A79F</a>
+</td>
+</tr>
+</table>
+<div class="description">A792: Handler for the boat: it crosses by itself</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Chained after one of the boat's handlers: when Bilbo really does it, 'with a lurch the boat glides across the river', and the boat crosses as for <a href="42858.html">A76A</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42898"></span>A792</td>
+<td class="instruction">CALL <a href="38749.html">$975D</a></td>
+<td class="comment-1" rowspan="1">Only if this is really happening</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42901"></span>A795</td>
+<td class="instruction">LD A,($B5DB)</td>
+<td class="comment-1" rowspan="2">Is the actor Bilbo?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42904"></span>A798</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42905"></span>A799</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing happens (this only triggers for Bilbo's own actions on the boat)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42906"></span>A79A</td>
+<td class="instruction">LD HL,$AE97</td>
+<td class="comment-1" rowspan="1">"with a lurch the boat glides across the river and lands on the other side."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42909"></span>A79D</td>
+<td class="instruction">JR <a href="42858.html#42870">$A776</a></td>
+<td class="comment-1" rowspan="1">Join the PULL code above, which actually moves it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42858.html">A76A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42898">Map</a></td>
+<td class="next">
+Next: <a href="42911.html">A79F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

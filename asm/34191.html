@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 858F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34153.html">8569</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34191">Map</a></td>
+<td class="next">
+Next: <a href="34324.html">8614</a>
+</td>
+</tr>
+</table>
+<div class="description">858F: Find the action for a command</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Collects the verb of the current frame and up to two prepositions from its noun phrases into $8349-$834E, and then searches the action table (<a href="43591.html">AA47</a>) for an entry with the same verb and prepositions (<a href="29162.html">71EA</a>). If one is found, <a href="34324.html">8614</a> sorts out which noun phrase is the target and which the instrument, and the routine returns with Z reset.
+</div>
+<div class="paragraph">
+If none is found there are two cases. If the verb was right but the other words were wrong ($B5D0 set), 'I do not know the verb ...' is printed ($8895). If the verb has no actions at all (WAIT, JUMP, SING, SMILE and many others), the game prints 'you wait. time passes...' with the verb substituted ($AC97), and a turn goes by. This is how all the verbs that do nothing get their reply.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34191"></span>858F</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save the caller's IY, the current frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34193"></span>8591</td>
+<td class="instruction">LD L,(IY+$00)</td>
+<td class="comment-1" rowspan="2">HL = the frame's own verb...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34196"></span>8594</td>
+<td class="instruction">LD H,(IY+$01)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34199"></span>8597</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="2">Is the ALL bit (bit 7) set on it?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34200"></span>8598</td>
+<td class="instruction">AND $80</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34202"></span>859A</td>
+<td class="instruction">LD ($8343),A</td>
+<td class="comment-1" rowspan="1">Remember whether this whole command is an ALL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34205"></span>859D</td>
+<td class="instruction">RES 7,H</td>
+<td class="comment-1" rowspan="1">Strip that bit back out of the verb itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34207"></span>859F</td>
+<td class="instruction">LD ($8349),HL</td>
+<td class="comment-1" rowspan="1">Keep the plain verb</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34210"></span>85A2</td>
+<td class="instruction">LD HL,$834B</td>
+<td class="comment-1" rowspan="5">Clear the four preposition slots that follow it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34213"></span>85A5</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34214"></span>85A6</td>
+<td class="instruction">LD B,$04</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34216"></span>85A8</td>
+<td class="instruction">CALL <a href="28889.html">$70D9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34219"></span>85AB</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34220"></span>85AC</td>
+<td class="instruction">LD B,$02</td>
+<td class="comment-1" rowspan="1">Up to two prepositions to pick out from the two noun phrases</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34222"></span>85AE</td>
+<td class="instruction">LD E,$04</td>
+<td class="comment-1" rowspan="1">First noun phrase's first preposition slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34224"></span>85B0</td>
+<td class="instruction">CALL <a href="34461.html">$869D</a></td>
+<td class="comment-1" rowspan="1">...pick it up, if there is one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34227"></span>85B3</td>
+<td class="instruction">LD E,$0E</td>
+<td class="comment-1" rowspan="1">Second noun phrase's first preposition slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34229"></span>85B5</td>
+<td class="instruction">CALL <a href="34461.html">$869D</a></td>
+<td class="comment-1" rowspan="1">...pick it up too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34232"></span>85B8</td>
+<td class="instruction">LD E,$06</td>
+<td class="comment-1" rowspan="2">First noun phrase's second preposition slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34234"></span>85BA</td>
+<td class="instruction">CALL <a href="34461.html">$869D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34237"></span>85BD</td>
+<td class="instruction">LD E,$10</td>
+<td class="comment-1" rowspan="2">Second noun phrase's second preposition slot...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34239"></span>85BF</td>
+<td class="instruction">CALL <a href="34461.html">$869D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34242"></span>85C2</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">The verb has not yet been shown to match anything</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34243"></span>85C3</td>
+<td class="instruction">LD ($B5D0),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34246"></span>85C6</td>
+<td class="instruction">LD HL,$8349</td>
+<td class="comment-1" rowspan="1">HL = the verb and prepositions just collected</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34249"></span>85C9</td>
+<td class="instruction">LD DE,$0008</td>
+<td class="comment-1" rowspan="1">DE = 8, the size of one action table entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34252"></span>85CC</td>
+<td class="instruction">LD IX,$AA47</td>
+<td class="comment-1" rowspan="1">IX = the start of the action table</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34256"></span>85D0</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">IY = the entry being compared</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34258"></span>85D2</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34260"></span>85D4</td>
+<td class="instruction">CALL <a href="29162.html">$71EA</a></td>
+<td class="comment-1" rowspan="1">Does this entry match the verb and words collected above?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34263"></span>85D7</td>
+<td class="instruction">JR Z,$860C</td>
+<td class="comment-1" rowspan="1">Yes: settle which words are the target and which the instrument, below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34265"></span>85D9</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1">No: move on to the next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34267"></span>85DB</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Have we reached the end of the table (an entry of all zeros)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34270"></span>85DE</td>
+<td class="instruction">OR (IX+$00)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34273"></span>85E1</td>
+<td class="instruction">JR NZ,$85D0</td>
+<td class="comment-1" rowspan="1">Not yet: try this next entry</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34275"></span>85E3</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">End of the table, with no match: restore IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34277"></span>85E5</td>
+<td class="instruction">LD A,($B5D0)</td>
+<td class="comment-1" rowspan="2">Did the verb itself match anything, just with the wrong words?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34280"></span>85E8</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34281"></span>85E9</td>
+<td class="instruction">JP NZ,<a href="34965.html">$8895</a></td>
+<td class="comment-1" rowspan="1">Yes: "I do not know the verb ..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34284"></span>85EC</td>
+<td class="instruction">LD HL,($8349)</td>
+<td class="comment-1" rowspan="2">No: this verb has no actions at all - push it as the message parameter...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34287"></span>85EF</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34288"></span>85F0</td>
+<td class="instruction">LD HL,$AC97</td>
+<td class="comment-1" rowspan="1">..."you &lt;verb&gt;. time passes..."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34291"></span>85F3</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Print it in the lower window, as if the command had succeeded</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34292"></span>85F4</td>
+<td class="instruction">LD ($B5F2),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34295"></span>85F7</td>
+<td class="instruction">LD ($B60C),A</td>
+<td class="comment-1" rowspan="1">No ALL is in progress</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34298"></span>85FA</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">This is really happening, not just a trial</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34300"></span>85FC</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34303"></span>85FF</td>
+<td class="instruction">CALL <a href="29386.html">$72CA</a></td>
+<td class="comment-1" rowspan="1">Print the message</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34306"></span>8602</td>
+<td class="instruction">LD A,($B60B)</td>
+<td class="comment-1" rowspan="2">Are we inside a quotation (an order to a character)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34309"></span>8605</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34310"></span>8606</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">If so, that is all - let the caller move on to the next frame as usual</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34311"></span>8607</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Otherwise throw away our own two return addresses...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34312"></span>8608</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34313"></span>8609</td>
+<td class="instruction">JP <a href="33617.html#33660">$837C</a></td>
+<td class="comment-1" rowspan="1">...and jump straight to ending the turn, as if a real action had just happened</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34316"></span>860C</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">A match was found: restore IY, the current frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34318"></span>860E</td>
+<td class="instruction">CALL <a href="34324.html">$8614</a></td>
+<td class="comment-1" rowspan="1">Work out which of its noun phrases is the target and which the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34321"></span>8611</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Make A non-zero...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34323"></span>8613</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">...telling the caller a matching action was found</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34153.html">8569</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34191">Map</a></td>
+<td class="next">
+Next: <a href="34324.html">8614</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

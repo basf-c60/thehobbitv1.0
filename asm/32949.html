@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 80B5</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32943.html">80AF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32949">Map</a></td>
+<td class="next">
+Next: <a href="32973.html">80CD</a>
+</td>
+</tr>
+</table>
+<div class="description">80B5: Opening quotation mark</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Begins a quotation, as in SAY TO THORIN "GO EAST". The current word class and frame count are saved ($8007, $8008), and the parser is re-entered at $7C54 with the frame pointer moved to a fresh frame, so that the words inside the quotation are parsed as complete commands of their own.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="32949"></span>80B5</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="2">Save the word class we had reached...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32950"></span>80B6</td>
+<td class="instruction">LD ($8007),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32953"></span>80B9</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="3">...and DE, BC and IY, so the parser can be restored exactly when the quotation closes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32954"></span>80BA</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32955"></span>80BB</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32957"></span>80BD</td>
+<td class="instruction">LD A,($B5F7)</td>
+<td class="comment-1" rowspan="2">Save the frame count too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32960"></span>80C0</td>
+<td class="instruction">LD ($8008),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32963"></span>80C3</td>
+<td class="instruction">LD DE,$FFE8</td>
+<td class="comment-1" rowspan="2">Move on to a fresh frame (24 bytes higher, since frames are built downwards)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32966"></span>80C6</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32968"></span>80C8</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">One level deeper inside a quotation</td>
+</tr>
+<tr>
+<td class="address-1"><span id="32970"></span>80CA</td>
+<td class="instruction">JP <a href="31823.html#31828">$7C54</a></td>
+<td class="comment-1" rowspan="1">Start parsing again, from a clean state, for the words inside the quotes</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="32943.html">80AF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#32949">Map</a></td>
+<td class="next">
+Next: <a href="32973.html">80CD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

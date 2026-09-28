@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 81E6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33197.html">81AD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33254">Map</a></td>
+<td class="next">
+Next: <a href="33266.html">81F2</a>
+</td>
+</tr>
+</table>
+<div class="description">81E6: Divide by repeated subtraction</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Divides HL by DE by repeated subtraction, returning the ASCII digit of the quotient in A and the remainder in HL. Z is set if the digit is '0'.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Number</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Divisor</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Digit ("0"-"9")</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Remainder</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33254"></span>81E6</td>
+<td class="instruction">LD A,$2F</td>
+<td class="comment-1" rowspan="1">A will become the ASCII digit ("0"-1, since the loop below starts by incrementing it)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33256"></span>81E8</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">One more digit counted</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33257"></span>81E9</td>
+<td class="instruction">AND A</td>
+<td class="comment-1" rowspan="2">Subtract the divisor from what is left...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33258"></span>81EA</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33260"></span>81EC</td>
+<td class="instruction">JR NC,$81E8</td>
+<td class="comment-1" rowspan="1">...as many times as it will go</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33262"></span>81EE</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="1">Put back the one subtraction that went too far</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33263"></span>81EF</td>
+<td class="instruction">CP $30</td>
+<td class="comment-1" rowspan="2">Is the digit "0" (Z reflects whether it is)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33265"></span>81F1</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33197.html">81AD</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33254">Map</a></td>
+<td class="next">
+Next: <a href="33266.html">81F2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

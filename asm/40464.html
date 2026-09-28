@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9E10</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40425.html">9DE9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40464">Map</a></td>
+<td class="next">
+Next: <a href="40479.html">9E1F</a>
+</td>
+</tr>
+</table>
+<div class="description">9E10: Print an object's name</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the words of the object whose record is at IY (<a href="40479.html">9E1F</a> on its word slots).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40464"></span>9E10</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Save the caller's IY and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40466"></span>9E12</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40467"></span>9E13</td>
+<td class="instruction">LD DE,$0008</td>
+<td class="comment-1" rowspan="2">An object's own word slots start 8 bytes into its record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40470"></span>9E16</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40472"></span>9E18</td>
+<td class="instruction">CALL <a href="40479.html">$9E1F</a></td>
+<td class="comment-1" rowspan="1">Print the noun and its adjectives</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40475"></span>9E1B</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="3">Restore the caller's DE and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40476"></span>9E1C</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40478"></span>9E1E</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40425.html">9DE9</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40464">Map</a></td>
+<td class="next">
+Next: <a href="40479.html">9E1F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

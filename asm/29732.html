@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7424</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29724.html">741C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29732">Map</a></td>
+<td class="next">
+Next: <a href="29739.html">742B</a>
+</td>
+</tr>
+</table>
+<div class="description">7424: Message code $13: pushed object's name and IS/ARE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Removes an object number from the stack and continues as <a href="29724.html">741C</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29732"></span>7424</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Reach past the interpreter's own two return addresses...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29733"></span>7425</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29734"></span>7426</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">...to find the object number the caller pushed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29735"></span>7427</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Put the two return addresses back</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29736"></span>7428</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29737"></span>7429</td>
+<td class="instruction">JR <a href="29724.html#29727">$741F</a></td>
+<td class="comment-1" rowspan="1">Join the target version above, using this object instead</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29724.html">741C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29732">Map</a></td>
+<td class="next">
+Next: <a href="29739.html">742B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

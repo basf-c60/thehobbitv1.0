@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9DE9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40414.html">9DDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40425">Map</a></td>
+<td class="next">
+Next: <a href="40464.html">9E10</a>
+</td>
+</tr>
+</table>
+<div class="description">9DE9: Find the next room that fits some words</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Searches the exits of the actor's room for one whose destination room has the words at HL, so that rooms can be named as targets ('go into the tunnel'). Returns the room number in A, or $FF.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40425"></span>9DE9</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Save the caller's IY and DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40427"></span>9DEB</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40428"></span>9DEC</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="1">DE = 2: the offset, from the start of a room's record, to its own name words</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40431"></span>9DEF</td>
+<td class="instruction">CALL <a href="39662.html">$9AEE</a></td>
+<td class="comment-1" rowspan="1">Look at the next exit of the actor's room; A = its direction, Z set once there are no more</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40434"></span>9DF2</td>
+<td class="instruction">JR Z,$9E0C</td>
+<td class="comment-1" rowspan="1">No more exits to try: give up</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40436"></span>9DF4</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1">A = this exit's destination room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40439"></span>9DF7</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Save the exit-table pointer for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40441"></span>9DF9</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = the destination room's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40444"></span>9DFC</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Copy that into IY as well...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40446"></span>9DFE</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40448"></span>9E00</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">...then restore IX, back to the exit we are examining</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40450"></span>9E02</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1">IY = the destination room's name words</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40452"></span>9E04</td>
+<td class="instruction">CALL <a href="29162.html">$71EA</a></td>
+<td class="comment-1" rowspan="1">Do the noun and adjectives at HL match that room's name?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40455"></span>9E07</td>
+<td class="instruction">JR NZ,$9DEF</td>
+<td class="comment-1" rowspan="1">No: try the next exit</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40457"></span>9E09</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="1">Yes: A = this exit's destination room, the answer we want</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40460"></span>9E0C</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="3">Restore the caller's DE and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40461"></span>9E0D</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40463"></span>9E0F</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40414.html">9DDE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40425">Map</a></td>
+<td class="next">
+Next: <a href="40464.html">9E10</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

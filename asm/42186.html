@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A4CA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42179.html">A4C3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42186">Map</a></td>
+<td class="next">
+Next: <a href="42203.html">A4DB</a>
+</td>
+</tr>
+</table>
+<div class="description">A4CA: Character routine: the warg</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If the warg (whose location is at $C341) is in Bilbo's room: 'the vicious warg runs around you and howls.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42186"></span>A4CA</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it always works</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42189"></span>A4CD</td>
+<td class="instruction">LD HL,$C341</td>
+<td class="comment-1" rowspan="1">HL = the warg's own location</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42192"></span>A4D0</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="2">Is Bilbo in the same room?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42195"></span>A4D3</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42196"></span>A4D4</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: say nothing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42197"></span>A4D5</td>
+<td class="instruction">LD HL,$AF77</td>
+<td class="comment-1" rowspan="1">"the vicious warg runs around you and howls."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42200"></span>A4D8</td>
+<td class="instruction">JP <a href="38738.html">$9752</a></td>
+<td class="comment-1" rowspan="1">Say it</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42179.html">A4C3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42186">Map</a></td>
+<td class="next">
+Next: <a href="42203.html">A4DB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

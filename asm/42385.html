@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A591</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42359.html">A577</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42385">Map</a></td>
+<td class="next">
+Next: <a href="42427.html">A5BB</a>
+</td>
+</tr>
+</table>
+<div class="description">A591: Character routine: the dragon comes for Bilbo</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+If Bilbo is in room 39, 41 or 44 (the dragon's domain) and the dragon (object 60, location at $C033) is somewhere else, the dragon moves to Bilbo's room and 'the dragon enters.'
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42385"></span>A591</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="3">Is Bilbo in room 39 (the front gate)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42388"></span>A594</td>
+<td class="instruction">CP $27</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42390"></span>A596</td>
+<td class="instruction">JR Z,$A59F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42392"></span>A598</td>
+<td class="instruction">CP $2C</td>
+<td class="comment-1" rowspan="2">...room 44...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42394"></span>A59A</td>
+<td class="instruction">JR Z,$A59F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42396"></span>A59C</td>
+<td class="instruction">CP $29</td>
+<td class="comment-1" rowspan="1">...or room 41 (the lower halls)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42398"></span>A59E</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">No: nothing happens</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42399"></span>A59F</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: this would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42402"></span>A5A2</td>
+<td class="instruction">LD A,($C01B)</td>
+<td class="comment-1" rowspan="3">Is the dragon already there?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42405"></span>A5A5</td>
+<td class="instruction">LD HL,$C033</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42408"></span>A5A8</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42409"></span>A5A9</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Yes: nothing to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42410"></span>A5AA</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">No: the dragon flies to Bilbo's room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42411"></span>A5AB</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Make sure Bilbo sees it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42413"></span>A5AD</td>
+<td class="instruction">LD ($B5F3),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42416"></span>A5B0</td>
+<td class="instruction">LD HL,$C02B</td>
+<td class="comment-1" rowspan="2">Push the dragon's name as the message parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42419"></span>A5B3</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42420"></span>A5B4</td>
+<td class="instruction">LD HL,$AF09</td>
+<td class="comment-1" rowspan="1">"the dragon enters."</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="42423"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="42427.html">A5BB</a> and <a href="42453.html">A5D5</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="42423"></span>A5B7</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="2">Print it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="42426"></span>A5BA</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="42359.html">A577</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#42385">Map</a></td>
+<td class="next">
+Next: <a href="42427.html">A5BB</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

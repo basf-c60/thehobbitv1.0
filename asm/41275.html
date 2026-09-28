@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at A13B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-b">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41257.html">A129</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41275">Map</a></td>
+<td class="next">
+Next: <a href="41332.html">A174</a>
+</td>
+</tr>
+</table>
+<div class="description">A13B: Action and word tables</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+<ul class="">
+<li>$A13B: the five actions for which the instrument's handlers are used rather than the target's (<a href="41216.html">A100</a>): DROP IN, PUT IN, PUT ON, TAKE OUT OF, THROW THROUGH.</li>
+<li>$A140: the words for the ten directions (<a href="40938.html">9FEA</a>): NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, UP, DOWN.</li>
+<li>$A154: the words for an object's flags when they are clear (<a href="41116.html">A09C</a>): UNLOCKED, -, EMPTY, -, OFF, CLOSED, DEAD, -.</li>
+<li>$A164: the same when set: LOCKED, -, FULL, BROKEN, ON, OPEN, ALIVE, -.</li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41275"></span>A13B</td>
+<td class="instruction">DEFB $0E,$11,$12,$14,$2C</td>
+<td class="comment-1" rowspan="1">Actions</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41280"></span>A140</td>
+<td class="instruction">DEFW $0484</td>
+<td class="comment-1" rowspan="10">Directions 1-10</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41282"></span>A142</td>
+<td class="instruction">DEFW $060B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41284"></span>A144</td>
+<td class="instruction">DEFW $0202</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41286"></span>A146</td>
+<td class="instruction">DEFW $077D</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41288"></span>A148</td>
+<td class="instruction">DEFW $0489</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41290"></span>A14A</td>
+<td class="instruction">DEFW $0492</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41292"></span>A14C</td>
+<td class="instruction">DEFW $0610</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41294"></span>A14E</td>
+<td class="instruction">DEFW $0619</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41296"></span>A150</td>
+<td class="instruction">DEFW $0729</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41298"></span>A152</td>
+<td class="instruction">DEFW $01C8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41300"></span>A154</td>
+<td class="instruction">DEFW $071C</td>
+<td class="comment-1" rowspan="8">Flag words (clear)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41302"></span>A156</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41304"></span>A158</td>
+<td class="instruction">DEFW $022C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41306"></span>A15A</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41308"></span>A15C</td>
+<td class="instruction">DEFW $04A3</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41310"></span>A15E</td>
+<td class="instruction">DEFW $0139</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41312"></span>A160</td>
+<td class="instruction">DEFW $0192</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41314"></span>A162</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41316"></span>A164</td>
+<td class="instruction">DEFW $03FA</td>
+<td class="comment-1" rowspan="8">Flag words (set)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41318"></span>A166</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41320"></span>A168</td>
+<td class="instruction">DEFW $02BD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41322"></span>A16A</td>
+<td class="instruction">DEFW $00CD</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41324"></span>A16C</td>
+<td class="instruction">DEFW $04AE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41326"></span>A16E</td>
+<td class="instruction">DEFW $04B8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41328"></span>A170</td>
+<td class="instruction">DEFW $07D8</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41330"></span>A172</td>
+<td class="instruction">DEFW $0000</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41257.html">A129</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41275">Map</a></td>
+<td class="next">
+Next: <a href="41332.html">A174</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

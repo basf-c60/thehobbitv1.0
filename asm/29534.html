@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 735E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29503.html">733F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29534">Map</a></td>
+<td class="next">
+Next: <a href="29549.html">736D</a>
+</td>
+</tr>
+</table>
+<div class="description">735E: Message code $00: print an object passed on the stack</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The caller of <a href="29396.html">72D4</a> pushed the address of an object's word list before calling. This handler reaches past the interpreter's own return addresses (POP DE / POP HL / EX (SP),HL / PUSH DE), removes that parameter, and prints the object's name (<a href="29739.html">742B</a>) unless the address is 0. The 'use an article' flag $B5F4 is cleared first, so no article is printed. Returns with Z set.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29534"></span>735E</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">No article wanted before this name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29535"></span>735F</td>
+<td class="instruction">LD ($B5F4),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29538"></span>7362</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Reach past the interpreter's own two return addresses...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29539"></span>7363</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29540"></span>7364</td>
+<td class="instruction">EX (SP),HL</td>
+<td class="comment-1" rowspan="1">...to find the object's own word-list address the caller pushed, lifting it out...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29541"></span>7365</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="1">...and putting the two return addresses back exactly as they were</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29542"></span>7366</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="2">Is that address 0 (meaning "nothing to name")?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29543"></span>7367</td>
+<td class="instruction">OR L</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29544"></span>7368</td>
+<td class="instruction">CALL NZ,<a href="29739.html">$742B</a></td>
+<td class="comment-1" rowspan="1">If not, print the object's name</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29547"></span>736B</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Tell the interpreter to just carry on: nothing further needs printing</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29548"></span>736C</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29503.html">733F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29534">Map</a></td>
+<td class="next">
+Next: <a href="29549.html">736D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

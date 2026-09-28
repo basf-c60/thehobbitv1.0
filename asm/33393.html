@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8271</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33387.html">826B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33393">Map</a></td>
+<td class="next">
+Next: <a href="33412.html">8284</a>
+</td>
+</tr>
+</table>
+<div class="description">8271: Wait for a key press and release</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Waits until no key is pressed, then until one is.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33393"></span>8271</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Wait here until no key at all is pressed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33394"></span>8272</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33396"></span>8274</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33398"></span>8276</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33400"></span>8278</td>
+<td class="instruction">JR NZ,$8271</td>
+</tr>
+<tr>
+<td class="address-2"><span id="33402"></span>827A</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="6">Then wait until one really is pressed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33403"></span>827B</td>
+<td class="instruction">IN A,($FE)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33405"></span>827D</td>
+<td class="instruction">AND $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33407"></span>827F</td>
+<td class="instruction">CP $1F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33409"></span>8281</td>
+<td class="instruction">JR Z,$827A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="33411"></span>8283</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="33387.html">826B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#33393">Map</a></td>
+<td class="next">
+Next: <a href="33412.html">8284</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

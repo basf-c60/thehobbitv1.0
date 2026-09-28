@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 84E6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34014.html">84DE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34022">Map</a></td>
+<td class="next">
+Next: <a href="34132.html">8554</a>
+</td>
+</tr>
+</table>
+<div class="description">84E6: Would this action work? (for a character)</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used when a character is deciding what to do (<a href="38764.html">976C</a>): works out, for the action in $B5D8 and the objects in $B5D9 and $B5DA, whether the action would succeed, without printing anything and without disturbing the player's command. The work area pointer at $833F is saved and restored. Returns with Z set if the action would not work.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34022"></span>84E6</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="5">Save every register this uses</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34023"></span>84E7</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34025"></span>84E9</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34027"></span>84EB</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34028"></span>84EC</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34029"></span>84ED</td>
+<td class="instruction">LD HL,($833F)</td>
+<td class="comment-1" rowspan="2">Save where the player's own target search had got to</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34032"></span>84F0</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34033"></span>84F1</td>
+<td class="instruction">LD A,($B5D8)</td>
+<td class="comment-1" rowspan="4">IX = the action table entry for the action being tried</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34036"></span>84F4</td>
+<td class="instruction">CALL <a href="28895.html">$70DF</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34039"></span>84F7</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34040"></span>84F8</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34042"></span>84FA</td>
+<td class="instruction">CALL <a href="33690.html">$839A</a></td>
+<td class="comment-1" rowspan="1">Clear the work area</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34045"></span>84FD</td>
+<td class="instruction">CALL <a href="28906.html">$70EA</a></td>
+<td class="comment-1" rowspan="1">Work out this action's own flag bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34048"></span>8500</td>
+<td class="instruction">CALL <a href="34153.html">$8569</a></td>
+<td class="comment-1" rowspan="1">Decode them</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34051"></span>8503</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="2">A = the target the character wants to try</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34054"></span>8506</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34055"></span>8507</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="3">Copy its words into the target work area, as if it had been typed</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34058"></span>850A</td>
+<td class="instruction">LD DE,$8333</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34061"></span>850D</td>
+<td class="instruction">CALL <a href="34132.html">$8554</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34064"></span>8510</td>
+<td class="instruction">LD A,($B5DA)</td>
+<td class="comment-1" rowspan="5">Do the same for the instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34067"></span>8513</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34068"></span>8514</td>
+<td class="instruction">LD A,($B5F0)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34071"></span>8517</td>
+<td class="instruction">LD DE,$8339</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34074"></span>851A</td>
+<td class="instruction">CALL <a href="34132.html">$8554</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="34077"></span>851D</td>
+<td class="instruction">CALL <a href="33938.html#33943">$8497</a></td>
+<td class="comment-1" rowspan="1">Start the object search fresh, in case a room search is needed instead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34080"></span>8520</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">For now, this is only a trial</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34081"></span>8521</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34084"></span>8524</td>
+<td class="instruction">LD A,($B60D)</td>
+<td class="comment-1" rowspan="2">Does the action need a target or an instrument at all?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34087"></span>8527</td>
+<td class="instruction">AND $0C</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34089"></span>8529</td>
+<td class="instruction">JR NZ,$8534</td>
+<td class="comment-1" rowspan="1">It does: check it properly below</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34091"></span>852B</td>
+<td class="instruction">CALL <a href="37999.html">$946F</a></td>
+<td class="comment-1" rowspan="4">It needs neither: just try it directly</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34094"></span>852E</td>
+<td class="instruction">LD A,($B5EC)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34097"></span>8531</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34098"></span>8532</td>
+<td class="instruction">JR $8543</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34100"></span>8534</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">It does need objects: only accept a single, unambiguous match</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34102"></span>8536</td>
+<td class="instruction">LD ($8344),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34105"></span>8539</td>
+<td class="instruction">CALL <a href="33797.html">$8405</a></td>
+<td class="comment-1" rowspan="1">Search for a workable target and instrument</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34108"></span>853C</td>
+<td class="instruction">JR Z,$8541</td>
+<td class="comment-1" rowspan="1">Found: success</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34110"></span>853E</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Not found: failure</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34111"></span>853F</td>
+<td class="instruction">JR $8543</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34113"></span>8541</td>
+<td class="instruction">OR $01</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34115"></span>8543</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Whatever the player was doing, it really is happening again now</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34117"></span>8545</td>
+<td class="instruction">LD ($B5EB),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34120"></span>8548</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="2">Restore the player's own target-search position...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34121"></span>8549</td>
+<td class="instruction">LD ($833F),HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34124"></span>854C</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="6">...and every other saved register</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34125"></span>854D</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34126"></span>854E</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34128"></span>8550</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34130"></span>8552</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34131"></span>8553</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34014.html">84DE</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34022">Map</a></td>
+<td class="next">
+Next: <a href="34132.html">8554</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 7225</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29162.html">71EA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29221">Map</a></td>
+<td class="next">
+Next: <a href="29248.html">7240</a>
+</td>
+</tr>
+</table>
+<div class="description">7225: Compare two word references</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Compares the word reference at HL with the one at IY (both stored low byte first) and then moves both pointers on by two bytes. Only the low 12 bits count (the offset from <a href="24576.html">6000</a>), so the class or flag bits in the top nibble are ignored.
+</div>
+<div class="paragraph">
+Returns with the Z flag set if the words are the same, or if the reference at HL is zero (an empty slot, which ends a list of words). Used five times by the routine at <a href="29145.html">71D9</a> when matching the words the player typed against the four word slots of an object record (<a href="49163.html">C00B</a>).
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Word reference</td>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Word reference</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z set if they match (or HL points to 0)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29221"></span>7225</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="1">Save HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29222"></span>7226</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">Is the word at HL empty?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29223"></span>7227</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29224"></span>7228</td>
+<td class="instruction">OR (HL)</td>
+<td class="comment-1" rowspan="1">Combine with (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29225"></span>7229</td>
+<td class="instruction">JR Z,$7238</td>
+<td class="comment-1" rowspan="1">If it is zero, go to <a href="29221.html#29240">7238</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29227"></span>722B</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="1">Compare the top four bits of the offset...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29230"></span>722E</td>
+<td class="instruction">XOR (HL)</td>
+<td class="comment-1" rowspan="1">Flip the bits in (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29231"></span>722F</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="1">Keep only the bits of $0F</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29233"></span>7231</td>
+<td class="instruction">JR NZ,$7238</td>
+<td class="comment-1" rowspan="1">If it is not zero, go to <a href="29221.html#29240">7238</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29235"></span>7233</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">...and the bottom eight</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29236"></span>7234</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="1">A = (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29237"></span>7235</td>
+<td class="instruction">CP (IY+$00)</td>
+<td class="comment-1" rowspan="1">Compare with the byte at (IY+$00)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29240"></span>7238</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Move both pointers on</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29241"></span>7239</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29242"></span>723A</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29243"></span>723B</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29245"></span>723D</td>
+<td class="instruction">INC IY</td>
+<td class="comment-1" rowspan="1">Increment IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29247"></span>723F</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29162.html">71EA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29221">Map</a></td>
+<td class="next">
+Next: <a href="29248.html">7240</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

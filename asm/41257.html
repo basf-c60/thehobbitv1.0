@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A129</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41235.html">A113</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41257">Map</a></td>
+<td class="next">
+Next: <a href="41275.html">A13B</a>
+</td>
+</tr>
+</table>
+<div class="description">A129: Is the target locked or open?</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Tests the target's flags: returns Z reset and A=$80 if it is locked; otherwise tests bit 5 and returns A=$85, so Z reset means it is open. The codes in A are for <a href="41116.html">A09C</a>. The entry at $A134 does only the second test.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41257"></span>A129</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41261"></span>A12D</td>
+<td class="instruction">BIT 0,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Is it locked?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41265"></span>A131</td>
+<td class="instruction">LD A,$80</td>
+<td class="comment-1" rowspan="1">A = the state code for LOCKED/UNLOCKED, in case the caller needs to report it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41267"></span>A133</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="1">Locked: return with Z reset, telling the caller it cannot be used yet</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="41268"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="37869.html">93ED</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41268"></span>A134</td>
+<td class="instruction">BIT 5,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Not locked: is it open?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41272"></span>A138</td>
+<td class="instruction">LD A,$85</td>
+<td class="comment-1" rowspan="1">A = the state code for OPEN/CLOSED, in case the caller needs to report it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41274"></span>A13A</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Z reflects whether it is open</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41235.html">A113</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41257">Map</a></td>
+<td class="next">
+Next: <a href="41275.html">A13B</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

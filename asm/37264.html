@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at 9190</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-w">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37245.html">917D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37264">Map</a></td>
+<td class="next">
+Next: <a href="37296.html">91B0</a>
+</td>
+</tr>
+</table>
+<div class="description">9190: Wound messages</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Addresses of the messages printed when a blow wounds but does not kill, indexed by twice the margin by which the attack beat the defence (see <a href="37083.html">90DB</a>). Entry 0 is never used (a margin of 0 means the blow was wasted). The small margins give the mildest messages and the larger margins the most violent ones, such as 'you hit thorin hard on the shoulder - thorin staggers and almost falls'.
+</div>
+<div class="paragraph">
+The table has 16 entries ($9190-$91AF), but the margin can be 16, which reads past the end into the code at $91B0 (see the bug note in <a href="37083.html">90DB</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37264"></span>9190</td>
+<td class="instruction">DEFW <a href="44145.html#44591">$AE2F</a></td>
+<td class="comment-1" rowspan="16">Messages for margins 0-15</td>
+</tr>
+<tr>
+<td class="address-1"><span id="37266"></span>9192</td>
+<td class="instruction">DEFW <a href="44145.html#44574">$AE1E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37268"></span>9194</td>
+<td class="instruction">DEFW <a href="44145.html#44563">$AE13</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37270"></span>9196</td>
+<td class="instruction">DEFW <a href="44145.html#44552">$AE08</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37272"></span>9198</td>
+<td class="instruction">DEFW <a href="44145.html#44540">$ADFC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37274"></span>919A</td>
+<td class="instruction">DEFW <a href="44145.html#44519">$ADE7</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37276"></span>919C</td>
+<td class="instruction">DEFW <a href="44145.html#44501">$ADD5</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37278"></span>919E</td>
+<td class="instruction">DEFW <a href="44145.html#44484">$ADC4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37280"></span>91A0</td>
+<td class="instruction">DEFW <a href="44145.html#44461">$ADAD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37282"></span>91A2</td>
+<td class="instruction">DEFW <a href="44145.html#44447">$AD9F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37284"></span>91A4</td>
+<td class="instruction">DEFW <a href="44145.html#44427">$AD8B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37286"></span>91A6</td>
+<td class="instruction">DEFW <a href="44145.html#44414">$AD7E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37288"></span>91A8</td>
+<td class="instruction">DEFW <a href="44145.html#44397">$AD6D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37290"></span>91AA</td>
+<td class="instruction">DEFW <a href="44145.html#44387">$AD63</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37292"></span>91AC</td>
+<td class="instruction">DEFW <a href="44145.html#44365">$AD4D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="37294"></span>91AE</td>
+<td class="instruction">DEFW <a href="44145.html#44348">$AD3C</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="37245.html">917D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#37264">Map</a></td>
+<td class="next">
+Next: <a href="37296.html">91B0</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

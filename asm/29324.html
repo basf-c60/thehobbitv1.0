@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Data at 728C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-w">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Data</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29320.html">7288</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29324">Map</a></td>
+<td class="next">
+Next: <a href="29370.html">72BA</a>
+</td>
+</tr>
+</table>
+<div class="description">728C: Message interpreter control-code jump table</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Addresses of the handlers for message control codes $00 to $16, used by <a href="29396.html">72D4</a>:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Code</th>
+<th colspan="1" rowspan="1">Handler</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$00</td>
+<td class="" colspan="1" rowspan="1"><a href="29534.html">735E</a></td>
+<td class="" colspan="1" rowspan="1">print the object whose address the caller pushed on the stack</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$01</td>
+<td class="" colspan="1" rowspan="1"><a href="29549.html">736D</a></td>
+<td class="" colspan="1" rowspan="1">print the word the caller pushed on the stack</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$02</td>
+<td class="" colspan="1" rowspan="1"><a href="29557.html">7375</a></td>
+<td class="" colspan="1" rowspan="1">jump forwards or backwards by the signed byte that follows</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$03</td>
+<td class="" colspan="1" rowspan="1"><a href="29572.html">7384</a></td>
+<td class="" colspan="1" rowspan="1">print the noun of the instrument in the current command ($B5ED)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$04</td>
+<td class="" colspan="1" rowspan="1"><a href="29579.html">738B</a></td>
+<td class="" colspan="1" rowspan="1">print the pushed word with an article (a/an/the/some)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$05, $0A, $0F, $12</td>
+<td class="" colspan="1" rowspan="1">$7382</td>
+<td class="" colspan="1" rowspan="1">do nothing</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$06</td>
+<td class="" colspan="1" rowspan="1"><a href="29594.html">739A</a></td>
+<td class="" colspan="1" rowspan="1">print the actor's name</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$07</td>
+<td class="" colspan="1" rowspan="1"><a href="29606.html">73A6</a></td>
+<td class="" colspan="1" rowspan="1">print the target with its article</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$08</td>
+<td class="" colspan="1" rowspan="1">$73B4</td>
+<td class="" colspan="1" rowspan="1">print a backspace (to join a word to the previous one)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$09</td>
+<td class="" colspan="1" rowspan="1">$73B9</td>
+<td class="" colspan="1" rowspan="1">print the instrument with its article</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0B</td>
+<td class="" colspan="1" rowspan="1"><a href="29655.html">73D7</a></td>
+<td class="" colspan="1" rowspan="1">call a sub-message at a relative address</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0C</td>
+<td class="" colspan="1" rowspan="1"><a href="29680.html">73F0</a></td>
+<td class="" colspan="1" rowspan="1">print HIS or YOUR for the actor</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0D</td>
+<td class="" colspan="1" rowspan="1"><a href="29370.html">72BA</a></td>
+<td class="" colspan="1" rowspan="1">new line</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$0E</td>
+<td class="" colspan="1" rowspan="1"><a href="29694.html">73FE</a></td>
+<td class="" colspan="1" rowspan="1">print HIS or YOUR for the target</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$10</td>
+<td class="" colspan="1" rowspan="1"><a href="29699.html">7403</a></td>
+<td class="" colspan="1" rowspan="1">print the actor's name and IS or ARE</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$11</td>
+<td class="" colspan="1" rowspan="1"><a href="29724.html">741C</a></td>
+<td class="" colspan="1" rowspan="1">the same for the target</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$13</td>
+<td class="" colspan="1" rowspan="1"><a href="29732.html">7424</a></td>
+<td class="" colspan="1" rowspan="1">the same for an object pushed on the stack</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$14</td>
+<td class="" colspan="1" rowspan="1"><a href="29495.html">7337</a></td>
+<td class="" colspan="1" rowspan="1">end the message with a new line</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$15</td>
+<td class="" colspan="1" rowspan="1"><a href="29499.html">733B</a></td>
+<td class="" colspan="1" rowspan="1">end the message with a full stop and a new line</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">$16</td>
+<td class="" colspan="1" rowspan="1">$7352</td>
+<td class="" colspan="1" rowspan="1">end the message</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+The IS/ARE and HIS/YOUR codes are what let one message serve both the player and the characters: 'you are dead' and 'thorin is dead' are the same message.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29324"></span>728C</td>
+<td class="instruction">DEFW <a href="29534.html">$735E</a></td>
+<td class="comment-1" rowspan="23">Handlers for codes $00-$16</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29326"></span>728E</td>
+<td class="instruction">DEFW <a href="29549.html">$736D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29328"></span>7290</td>
+<td class="instruction">DEFW <a href="29557.html">$7375</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29330"></span>7292</td>
+<td class="instruction">DEFW <a href="29572.html">$7384</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29332"></span>7294</td>
+<td class="instruction">DEFW <a href="29579.html">$738B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29334"></span>7296</td>
+<td class="instruction">DEFW <a href="29557.html#29570">$7382</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29336"></span>7298</td>
+<td class="instruction">DEFW <a href="29594.html">$739A</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29338"></span>729A</td>
+<td class="instruction">DEFW <a href="29606.html">$73A6</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29340"></span>729C</td>
+<td class="instruction">DEFW <a href="29620.html">$73B4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29342"></span>729E</td>
+<td class="instruction">DEFW <a href="29620.html#29625">$73B9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29344"></span>72A0</td>
+<td class="instruction">DEFW <a href="29557.html#29570">$7382</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29346"></span>72A2</td>
+<td class="instruction">DEFW <a href="29655.html">$73D7</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29348"></span>72A4</td>
+<td class="instruction">DEFW <a href="29680.html">$73F0</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29350"></span>72A6</td>
+<td class="instruction">DEFW <a href="29370.html">$72BA</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29352"></span>72A8</td>
+<td class="instruction">DEFW <a href="29694.html">$73FE</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29354"></span>72AA</td>
+<td class="instruction">DEFW <a href="29557.html#29570">$7382</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29356"></span>72AC</td>
+<td class="instruction">DEFW <a href="29699.html">$7403</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29358"></span>72AE</td>
+<td class="instruction">DEFW <a href="29724.html">$741C</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29360"></span>72B0</td>
+<td class="instruction">DEFW <a href="29557.html#29570">$7382</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29362"></span>72B2</td>
+<td class="instruction">DEFW <a href="29732.html">$7424</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29364"></span>72B4</td>
+<td class="instruction">DEFW <a href="29495.html">$7337</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29366"></span>72B6</td>
+<td class="instruction">DEFW <a href="29499.html">$733B</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="29368"></span>72B8</td>
+<td class="instruction">DEFW <a href="29503.html#29522">$7352</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29320.html">7288</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29324">Map</a></td>
+<td class="next">
+Next: <a href="29370.html">72BA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

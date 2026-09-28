@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 70D9</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28883.html">70D3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28889">Map</a></td>
+<td class="next">
+Next: <a href="28895.html">70DF</a>
+</td>
+</tr>
+</table>
+<div class="description">70D9: Clear a block of memory</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Writes B zero bytes starting at HL. A tiny utility used to clear the token buffer and other work areas.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Number of bytes to clear</td>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Start address</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28889"></span>70D9</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">A = 0</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28890"></span>70DA</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Clear this byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28891"></span>70DB</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Move on to the next one</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28892"></span>70DC</td>
+<td class="instruction">DJNZ $70DA</td>
+<td class="comment-1" rowspan="2">Repeat for however many bytes were asked for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28894"></span>70DE</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28883.html">70D3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28889">Map</a></td>
+<td class="next">
+Next: <a href="28895.html">70DF</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

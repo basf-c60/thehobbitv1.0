@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9D2E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40210.html">9D12</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40238">Map</a></td>
+<td class="next">
+Next: <a href="40311.html">9D77</a>
+</td>
+</tr>
+</table>
+<div class="description">9D2E: Find the next object that fits some words</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Continues a search of the object index (from IX) for an object whose words match the noun and adjectives at HL (<a href="29162.html">71EA</a>). The object must also match the filter in $B600: 0 for things that are not characters, 1 for characters, 2 for anything. Unless $B5FF says reach does not matter, the object must also be in the same place as the actor (<a href="40326.html">9D86</a>). Returns the object in A, or $FF when there are no more.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40238"></span>9D2E</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="3">Save the caller's BC, DE and IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40239"></span>9D2F</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40240"></span>9D30</td>
+<td class="instruction">PUSH IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40242"></span>9D32</td>
+<td class="instruction">LD IY,($B5FC)</td>
+<td class="comment-1" rowspan="1">IY = the current actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40246"></span>9D36</td>
+<td class="instruction">LD D,(IY+$10)</td>
+<td class="comment-1" rowspan="1">D = the actor's room, in case the object must be close by to count</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40249"></span>9D39</td>
+<td class="instruction">LD A,($B600)</td>
+<td class="comment-1" rowspan="1">A = the filter the caller wants: 0 things that are not characters, 1 characters, 2 anything at all</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40252"></span>9D3C</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">E = that filter, kept for the tests below</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40253"></span>9D3D</td>
+<td class="instruction">CALL <a href="39662.html">$9AEE</a></td>
+<td class="comment-1" rowspan="1">Look at the next entry of the object index; A = its object number, Z set once we run out</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40256"></span>9D40</td>
+<td class="instruction">JR Z,$9D6F</td>
+<td class="comment-1" rowspan="1">No more objects: give up (A is left holding $FF)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40258"></span>9D42</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="2">Does the caller want absolutely anything (filter 2)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40260"></span>9D44</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40261"></span>9D45</td>
+<td class="instruction">JR Z,$9D56</td>
+<td class="comment-1" rowspan="1">Yes: skip the character/object test below entirely</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40263"></span>9D47</td>
+<td class="instruction">LD A,(IY+$07)</td>
+<td class="comment-1" rowspan="1">No: A = this object's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40266"></span>9D4A</td>
+<td class="instruction">AND $48</td>
+<td class="comment-1" rowspan="1">Keep only whether it is alive and whether it is dead</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40268"></span>9D4C</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="1">Is it alive and NOT dead, i.e. a proper living character?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40270"></span>9D4E</td>
+<td class="instruction">LD A,$00</td>
+<td class="comment-1" rowspan="1">Assume it is not a character (0)...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40272"></span>9D50</td>
+<td class="instruction">JR NZ,$9D53</td>
+<td class="comment-1" rowspan="1">...unless it just proved to be alive and undead, in which case...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40274"></span>9D52</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="1">...it counts as a character (1)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40275"></span>9D53</td>
+<td class="instruction">CP E</td>
+<td class="comment-1" rowspan="1">Does that match what the caller asked for?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40276"></span>9D54</td>
+<td class="instruction">JR NZ,$9D3D</td>
+<td class="comment-1" rowspan="1">No: try the next object</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40278"></span>9D56</td>
+<td class="instruction">LD BC,$0008</td>
+<td class="comment-1" rowspan="1">BC = 8: the offset, from the start of an object's record, to its own four word slots</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40281"></span>9D59</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save IY (the object's record) for a moment</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40283"></span>9D5B</td>
+<td class="instruction">ADD IY,BC</td>
+<td class="comment-1" rowspan="1">IY = the object's word slots</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40285"></span>9D5D</td>
+<td class="instruction">CALL <a href="29162.html">$71EA</a></td>
+<td class="comment-1" rowspan="1">Do the noun and adjectives at HL match this object's own words?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40288"></span>9D60</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore IY, the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40290"></span>9D62</td>
+<td class="instruction">JR NZ,$9D3D</td>
+<td class="comment-1" rowspan="1">No match: try the next object</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40292"></span>9D64</td>
+<td class="instruction">LD A,($B5FF)</td>
+<td class="comment-1" rowspan="2">A match on words. Does this particular action not care whether the object is within reach?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40295"></span>9D67</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40296"></span>9D68</td>
+<td class="instruction">JR NZ,$9D6F</td>
+<td class="comment-1" rowspan="1">It does not care: accept this object regardless of where it is</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40298"></span>9D6A</td>
+<td class="instruction">CALL <a href="40326.html">$9D86</a></td>
+<td class="comment-1" rowspan="1">It does care: is the object near the actor?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40301"></span>9D6D</td>
+<td class="instruction">JR Z,$9D3D</td>
+<td class="comment-1" rowspan="1">No: try the next object</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40303"></span>9D6F</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1">A = the object we settled on (or $FF if we ran right out)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40306"></span>9D72</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="4">Restore the caller's IY, DE and BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40308"></span>9D74</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40309"></span>9D75</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40310"></span>9D76</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40210.html">9D12</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40238">Map</a></td>
+<td class="next">
+Next: <a href="40311.html">9D77</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

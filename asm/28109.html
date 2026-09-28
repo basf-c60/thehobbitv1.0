@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 6DCD</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28099.html">6DC3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28109">Map</a></td>
+<td class="next">
+Next: <a href="28230.html">6E46</a>
+</td>
+</tr>
+</table>
+<div class="description">6DCD: Read a line of input from the keyboard</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+This is The Hobbit's line editor. It starts by setting the idle timer at $B604 to 3000 (see <a href="29248.html">7240</a>), and setting $B5F2 and $B5EB to 1, then prints the '&gt;' prompt and a space.
+</div>
+<div class="paragraph">
+Characters are collected into the input buffer at <a href="28656.html">6FF0</a>. B counts the space left, starting at 128 ($80), so bit 7 of B being set means that nothing has been typed yet. C is 0 until the first key has been handled.
+</div>
+<div class="paragraph">
+Keys are fetched by <a href="29248.html">7240</a>, which also types WAIT for the player if they are idle for too long. Each key is then handled as follows:
+</div>
+<div class="paragraph">
+<ul class="">
+<li>'@' ($40, SYMBOL SHIFT + 2) as the very first key: repeat the last command (<a href="28273.html">6E71</a>).</li>
+<li>Any key that is the first key of the line: <a href="28230.html">6E46</a> checks for the cursor keys, which produce a one-letter movement command on their own.</li>
+<li>$18 (SYMBOL SHIFT + 0): delete the whole line (<a href="28290.html">6E82</a>).</li>
+<li>$08 (CAPS SHIFT + 0 or 5, or 5 on its own): delete the last character, by printing a backspace, putting B back up by one and moving HL back, unless the line is empty.</li>
+<li>Letters (codes $40 and above), space, double quote, full stop, comma and ENTER are accepted. Everything else is ignored.</li>
+</ul>
+</div>
+<div class="paragraph">
+An accepted character is stored in $B5F5 (the printer uses this to remember the last punctuation mark), echoed to the screen via <a href="30080.html">7580</a>, and put in the buffer, as long as there is room (B not 0). ENTER ($0D) ends the line: it is stored like any other character, and the routine returns with the Z flag reset.
+</div>
+<div class="paragraph">
+Note that letters are not converted to upper case here. They do not need to be: the tokeniser keeps only the low five bits of each letter (<a href="28478.html">6F3E</a>), and that is the same for 'a' and 'A'.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z reset for a normal line; Z set if the previous command is to be repeated</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28109"></span>6DCD</td>
+<td class="instruction">LD HL,$0BB8</td>
+<td class="comment-1" rowspan="1">Allow 3000 key polls before WAIT is typed automatically</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28112"></span>6DD0</td>
+<td class="instruction">LD ($B604),HL</td>
+<td class="comment-1" rowspan="1">Store HL in the idle counter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28115"></span>6DD3</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="1">A = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28117"></span>6DD5</td>
+<td class="instruction">LD ($B5F2),A</td>
+<td class="comment-1" rowspan="1">Store A in the lower-window flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28120"></span>6DD8</td>
+<td class="instruction">LD ($B5EB),A</td>
+<td class="comment-1" rowspan="1">Store A in the "really do it" flag</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28123"></span>6DDB</td>
+<td class="instruction">LD A,$3E</td>
+<td class="comment-1" rowspan="1">Print the prompt "&gt; "</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28125"></span>6DDD</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28128"></span>6DE0</td>
+<td class="instruction">LD A,$20</td>
+<td class="comment-1" rowspan="1">A = 32</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28130"></span>6DE2</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28133"></span>6DE5</td>
+<td class="instruction">LD HL,$6FF0</td>
+<td class="comment-1" rowspan="1">HL = input buffer, B = 128 characters of space, C = 0 (no keys yet)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28136"></span>6DE8</td>
+<td class="instruction">LD B,$80</td>
+<td class="comment-1" rowspan="1">B = 128</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28138"></span>6DEA</td>
+<td class="instruction">LD C,$00</td>
+<td class="comment-1" rowspan="1">C = 0</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="28140"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="28273.html">6E71</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28140"></span>6DEC</td>
+<td class="instruction">CALL <a href="29248.html">$7240</a></td>
+<td class="comment-1" rowspan="1">Wait for a key</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28143"></span>6DEF</td>
+<td class="instruction">BIT 7,B</td>
+<td class="comment-1" rowspan="1">First character of the line?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28145"></span>6DF1</td>
+<td class="instruction">JR Z,$6DF8</td>
+<td class="comment-1" rowspan="1">If the bit is clear, go to <a href="28109.html#28152">6DF8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28147"></span>6DF3</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="1">"@" as the first key: repeat the last command</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28149"></span>6DF5</td>
+<td class="instruction">JP Z,<a href="28273.html">$6E71</a></td>
+<td class="comment-1" rowspan="1">If yes, go to Repeat the last command (<a href="28273.html">6E71</a>)</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28152"></span>6DF8</td>
+<td class="instruction">BIT 0,C</td>
+<td class="comment-1" rowspan="1">First key of the line: check for cursor-key shortcuts</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28154"></span>6DFA</td>
+<td class="instruction">CALL Z,<a href="28230.html">$6E46</a></td>
+<td class="comment-1" rowspan="1">If zero/equal: call: Cursor-key shortcuts (<a href="28230.html">6E46</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28157"></span>6DFD</td>
+<td class="instruction">LD C,$01</td>
+<td class="comment-1" rowspan="1">C = 1</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28159"></span>6DFF</td>
+<td class="instruction">CP $18</td>
+<td class="comment-1" rowspan="1">SYMBOL SHIFT + 0: delete the whole line</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28161"></span>6E01</td>
+<td class="instruction">JR NZ,$6E08</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="28109.html#28168">6E08</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28163"></span>6E03</td>
+<td class="instruction">CALL <a href="28290.html">$6E82</a></td>
+<td class="comment-1" rowspan="1">Call: Delete the whole input line (<a href="28290.html">6E82</a>)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28166"></span>6E06</td>
+<td class="instruction">JR $6DEA</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28109.html#28138">6DEA</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28168"></span>6E08</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="1">Backspace?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28170"></span>6E0A</td>
+<td class="instruction">JR NZ,$6E19</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="28109.html#28185">6E19</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28172"></span>6E0C</td>
+<td class="instruction">BIT 7,B</td>
+<td class="comment-1" rowspan="1">Ignore it if the line is empty</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28174"></span>6E0E</td>
+<td class="instruction">JR NZ,$6DEC</td>
+<td class="comment-1" rowspan="1">If the bit is set, go to <a href="28109.html#28140">6DEC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28176"></span>6E10</td>
+<td class="instruction">LD A,$08</td>
+<td class="comment-1" rowspan="1">Otherwise rub out the last character</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28178"></span>6E12</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Print the character in A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28181"></span>6E15</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28182"></span>6E16</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Decrement HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28183"></span>6E17</td>
+<td class="instruction">JR $6DEC</td>
+<td class="comment-1" rowspan="1">Continue at <a href="28109.html#28140">6DEC</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28185"></span>6E19</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="1">Accept letters...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28187"></span>6E1B</td>
+<td class="instruction">JR NC,$6E31</td>
+<td class="comment-1" rowspan="1">If A &gt;= 64, go to <a href="28109.html#28209">6E31</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28189"></span>6E1D</td>
+<td class="instruction">CP $22</td>
+<td class="comment-1" rowspan="1">...double quote, space, ENTER, full stop and comma</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28191"></span>6E1F</td>
+<td class="instruction">JR Z,$6E31</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28109.html#28209">6E31</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28193"></span>6E21</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="1">Is it " "?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28195"></span>6E23</td>
+<td class="instruction">JR Z,$6E31</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28109.html#28209">6E31</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28197"></span>6E25</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="1">Compare with 13</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28199"></span>6E27</td>
+<td class="instruction">JR Z,$6E31</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28109.html#28209">6E31</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28201"></span>6E29</td>
+<td class="instruction">CP $2E</td>
+<td class="comment-1" rowspan="1">Is it "."?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28203"></span>6E2B</td>
+<td class="instruction">JR Z,$6E31</td>
+<td class="comment-1" rowspan="1">If yes, go to <a href="28109.html#28209">6E31</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28205"></span>6E2D</td>
+<td class="instruction">CP $2C</td>
+<td class="comment-1" rowspan="1">Is it ","?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28207"></span>6E2F</td>
+<td class="instruction">JR NZ,$6DEC</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="28109.html#28140">6DEC</a></td>
+</tr>
+<tr>
+<td class="address-2"><span id="28209"></span>6E31</td>
+<td class="instruction">LD ($B5F5),A</td>
+<td class="comment-1" rowspan="1">Remember the character for the printer</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28212"></span>6E34</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Buffer full?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28213"></span>6E35</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="1">Increment B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28214"></span>6E36</td>
+<td class="instruction">JR Z,$6E3E</td>
+<td class="comment-1" rowspan="1">If Z is set, go to <a href="28109.html#28222">6E3E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28216"></span>6E38</td>
+<td class="instruction">CALL <a href="30080.html">$7580</a></td>
+<td class="comment-1" rowspan="1">Echo the character and store it</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28219"></span>6E3B</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Store A at (HL)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28220"></span>6E3C</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Increment HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28221"></span>6E3D</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Decrement B</td>
+</tr>
+<tr>
+<td class="address-2"><span id="28222"></span>6E3E</td>
+<td class="instruction">CP $0D</td>
+<td class="comment-1" rowspan="1">Loop until ENTER</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28224"></span>6E40</td>
+<td class="instruction">JP NZ,$6DEC</td>
+<td class="comment-1" rowspan="1">If no, go to <a href="28109.html#28140">6DEC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="28227"></span>6E43</td>
+<td class="instruction">OR $01</td>
+<td class="comment-1" rowspan="1">Return with Z reset</td>
+</tr>
+<tr>
+<td class="address-1"><span id="28229"></span>6E45</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Done</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="28099.html">6DC3</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#28109">Map</a></td>
+<td class="next">
+Next: <a href="28230.html">6E46</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

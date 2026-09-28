@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 73A6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29594.html">739A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29606">Map</a></td>
+<td class="next">
+Next: <a href="29620.html">73B4</a>
+</td>
+</tr>
+</table>
+<div class="description">73A6: Message code $07: print the target</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Prints the target of the command (object $B5D9) with its article. If $B5EF is set, the target is a room rather than an object, and the room's name is used instead (<a href="29132.html">71CC</a> rather than <a href="29145.html">71D9</a>). The entry at $73AB is used by <a href="28962.html">7122</a>. Code $08 ($73B4) prints a backspace, and code $09 ($73B9) sets the article flag and continues into <a href="29630.html">73BE</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29606"></span>73A6</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">An article is wanted</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29608"></span>73A8</td>
+<td class="instruction">LD ($B5F4),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="29611"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="28962.html">7122</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="29611"></span>73AB</td>
+<td class="instruction">LD A,($B5EF)</td>
+<td class="comment-1" rowspan="2">Is the target actually a room, rather than an object?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29614"></span>73AE</td>
+<td class="instruction">AND A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29615"></span>73AF</td>
+<td class="instruction">LD A,($B5D9)</td>
+<td class="comment-1" rowspan="1">A = the target's own number, either way</td>
+</tr>
+<tr>
+<td class="address-1"><span id="29618"></span>73B2</td>
+<td class="instruction">JR <a href="29630.html#29637">$73C5</a></td>
+<td class="comment-1" rowspan="1">Join the shared printing code below</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="29594.html">739A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#29606">Map</a></td>
+<td class="next">
+Next: <a href="29620.html">73B4</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

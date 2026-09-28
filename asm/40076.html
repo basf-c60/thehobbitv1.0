@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 9C8C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40021.html">9C55</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40076">Map</a></td>
+<td class="next">
+Next: <a href="40089.html">9C99</a>
+</td>
+</tr>
+</table>
+<div class="description">9C8C: Get the actor's room record</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Returns IX pointing at the record of the room the actor is in. AF is preserved.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="40076"></span>9C8C</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Save AF, so this can be used freely without upsetting the caller's flags</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40077"></span>9C8D</td>
+<td class="instruction">LD IX,($B5FC)</td>
+<td class="comment-1" rowspan="1">IX = the current actor's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40081"></span>9C91</td>
+<td class="instruction">LD A,(IX+$10)</td>
+<td class="comment-1" rowspan="1">A = the actor's location (the first location byte of their record)</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40084"></span>9C94</td>
+<td class="instruction">CALL <a href="39692.html">$9B0C</a></td>
+<td class="comment-1" rowspan="1">IX = that room's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40087"></span>9C97</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">Restore AF</td>
+</tr>
+<tr>
+<td class="address-1"><span id="40088"></span>9C98</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="40021.html">9C55</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#40076">Map</a></td>
+<td class="next">
+Next: <a href="40089.html">9C99</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

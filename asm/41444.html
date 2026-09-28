@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at A1E4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41336.html">A178</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41444">Map</a></td>
+<td class="next">
+Next: <a href="41469.html">A1FD</a>
+</td>
+</tr>
+</table>
+<div class="description">A1E4: UNTIE</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The target must be tied to the rope ('the X is not tied'). It then goes to whoever holds the rope.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="41444"></span>A1E4</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the target's own record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41448"></span>A1E8</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Is it actually held by the rope (object 18)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41451"></span>A1EB</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41453"></span>A1ED</td>
+<td class="instruction">LD HL,$AF84</td>
+<td class="comment-1" rowspan="1">"the X is not tied."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41456"></span>A1F0</td>
+<td class="instruction">JP NZ,<a href="29396.html">$72D4</a></td>
+<td class="comment-1" rowspan="1">No: say so and stop</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41459"></span>A1F3</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop here: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41462"></span>A1F6</td>
+<td class="instruction">LD A,($C256)</td>
+<td class="comment-1" rowspan="1">A = whoever holds the rope itself</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41465"></span>A1F9</td>
+<td class="instruction">LD (IX+$01),A</td>
+<td class="comment-1" rowspan="2">The target now belongs to them too</td>
+</tr>
+<tr>
+<td class="address-1"><span id="41468"></span>A1FC</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="41336.html">A178</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#41444">Map</a></td>
+<td class="next">
+Next: <a href="41469.html">A1FD</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

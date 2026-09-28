@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 8C45</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35898.html">8C3A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35909">Map</a></td>
+<td class="next">
+Next: <a href="35957.html">8C75</a>
+</td>
+</tr>
+</table>
+<div class="description">8C45: DROP</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+The actor must be carrying the target (<a href="35898.html">8C3A</a>). If the target is tied to the rope (it is 'held by' object 18), it is the rope that is dropped.
+</div>
+<div class="paragraph">
+Dropping means setting the object's holder to $FF, which leaves it in the room. But objects with bit 1 of their flags set are liquids or things that do not survive being put down: they 'evaporate', which means their location is set to 0 (nowhere) and a message says so. The objects that behave like this are numbers 9, 20 (the wine), 21, 22, 23, 24 and 42.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35909"></span>8C45</td>
+<td class="instruction">CALL <a href="35898.html">$8C3A</a></td>
+<td class="comment-1" rowspan="1">Is the actor carrying it? (If not, "you are not carrying it.")</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35912"></span>8C48</td>
+<td class="instruction">CALL <a href="40089.html">$9C99</a></td>
+<td class="comment-1" rowspan="1">Dry run? Then stop: it would work</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35915"></span>8C4B</td>
+<td class="instruction">LD IX,($B5F8)</td>
+<td class="comment-1" rowspan="1">IX = the object's record</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35919"></span>8C4F</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="2">Is it tied to the rope (object 18)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35922"></span>8C52</td>
+<td class="instruction">CP $12</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35924"></span>8C54</td>
+<td class="instruction">JR NZ,$8C5A</td>
+<td class="comment-1" rowspan="1">No</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35926"></span>8C56</td>
+<td class="instruction">LD IX,$C255</td>
+<td class="comment-1" rowspan="1">Yes: it is the rope that gets dropped</td>
+</tr>
+<tr>
+<td class="address-2"><span id="35930"></span>8C5A</td>
+<td class="instruction">LD (IX+$01),$FF</td>
+<td class="comment-1" rowspan="1">Nobody holds it now: it lies in the room</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35934"></span>8C5E</td>
+<td class="instruction">BIT 1,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Does it evaporate?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35938"></span>8C62</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">No: done</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35939"></span>8C63</td>
+<td class="instruction">LD (IX+$10),$00</td>
+<td class="comment-1" rowspan="1">Yes: it goes nowhere</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35943"></span>8C67</td>
+<td class="instruction">LD HL,$B034</td>
+<td class="comment-1" rowspan="1">"&lt;object&gt; evaporates."</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35946"></span>8C6A</td>
+<td class="instruction">LD DE,$0008</td>
+<td class="comment-1" rowspan="5">Push the object's name as the parameter</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35949"></span>8C6D</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35951"></span>8C6F</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="address-1"><span id="35953"></span>8C71</td>
+<td class="instruction">CALL <a href="29396.html">$72D4</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="35956"></span>8C74</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="35898.html">8C3A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#35909">Map</a></td>
+<td class="next">
+Next: <a href="35957.html">8C75</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>

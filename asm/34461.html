@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Hobbit (v1.0): Routine at 869D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html">The Hobbit (v1.0)</a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34324.html">8614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34461">Map</a></td>
+<td class="next">
+Next: <a href="34490.html">86BA</a>
+</td>
+</tr>
+</table>
+<div class="description">869D: Pick up a preposition from the frame</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Copies the word at offset E of the frame to (HL) and moves HL on, unless it is empty or B (the number of words wanted) has reached 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="address-2"><span id="34461"></span>869D</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Does the caller still want any more prepositions from this phrase?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34462"></span>869E</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34463"></span>869F</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="2">No: nothing more to do</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34464"></span>86A0</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34466"></span>86A2</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Save the caller's IY, the current frame</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34468"></span>86A4</td>
+<td class="instruction">ADD IY,DE</td>
+<td class="comment-1" rowspan="1">IY = the frame, plus the offset of the preposition slot asked for</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34470"></span>86A6</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">Copy its low byte to where HL points...</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34473"></span>86A9</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34474"></span>86AA</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34475"></span>86AB</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="2">...then its high byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34478"></span>86AE</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34479"></span>86AF</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="1">Step back to the low byte</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34480"></span>86B0</td>
+<td class="instruction">OR (IY+$00)</td>
+<td class="comment-1" rowspan="1">Was that slot actually empty (both bytes zero)?</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34483"></span>86B3</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore the caller's IY</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34485"></span>86B5</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Empty: leave HL where it is, so the next candidate can use the same two bytes</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34486"></span>86B6</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">A real preposition was found: one fewer still wanted</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34487"></span>86B7</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Move on past the two bytes just filled</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34488"></span>86B8</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="address-1"><span id="34489"></span>86B9</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="34324.html">8614</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#34461">Map</a></td>
+<td class="next">
+Next: <a href="34490.html">86BA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release">Disassembly of the 1982 v1.0 tape, with notes on the engine</div>
+<div class="copyright">&#169; 1982 Melbourne House. Annotated disassembly produced with SkoolKit for personal study.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+</footer>
+</body>
+</html>
