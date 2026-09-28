@@ -32,13 +32,13 @@ Next: <a href="30059.html">756B</a>
 Prints one word from the dictionary, with the right verb ending and with word wrap. On entry DE holds the word reference: the low nibble of D and all of E are the offset from <a href="24576.html">6000</a>, and the high nibble of D holds flags. A reference of zero prints nothing.
 </div>
 <div class="paragraph">
-The letters are unpacked into a buffer at $749D (five-bit letter codes plus $60 give lower-case ASCII), using the usual end-of-word rule (bit 7, but never in the first two bytes).
+The letters are unpacked into a buffer at <a href="29853.html">749D</a> (five-bit letter codes plus $60 give lower-case ASCII), using the usual end-of-word rule (bit 7, but never in the first two bytes).
 </div>
 <div class="paragraph">
 VERB ENDINGS. The flag nibble decides whether the verb is to agree with a third-person subject: $50 never, $40 always, $10 if the target is not Bilbo, and anything else if the actor is not Bilbo. So one message can say 'you attack thorin' or 'thorin attacks you'. If an ending is needed and the word allows one (bit 7 of its second byte), the top three bits of its third byte choose an ending from the table at <a href="46607.html">B60F</a>: S, ES, IES, a backspace followed by IES (to turn 'carry' into 'carries'), D, or ING.
 </div>
 <div class="paragraph">
-WORD WRAP. The length of the word, with its ending, is compared with the room left on the line (at $75A8 in the lower window or $768E in the story window). If it will not fit, a new line is started first, keeping the capital-letter flag. A space is printed before the word unless it starts a line.
+WORD WRAP. The length of the word, with its ending, is compared with the room left on the line (at <a href="30120.html">75A8</a> in the lower window or <a href="30350.html">768E</a> in the story window). If it will not fit, a new line is started first, keeping the capital-letter flag. A space is printed before the word unless it starts a line.
 </div>
 <div class="paragraph">
 Words with flag nibble $70 set the capital-letter flag afterwards, so that the next word starts a sentence.
@@ -106,7 +106,7 @@ Words with flag nibble $70 set the capital-letter flag afterwards, so that the n
 <tr>
 <td class="address-1"><span id="29893"></span>74C5</td>
 <td class="instruction">LD HL,$6000</td>
-<td class="comment-1" rowspan="2">...plus $6000: HL = the word in the dictionary</td>
+<td class="comment-1" rowspan="2">...plus <a href="24576.html">6000</a>: HL = the word in the dictionary</td>
 </tr>
 <tr>
 <td class="address-1"><span id="29896"></span>74C8</td>

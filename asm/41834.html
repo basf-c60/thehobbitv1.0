@@ -29,7 +29,7 @@ Next: <a href="41923.html">A3C3</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Chained after the normal ATTACK handler in each goblin's object record (action 15 runs <a href="37083.html">90DB</a>, then this). If the attack killed the goblin, it comes straight back: the dead flag is cleared, its number is written back into its slot in the character table (so it acts again), it is moved to another room and given a new adjective, all from its 6-byte entry in the table at $A3C3. The game prints 'the goblin falls down a hole and vanishes.'
+Chained after the normal ATTACK handler in each goblin's object record (action 15 runs <a href="37083.html">90DB</a>, then this). If the attack killed the goblin, it comes straight back: the dead flag is cleared, its number is written back into its slot in the character table (so it acts again), it is moved to another room and given a new adjective, all from its 6-byte entry in the table at <a href="41923.html">A3C3</a>. The game prints 'the goblin falls down a hole and vanishes.'
 </div>
 <div class="paragraph">
 It then means to announce '- another goblin' if the goblin's new room is Bilbo's, but compares Bilbo's room with register B, which this routine never sets; B holds whatever the attack routine left there (the attack value), so the announcement depends on chance.
@@ -60,7 +60,7 @@ It then means to announce '- another goblin' if the goblin's new room is Bilbo's
 <tr>
 <td class="address-1"><span id="41847"></span>A377</td>
 <td class="instruction">LD DE,$0006</td>
-<td class="comment-1" rowspan="7">Find its entry in the table at $A3C3 (6 bytes each)</td>
+<td class="comment-1" rowspan="7">Find its entry in the table at <a href="41923.html">A3C3</a> (6 bytes each)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="41850"></span>A37A</td>

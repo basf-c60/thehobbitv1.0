@@ -29,7 +29,7 @@ Next: <a href="50719.html">C61F</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Every object, character and door in the game has a record here. They are backed up at start-up and restored when the game restarts. As an example, the short strong sword (object 14) at $C1F4 in the original game:
+Every object, character and door in the game has a record here. They are backed up at start-up and restored when the game restarts. As an example, the short strong sword (object 14) at <a href="49163.html#49652">C1F4</a> in the original game:
 </div>
 <div class="paragraph">
 $01,$FF,$03,$04,$00,$40,$80,$94, $84,$06,$9D,$05,$68,$06,$00,$00, $07, $0B,$57,$92,$FF
@@ -53,13 +53,13 @@ Byte 7: flags. Bit 0 locked; bit 1 'pours' (a liquid, which evaporates when drop
 Bytes 8-15: four word slots (little-endian references, offsets from <a href="24576.html">6000</a>): the noun followed by adjectives. For the sword: $0684 SWORD, $059D SHORT, $0668 STRONG, 0.
 </div>
 <div class="paragraph">
-Then one location byte per location (byte 0 says how many): here room 7, the trolls' cave. Changing this byte (at $C204) moves the sword; I changed it to 1 so that the sword starts with Bilbo.
+Then one location byte per location (byte 0 says how many): here room 7, the trolls' cave. Changing this byte (at <a href="49163.html#49668">C204</a>) moves the sword; I changed it to 1 so that the sword starts with Bilbo.
 </div>
 <div class="paragraph">
-Then a list of the object's own action handlers, three bytes each: an action number (see <a href="43591.html">AA47</a>) and the address of a routine to run when that action is done to the object. An entry with action 0 straight after a matching entry is run as well, so several routines can be chained. The list ends with $FF. The sword's list has one entry: action 11 (STRIKE) runs $9257. The wine's has action 33 (DRINK) followed by action 0 running <a href="43501.html">A9ED</a>, which is what makes Bilbo drunk. Actions that an object has no handler for fall back on the default handlers at <a href="50719.html">C61F</a> (see <a href="37999.html">946F</a>).
+Then a list of the object's own action handlers, three bytes each: an action number (see <a href="43591.html">AA47</a>) and the address of a routine to run when that action is done to the object. An entry with action 0 straight after a matching entry is run as well, so several routines can be chained. The list ends with $FF. The sword's list has one entry: action 11 (STRIKE) runs <a href="37463.html">9257</a>. The wine's has action 33 (DRINK) followed by action 0 running <a href="43501.html">A9ED</a>, which is what makes Bilbo drunk. Actions that an object has no handler for fall back on the default handlers at <a href="50719.html">C61F</a> (see <a href="37999.html">946F</a>).
 </div>
 <div class="paragraph">
-Offset 16 (the first location byte) is what the movement routine updates (<a href="36121.html">8D19</a>). For Bilbo, this is $C01B.
+Offset 16 (the first location byte) is what the movement routine updates (<a href="36121.html">8D19</a>). For Bilbo, this is <a href="49163.html#49179">C01B</a>.
 </div>
 </div>
 </td>

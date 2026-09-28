@@ -29,13 +29,13 @@ Next: <a href="32182.html">7DB6</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Handles the end-of-line token, and (from $7CC4) THEN or a full stop. It closes the current command frame. If a verb was required but none was given it complains (<a href="32761.html">7FF9</a>).
+Handles the end-of-line token, and (from <a href="31936.html#31940">7CC4</a>) THEN or a full stop. It closes the current command frame. If a verb was required but none was given it complains (<a href="32761.html">7FF9</a>).
 </div>
 <div class="paragraph">
-For ALL (see <a href="32906.html">808A</a>) the verb is flagged. The frame count $B5F7 is increased and, for THEN, the parser goes back to the start state for the next command ($7C6A).
+For ALL (see <a href="32906.html">808A</a>) the verb is flagged. The frame count $B5F7 is increased and, for THEN, the parser goes back to the start state for the next command (<a href="31823.html#31850">7C6A</a>).
 </div>
 <div class="paragraph">
-At the end of the line some tidying up is done. If the previous command was unfinished ($B60A), the new words are merged into it ($7D02-$7D4B): empty slots in the old frame are filled from the new one. Then frames that have no verb of their own (because of AND, as in 'take the key and the sword') are given the verb of the frame before them (<a href="32641.html">7F81</a>). Finally, noun phrases consisting of IT are resolved, and if a quotation is still open the parser starts again.
+At the end of the line some tidying up is done. If the previous command was unfinished ($B60A), the new words are merged into it (<a href="31936.html#32002">7D02</a>-<a href="31936.html#32075">7D4B</a>): empty slots in the old frame are filled from the new one. Then frames that have no verb of their own (because of AND, as in 'take the key and the sword') are given the verb of the frame before them (<a href="32641.html">7F81</a>). Finally, noun phrases consisting of IT are resolved, and if a quotation is still open the parser starts again.
 </div>
 </div>
 </td>

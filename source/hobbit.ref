@@ -18,7 +18,7 @@ Facts=Trivia
 
 [HowItWorksText]
 <h2>About this disassembly</h2>
-<p>This is a complete annotated disassembly of the main code block of the original 1982 release (v1.0) of <i>The Hobbit</i> by Veronika Megler and Philip Mitchell, published by Melbourne House. The block is 37,888 bytes long, loads at 24576 ($6000) and is started by <tt>RANDOMIZE USR 27648</tt>. Reassembling the disassembly with SkoolKit gives back the original block byte for byte.</p>
+<p>This is a complete annotated disassembly of the main code block of the original 1982 release (v1.0) of <i>The Hobbit</i> by Veronika Megler and Philip Mitchell, published by Melbourne House. The block is 37,888 bytes long, loads at 24576 (#R$6000) and is started by <tt>RANDOMIZE USR 27648</tt>. Reassembling the disassembly with SkoolKit gives back the original block byte for byte.</p>
 <p>The code and data were identified by running the game in a Z80 emulator, by tracing every table and pointer, and by hand. Many descriptions were confirmed by playing the relevant scene in the emulator; the Trivia page lists what was checked this way. Everything else is a careful reading of the code.</p>
 <p>Besides the routine and data pages, see: <a href="Map.html">the map of Wilderland</a>, <a href="Pictures.html">the location pictures</a>, <a href="Characters.html">the characters</a>, <a href="Objects.html">the objects</a>, <a href="reference/facts.html">trivia</a> and <a href="reference/bugs.html">bugs</a>.</p>
 
@@ -79,7 +79,7 @@ The characters in the table at #R$C9BA act on their own every turn (#R$976C), us
 In #R$917D a random adjustment of -1 to -10 is added to a fight value. The code uses the carry flag to detect overflow, but adding a negative (two's complement) number to a value larger than its size always sets the carry, so the routine wrongly concludes that the result has overflowed and returns 0. About 4% of adjustments are negative, so about 4% of attack or defence values collapse to zero. A zeroed defence makes the next blow almost certainly fatal, which explains many of the game's sudden deaths.
 
 [Bug:woundTable:Missing wound message]
-The wound message table at #R$9190 has no valid entry for a margin of exactly 16. The two bytes read instead are code at $91B0, giving a message address of $2ADD in the ROM, so the game prints garbage.
+The wound message table at #R$9190 has no valid entry for a margin of exactly 16. The two bytes read instead are code at #R$91B0, giving a message address of $2ADD in the ROM, so the game prints garbage.
 
 [Bug:rrca:Wound damage computed with RRCA]
 The routine at #R$90DB halves the margin with RRCA instead of SRL. RRCA feeds the bit that falls off the bottom back in at the top, so for many margins the 'halved' value is over 128 and the reduction is either skipped or enormous. For Thorin, margins 3, 7, 11 and 15 do no damage at all, while margins 1, 5, 9 and 13 cut his defence from 120 to about 53 in one blow.
@@ -91,10 +91,10 @@ POKE 49653,0 (the sword is held by object 0, Bilbo) and POKE 49668,1 (and it is 
 POKE 49657,255 (the sword's strength becomes 255, so Bilbo attacks at the maximum of 255).
 
 [Glossary:Actor]
-The character currently performing an action: Bilbo (object 0) or one of the independent characters. Held in $B5DB.
+The character currently performing an action: Bilbo (object 0) or one of the independent characters. Held in #R$B5DB.
 
 [Glossary:Dry run]
 A trial execution of a command routine to find out whether it would succeed, with no visible effects. See #R$9C99.
 
 [Glossary:Word reference]
-A 12-bit offset from $6000 identifying a word in one of the dictionaries, often stored in two bytes with flag bits in the top four.
+A 12-bit offset from #R$6000 identifying a word in one of the dictionaries, often stored in two bytes with flag bits in the top four.

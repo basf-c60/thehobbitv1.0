@@ -35,7 +35,7 @@ This is The Hobbit's famous 'independent characters' system. Every character in 
 Each entry of that table is 7 bytes: the character's object number (0 if the character is dead or gone), a count used by <a href="39348.html">99B4</a>, the address of the character's current place in its behaviour program, the address of its reaction table, and a 'stubbornness' value used by <a href="36766.html">8F9E</a>.
 </div>
 <div class="paragraph">
-For each living character, the character becomes the current actor ($B5DB, $B5FC) and the room it starts the turn in is noted ($B5E7). Output is switched on only if Bilbo can see the character (<a href="40311.html">9D77</a>), so the player sees only what happens in front of him. If Bilbo is in the dark, the first character to do anything in his room produces 'you hear a noise.' instead ($AF19).
+For each living character, the character becomes the current actor (<a href="46539.html#46555">B5DB</a>, $B5FC) and the room it starts the turn in is noted ($B5E7). Output is switched on only if Bilbo can see the character (<a href="40311.html">9D77</a>), so the player sees only what happens in front of him. If Bilbo is in the dark, the first character to do anything in his room produces 'you hear a noise.' instead (<a href="44145.html#44825">AF19</a>).
 </div>
 <div class="paragraph">
 A character that is inside something (held by an object rather than standing in a room) tries to get out first (<a href="39537.html">9A71</a>).
@@ -45,7 +45,7 @@ Then the character's behaviour program is run. Each instruction starts with a by
 </div>
 <div class="paragraph">
 <ul class="">
-<li>0-3: do an action. The next three bytes are the action, the target and the instrument (<a href="39043.html">9883</a>). If bit 0 of the flags is set, the next two bytes are instead the address of a routine that does something special - most of the routines in the range $A406-$A91B are such character routines.</li>
+<li>0-3: do an action. The next three bytes are the action, the target and the instrument (<a href="39043.html">9883</a>). If bit 0 of the flags is set, the next two bytes are instead the address of a routine that does something special - most of the routines in the range <a href="41990.html">A406</a>-<a href="43291.html">A91B</a> are such character routines.</li>
 <li>4: do an action without objects, such as moving in a direction (<a href="39119.html">98CF</a>). An action of $FF just jumps.</li>
 <li>$0C: change the character's reaction (<a href="39419.html">99FB</a>).</li>
 <li>$0E: jump to the address that follows.</li>
@@ -54,10 +54,10 @@ Then the character's behaviour program is run. Each instruction starts with a by
 </ul>
 </div>
 <div class="paragraph">
-Before the program, if the player has given the character an order (<a href="35069.html">88FD</a>) and the current instruction allows it (bit 6 clear), the order is obeyed instead (<a href="35079.html">8907</a>, $9929).
+Before the program, if the player has given the character an order (<a href="35069.html">88FD</a>) and the current instruction allows it (bit 6 clear), the order is obeyed instead (<a href="35079.html">8907</a>, <a href="39201.html#39209">9929</a>).
 </div>
 <div class="paragraph">
-A character stops after 6 instructions in one turn ($9769). At the end the player becomes the actor again, with output switched on.
+A character stops after 6 instructions in one turn (<a href="38761.html">9769</a>). At the end the player becomes the actor again, with output switched on.
 </div>
 </div>
 </td>
@@ -426,7 +426,7 @@ This entry point is used by the routine at <a href="39119.html">98CF</a>.
 <tr>
 <td class="address-1"><span id="38935"></span>9817</td>
 <td class="instruction">JP <a href="39201.html#39209">$9929</a></td>
-<td class="comment-1" rowspan="1">Do it (<a href="39201.html">9921</a>), then return to $985C</td>
+<td class="comment-1" rowspan="1">Do it (<a href="39201.html">9921</a>), then return to <a href="38764.html#39004">985C</a></td>
 </tr>
 <tr>
 <td class="address-2"><span id="38938"></span>981A</td>

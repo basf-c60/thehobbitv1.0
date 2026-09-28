@@ -164,7 +164,9 @@ for s,e in regions.items():
         blocks[e]=auto_type_at(e) if e not in A else A[e]['t']
 # the area C700-C973 (after the handlers) keep auto; C973 etc defined
 AUTO={}
-import os
+import os, linker
+_ADDRS=linker.load_addrs()
+L=lambda t: linker.link(t,_ADDRS)
 if os.environ.get('AUTOCOM'):
     import autocom
     for blkd in autocom.parse_blocks(): istarts|=set(x[0] for x in blkd['ins'])
@@ -180,24 +182,24 @@ for a in sorted(blocks):
     out.append(f'{t} ${a:04X} {title}'.rstrip())
     if not d and a in AUTO:
         for ca,cm in sorted(AUTO[a].items()):
-            if cm and ca in istarts|set(AUTO[a]): out.append(f'C ${ca:04X} {cm}')
+            if cm and ca in istarts|set(AUTO[a]): out.append(f'C ${ca:04X} {L(cm)}')
     if d:
-        for p in d['desc']: out.append(f'D ${a:04X} {p}')
-        for r in d['regs']: out.append(f'R ${a:04X} {r}')
+        for p in d['desc']: out.append(f'D ${a:04X} {L(p)}')
+        for r in d['regs']: out.append(f'R ${a:04X} {L(r)}')
         for (dr,sa,ln,cm) in d['subs']:
             if ln<=0: continue
             per = 8 if dr=='B' else 1
             if dr=='B' and ln<=16: per=ln
             spec=f'{ln}' if dr=='W' else f'{ln},{per}'
-            out.append(f'{dr} ${sa:04X},{spec} {cm}'.rstrip())
+            out.append(f'{dr} ${sa:04X},{spec} {L(cm)}'.rstrip())
         for na,nt in sorted(d.get('mid',{}).items()):
-            out.append(f'N ${na:04X} {nt}')
+            out.append(f'N ${na:04X} {L(nt)}')
         cms=dict(AUTO.get(a,{}))
         cms.update(d['comments'])
         for ca,cm in sorted(cms.items()):
             if not cm: continue
             if t=='c' and ca not in istarts: bad.append(hex(ca)); continue
-            out.append(f'C ${ca:04X} {cm}')
+            out.append(f'C ${ca:04X} {L(cm)}')
 out.append('i $F400')
 open('/home/claude/sk/hobbit.ctl','w').write('\n'.join(out)+'\n')
 print('blocks',len(blocks),'bad comment addrs',bad)

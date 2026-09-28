@@ -32,7 +32,7 @@ Next: <a href="30208.html">7600</a>
 Prints a character in the four-line window at the bottom of the screen, where the player's typing and the game's immediate replies appear. Unlike the story window, this one uses the Spectrum ROM's 8x8 font (<a href="30317.html">766D</a>) at 32 characters per line, and letters are always shown in upper case.
 </div>
 <div class="paragraph">
-The print position is kept at $75A9 and the number of columns left at $75A8. After each character, the cursor character (from $75AB, a '+') is drawn in the next position, so the player can see where the next key will appear.
+The print position is kept at $75A9 and the number of columns left at <a href="30120.html">75A8</a>. After each character, the cursor character (from $75AB, a '+') is drawn in the next position, so the player can see where the next key will appear.
 </div>
 <div class="paragraph">
 ENTER blanks the cursor and scrolls the window up a line (<a href="30208.html">7600</a>). A backspace ($08) rubs out the cursor, moves back one column and draws the cursor there; backspacing past the start of a line scrolls the window down again (<a href="30269.html">763D</a>). Reaching the end of a line also scrolls the window.

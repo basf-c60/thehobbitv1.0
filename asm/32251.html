@@ -29,13 +29,13 @@ Next: <a href="32346.html">7E5A</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The entry at $7DFB (from <a href="32182.html">7DB6</a>) supplies the verb GO ($30 class) for a bare direction; the entry at $7DFD handles verbs typed by the player.
+The entry at <a href="32251.html">7DFB</a> (from <a href="32182.html">7DB6</a>) supplies the verb GO ($30 class) for a bare direction; the entry at <a href="32251.html#32253">7DFD</a> handles verbs typed by the player.
 </div>
 <div class="paragraph">
 If a verb arrives when a command has already been started and there has been no AND, the parser backtracks: the state saved by the last AND (<a href="32213.html">7DD5</a>) is restored and the AND is reinterpreted as THEN, splitting the line into two commands.
 </div>
 <div class="paragraph">
-Otherwise the verb must be allowed here (bit 1 of E). It is stored at offset 0 of the frame (<a href="32734.html">7FDE</a>). GO and RUN look ahead (from $7E31) past any adverbs: if the next word is a direction, the verb is dropped and the direction stored as the particle, so that 'go north' and 'north' produce the same frame.
+Otherwise the verb must be allowed here (bit 1 of E). It is stored at offset 0 of the frame (<a href="32734.html">7FDE</a>). GO and RUN look ahead (from <a href="32251.html#32305">7E31</a>) past any adverbs: if the next word is a direction, the verb is dropped and the direction stored as the particle, so that 'go north' and 'north' produce the same frame.
 </div>
 </div>
 </td>

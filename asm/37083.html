@@ -29,7 +29,7 @@ Next: <a href="37245.html">917D</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The fight routine. It is used both when the player attacks someone and when another character attacks (for example Thorin retaliating, or the trolls and goblins attacking Bilbo). The attacker's object record is pointed to by $B5FC, the target's by $B5F8, and the weapon's (if any) by $B5FA; $B5DA holds the weapon's object number, or $FF when there is none.
+The fight routine. It is used both when the player attacks someone and when another character attacks (for example Thorin retaliating, or the trolls and goblins attacking Bilbo). The attacker's object record is pointed to by $B5FC, the target's by <a href="46539.html#46584">B5F8</a>, and the weapon's (if any) by $B5FA; <a href="46539.html#46554">B5DA</a> holds the weapon's object number, or $FF when there is none.
 </div>
 <div class="paragraph">
 It uses two bytes of the 8-byte object header (see <a href="49163.html">C00B</a>): byte 5 is STRENGTH and byte 6 is DEFENCE. Some starting values: Bilbo 64/64, Thorin 104/120, Gandalf 112/136, the trolls 160/160, the goblins 72/96, Bard 96/96, the dragon 192/192, and the short strong sword has strength 64 (255 in my modified tape).
@@ -38,25 +38,25 @@ It uses two bytes of the 8-byte object header (see <a href="49163.html">C00B</a>
 Step 1: 'you attack thorin' is printed ($90FE onwards), naming the weapon if one was used.
 </div>
 <div class="paragraph">
-Step 2: the attack value is the attacker's strength ($90F9), plus the weapon's strength if one was used ($9102-$9116), capped at 255. A weapon is only accepted if byte 0 of its record is 1 (an ordinary one-place object); otherwise the message at <a href="44145.html#44626">AE52</a> is printed.
+Step 2: the attack value is the attacker's strength (<a href="37083.html#37113">90F9</a>), plus the weapon's strength if one was used (<a href="37083.html#37122">9102</a>-<a href="37083.html#37142">9116</a>), capped at 255. A weapon is only accepted if byte 0 of its record is 1 (an ordinary one-place object); otherwise the message at <a href="44145.html#44626">AE52</a> is printed.
 </div>
 <div class="paragraph">
-Step 3: the attack value is randomised by <a href="37245.html">917D</a> (roughly -10 to +10) and so is the target's defence ($9121-$912A).
+Step 3: the attack value is randomised by <a href="37245.html">917D</a> (roughly -10 to +10) and so is the target's defence (<a href="37083.html#37153">9121</a>-$912A).
 </div>
 <div class="paragraph">
 Step 4: if the randomised defence is greater than or equal to the attack, the blow does nothing: 'but the effort is wasted. his defense is too strong' (<a href="44145.html#44611">AE43</a>).
 </div>
 <div class="paragraph">
-Step 5: if the attack exceeds the defence by more than 16, the blow is fatal. The message at <a href="44145.html#44333">AD2D</a> ('with one well placed blow you cleave his skull') is printed and bit 3 of the target's flag byte (byte 7) is set, marking it dead ($9168).
+Step 5: if the attack exceeds the defence by more than 16, the blow is fatal. The message at <a href="44145.html#44333">AD2D</a> ('with one well placed blow you cleave his skull') is printed and bit 3 of the target's flag byte (byte 7) is set, marking it dead (<a href="37083.html#37224">9168</a>).
 </div>
 <div class="paragraph">
-Step 6: otherwise the target is wounded. The difference d (1-16) selects a message from the table at <a href="37264.html">9190</a> - the larger the margin the nastier the description. The code then tries to reduce the target's strength by d/2+1 and its defence by d/4+1 ($914E-$9164), skipping either reduction if it would go below 0. It computes d/2 and d/4 with RRCA (rotate right) rather than SRL (shift right), though.
+Step 6: otherwise the target is wounded. The difference d (1-16) selects a message from the table at <a href="37264.html">9190</a> - the larger the margin the nastier the description. The code then tries to reduce the target's strength by d/2+1 and its defence by d/4+1 (<a href="37083.html#37198">914E</a>-$9164), skipping either reduction if it would go below 0. It computes d/2 and d/4 with RRCA (rotate right) rather than SRL (shift right), though.
 </div>
 <div class="paragraph">
 BUG: RRCA moves the bit shifted out of the bottom back into the top, so the halving only works when the bit being shifted out is 0. With Thorin (strength 104, defence 120) the actual results are: margins 4, 8, 12 and 16 reduce both strength and defence as intended (for example margin 8 takes him to 99/117); margins 2, 6, 10 and 14 reduce strength only; margins 3, 7, 11 and 15 do nothing at all; and margins 1, 5, 9 and 13 leave strength alone but slash his defence by about 65, to 52-55, which makes the next blow very likely to kill him.
 </div>
 <div class="paragraph">
-BUG: the table at <a href="37264.html">9190</a> only has useful entries for differences 1 to 15. A difference of exactly 16 reads the two bytes at $91B0 (which are code, $DD $2A) as a message address, so the game interprets ROM at $2ADD as a message and prints garbage.
+BUG: the table at <a href="37264.html">9190</a> only has useful entries for differences 1 to 15. A difference of exactly 16 reads the two bytes at <a href="37296.html">91B0</a> (which are code, $DD $2A) as a message address, so the game interprets ROM at $2ADD as a message and prints garbage.
 </div>
 </div>
 </td>

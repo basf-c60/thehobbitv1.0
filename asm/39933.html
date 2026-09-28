@@ -29,7 +29,7 @@ Next: <a href="39997.html">9C3D</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Returns a random number in A in the range -C to +C (signed). The random byte is produced from the seed at $B5FE (set from the R register in <a href="27687.html">6C27</a>), the counter at $B602 and a byte fetched from memory.
+Returns a random number in A in the range -C to +C (signed). The random byte is produced from the seed at <a href="46539.html#46590">B5FE</a> (set from the R register in <a href="27687.html">6C27</a>), the counter at $B602 and a byte fetched from memory.
 </div>
 <div class="paragraph">
 The random bytes come from memory itself. A 16-bit counter at $B602 is increased on every call and used as an address; the byte found there (and one a little further on) is mixed with the previous result. So the program code, the tables and even the ROM serve as the game's random number table, and the R register seed from the start of the game (<a href="27687.html">6C27</a>) decides where the sequence begins. A result equal to the previous one is thrown away.

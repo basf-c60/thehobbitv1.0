@@ -29,10 +29,10 @@ Next: <a href="32875.html">806B</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-PRINT ($805D) switches on copying of the story window to a ZX Printer (<a href="31509.html">7B15</a>), by setting $B5E3 to 1, but only if a printer is attached: bit 6 of port $FB is 0 when one is. NOPRINT ($8067) sets $B5E3 to 0.
+PRINT (<a href="32861.html">805D</a>) switches on copying of the story window to a ZX Printer (<a href="31509.html">7B15</a>), by setting $B5E3 to 1, but only if a printer is attached: bit 6 of port $FB is 0 when one is. NOPRINT (<a href="32861.html#32871">8067</a>) sets $B5E3 to 0.
 </div>
 <div class="paragraph">
-The test for the printer has a curious slip: when no printer is attached, the JR NZ at $805F jumps to $8069, which is in the middle of the LD ($B5E3),A instruction. The bytes there are executed as EX (SP),HL and OR L before execution reaches <a href="32875.html">806B</a>. In my tests the game carried on normally after PRINT with no printer, so the damage appears to be harmless in practice.
+The test for the printer has a curious slip: when no printer is attached, the JR NZ at <a href="32861.html#32863">805F</a> jumps to $8069, which is in the middle of the LD ($B5E3),A instruction. The bytes there are executed as EX (SP),HL and OR L before execution reaches <a href="32875.html">806B</a>. In my tests the game carried on normally after PRINT with no printer, so the damage appears to be harmless in practice.
 </div>
 </div>
 </td>

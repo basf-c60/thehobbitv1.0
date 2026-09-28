@@ -29,7 +29,7 @@ Next: <a href="28455.html">6F27</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the next word or punctuation mark, and returns its class in A and a two-byte token in B (high) and C (low). HL is left after the word, ready for the next call. The address of the start of the word is stored at $B5CB so that an 'I don't know the word' message can quote it.
+The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the next word or punctuation mark, and returns its class in A and a two-byte token in B (high) and C (low). HL is left after the word, ready for the next call. The address of the start of the word is stored at <a href="46539.html">B5CB</a> so that an 'I don't know the word' message can quote it.
 </div>
 <div class="paragraph">
 <table class="default">
@@ -56,7 +56,7 @@ The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the ne
 <tr>
 <td class="" colspan="1" rowspan="1">Double quote</td>
 <td class="" colspan="1" rowspan="1">$90</td>
-<td class="" colspan="1" rowspan="1">$9000</td>
+<td class="" colspan="1" rowspan="1"><a href="36832.html#36864">9000</a></td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">A dictionary word</td>
@@ -74,7 +74,7 @@ The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the ne
 The search works like this:
 </div>
 <div class="paragraph">
-1. <a href="28478.html">6F3E</a> copies the typed letters (keeping only their low five bits, so case does not matter) into the buffer at <a href="28785.html">7071</a> and their count into $7081. It then uses the letter index at <a href="24576.html">6000</a> to find the first dictionary word beginning with the same letter, and unpacks that word into the buffer at <a href="28785.html#28802">7082</a> (count in $7092). If there are no words for that letter, the word is unknown.
+1. <a href="28478.html">6F3E</a> copies the typed letters (keeping only their low five bits, so case does not matter) into the buffer at <a href="28785.html">7071</a> and their count into <a href="28785.html#28801">7081</a>. It then uses the letter index at <a href="24576.html">6000</a> to find the first dictionary word beginning with the same letter, and unpacks that word into the buffer at <a href="28785.html#28802">7082</a> (count in <a href="28785.html#28818">7092</a>). If there are no words for that letter, the word is unknown.
 </div>
 <div class="paragraph">
 2. <a href="28593.html">6FB1</a> compares the typed letters with the dictionary word, over the length of the shorter of the two.
@@ -83,10 +83,10 @@ The search works like this:
 3. If they differ, <a href="28478.html#28521">6F69</a> unpacks the next word in the dictionary and the comparison is repeated. The search gives up (unknown word) as soon as it reaches a word with a different first letter.
 </div>
 <div class="paragraph">
-4. If they agree, the lengths decide ($6EB7). If the dictionary word is at least as long as what was typed, it is accepted. So any abbreviation matches the first word that starts with those letters: this is why N means NORTH, but also why EX finds EXAMINE and not EXCEPT. If the player typed MORE letters than the dictionary word has, and the dictionary word is 1-3 letters long, it is rejected and the search moves on (so typing EASTWARD does not match E). If the dictionary word is 4 letters or longer, the game looks at the following dictionary word (<a href="28478.html#28525">6F6D</a>, without moving the current position); if that one also matches the typed letters, the search moves on to it, otherwise the current word is accepted. So extra letters after a long enough word are ignored: SWORDS finds SWORD, and TROLLS finds TROLLS rather than TROLL.
+4. If they agree, the lengths decide (<a href="28302.html#28343">6EB7</a>). If the dictionary word is at least as long as what was typed, it is accepted. So any abbreviation matches the first word that starts with those letters: this is why N means NORTH, but also why EX finds EXAMINE and not EXCEPT. If the player typed MORE letters than the dictionary word has, and the dictionary word is 1-3 letters long, it is rejected and the search moves on (so typing EASTWARD does not match E). If the dictionary word is 4 letters or longer, the game looks at the following dictionary word (<a href="28478.html#28525">6F6D</a>, without moving the current position); if that one also matches the typed letters, the search moves on to it, otherwise the current word is accepted. So extra letters after a long enough word are ignored: SWORDS finds SWORD, and TROLLS finds TROLLS rather than TROLL.
 </div>
 <div class="paragraph">
-5. For the accepted word ($6EE2), the end of the word is found. If bit 6 of the last letter is set, the word is a synonym and the next two bytes give the offset of the real word; HL is switched to that word, so for example HIT is returned as ATTACK. The class is then assembled from bits 5 and 6 of the real word's first two bytes (see <a href="24640.html">6040</a>), and $A000 is added to the word's address to turn it into an offset from $6000 (because $6000 + $A000 = $10000).
+5. For the accepted word (<a href="28302.html#28386">6EE2</a>), the end of the word is found. If bit 6 of the last letter is set, the word is a synonym and the next two bytes give the offset of the real word; HL is switched to that word, so for example HIT is returned as ATTACK. The class is then assembled from bits 5 and 6 of the real word's first two bytes (see <a href="24640.html">6040</a>), and $A000 is added to the word's address to turn it into an offset from <a href="24576.html">6000</a> (because <a href="24576.html">6000</a> + $A000 = $10000).
 </div>
 </div>
 <table class="input">
@@ -495,7 +495,7 @@ The search works like this:
 <tr>
 <td class="address-1"><span id="28446"></span>6F1E</td>
 <td class="instruction">LD DE,$A000</td>
-<td class="comment-1" rowspan="1">Turn the address into an offset from $6000</td>
+<td class="comment-1" rowspan="1">Turn the address into an offset from <a href="24576.html">6000</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="28449"></span>6F21</td>

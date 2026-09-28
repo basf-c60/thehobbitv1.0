@@ -29,7 +29,7 @@ Next: <a href="32467.html">7ED3</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Collects one noun phrase into the buffer at $7C45 (cleared by the main parser loop): up to two prepositions (<a href="32486.html">7EE6</a>; a third one is an error), any number of articles (skipped), up to two adjectives (<a href="32467.html">7ED3</a>; a third one is an error), and a noun, which ends the phrase ($7E9B stores it at $7C49). Adjectives enter at $7E93 and nouns at $7E9B. A phrase that ends without a noun (for example 'look through') is allowed and simply has no noun.
+Collects one noun phrase into the buffer at $7C45 (cleared by the main parser loop): up to two prepositions (<a href="32486.html">7EE6</a>; a third one is an error), any number of articles (skipped), up to two adjectives (<a href="32467.html">7ED3</a>; a third one is an error), and a noun, which ends the phrase (<a href="32364.html#32411">7E9B</a> stores it at $7C49). Adjectives enter at <a href="32364.html#32403">7E93</a> and nouns at <a href="32364.html#32411">7E9B</a>. A phrase that ends without a noun (for example 'look through') is allowed and simply has no noun.
 </div>
 <div class="paragraph">
 The phrase is then stored in the frame by <a href="32501.html">7EF5</a>: the first phrase at offset 4 and the second at offset 14. When ALL EXCEPT is in force ($B609 = 2), each extra noun phrase instead starts a new frame (<a href="32546.html">7F22</a>), with bit 6 of its verb marked, so that 'take all except the sword and the key' produces one frame per exception.

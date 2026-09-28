@@ -29,7 +29,7 @@ Next: <a href="40101.html">9CA5</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The command routines are run more than once: first as a 'dry run' to find out whether a command is possible (for example while the parser is choosing between two objects that fit the same noun), and then for real. The flag at $B5EB is 1 when the action should really happen. If it is not, this routine sets $B5EC to record that the action would have succeeded, discards its own return address and returns to the caller's caller, so the rest of the command routine is skipped. That is why the fight routine calls this after rolling the attack value but before doing anything that has a visible effect.
+The command routines are run more than once: first as a 'dry run' to find out whether a command is possible (for example while the parser is choosing between two objects that fit the same noun), and then for real. The flag at $B5EB is 1 when the action should really happen. If it is not, this routine sets <a href="46539.html#46572">B5EC</a> to record that the action would have succeeded, discards its own return address and returns to the caller's caller, so the rest of the command routine is skipped. That is why the fight routine calls this after rolling the attack value but before doing anything that has a visible effect.
 </div>
 </div>
 </td>

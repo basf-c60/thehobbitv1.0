@@ -38,16 +38,16 @@ This is the heart of the game. Each pass round the loop is one line of input fro
 2. The token buffer at <a href="28819.html">7093</a> is cleared (<a href="28889.html">70D9</a>), and then <a href="28302.html">6E8E</a> is called repeatedly to turn the line into tokens, one per word. Each token is two bytes, stored high byte first: the high byte is the word's class (see <a href="24640.html">6040</a>) in its top four bits plus the top four bits of the word's 12-bit dictionary offset; the low byte is the bottom eight bits of the offset.
 </div>
 <div class="paragraph">
-3. Double quotes get special treatment (from $6D2F). A quote comes back from <a href="28302.html">6E8E</a> as class $90 with an offset of 0. The flag at $B60B records whether we are inside a quotation. At an opening quote the flag is set. At a closing quote the flag is cleared and, unless the previous token was already a comma ($A0) or full stop ($B0), a full-stop token is inserted before the quote token, so that whatever was said to a character ends like a complete sentence.
+3. Double quotes get special treatment (from <a href="27914.html#27951">6D2F</a>). A quote comes back from <a href="28302.html">6E8E</a> as class $90 with an offset of 0. The flag at $B60B records whether we are inside a quotation. At an opening quote the flag is set. At a closing quote the flag is cleared and, unless the previous token was already a comma ($A0) or full stop ($B0), a full-stop token is inserted before the quote token, so that whatever was said to a character ends like a complete sentence.
 </div>
 <div class="paragraph">
-4. Tokens are stored until the end-of-line token ($C0). A token of class $D0 means the word was not in the dictionary: the game jumps to $6D99, which prints a message saying it does not know the word and quotes the word back from the input line (up to the next space or quote, using the pointer at $B5CB). If the line ends with a quotation still open, <a href="32761.html">7FF9</a> is called to complain and the line is thrown away.
+4. Tokens are stored until the end-of-line token ($C0). A token of class $D0 means the word was not in the dictionary: the game jumps to <a href="27914.html#28057">6D99</a>, which prints a message saying it does not know the word and quotes the word back from the input line (up to the next space or quote, using the pointer at <a href="46539.html">B5CB</a>). If the line ends with a quotation still open, <a href="32761.html">7FF9</a> is called to complain and the line is thrown away.
 </div>
 <div class="paragraph">
-5. <a href="31823.html">7C4F</a> parses the tokens into an action, and <a href="33617.html">8351</a> executes it and lets the rest of the world take its turn. If the line contained more than one command (separated by AND, THEN, commas or full stops), the loop at $6D8D goes back into the parser for the next one while the flag at $B5F6 is set.
+5. <a href="31823.html">7C4F</a> parses the tokens into an action, and <a href="33617.html">8351</a> executes it and lets the rest of the world take its turn. If the line contained more than one command (separated by AND, THEN, commas or full stops), the loop at <a href="27914.html#28045">6D8D</a> goes back into the parser for the next one while the flag at $B5F6 is set.
 </div>
 <div class="paragraph">
-The main loop can also be entered at $6D17 with the Z flag set, from the '@' key (see <a href="28273.html">6E71</a>), which re-parses the tokens left over from the previous line: in other words, it repeats the last command.
+The main loop can also be entered at <a href="27914.html#27927">6D17</a> with the Z flag set, from the '@' key (see <a href="28273.html">6E71</a>), which re-parses the tokens left over from the previous line: in other words, it repeats the last command.
 </div>
 </div>
 </td>

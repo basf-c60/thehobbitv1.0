@@ -29,7 +29,7 @@ Next: <a href="30741.html">7815</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Draws one 8x8 character from the font at <a href="30741.html">7815</a>. The glyph address is $7715 + 8 x character code (the font only defines codes $20 to $7F, so the table effectively starts at $7815).
+Draws one 8x8 character from the font at <a href="30741.html">7815</a>. The glyph address is <a href="30356.html#30485">7715</a> + 8 x character code (the font only defines codes $20 to $7F, so the table effectively starts at <a href="30741.html">7815</a>).
 </div>
 <div class="paragraph">
 Characters are drawn on a 6-pixel pitch rather than the Spectrum's usual 8, which is why The Hobbit fits more text on a line than most Spectrum games. C holds the pixel offset within the current screen byte, so each glyph row is shifted right by C bits and may straddle two screen bytes: the first part is masked into (HL) and the overflow is shifted left and masked into (HL+1). After drawing, C is advanced by 6 and, if it passes 8, L moves on to the next byte.

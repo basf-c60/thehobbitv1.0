@@ -7,7 +7,7 @@
 ; which is where GANDALF lives. The parser uses this to jump straight to the right part of the dictionary instead of scanning the whole thing.
 ; .
 ; Entry 0 is unused ($0000). After Z come a few more words, including $07AC, which points into the second (message-only) dictionary at #R$67B0.
-w$6000 DEFW $0000    ; {Offsets from $6000 of each letter group
+w$6000 DEFW $0000    ; {Offsets from #R$6000 of each letter group
  $6002 DEFW $0040    ;
  $6004 DEFW $007C    ;
  $6006 DEFW $00E2    ;
@@ -49,8 +49,9 @@ w$6000 DEFW $0000    ; {Offsets from $6000 of each letter group
 ; bit 7 set means 'this is the last letter of the word'. Words shorter than three letters are padded with a byte whose letter bits are 0 and whose bit 7 is set
 ; (so TO is stored as T, O, $80).
 ; .
-; Bits 5 and 6 of the FIRST TWO bytes are not part of the letters: together they give the word's class, which the tokeniser (#R$6E8E, at $6F12) assembles into a
-; single byte: bit 6 of byte 0 becomes bit 7, bit 5 of byte 0 becomes bit 6, bit 6 of byte 1 becomes bit 5, and bit 5 of byte 1 becomes bit 4. The classes are:
+; Bits 5 and 6 of the FIRST TWO bytes are not part of the letters: together they give the word's class, which the tokeniser (#R$6E8E, at #R$6F12) assembles into
+; a single byte: bit 6 of byte 0 becomes bit 7, bit 5 of byte 0 becomes bit 6, bit 6 of byte 1 becomes bit 5, and bit 5 of byte 1 becomes bit 4. The classes
+; are:
 ; .
 ; #TABLE(default)
 ; { =h Class | =h Meaning | =h Examples }
@@ -74,10 +75,10 @@ w$6000 DEFW $0000    ; {Offsets from $6000 of each letter group
 ; becomes EXAMINE; SAY becomes TALK; EVERYTHING becomes ALL; BUT becomes EXCEPT; ME becomes YOU; I becomes INVENTORY; L and LO become LOOK; and N, S, E, W, NE,
 ; NW, SE, SW, U and D become the full direction words. So 'hit thorin' and 'kill thorin' are literally the same command as 'attack thorin'.
 ; .
-; Everything else in the game refers to a word by its offset from #R$6000, as a 12-bit number. So SWORD, which starts at $6684, is referred to as $684; THORIN
-; at $66B8 is $6B8; CAVE at $6112 is $112. The spare top four bits of those 16-bit references are used for the class or for printing flags.
+; Everything else in the game refers to a word by its offset from #R$6000, as a 12-bit number. So SWORD, which starts at #R$6684, is referred to as $684; THORIN
+; at #R$66B8 is $6B8; CAVE at #R$6112 is $112. The spare top four bits of those 16-bit references are used for the class or for printing flags.
 ; .
-; The dictionary ends at $67AE with YOU; the byte at $67AF is a separator, and the second dictionary (#R$67B0) follows.
+; The dictionary ends at $67AE with YOU; the byte at #R$67AF is a separator, and the second dictionary (#R$67B0) follows.
 b$6040 DEFB $41,$00,$80                                         ; A: $040, article/filler
  $6043 DEFB $21,$63,$12,$0F,$13,$93                             ; ACROSS: $043, preposition
  $6049 DEFB $21,$66,$14,$05,$92                                 ; AFTER: $049, preposition
@@ -664,8 +665,8 @@ u$6BEE DEFB $00,$00,$00,$00,$00,$00,$00,$00
 
 ; Game entry point (RANDOMIZE USR 27648)
 ;
-; The BASIC loader 'hobbit' loads the loading screen to 40000, copies it onto the display, loads this 37,888-byte block at 24576 ($6000) and then does RANDOMIZE
-; USR 27648, which arrives here.
+; The BASIC loader 'hobbit' loads the loading screen to 40000, copies it onto the display, loads this 37,888-byte block at 24576 (#R$6000) and then does
+; RANDOMIZE USR 27648, which arrives here.
 ; .
 ; The first job is to make pristine copies of everything that changes during play, so the game can be restarted after Bilbo dies without reloading the tape: the
 ; object table (#R$C00B, $614 bytes) and the room table (#R$B97A, $5D9 bytes) are copied up to $F400 onwards, the 28 bytes of game variables at #R$B5DC are
@@ -693,15 +694,15 @@ c$6C00 DI            ; Disable interrupts
 ; This is where the game begins, and where it comes back to after 'you are dead' (see #R$903C). It is the reverse of #R$6C00: the backed-up copies of the object
 ; table, room table, variables and timer tables are copied back over the live ones, so every object, character, door and timer returns to its starting state.
 ; .
-; It then sets the border to black, waits for a key press (the IN A,($FE) loop at $6C6E: keys read as 0 bits, so the loop continues while all five bits are 1),
-; sets up the text window variables used by the printer (#R$75AD), clears a 200-byte work area at #R$B628, and seeds the random number generator from the Z80's
-; R (refresh) register at $6C9E. Because R counts instructions, the seed depends on exactly how long the player took to press a key, which is why every game
-; plays out differently.
+; It then sets the border to black, waits for a key press (the IN A,($FE) loop at #R$6C6E: keys read as 0 bits, so the loop continues while all five bits are
+; 1), sets up the text window variables used by the printer (#R$75AD), clears a 200-byte work area at #R$B628, and seeds the random number generator from the
+; Z80's R (refresh) register at #R$6C9E. Because R counts instructions, the seed depends on exactly how long the player took to press a key, which is why every
+; game plays out differently.
 ; .
 ; The routine then clears the screen (#R$6FCA), draws the bar that separates the story window from the input window (a 5-line pattern from #R$6DC3, repeated
 ; across the screen at $5140), sets the line counter used by the story window's pause (#R$7694) to 17, and, if this is a fresh start (the frame count at $B5F7
 ; is $FF, as it always is after the variables are restored), makes the game's random choices (#R$970B), puts the first command, LOOK, into the input buffer
-; (copied from $6FEB to $6FF0), and drops into the main loop at #R$6D0A.
+; (copied from #R$6FEB to #R$6FF0), and drops into the main loop at #R$6D0A.
 c$6C27 DI            ; Disable interrupts
  $6C28 LD SP,$5EFF   ; SP = $5EFF
  $6C2B LD IX,$CC00   ; IX = the picture index
@@ -814,18 +815,18 @@ c$6C27 DI            ; Disable interrupts
 ; bytes, stored high byte first: the high byte is the word's class (see #R$6040) in its top four bits plus the top four bits of the word's 12-bit dictionary
 ; offset; the low byte is the bottom eight bits of the offset.
 ; .
-; 3. Double quotes get special treatment (from $6D2F). A quote comes back from #R$6E8E as class $90 with an offset of 0. The flag at $B60B records whether we
+; 3. Double quotes get special treatment (from #R$6D2F). A quote comes back from #R$6E8E as class $90 with an offset of 0. The flag at $B60B records whether we
 ; are inside a quotation. At an opening quote the flag is set. At a closing quote the flag is cleared and, unless the previous token was already a comma ($A0)
 ; or full stop ($B0), a full-stop token is inserted before the quote token, so that whatever was said to a character ends like a complete sentence.
 ; .
-; 4. Tokens are stored until the end-of-line token ($C0). A token of class $D0 means the word was not in the dictionary: the game jumps to $6D99, which prints a
-; message saying it does not know the word and quotes the word back from the input line (up to the next space or quote, using the pointer at $B5CB). If the line
-; ends with a quotation still open, #R$7FF9 is called to complain and the line is thrown away.
+; 4. Tokens are stored until the end-of-line token ($C0). A token of class $D0 means the word was not in the dictionary: the game jumps to #R$6D99, which prints
+; a message saying it does not know the word and quotes the word back from the input line (up to the next space or quote, using the pointer at #R$B5CB). If the
+; line ends with a quotation still open, #R$7FF9 is called to complain and the line is thrown away.
 ; .
 ; 5. #R$7C4F parses the tokens into an action, and #R$8351 executes it and lets the rest of the world take its turn. If the line contained more than one command
-; (separated by AND, THEN, commas or full stops), the loop at $6D8D goes back into the parser for the next one while the flag at $B5F6 is set.
+; (separated by AND, THEN, commas or full stops), the loop at #R$6D8D goes back into the parser for the next one while the flag at $B5F6 is set.
 ; .
-; The main loop can also be entered at $6D17 with the Z flag set, from the '@' key (see #R$6E71), which re-parses the tokens left over from the previous line:
+; The main loop can also be entered at #R$6D17 with the Z flag set, from the '@' key (see #R$6E71), which re-parses the tokens left over from the previous line:
 ; in other words, it repeats the last command.
 c$6D0A LD A,$01      ; A = 1
  $6D0C LD ($B5F6),A  ; Store A in the "more commands" flag
@@ -912,7 +913,7 @@ c$6D0A LD A,$01      ; A = 1
 
 ; Window separator pattern
 ;
-; Five pairs of bytes, one pair for each of five pixel lines. At start-up (#R$6C27, from $6CC7) each pair is repeated 16 times across the screen at $5140,
+; Five pairs of bytes, one pair for each of five pixel lines. At start-up (#R$6C27, from #R$6CC7) each pair is repeated 16 times across the screen at $5140,
 ; drawing the patterned bar that separates the story window from the input window below it.
 b$6DC3 DEFB $C3,$C3,$2C,$34,$10,$08,$2C,$34,$C3,$C3
 
@@ -1094,40 +1095,40 @@ c$6E82 BIT 7,B       ; Stop when the line is empty
 ; Turn the next word of the input into a token
 ;
 ; The tokeniser. Starting at HL in the input buffer, it skips spaces, finds the next word or punctuation mark, and returns its class in A and a two-byte token
-; in B (high) and C (low). HL is left after the word, ready for the next call. The address of the start of the word is stored at $B5CB so that an 'I don't know
-; the word' message can quote it.
+; in B (high) and C (low). HL is left after the word, ready for the next call. The address of the start of the word is stored at #R$B5CB so that an 'I don't
+; know the word' message can quote it.
 ; .
 ; #TABLE(default)
 ; { =h Input | =h A | =h BC }
 ; { End of line (ENTER) | $C0 | $C000 }
 ; { Full stop | $B0 | $B000 }
 ; { Comma | $A0 | $A000 }
-; { Double quote | $90 | $9000 }
+; { Double quote | $90 | #R$9000 }
 ; { A dictionary word | its class | class in the top nibble of B, then the 12-bit offset of the word from #R$6000 }
 ; { An unknown word | $D0 | undefined }
 ; TABLE#
 ; .
 ; The search works like this:
 ; .
-; 1. #R$6F3E copies the typed letters (keeping only their low five bits, so case does not matter) into the buffer at #R$7071 and their count into $7081. It then
-; uses the letter index at #R$6000 to find the first dictionary word beginning with the same letter, and unpacks that word into the buffer at #R$7082 (count in
-; $7092). If there are no words for that letter, the word is unknown.
+; 1. #R$6F3E copies the typed letters (keeping only their low five bits, so case does not matter) into the buffer at #R$7071 and their count into #R$7081. It
+; then uses the letter index at #R$6000 to find the first dictionary word beginning with the same letter, and unpacks that word into the buffer at #R$7082
+; (count in #R$7092). If there are no words for that letter, the word is unknown.
 ; .
 ; 2. #R$6FB1 compares the typed letters with the dictionary word, over the length of the shorter of the two.
 ; .
 ; 3. If they differ, #R$6F69 unpacks the next word in the dictionary and the comparison is repeated. The search gives up (unknown word) as soon as it reaches a
 ; word with a different first letter.
 ; .
-; 4. If they agree, the lengths decide ($6EB7). If the dictionary word is at least as long as what was typed, it is accepted. So any abbreviation matches the
+; 4. If they agree, the lengths decide (#R$6EB7). If the dictionary word is at least as long as what was typed, it is accepted. So any abbreviation matches the
 ; first word that starts with those letters: this is why N means NORTH, but also why EX finds EXAMINE and not EXCEPT. If the player typed MORE letters than the
 ; dictionary word has, and the dictionary word is 1-3 letters long, it is rejected and the search moves on (so typing EASTWARD does not match E). If the
 ; dictionary word is 4 letters or longer, the game looks at the following dictionary word (#R$6F6D, without moving the current position); if that one also
 ; matches the typed letters, the search moves on to it, otherwise the current word is accepted. So extra letters after a long enough word are ignored: SWORDS
 ; finds SWORD, and TROLLS finds TROLLS rather than TROLL.
 ; .
-; 5. For the accepted word ($6EE2), the end of the word is found. If bit 6 of the last letter is set, the word is a synonym and the next two bytes give the
+; 5. For the accepted word (#R$6EE2), the end of the word is found. If bit 6 of the last letter is set, the word is a synonym and the next two bytes give the
 ; offset of the real word; HL is switched to that word, so for example HIT is returned as ATTACK. The class is then assembled from bits 5 and 6 of the real
-; word's first two bytes (see #R$6040), and $A000 is added to the word's address to turn it into an offset from $6000 (because $6000 + $A000 = $10000).
+; word's first two bytes (see #R$6040), and $A000 is added to the word's address to turn it into an offset from #R$6000 (because #R$6000 + $A000 = $10000).
 ;
 ;  Input:HL Position in the input buffer
 ; Output:A Word class
@@ -1208,7 +1209,7 @@ c$6E8E PUSH DE        ; Save DE
  $6F1A AND $30        ; Keep only the bits of $30
  $6F1C ADD A,B        ; Add A,B
  $6F1D DEC HL         ; Decrement HL
- $6F1E LD DE,$A000    ; Turn the address into an offset from $6000
+ $6F1E LD DE,$A000    ; Turn the address into an offset from #R$6000
  $6F21 ADD HL,DE      ; Add HL,DE
  $6F22 PUSH HL        ; Save HL
  $6F23 POP BC         ; Restore BC
@@ -1243,7 +1244,7 @@ c$6F27 LD B,$B0      ; Full stop: class $B0 (like THEN)
 ; Start a dictionary search for the typed word
 ;
 ; Copies the letters of the word at HL into the buffer at #R$7071, keeping only the low five bits of each (so 'a' and 'A' are both 1). Characters below $40
-; (space, punctuation, ENTER) end the word. The number of letters is stored at $7081.
+; (space, punctuation, ENTER) end the word. The number of letters is stored at #R$7081.
 ; .
 ; The first letter (1-26) is then used to index the letter table at #R$6000, and IX is set to the first dictionary word starting with that letter. Execution
 ; continues into #R$6F69 to unpack it.
@@ -1278,19 +1279,19 @@ c$6F3E LD DE,$7071    ; Copy letters into the typed-word buffer
  $6F66 ADD IX,DE      ; Add IX,DE
  $6F68 POP HL         ; Restore HL
 ; This entry point is used by #R$6E8E to move on to the next dictionary word. It saves IX in $B607 as the current candidate and then unpacks it. Another entry
-; point at $6F6D does the same without updating $B607; the tokeniser uses that one to peek at the following word.
+; point at #R$6F6D does the same without updating $B607; the tokeniser uses that one to peek at the following word.
 *$6F69 LD ($B607),IX  ; Store IX in the current dictionary word
 ; Check that the dictionary word at IX starts with the same letter as the typed word. If not, return with Z reset: the search is over.
 *$6F6D LD A,(IX+$00)  ; A = (IX+0)
  $6F70 AND $1F        ; Keep only the bits of $1F
  $6F72 LD B,A         ; B = A
- $6F73 LD A,($7071)   ; A = the contents of $7071
+ $6F73 LD A,($7071)   ; A = the contents of #R$7071
  $6F76 CP B           ; Compare with B
  $6F77 RET NZ         ; Return if no
 ; Unpack the dictionary word into #R$7082. The same end-of-word rule is used everywhere: bit 7 marks the last letter, except in the first two bytes. Letter
 ; codes of 0 (padding) are not copied.
  $6F78 PUSH HL        ; Save HL
- $6F79 LD HL,$7082    ; HL = $7082
+ $6F79 LD HL,$7082    ; HL = #R$7082
  $6F7C LD BC,$0000    ; BC = 0
 *$6F7F LD A,(IX+$00)  ; A = (IX+0)
  $6F82 AND $1F        ; Keep only the bits of $1F
@@ -1333,7 +1334,7 @@ c$6FB1 LD A,($7081)  ; B = the shorter of the two lengths
  $6FB9 JR NC,$6FBC   ; If carry clear, go to #R$6FBC
  $6FBB LD B,A        ; B = A
 *$6FBC LD HL,$7071   ; Compare letter by letter
- $6FBF LD DE,$7082   ; DE = $7082
+ $6FBF LD DE,$7082   ; DE = #R$7082
 *$6FC2 LD A,(DE)     ; A = (DE)
  $6FC3 CP (HL)       ; Compare with the byte at (HL)
  $6FC4 RET NZ        ; Return if no
@@ -1378,8 +1379,8 @@ t$6FE9 DEFM ">"      ; {The prompt
 
 ; Input buffer
 ;
-; The line typed by the player, 128 characters, filled by #R$6DCD and read by #R$6E8E. It is followed by a permanent ENTER at $7070 so that the tokeniser always
-; finds an end even on a completely full line.
+; The line typed by the player, 128 characters, filled by #R$6DCD and read by #R$6E8E. It is followed by a permanent ENTER at #R$7070 so that the tokeniser
+; always finds an end even on a completely full line.
 t$6FF0 DEFM " "
  $6FF1 DEFM " "
  $6FF2 DEFM " "
@@ -1513,10 +1514,10 @@ t$6FF0 DEFM " "
 ; Tokeniser work areas
 ;
 ; #LIST
-; { $7071-$7080: the letters of the word being looked up (#R$6F3E), as values 1-26 }
-; { $7081: the number of letters typed }
-; { $7082-$7091: the letters of the dictionary word being compared with it (#R$6F69) }
-; { $7092: the number of letters in the dictionary word }
+; { #R$7071-$7080: the letters of the word being looked up (#R$6F3E), as values 1-26 }
+; { #R$7081: the number of letters typed }
+; { #R$7082-$7091: the letters of the dictionary word being compared with it (#R$6F69) }
+; { #R$7092: the number of letters in the dictionary word }
 ; LIST#
 b$7071 DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00 ; Typed word
  $7081 DEFB $00                                                             ; Its length
@@ -1539,7 +1540,7 @@ b$7093 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 
 ; Registers saved by the message printer
 ;
-; #R$72D4 saves A at $70D3, DE at $70D4 and IX at $70D7 (with an unused byte at $70D6) while it runs, and restores them at the end.
+; #R$72D4 saves A at #R$70D3, DE at #R$70D4 and IX at #R$70D7 (with an unused byte at #R$70D6) while it runs, and restores them at the end.
 b$70D3 DEFB $00      ; A
  $70D4 DEFB $00,$00  ; DE
  $70D6 DEFB $00
@@ -1560,7 +1561,7 @@ c$70D9 XOR A         ; A = 0
 ; Get the address of an action table entry
 ;
 ; Returns HL = $AA3F + 8 x A, the address of the 8-byte entry for action number A in the action table (#R$AA47 is action 1; there is no action 0). The action
-; number of the command being carried out is kept at $B5D8.
+; number of the command being carried out is kept at #R$B5D8.
 ;
 ;  Input:A Action number
 ; Output:HL Action table entry
@@ -1581,7 +1582,7 @@ c$70DF LD L,A        ; {HL = the action number...
 ; #LIST
 ; { $B60D = (top nibble of byte 3) + (top nibble of byte 1) / 16. Bit 4 of this byte means 'do not report this action' (#R$7122), bit 3 'mention the target',
 ; bit 2 'mention the instrument', bit 5 'leave out the article'. }
-; { $B60E = (top nibble of byte 7) + (top nibble of byte 5) / 16. Bit 7 of this byte controls how the target and instrument are introduced. }
+; { #R$B60E = (top nibble of byte 7) + (top nibble of byte 5) / 16. Bit 7 of this byte controls how the target and instrument are introduced. }
 ; LIST#
 ; .
 ; The value of $B60D is also returned in A.
@@ -1614,8 +1615,8 @@ c$70EA LD A,(IX+$05) ; A = the third word of this action, whose top nibble carri
 
 ; Report the action (if not inside a quotation)
 ;
-; Marks the command as really happening ($B5EC=0, $B5EB=1) and, unless the parser is in the middle of a quotation ($B60B), prints the report of the action with
-; #R$7122. Returns with A=0.
+; Marks the command as really happening (#R$B5EC=0, $B5EB=1) and, unless the parser is in the middle of a quotation ($B60B), prints the report of the action
+; with #R$7122. Returns with A=0.
 c$7111 XOR A         ; {The action has not yet been shown to work...
  $7112 LD ($B5EC),A  ; }
  $7115 INC A         ; {...but it really is being carried out now, not just tried
@@ -1629,18 +1630,18 @@ c$7111 XOR A         ; {The action has not yet been shown to work...
 ; Report the action ("you attack thorin with the sword.")
 ;
 ; Prints the sentence that describes what an actor has just done, for example 'you go east.', 'thorin attacks you.', 'gandalf opens the round green door.' or
-; 'you attack thorin with the short strong sword.'. It is built from the entry for the current action (number in $B5D8) in the action table #R$AA47, whose four
-; word slots hold the verb, a particle, a preposition and (for movement) GO.
+; 'you attack thorin with the short strong sword.'. It is built from the entry for the current action (number in #R$B5D8) in the action table #R$AA47, whose
+; four word slots hold the verb, a particle, a preposition and (for movement) GO.
 ; .
 ; The flags collected by #R$70EA decide what is printed. If bit 4 of them is set the action is silent and nothing is printed at all.
 ; .
-; Otherwise the actor's name is printed (#R$739E: 'you', 'thorin', 'gandalf'...). If the action was only being tried and would have failed ($B5EC is 0) the word
-; CANNOT is inserted, so the report reads 'you cannot open the door'. The verb follows (#R$74B1). For the ten movement actions a special case applies when the
-; actor is a character and the move is not possible: the word SOMEWHERE is printed instead of the direction. Then, as the flags require, the particle, the
+; Otherwise the actor's name is printed (#R$739E: 'you', 'thorin', 'gandalf'...). If the action was only being tried and would have failed (#R$B5EC is 0) the
+; word CANNOT is inserted, so the report reads 'you cannot open the door'. The verb follows (#R$74B1). For the ten movement actions a special case applies when
+; the actor is a character and the move is not possible: the word SOMEWHERE is printed instead of the direction. Then, as the flags require, the particle, the
 ; target object (#R$73AB, with its article) and the preposition plus instrument (#R$73BE) are added. The sentence ends with a full stop and a new line.
 ; .
-; The printing is done with $70D6 set to 1, which makes #R$7436 use 'the' rather than 'a' for articles. $B5F2 is set when the action is only being tried, which
-; sends the text to the lower window instead (see #R$7580).
+; The printing is done with #R$70D6 set to 1, which makes #R$7436 use 'the' rather than 'a' for articles. $B5F2 is set when the action is only being tried,
+; which sends the text to the lower window instead (see #R$7580).
 c$7122 LD A,$01      ; A = 1
  $7124 LD ($70D6),A  ; Store A in the "definite article" flag
  $7127 XOR A         ; A = 0
@@ -1917,11 +1918,11 @@ t$7288 DEFM "W"
 ; { $02 | #R$7375 | jump forwards or backwards by the signed byte that follows }
 ; { $03 | #R$7384 | print the noun of the instrument in the current command ($B5ED) }
 ; { $04 | #R$738B | print the pushed word with an article (a/an/the/some) }
-; { $05, $0A, $0F, $12 | $7382 | do nothing }
+; { $05, $0A, $0F, $12 | #R$7382 | do nothing }
 ; { $06 | #R$739A | print the actor's name }
 ; { $07 | #R$73A6 | print the target with its article }
-; { $08 | $73B4 | print a backspace (to join a word to the previous one) }
-; { $09 | $73B9 | print the instrument with its article }
+; { $08 | #R$73B4 | print a backspace (to join a word to the previous one) }
+; { $09 | #R$73B9 | print the instrument with its article }
 ; { $0B | #R$73D7 | call a sub-message at a relative address }
 ; { $0C | #R$73F0 | print HIS or YOUR for the actor }
 ; { $0D | #R$72BA | new line }
@@ -1931,7 +1932,7 @@ t$7288 DEFM "W"
 ; { $13 | #R$7424 | the same for an object pushed on the stack }
 ; { $14 | #R$7337 | end the message with a new line }
 ; { $15 | #R$733B | end the message with a full stop and a new line }
-; { $16 | $7352 | end the message }
+; { $16 | #R$7352 | end the message }
 ; TABLE#
 ; .
 ; The IS/ARE and HIS/YOUR codes are what let one message serve both the player and the characters: 'you are dead' and 'thorin is dead' are the same message.
@@ -1972,7 +1973,7 @@ c$72BA CALL $7580    ; Print the character
 
 ; Print "I cannot do that."
 ;
-; Prints the message at $AEB2.
+; Prints the message at #R$AEB2.
 c$72C5 LD HL,$AEB2   ; "I cannot do that."
  $72C8 JR $72D4      ; Print it
 
@@ -1991,10 +1992,10 @@ c$72CA LD A,($B60B)  ; {Are we in the middle of a quotation (an order being give
 ; Almost everything the game says is printed by this routine, which interprets a compact message 'bytecode' starting at the address in HL. Messages are not
 ; stored as ASCII; they are sequences of dictionary references and control codes, which is how The Hobbit fits so much text into 48K.
 ; .
-; The entry at $72D4 saves DE, IX and A (restored at the end, $7352) so callers do not lose them. If the command is only being tried ($B5EB is 0) the flag $B5EC
-; is cleared.
+; The entry at #R$72D4 saves DE, IX and A (restored at the end, #R$7352) so callers do not lose them. If the command is only being tried ($B5EB is 0) the flag
+; #R$B5EC is cleared.
 ; .
-; The loop at $72EB fetches a byte and decides what it is:
+; The loop at #R$72EB fetches a byte and decides what it is:
 ; .
 ; #LIST
 ; { $80-$FF: the first byte of a two-byte dictionary reference, high byte first. The low nibble of the first byte and all of the second give the word's offset
@@ -2016,9 +2017,9 @@ c$72CA LD A,($B60B)  ; {Are we in the middle of a quotation (an order being give
 ; messages.
 ;
 ; Input:HL Address of the message bytecode
-c$72D4 LD ($70D4),DE ; Store DE at $70D4
- $72D8 LD ($70D7),IX ; Store IX at $70D7
- $72DC LD ($70D3),A  ; Store A at $70D3
+c$72D4 LD ($70D4),DE ; Store DE at #R$70D4
+ $72D8 LD ($70D7),IX ; Store IX at #R$70D7
+ $72DC LD ($70D3),A  ; Store A at #R$70D3
  $72DF LD A,($B5EB)  ; A = the "really do it" flag
  $72E2 AND A         ; Is A zero?
  $72E3 JR NZ,$72E8   ; If it is not zero, go to #R$72E8
@@ -2103,7 +2104,7 @@ c$733F CALL $74B8    ; Print the word left over in DE
 ; Message code $00: print an object passed on the stack
 ;
 ; The caller of #R$72D4 pushed the address of an object's word list before calling. This handler reaches past the interpreter's own return addresses (POP DE /
-; POP HL / EX (SP),HL / PUSH DE), removes that parameter, and prints the object's name (#R$742B) unless the address is 0. The 'use an article' flag $B5F4 is
+; POP HL / EX (SP),HL / PUSH DE), removes that parameter, and prints the object's name (#R$742B) unless the address is 0. The 'use an article' flag #R$B5F4 is
 ; cleared first, so no article is printed. Returns with Z set.
 c$735E XOR A         ; {No article wanted before this name
  $735F LD ($B5F4),A  ; }
@@ -2132,7 +2133,7 @@ c$736D POP DE        ; {Reach past the interpreter's own two return addresses...
 ; Message code $02: relative jump
 ;
 ; Moves the message pointer IX by the signed byte that follows the code, so a message can skip over part of itself or loop. Returns with Z set. The entry point
-; at $7382 (XOR A / RET) is used by the codes that do nothing.
+; at #R$7382 (XOR A / RET) is used by the codes that do nothing.
 c$7375 LD E,(IX+$01) ; {E = the signed jump distance that follows this code
  $7378 LD D,$00      ; }
  $737A BIT 7,E       ; {Is it negative?
@@ -2152,7 +2153,7 @@ c$7384 LD DE,($B5ED) ; DE = the noun the player used for the instrument (e.g. SW
 
 ; Message code $04: print a word with an article
 ;
-; Removes a word from the stack (as #R$736D) and prints it with an article, by setting $B5F4 and calling #R$746F. Returns with Z set.
+; Removes a word from the stack (as #R$736D) and prints it with an article, by setting #R$B5F4 and calling #R$746F. Returns with Z set.
 c$738B POP DE        ; {Reach past the interpreter's own two return addresses...
  $738C POP HL        ; }
  $738D EX (SP),HL    ; ...to find the word the caller pushed, lifting it out...
@@ -2166,8 +2167,8 @@ c$738B POP DE        ; {Reach past the interpreter's own two return addresses...
 
 ; Message code $06: print the actor's name
 ;
-; Prints the name of the current actor ($B5DB) with no article, via #R$747F: 'you' for Bilbo, 'thorin', 'gandalf' and so on. The entry point at $739E is used by
-; #R$7122 without clearing the article flag.
+; Prints the name of the current actor (#R$B5DB) with no article, via #R$747F: 'you' for Bilbo, 'thorin', 'gandalf' and so on. The entry point at #R$739E is
+; used by #R$7122 without clearing the article flag.
 c$739A XOR A         ; {No article for a name
  $739B LD ($B5F4),A  ; }
 ; This entry point is used by the routine at #R$7122.
@@ -2179,8 +2180,8 @@ c$739A XOR A         ; {No article for a name
 ; Message code $07: print the target
 ;
 ; Prints the target of the command (object $B5D9) with its article. If $B5EF is set, the target is a room rather than an object, and the room's name is used
-; instead (#R$71CC rather than #R$71D9). The entry at $73AB is used by #R$7122. Code $08 ($73B4) prints a backspace, and code $09 ($73B9) sets the article flag
-; and continues into #R$73BE.
+; instead (#R$71CC rather than #R$71D9). The entry at #R$73AB is used by #R$7122. Code $08 (#R$73B4) prints a backspace, and code $09 (#R$73B9) sets the article
+; flag and continues into #R$73BE.
 c$73A6 LD A,$01      ; {An article is wanted
  $73A8 LD ($B5F4),A  ; }
 ; This entry point is used by the routine at #R$7122.
@@ -2191,7 +2192,7 @@ c$73A6 LD A,$01      ; {An article is wanted
 
 ; Message codes $08 and $09
 ;
-; Code $08 ($73B4) prints a backspace, so that a word can be joined to the one before it (for example to add a suffix). Code $09 ($73B9) sets the 'print an
+; Code $08 (#R$73B4) prints a backspace, so that a word can be joined to the one before it (for example to add a suffix). Code $09 (#R$73B9) sets the 'print an
 ; article' flag and prints the instrument with its article, continuing into #R$73BE.
 c$73B4 CALL $7580    ; CODE $08: print a backspace, joining this word onto the one before it
  $73B7 XOR A         ; {Nothing further to print
@@ -2201,8 +2202,8 @@ c$73B4 CALL $7580    ; CODE $08: print a backspace, joining this word onto the o
 
 ; Print the instrument
 ;
-; Prints the instrument (the 'with' object, number in $B5DA) with its article; if $B5F0 is set the instrument is a room. Shares its tail with #R$73A6: the words
-; are found with #R$71CC or #R$71D9 and printed with #R$742B.
+; Prints the instrument (the 'with' object, number in #R$B5DA) with its article; if $B5F0 is set the instrument is a room. Shares its tail with #R$73A6: the
+; words are found with #R$71CC or #R$71D9 and printed with #R$742B.
 c$73BE LD A,($B5F0)  ; {Is the instrument actually a room, rather than an object?
  $73C1 AND A         ; }
  $73C2 LD A,($B5DA)  ; A = the instrument's own number, either way
@@ -2240,7 +2241,7 @@ c$73D7 INC IX        ; Step past this code, to its jump-distance byte
 
 ; Message code $0C: HIS or YOUR (actor)
 ;
-; Returns the word YOUR if the actor is Bilbo (object 0) and HIS for anyone else, with Z reset so that the interpreter prints it. The entry at $73F3 is shared
+; Returns the word YOUR if the actor is Bilbo (object 0) and HIS for anyone else, with Z reset so that the interpreter prints it. The entry at #R$73F3 is shared
 ; with #R$73FE.
 c$73F0 LD A,($B5DB)  ; A = the current actor
 ; This entry point is used by the routine at #R$73FE.
@@ -2316,7 +2317,8 @@ c$742B PUSH IY       ; Save the caller's IY
 ; left alone.
 ; .
 ; Other words use bits 4-6 of D as an index (0-3) into a table of articles: #R$AC21 (THE, A, AN, SOME) normally, or #R$AC29 (THE, THE, THE, SOME) when a
-; definite article is wanted ($B5F2 or $70D6 set). So each noun in the dictionary references carries its own article: 'a sword', 'an elvish sword', 'some wine'.
+; definite article is wanted ($B5F2 or #R$70D6 set). So each noun in the dictionary references carries its own article: 'a sword', 'an elvish sword', 'some
+; wine'.
 ;
 ; Input:DE Word reference
 c$7436 BIT 7,D       ; A name (bit 7 of D)?
@@ -2357,7 +2359,7 @@ c$7436 BIT 7,D       ; A name (bit 7 of D)?
 
 ; Print a word, with an article if required
 ;
-; If the article flag $B5F4 is set, #R$7436 prints the article first. The flag bits in D are then cleared and the word is printed by #R$74B8.
+; If the article flag #R$B5F4 is set, #R$7436 prints the article first. The flag bits in D are then cleared and the word is printed by #R$74B8.
 ;
 ; Input:DE Word reference
 c$746F PUSH DE       ; Save DE, the word to print
@@ -2373,7 +2375,7 @@ c$746F PUSH DE       ; Save DE, the word to print
 ; Print the name of object A
 ;
 ; Prints the name of object A. Object $FF (nobody) is printed as SOMEONE, which is what you see when an unseen character does something: 'someone opens the
-; door'. Otherwise it continues at $73CD in #R$73BE.
+; door'. Otherwise it continues at #R$73CD in #R$73BE.
 ;
 ; Input:A Object number
 c$747F CP $FF        ; Is there no object at all ($FF, for an attacker Bilbo cannot see)?
@@ -2424,16 +2426,16 @@ c$74B1 LD E,(HL)     ; {DE = the next word reference in the list, low byte...
 ; Prints one word from the dictionary, with the right verb ending and with word wrap. On entry DE holds the word reference: the low nibble of D and all of E are
 ; the offset from #R$6000, and the high nibble of D holds flags. A reference of zero prints nothing.
 ; .
-; The letters are unpacked into a buffer at $749D (five-bit letter codes plus $60 give lower-case ASCII), using the usual end-of-word rule (bit 7, but never in
-; the first two bytes).
+; The letters are unpacked into a buffer at #R$749D (five-bit letter codes plus $60 give lower-case ASCII), using the usual end-of-word rule (bit 7, but never
+; in the first two bytes).
 ; .
 ; VERB ENDINGS. The flag nibble decides whether the verb is to agree with a third-person subject: $50 never, $40 always, $10 if the target is not Bilbo, and
 ; anything else if the actor is not Bilbo. So one message can say 'you attack thorin' or 'thorin attacks you'. If an ending is needed and the word allows one
 ; (bit 7 of its second byte), the top three bits of its third byte choose an ending from the table at #R$B60F: S, ES, IES, a backspace followed by IES (to turn
 ; 'carry' into 'carries'), D, or ING.
 ; .
-; WORD WRAP. The length of the word, with its ending, is compared with the room left on the line (at $75A8 in the lower window or $768E in the story window). If
-; it will not fit, a new line is started first, keeping the capital-letter flag. A space is printed before the word unless it starts a line.
+; WORD WRAP. The length of the word, with its ending, is compared with the room left on the line (at #R$75A8 in the lower window or #R$768E in the story
+; window). If it will not fit, a new line is started first, keeping the capital-letter flag. A space is printed before the word unless it starts a line.
 ; .
 ; Words with flag nibble $70 set the capital-letter flag afterwards, so that the next word starts a sentence.
 ;
@@ -2449,7 +2451,7 @@ c$74B8 LD A,D        ; {Is the word reference zero?
  $74C1 LD A,D        ; {DE = the offset...
  $74C2 AND $0F       ;
  $74C4 LD D,A        ; }
- $74C5 LD HL,$6000   ; {...plus $6000: HL = the word in the dictionary
+ $74C5 LD HL,$6000   ; {...plus #R$6000: HL = the word in the dictionary
  $74C8 ADD HL,DE     ; }
  $74C9 LD DE,$749D   ; {DE = the letter buffer
  $74CC PUSH HL       ; }
@@ -2624,7 +2626,7 @@ c$75AC POP AF        ; Throw away the copy of AF that #R$7580 pushed, then fall 
 ; Prints a character in the four-line window at the bottom of the screen, where the player's typing and the game's immediate replies appear. Unlike the story
 ; window, this one uses the Spectrum ROM's 8x8 font (#R$766D) at 32 characters per line, and letters are always shown in upper case.
 ; .
-; The print position is kept at $75A9 and the number of columns left at $75A8. After each character, the cursor character (from $75AB, a '+') is drawn in the
+; The print position is kept at $75A9 and the number of columns left at #R$75A8. After each character, the cursor character (from $75AB, a '+') is drawn in the
 ; next position, so the player can see where the next key will appear.
 ; .
 ; ENTER blanks the cursor and scrolls the window up a line (#R$7600). A backspace ($08) rubs out the cursor, moves back one column and draws the cursor there;
@@ -2799,14 +2801,14 @@ s$768E DEFS $06
 ; Put a character on the screen
 ;
 ; Prints one character in the story window, which fills the upper part of the screen and uses the game's own 6-pixel font (#R$77BC). The screen address is kept
-; at $768F, the pixel offset within the byte at $7691, and the number of characters left on the line at $768E (42 per line).
+; at $768F, the pixel offset within the byte at $7691, and the number of characters left on the line at #R$768E (42 per line).
 ; .
 ; Letters are converted to lower case, except that the first letter after a full stop or a new line is capitalised: the flag at $B5F5 is set by those, and
 ; cleared once a capital has been printed. This is why the game's text needs no capital letters in the dictionary.
 ; .
 ; A carriage return sends the finished line to the ZX Printer if it is switched on (#R$7B15), then scrolls the story window up (#R$775E) and starts a new line.
-; Before scrolling, the game checks the line counter at $B606, which is set to 9 each time the player enters a command: after that many lines, each further line
-; waits (for about half a second, or until a key is pressed) so that long bursts of text do not rush past unread. A key held down at that point has to be
+; Before scrolling, the game checks the line counter at #R$B606, which is set to 9 each time the player enters a command: after that many lines, each further
+; line waits (for about half a second, or until a key is pressed) so that long bursts of text do not rush past unread. A key held down at that point has to be
 ; released before the text continues.
 ; .
 ; A backspace moves back 6 pixels (#R$7754) and rubs out the character there. A full line wraps automatically.
@@ -3000,8 +3002,8 @@ c$775E PUSH AF       ; {Save the registers this uses
 
 ; Draw a character glyph
 ;
-; Draws one 8x8 character from the font at #R$7815. The glyph address is $7715 + 8 x character code (the font only defines codes $20 to $7F, so the table
-; effectively starts at $7815).
+; Draws one 8x8 character from the font at #R$7815. The glyph address is #R$7715 + 8 x character code (the font only defines codes $20 to $7F, so the table
+; effectively starts at #R$7815).
 ; .
 ; Characters are drawn on a 6-pixel pitch rather than the Spectrum's usual 8, which is why The Hobbit fits more text on a line than most Spectrum games. C holds
 ; the pixel offset within the current screen byte, so each glyph row is shifted right by C bits and may straddle two screen bytes: the first part is masked into
@@ -3083,7 +3085,7 @@ c$77BC PUSH AF       ; {Save the registers this uses
 ; Font
 ;
 ; 96 characters, codes $20 (space) to $7F, 8 bytes each, top row first. Each glyph uses only the left 6 pixels, matching the 6-pixel character pitch used by
-; #R$77BC. For example 'A' is at $791D: $00,$38,$44,$44,$7C,$44,$44,$00.
+; #R$77BC. For example 'A' is at #R$791D: $00,$38,$44,$44,$7C,$44,$44,$00.
 ; .
 ; #FONT$7815,96
 b$7815 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; {Characters $20-$7F
@@ -3267,11 +3269,11 @@ c$7B6B LD BC,$03E8   ; BC = 1000
 ; Keyboard scan state
 ;
 ; #LIST
-; { $7B74-$7B7B: a mask for each of the eight half-rows of the keyboard, ORed with the reading so that those keys are never seen as pressed. The masks hide CAPS
-; SHIFT ($01 in the first half-row) and SYMBOL SHIFT ($02 in the last), which are read separately as shift keys, and the unused keys 1, 3, 4 ($0D in the 1-5
-; half-row) and 9 ($02 in the 0-6 half-row). }
-; { $7B7C-$7B7D: the newly pressed key found by the last scan: the bits in $7B7C and the half-row in $7B7D, or 0 for none. }
-; { $7B7E-$7B85: the previous reading of each half-row, used to detect keys that have just gone down. }
+; { #R$7B74-$7B7B: a mask for each of the eight half-rows of the keyboard, ORed with the reading so that those keys are never seen as pressed. The masks hide
+; CAPS SHIFT ($01 in the first half-row) and SYMBOL SHIFT ($02 in the last), which are read separately as shift keys, and the unused keys 1, 3, 4 ($0D in the
+; 1-5 half-row) and 9 ($02 in the 0-6 half-row). }
+; { #R$7B7C-$7B7D: the newly pressed key found by the last scan: the bits in #R$7B7C and the half-row in $7B7D, or 0 for none. }
+; { #R$7B7E-$7B85: the previous reading of each half-row, used to detect keys that have just gone down. }
 ; LIST#
 b$7B74 DEFB $01,$00,$00,$0D,$02,$00,$00,$02 ; Key masks
  $7B7C DEFB $00,$00                         ; New key
@@ -3284,11 +3286,11 @@ b$7B74 DEFB $01,$00,$00,$0D,$02,$00,$00,$02 ; Key masks
 ; .
 ; The routine first waits a few milliseconds (#R$7B6B), then reads each of the eight half-rows in turn, starting with port $FEFE (CAPS SHIFT to V) and rotating
 ; the high byte of the port address to reach the next row. Each reading is ORed with that row's mask from #R$7B74. A key counts as newly pressed if its bit is 0
-; now but was 1 in the previous reading kept at $7B7E; the row and bits of such a key are saved at $7B7C.
+; now but was 1 in the previous reading kept at #R$7B7E; the row and bits of such a key are saved at #R$7B7C.
 ; .
-; If a new key was found, its row and bit are turned into a number from 0 to 39 (row x 5 + bit, $7BC0-$7BCE). Then the shift keys are checked directly: if CAPS
-; SHIFT is held, or SYMBOL SHIFT is not, the normal table at #R$7BEE is used; if SYMBOL SHIFT is held (and CAPS SHIFT is not), the symbol table at #R$7C16 is
-; used. The table entry is returned in A.
+; If a new key was found, its row and bit are turned into a number from 0 to 39 (row x 5 + bit, #R$7BC0-#R$7BCE). Then the shift keys are checked directly: if
+; CAPS SHIFT is held, or SYMBOL SHIFT is not, the normal table at #R$7BEE is used; if SYMBOL SHIFT is held (and CAPS SHIFT is not), the symbol table at #R$7C16
+; is used. The table entry is returned in A.
 ; .
 ; In my emulator I replaced this routine with one that fed typed commands to the game.
 ;
@@ -3298,7 +3300,7 @@ c$7B86 PUSH HL       ; Save HL
  $7B89 PUSH BC       ; Save BC
  $7B8A CALL $7B6B    ; Short delay; clear the new-key record
  $7B8D LD ($7B7C),BC ; Store BC in the new key record
- $7B91 LD HL,$7B7E   ; HL = $7B7E
+ $7B91 LD HL,$7B7E   ; HL = #R$7B7E
  $7B94 LD IX,$7B74   ; IX = Keyboard scan state (#R$7B74)
  $7B98 LD BC,$FEFE   ; Start with the CAPS SHIFT-V half-row
 *$7B9B IN A,(C)      ; Read it and hide the ignored keys
@@ -3385,7 +3387,7 @@ b$7C3E DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; Parse the command
 ;
 ; The parser. It works through the tokens in #R$7093 (the pointer to the next token is kept at $B5CD) and turns them into one or more 24-byte command frames,
-; starting at #R$B8B8 and growing downwards in memory ($B8A0, $B888...). The number of frames built is counted in $B5F7.
+; starting at #R$B8B8 and growing downwards in memory (#R$B8A0, #R$B888...). The number of frames built is counted in $B5F7.
 ; .
 ; A frame holds: the verb (offset 0; bit 7 of byte 1 marks a command with ALL, and bit 6 marks an extra frame that only holds an exception for ALL EXCEPT), an
 ; adverb, direction or particle (offset 2), and two noun phrases of 10 bytes each (offsets 4 and 14). A noun phrase is two prepositions, a noun and two
@@ -3395,15 +3397,15 @@ b$7C3E DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; 'we have just had AND', bit 4 'an article is allowed', bit 6 'the first noun phrase is still empty', bit 7 'the second noun phrase is still empty', bit 0 'the
 ; verb has been followed by a direction'. Register D holds the class of the token being processed.
 ; .
-; For each token, #R$7F3D fetches it and the class (top nibble, divided by 8) indexes the jump table at #R$7C9C, which sends it to a handler: adverbs to $7DBC,
-; IN/INTO to #R$7E5F, directions to #R$7DB6, verbs to $7DFD, GO/RUN to #R$7DF9, nouns to $7E9B, adjectives to $7E93, prepositions to #R$7E6C, articles to
-; #R$7E5A, special words to #R$8009, AND to #R$7DD5, THEN (and full stop) to $7CC4 and the end of the line to #R$7CC0.
+; For each token, #R$7F3D fetches it and the class (top nibble, divided by 8) indexes the jump table at #R$7C9C, which sends it to a handler: adverbs to
+; #R$7DBC, IN/INTO to #R$7E5F, directions to #R$7DB6, verbs to #R$7DFD, GO/RUN to #R$7DF9, nouns to #R$7E9B, adjectives to #R$7E93, prepositions to #R$7E6C,
+; articles to #R$7E5A, special words to #R$8009, AND to #R$7DD5, THEN (and full stop) to #R$7CC4 and the end of the line to #R$7CC0.
 ; .
 ; A word that is not allowed where it appears goes to #R$7FEE, which prints 'what?' (inside a quotation it is ignored instead, so that orders to other
 ; characters are more forgiving).
 ; .
 ; If a previous command was left unfinished ($B60A set, for example after the game asked 'which key?'), the parser starts in a different state so that the words
-; just typed are fitted into the old frame (see $7CFC).
+; just typed are fitted into the old frame (see #R$7CFC).
 c$7C4F LD IY,$B8B8   ; IY = the first command frame
  $7C53 XOR A         ; {Not inside a quotation
 ; This entry point is used by the routine at #R$80B5.
@@ -3482,15 +3484,15 @@ c$7CBB LD A,($B60B)  ; A = how many levels of quotation we are inside
 
 ; Parser: end of line (and THEN / full stop)
 ;
-; Handles the end-of-line token, and (from $7CC4) THEN or a full stop. It closes the current command frame. If a verb was required but none was given it
+; Handles the end-of-line token, and (from #R$7CC4) THEN or a full stop. It closes the current command frame. If a verb was required but none was given it
 ; complains (#R$7FF9).
 ; .
 ; For ALL (see #R$808A) the verb is flagged. The frame count $B5F7 is increased and, for THEN, the parser goes back to the start state for the next command
-; ($7C6A).
+; (#R$7C6A).
 ; .
-; At the end of the line some tidying up is done. If the previous command was unfinished ($B60A), the new words are merged into it ($7D02-$7D4B): empty slots in
-; the old frame are filled from the new one. Then frames that have no verb of their own (because of AND, as in 'take the key and the sword') are given the verb
-; of the frame before them (#R$7F81). Finally, noun phrases consisting of IT are resolved, and if a quotation is still open the parser starts again.
+; At the end of the line some tidying up is done. If the previous command was unfinished ($B60A), the new words are merged into it (#R$7D02-#R$7D4B): empty
+; slots in the old frame are filled from the new one. Then frames that have no verb of their own (because of AND, as in 'take the key and the sword') are given
+; the verb of the frame before them (#R$7F81). Finally, noun phrases consisting of IT are resolved, and if a quotation is still open the parser starts again.
 c$7CC0 XOR A          ; {End of the line: no more commands will follow
  $7CC1 LD ($B5F6),A   ; }
 ; This entry point is used by the routines at #R$7DD5 and #R$7DFB.
@@ -3615,9 +3617,9 @@ c$7CC0 XOR A          ; {End of the line: no more commands will follow
 
 ; Parser: a direction
 ;
-; A direction on its own ('north') is a complete movement command: if a verb may start here (bit 1 of E), it is treated as GO NORTH ($7DFB). After a verb, a
-; direction is stored as the frame's particle, like an adverb ($7DBC): bit 2 of E must allow it, and it is put at offset 2 of the frame (#R$7FE2). The entry at
-; $7DBC is the handler for adverbs.
+; A direction on its own ('north') is a complete movement command: if a verb may start here (bit 1 of E), it is treated as GO NORTH (#R$7DFB). After a verb, a
+; direction is stored as the frame's particle, like an adverb (#R$7DBC): bit 2 of E must allow it, and it is put at offset 2 of the frame (#R$7FE2). The entry
+; at #R$7DBC is the handler for adverbs.
 c$7DB6 BIT 1,E       ; May a verb start here?
  $7DB8 JR NZ,$7DFB   ; Yes: treat the direction as "go <direction>"
  $7DBA LD D,$00      ; Otherwise it is used like an adverb
@@ -3635,9 +3637,9 @@ c$7DB6 BIT 1,E       ; May a verb start here?
 ; Parser: AND
 ;
 ; AND (or a comma) is ambiguous: it may join two objects ('take the key and the sword') or two commands ('take the key and go east'). The parser cannot tell
-; until it sees what follows, so it records where it is: the token pointer (in $7C3E and $B5CD, pointing back at the AND), the state flags E ($7C40), the frame
-; pointer IY ($7C41) and the frame count ($7C43). It then carries on as though a new command had begun ($7CC4). If a verb turns up next, the new command stands.
-; If not, the verb handler at $7DFD is never reached and the next frame inherits the verb of this one (#R$7F81).
+; until it sees what follows, so it records where it is: the token pointer (in #R$7C3E and $B5CD, pointing back at the AND), the state flags E ($7C40), the
+; frame pointer IY ($7C41) and the frame count ($7C43). It then carries on as though a new command had begun (#R$7CC4). If a verb turns up next, the new command
+; stands. If not, the verb handler at #R$7DFD is never reached and the next frame inherits the verb of this one (#R$7F81).
 ; .
 ; Bit 3 of E is reset to show that an AND has just been seen.
 c$7DD5 RES 3,E       ; {Note that AND has been seen (bit 3 clear)
@@ -3664,13 +3666,13 @@ c$7DF9 RES 0,E       ; Clear this state bit, then fall into the ordinary verb ha
 
 ; Parser: a verb
 ;
-; The entry at $7DFB (from #R$7DB6) supplies the verb GO ($30 class) for a bare direction; the entry at $7DFD handles verbs typed by the player.
+; The entry at #R$7DFB (from #R$7DB6) supplies the verb GO ($30 class) for a bare direction; the entry at #R$7DFD handles verbs typed by the player.
 ; .
 ; If a verb arrives when a command has already been started and there has been no AND, the parser backtracks: the state saved by the last AND (#R$7DD5) is
 ; restored and the AND is reinterpreted as THEN, splitting the line into two commands.
 ; .
-; Otherwise the verb must be allowed here (bit 1 of E). It is stored at offset 0 of the frame (#R$7FDE). GO and RUN look ahead (from $7E31) past any adverbs: if
-; the next word is a direction, the verb is dropped and the direction stored as the particle, so that 'go north' and 'north' produce the same frame.
+; Otherwise the verb must be allowed here (bit 1 of E). It is stored at offset 0 of the frame (#R$7FDE). GO and RUN look ahead (from #R$7E31) past any adverbs:
+; if the next word is a direction, the verb is dropped and the direction stored as the particle, so that 'go north' and 'north' produce the same frame.
 c$7DFB LD D,$30      ; Class of GO (for a bare direction)
  $7DFD BIT 3,E       ; VERB: has there just been an AND?
  $7DFF JR NZ,$7E1F   ; Yes: a new command after AND is fine
@@ -3717,14 +3719,14 @@ c$7DFB LD D,$30      ; Class of GO (for a bare direction)
 
 ; Parser: an article
 ;
-; Articles (A, AN, THE and the like) are ignored, apart from clearing bit 4 of E; the parser goes straight on to the next word ($7C88).
+; Articles (A, AN, THE and the like) are ignored, apart from clearing bit 4 of E; the parser goes straight on to the next word (#R$7C88).
 c$7E5A RES 4,E       ; No article is expected next
  $7E5C JP $7C88      ; Go back for the next word: the article itself is simply ignored
 
 ; Parser: IN or INTO
 ;
 ; IN and INTO are usually prepositions, and are handled as such (#R$7E6C, with class $70). The exception is when a verb may start here and the previous word was
-; AND or a comma, in which case they begin a new command such as 'and in': the parser jumps back to $7DFB to treat them like a direction.
+; AND or a comma, in which case they begin a new command such as 'and in': the parser jumps back to #R$7DFB to treat them like a direction.
 c$7E5F BIT 1,E       ; May a verb start here?
  $7E61 JR Z,$7E6A    ; No: treat IN/INTO as an ordinary preposition
  $7E63 LD A,($B5CF)  ; {A verb could start here - was the word just before this one AND or a comma?
@@ -3735,8 +3737,8 @@ c$7E5F BIT 1,E       ; May a verb start here?
 ; Parser: a noun phrase
 ;
 ; Collects one noun phrase into the buffer at $7C45 (cleared by the main parser loop): up to two prepositions (#R$7EE6; a third one is an error), any number of
-; articles (skipped), up to two adjectives (#R$7ED3; a third one is an error), and a noun, which ends the phrase ($7E9B stores it at $7C49). Adjectives enter at
-; $7E93 and nouns at $7E9B. A phrase that ends without a noun (for example 'look through') is allowed and simply has no noun.
+; articles (skipped), up to two adjectives (#R$7ED3; a third one is an error), and a noun, which ends the phrase (#R$7E9B stores it at $7C49). Adjectives enter
+; at #R$7E93 and nouns at #R$7E9B. A phrase that ends without a noun (for example 'look through') is allowed and simply has no noun.
 ; .
 ; The phrase is then stored in the frame by #R$7EF5: the first phrase at offset 4 and the second at offset 14. When ALL EXCEPT is in force ($B609 = 2), each
 ; extra noun phrase instead starts a new frame (#R$7F22), with bit 6 of its verb marked, so that 'take all except the sword and the key' produces one frame per
@@ -3819,8 +3821,9 @@ c$7EE6 LD HL,$7C44   ; HL = the count of prepositions seen in this noun phrase s
 
 ; Parser: store a noun phrase in the frame
 ;
-; Copies the 10-byte noun phrase from $7C45 into the command frame: to offset 4 if bit 6 of E says the first phrase is still empty ($7F1A), otherwise to offset
-; 14 if bit 7 says the second is empty ($7F02). The corresponding bit of E is cleared. If both phrases are already full, it is a syntax error (#R$7FEE).
+; Copies the 10-byte noun phrase from $7C45 into the command frame: to offset 4 if bit 6 of E says the first phrase is still empty (#R$7F1A), otherwise to
+; offset 14 if bit 7 says the second is empty (#R$7F02). The corresponding bit of E is cleared. If both phrases are already full, it is a syntax error
+; (#R$7FEE).
 c$7EF5 BIT 6,E       ; Is the first noun phrase free?
  $7EF7 JR NZ,$7F1A   ; Yes: store it there
  $7EF9 BIT 7,E       ; Is the second free?
@@ -3879,7 +3882,7 @@ c$7F2E PUSH IY       ; {HL = the current frame
 ;
 ; Reads the next token from the token buffer (pointer at $B5CD), which it then advances by two. On return D holds the class (the top nibble of the first byte)
 ; and BC the word: B the top nibble of the offset and C the bottom byte. The previous class is saved at $B5CF (so that handlers can see what came before), and
-; the position of the token is saved at $B5CB for error messages. A also holds the class.
+; the position of the token is saved at #R$B5CB for error messages. A also holds the class.
 ;
 ; Output:A Class
 ;        D Class
@@ -3910,8 +3913,8 @@ c$7F56 DEC B         ; One frame fewer to go
 
 ; Parser: step on to the next frame
 ;
-; Decrements B, finds the next frame (#R$7F69, 24 bytes lower) and swaps IX and IY, so that IY is the next frame and IX the one we came from. The entry at $7F5D
-; does not decrement B.
+; Decrements B, finds the next frame (#R$7F69, 24 bytes lower) and swaps IX and IY, so that IY is the next frame and IX the one we came from. The entry at
+; #R$7F5D does not decrement B.
 c$7F5C DEC B         ; One frame fewer to go
 ; This entry point is used by the routine at #R$7CC0.
 *$7F5D CALL $7F69    ; IX = the next frame (24 bytes lower)
@@ -3925,14 +3928,14 @@ c$7F5C DEC B         ; One frame fewer to go
 ; Find the next frame (24 bytes lower)
 ;
 ; Returns IX = IY - 24: the frame after the current one in parse order (frames are built downwards from #R$B8B8). Frames that only hold an exception for ALL
-; EXCEPT (bit 6 of byte 1) are skipped. Continues into #R$7F6F at $7F73.
+; EXCEPT (bit 6 of byte 1) are skipped. Continues into #R$7F6F at #R$7F73.
 c$7F69 PUSH DE       ;
  $7F6A LD DE,$FFE8   ; {Step -24: the next frame
  $7F6D JR $7F73      ; }
 
 ; Find the previous frame (24 bytes higher)
 ;
-; Returns IX = IY + 24: the frame before the current one in parse order, skipping ALL EXCEPT exception frames (bit 6 of byte 1). The entry at $7F73 is shared
+; Returns IX = IY + 24: the frame before the current one in parse order, skipping ALL EXCEPT exception frames (bit 6 of byte 1). The entry at #R$7F73 is shared
 ; with #R$7F69, which uses -24 instead.
 c$7F6F PUSH DE        ;
  $7F70 LD DE,$0018    ; Step +24: the previous frame
@@ -3950,7 +3953,7 @@ c$7F6F PUSH DE        ;
 ; Copies the verb from the frame at IX into the frame at IY (keeping IY's flag bits). This is how the verb is shared when AND joins objects: 'take the key and
 ; the sword' produces two TAKE frames.
 ; .
-; If the new frame has a second noun phrase, and bit 7 of E is set, the second noun phrase and the particle of the previous frame are copied too ($7FC9), so
+; If the new frame has a second noun phrase, and bit 7 of E is set, the second noun phrase and the particle of the previous frame are copied too (#R$7FC9), so
 ; that 'put the key and the sword in the chest' puts both in the chest.
 c$7F81 EXX           ; Switch to the alternate registers for a moment
  $7F82 LD A,(IX+$01) ; A = the previous frame's own verb flags...
@@ -3988,8 +3991,8 @@ c$7F81 EXX           ; Switch to the alternate registers for a moment
 
 ; Copy part of one frame to another
 ;
-; Copies C bytes at offset DE from the frame at IX to the same offset in the frame at IY. Entry points: $7FC5 copies 6 bytes (a noun and two adjectives), $7FC9
-; copies 10 (a whole noun phrase) and $7FCD copies 2 (one word). Used by #R$7F81 and #R$7CC0 to share words between commands.
+; Copies C bytes at offset DE from the frame at IX to the same offset in the frame at IY. Entry points: #R$7FC5 copies 6 bytes (a noun and two adjectives),
+; #R$7FC9 copies 10 (a whole noun phrase) and #R$7FCD copies 2 (one word). Used by #R$7F81 and #R$7CC0 to share words between commands.
 c$7FC5 LD C,$06      ; {6 bytes: a noun with two adjectives
  $7FC7 JR $7FCF      ; }
 ; This entry point is used by the routine at #R$7F81.
@@ -4011,8 +4014,8 @@ c$7FC5 LD C,$06      ; {6 bytes: a noun with two adjectives
 
 ; Parser: store the verb
 ;
-; Clears bit 1 of E (no more verbs allowed) and stores the token BC at offset 0 of the current frame. The entry at $7FE2 stores BC at offset L instead (used for
-; the particle at offset 2).
+; Clears bit 1 of E (no more verbs allowed) and stores the token BC at offset 0 of the current frame. The entry at #R$7FE2 stores BC at offset L instead (used
+; for the particle at offset 2).
 ;
 ;  Input:BC Token
 ; Output:E Updated state
@@ -4044,7 +4047,7 @@ c$7FEE CALL $7CBB    ; Are we inside a quotation (an order to a character)?
 
 ; Print "what?"
 ;
-; Prints 'what?' (the message at $AC93) in the lower window, and returns with Z reset so that the command is abandoned.
+; Prints 'what?' (the message at #R$AC93) in the lower window, and returns with Z reset so that the command is abandoned.
 c$7FF9 LD HL,$AC93   ; "what?"
  $7FFC LD A,$01      ; {Send it to the lower (input) window...
  $7FFE LD ($B5F2),A  ; }
@@ -4057,10 +4060,10 @@ s$8007 DEFS $02
 
 ; Parser: special words
 ;
-; Looks the special word up in the table at #R$8029 and jumps to its handler. DE (the word's class and the parser's state) is saved on the stack at $800C and
-; restored at $8027 before the jump.
+; Looks the special word up in the table at #R$8029 and jumps to its handler. DE (the word's class and the parser's state) is saved on the stack at #R$800C and
+; restored at #R$8027 before the jump.
 ; .
-; If the word is not in the table, the jump at $801C goes back into the parser WITHOUT restoring DE, leaving two bytes on the stack. Every special word except
+; If the word is not in the table, the jump at #R$801C goes back into the parser WITHOUT restoring DE, leaving two bytes on the stack. Every special word except
 ; DO is in the table, so in practice this happens only when the player types DO - and then the game loses control completely (see the bug note).
 ; .
 ; The special words are ALL, EXCEPT, IT, ONE, the game commands PRINT, NOPRINT, LOAD, SAVE, QUIT, HELP, SCORE and PAUSE, and a quotation mark (which has class
@@ -4120,10 +4123,10 @@ b$8029 DEFW $0000    ; {Quote, ALL, EXCEPT, IT, ONE, PRINT, NOPRINT, LOAD, SAVE,
 
 ; PRINT and NOPRINT
 ;
-; PRINT ($805D) switches on copying of the story window to a ZX Printer (#R$7B15), by setting $B5E3 to 1, but only if a printer is attached: bit 6 of port $FB
-; is 0 when one is. NOPRINT ($8067) sets $B5E3 to 0.
+; PRINT (#R$805D) switches on copying of the story window to a ZX Printer (#R$7B15), by setting $B5E3 to 1, but only if a printer is attached: bit 6 of port $FB
+; is 0 when one is. NOPRINT (#R$8067) sets $B5E3 to 0.
 ; .
-; The test for the printer has a curious slip: when no printer is attached, the JR NZ at $805F jumps to $8069, which is in the middle of the LD ($B5E3),A
+; The test for the printer has a curious slip: when no printer is attached, the JR NZ at #R$805F jumps to $8069, which is in the middle of the LD ($B5E3),A
 ; instruction. The bytes there are executed as EX (SP),HL and OR L before execution reaches #R$806B. In my tests the game carried on normally after PRINT with
 ; no printer, so the damage appears to be harmless in practice.
 c$805D IN A,($FB)    ; Read the ZX Printer's status port
@@ -4136,7 +4139,7 @@ c$805D IN A,($FB)    ; Read the ZX Printer's status port
 
 ; Special word finished: carry on parsing
 ;
-; Restores the previous word class from $B5CF into D and goes back to the parser loop ($7C7E). Used by the game commands, which are not part of the command
+; Restores the previous word class from $B5CF into D and goes back to the parser loop (#R$7C7E). Used by the game commands, which are not part of the command
 ; being parsed.
 c$806B LD A,($B5CF)  ; A = the word class that came before this special word
  $806E LD D,A        ; Restore it, as if the special word had never been seen
@@ -4182,14 +4185,14 @@ c$809A PUSH DE       ; Save DE
 
 ; Store the noun phrase in the frame (jump)
 ;
-; Jumps to $7F02 (second noun phrase) if Z is set, otherwise to $7F1A (first noun phrase); see #R$7EF5.
+; Jumps to #R$7F02 (second noun phrase) if Z is set, otherwise to #R$7F1A (first noun phrase); see #R$7EF5.
 c$80AF JP Z,$7F02    ; First phrase already taken: store in the second
  $80B2 JP $7F1A      ; Otherwise store in the first
 
 ; Opening quotation mark
 ;
-; Begins a quotation, as in SAY TO THORIN "GO EAST". The current word class and frame count are saved ($8007, $8008), and the parser is re-entered at $7C54 with
-; the frame pointer moved to a fresh frame, so that the words inside the quotation are parsed as complete commands of their own.
+; Begins a quotation, as in SAY TO THORIN "GO EAST". The current word class and frame count are saved (#R$8007, $8008), and the parser is re-entered at #R$7C54
+; with the frame pointer moved to a fresh frame, so that the words inside the quotation are parsed as complete commands of their own.
 c$80B5 LD A,D        ; {Save the word class we had reached...
  $80B6 LD ($8007),A  ; }
  $80B9 PUSH DE       ; {...and DE, BC and IY, so the parser can be restored exactly when the quotation closes
@@ -4285,7 +4288,7 @@ c$8149 CALL $81AD    ; Print the score
 ; HELP
 ;
 ; HELP gives a hint that depends on where Bilbo is. His room is looked up in the table at #R$8185; if it is there, that message is printed, otherwise the
-; general one at $B358: 'you're doing fine.' The message goes to the lower window. HELP is ignored if a character is the actor (for example inside SAY TO).
+; general one at #R$B358: 'you're doing fine.' The message goes to the lower window. HELP is ignored if a character is the actor (for example inside SAY TO).
 c$8158 LD A,($B5DB)  ; {Is the current actor Bilbo, not a character (e.g. during SAY TO)?
  $815B AND A         ; }
  $815C JP NZ,$7C7E   ; Not Bilbo: ignore HELP entirely and carry on parsing
@@ -4403,10 +4406,10 @@ c$81F2 LD A,$04      ; {Green border
 
 ; LOAD
 ;
-; Loads a saved game from tape using the ROM routine LD-BYTES ($0556), in four headerless blocks: the 28 game variables (#R$B5CB, from $B5DC), the object table
-; (#R$C00B), the timers and characters (#R$C973) and the room table (#R$B97A). These are exactly the areas that the game backs up at start-up (#R$6C00), and
-; together they are the entire state of the game. Afterwards three bytes are copied from $B5DC back to $C8D1 (see #R$8284). If a block fails to load, #R$8250
-; reports a tape error and restarts the game.
+; Loads a saved game from tape using the ROM routine LD-BYTES ($0556), in four headerless blocks: the 28 game variables (#R$B5CB, from #R$B5DC), the object
+; table (#R$C00B), the timers and characters (#R$C973) and the room table (#R$B97A). These are exactly the areas that the game backs up at start-up (#R$6C00),
+; and together they are the entire state of the game. Afterwards three bytes are copied from #R$B5DC back to #R$C8D1 (see #R$8284). If a block fails to load,
+; #R$8250 reports a tape error and restarts the game.
 ; .
 ; Two things live outside the four blocks. The three bytes of Bard's current order are handled specially (see #R$8284). But the address of the hidden route
 ; chosen at the start of the game is not saved at all: #R$970B writes it into the code of Elrond's map routine (the operand at $A6C5), not into the saved data.
@@ -4459,7 +4462,7 @@ c$8250 CALL $0556    ; The ROM's own LD-BYTES routine
 
 ; Copy three bytes
 ;
-; Copies three bytes from HL to DE (used to move the bytes at $C8D1 in or out of the saved variables).
+; Copies three bytes from HL to DE (used to move the bytes at #R$C8D1 in or out of the saved variables).
 c$826B LD BC,$0003   ; {Three bytes to copy
  $826E LDIR          ;
  $8270 RET           ; }
@@ -4481,15 +4484,15 @@ c$8271 XOR A         ; {Wait here until no key at all is pressed
 
 ; SAVE
 ;
-; Saves the game to tape. Three bytes at $C8D1 (part of the data after the room-entry handlers) are first copied over the start of the saved variables at $B5DC
-; so that they are saved too. The player is asked to start the tape and press a key, and the four blocks listed under #R$8209 are saved with the ROM routine
-; SA-BYTES ($04C2).
+; Saves the game to tape. Three bytes at #R$C8D1 (part of the data after the room-entry handlers) are first copied over the start of the saved variables at
+; #R$B5DC so that they are saved too. The player is asked to start the tape and press a key, and the four blocks listed under #R$8209 are saved with the ROM
+; routine SA-BYTES ($04C2).
 ; .
 ; Then, unusually for a 1982 game, it offers to VERIFY the save: 'rewind and prepare tape for verification - then hit any key', and reads the four blocks back
 ; with the ROM routine in verify mode (#R$8312).
 c$8284 PUSH IX       ; {Save IX and DE
  $8286 PUSH DE       ; }
- $8287 LD DE,$B5DC   ; {Tuck Bard's own remembered order (from $C8D1) in among the saved variables for a moment...
+ $8287 LD DE,$B5DC   ; {Tuck Bard's own remembered order (from #R$C8D1) in among the saved variables for a moment...
  $828A LD HL,$C8D1   ;
  $828D CALL $826B    ; }
  $8290 LD A,$01      ; {Ask the player to get the tape ready, in the lower window
@@ -4564,15 +4567,15 @@ c$8312 CALL $0556    ; The ROM's own LD-BYTES routine, in verify mode
 ; Used by #R$83A7 and the routines after it while a command is being matched to objects. The first 17 bytes are cleared by #R$839A for each command.
 ; .
 ; #LIST
-; { $832E, $832F: flags for the target and the instrument (bit 0: a noun was given; bit 1: a matching object has been found) }
+; { #R$832E, $832F: flags for the target and the instrument (bit 0: a noun was given; bit 1: a matching object has been found) }
 ; { $8330-$8332: counts of candidate objects and of those for which the action would work }
-; { $8333-$8338 and $8339-$833E: the noun and adjectives given for the target and for the instrument }
+; { $8333-$8338 and $8339-#R$833E: the noun and adjectives given for the target and for the instrument }
 ; { $833F, $8341: where the search for the target and instrument has got to }
 ; { $8343: the ALL flag of the frame }
 ; { $8344: set when only one candidate is wanted }
-; { $8345, $8346: frame offsets of the target and instrument phrases }
+; { $8345, #R$8346: frame offsets of the target and instrument phrases }
 ; { $8347, $8348: the candidate target and instrument }
-; { $8349-$834E: the verb, particle and preposition used to find the action }
+; { $8349-#R$834E: the verb, particle and preposition used to find the action }
 ; { $834F: the action table entry }
 ; LIST#
 b$832E DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -4589,10 +4592,10 @@ b$832E DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; $B5EB is set to 1, #R$7122 reports it ('you take the sword.'), #R$946F performs it, and #R$9611 ends the turn, letting the characters act and the timers run.
 ; So every command the player types costs one turn, and a line with three commands costs three turns.
 ; .
-; A command with ALL is repeated ($837F) for each object it applies to, one turn each. When a frame is finished, the next frame (24 bytes lower) is taken,
+; A command with ALL is repeated (#R$837F) for each object it applies to, one turn each. When a frame is finished, the next frame (24 bytes lower) is taken,
 ; skipping the exception frames of ALL EXCEPT, until the frame count $B5F7 reaches 0.
 ; .
-; If the previous command was left unfinished ($B60A), it is picked up again at $8385 instead.
+; If the previous command was left unfinished ($B60A), it is picked up again at #R$8385 instead.
 c$8351 XOR A          ; {No ALL command is still in progress yet
  $8352 LD ($B60C),A   ; }
  $8355 LD IY,$B8B8    ; IY = the first command frame
@@ -4640,10 +4643,10 @@ c$839A XOR A         ; A = 0
 
 ; Find the action and objects for a command
 ;
-; The target ($B5D9) and instrument ($B5DA) are set to $FF (none) and the work area is cleared. #R$858F then finds the action table entry that matches the
+; The target ($B5D9) and instrument (#R$B5DA) are set to $FF (none) and the work area is cleared. #R$858F then finds the action table entry that matches the
 ; frame's verb, particle and preposition; if none does, the routine returns with Z set.
 ; .
-; The action number (1-59) is worked out from the entry's address and stored in $B5D8. The flags of the entry (#R$8569) say whether the action needs a target
+; The action number (1-59) is worked out from the entry's address and stored in #R$B5D8. The flags of the entry (#R$8569) say whether the action needs a target
 ; and an instrument (bits 3 and 2 of $B60D). If it needs neither, the routine is done. Otherwise #R$8405 searches for suitable objects, trying each candidate
 ; with a dry run. If the objects cannot be decided, #R$87AD deals with it (asking 'which key?', saying 'I do not see the key', and so on). With ALL, #R$8464
 ; moves on to the next object.
@@ -4771,7 +4774,7 @@ c$8464 PUSH IY        ; {Save IY, DE and HL
 
 ; Start the search for targets
 ;
-; Sets up the table (objects or rooms) in which the target will be searched for (#R$84BD), according to bits 2-3 of $B60E, and saves the starting position in
+; Sets up the table (objects or rooms) in which the target will be searched for (#R$84BD), according to bits 2-3 of #R$B60E, and saves the starting position in
 ; $833F. Does nothing when repeating an ALL command.
 c$8492 LD A,($B60C)  ; {Is an ALL command already partway through its list of objects?
  $8495 AND A         ; }
@@ -4827,7 +4830,7 @@ c$84C9 LD A,($B60D)  ; A = the action's main flags
 
 ; Try the action (dry run)
 ;
-; Runs the action with #R$946F and returns with Z set if it would not work ($B5EC is 0). Called while $B5EB is 0, so nothing actually happens and nothing is
+; Runs the action with #R$946F and returns with Z set if it would not work (#R$B5EC is 0). Called while $B5EB is 0, so nothing actually happens and nothing is
 ; printed.
 c$84DE CALL $946F    ; Carry out the action, with nothing yet really happening
  $84E1 LD A,($B5EC)  ; {Did it say it would work?
@@ -4836,7 +4839,7 @@ c$84DE CALL $946F    ; Carry out the action, with nothing yet really happening
 
 ; Would this action work? (for a character)
 ;
-; Used when a character is deciding what to do (#R$976C): works out, for the action in $B5D8 and the objects in $B5D9 and $B5DA, whether the action would
+; Used when a character is deciding what to do (#R$976C): works out, for the action in #R$B5D8 and the objects in $B5D9 and #R$B5DA, whether the action would
 ; succeed, without printing anything and without disturbing the player's command. The work area pointer at $833F is saved and restored. Returns with Z set if
 ; the action would not work.
 c$84E6 PUSH HL       ; {Save every register this uses
@@ -4909,8 +4912,8 @@ c$8554 INC B         ; Was there actually no object given at all ($FF)?
 
 ; Decode the flags of the action
 ;
-; Turns the flag nibbles of the action table entry (see #R$70EA) into separate variables: $B601 (bit 6 of $B60E: the action is allowed in the dark), $B5FF (bit
-; 0 of $B60D: the objects need not be within reach), $B5EF (bit 7: the target is a room rather than an object) and $B5F0 (bit 6: the instrument is a room).
+; Turns the flag nibbles of the action table entry (see #R$70EA) into separate variables: $B601 (bit 6 of #R$B60E: the action is allowed in the dark), $B5FF
+; (bit 0 of $B60D: the objects need not be within reach), $B5EF (bit 7: the target is a room rather than an object) and $B5F0 (bit 6: the instrument is a room).
 c$8569 LD A,($B60E)  ; A = the action's second set of flags
  $856C AND $40       ; {Is it allowed in the dark?
  $856E LD ($B601),A  ; }
@@ -4932,13 +4935,13 @@ c$8569 LD A,($B60E)  ; A = the action's second set of flags
 
 ; Find the action for a command
 ;
-; Collects the verb of the current frame and up to two prepositions from its noun phrases into $8349-$834E, and then searches the action table (#R$AA47) for an
-; entry with the same verb and prepositions (#R$71EA). If one is found, #R$8614 sorts out which noun phrase is the target and which the instrument, and the
+; Collects the verb of the current frame and up to two prepositions from its noun phrases into $8349-#R$834E, and then searches the action table (#R$AA47) for
+; an entry with the same verb and prepositions (#R$71EA). If one is found, #R$8614 sorts out which noun phrase is the target and which the instrument, and the
 ; routine returns with Z reset.
 ; .
-; If none is found there are two cases. If the verb was right but the other words were wrong ($B5D0 set), 'I do not know the verb ...' is printed ($8895). If
-; the verb has no actions at all (WAIT, JUMP, SING, SMILE and many others), the game prints 'you wait. time passes...' with the verb substituted ($AC97), and a
-; turn goes by. This is how all the verbs that do nothing get their reply.
+; If none is found there are two cases. If the verb was right but the other words were wrong ($B5D0 set), 'I do not know the verb ...' is printed (#R$8895). If
+; the verb has no actions at all (WAIT, JUMP, SING, SMILE and many others), the game prints 'you wait. time passes...' with the verb substituted (#R$AC97), and
+; a turn goes by. This is how all the verbs that do nothing get their reply.
 c$858F PUSH IY       ; Save the caller's IY, the current frame
  $8591 LD L,(IY+$00) ; {HL = the frame's own verb...
  $8594 LD H,(IY+$01) ; }
@@ -5001,7 +5004,7 @@ c$858F PUSH IY       ; Save the caller's IY, the current frame
 ; Assign the noun phrases to target and instrument
 ;
 ; Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's
-; flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase
+; flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of #R$832E and $832F is set if the phrase
 ; actually has a noun.
 ; .
 ; I originally described this as also making 'with the sword hit thorin' work alongside 'hit thorin with the sword'. Testing it in the emulator shows that is
@@ -5152,7 +5155,7 @@ c$86ED LD HL,$8333   ; HL = the target's own collected words (noun and adjective
 
 ; Find the next candidate instrument
 ;
-; As #R$86BC, for the instrument; the position is kept at $8341, and the candidate goes into $B5DA.
+; As #R$86BC, for the instrument; the position is kept at $8341, and the candidate goes into #R$B5DA.
 c$8708 XOR A         ; {Assume reach does not matter, for now
  $8709 LD ($B5FF),A  ; }
  $870C PUSH IY       ; Save the caller's IY
@@ -5215,7 +5218,7 @@ c$8765 LD ($B60A),A  ; Remember which situation this is (which key?/what with?/.
 
 ; Ask "which ...?"
 ;
-; When the noun fits more than one object and more than one of them would work, the game asks 'which key?' ($ACC0, with the noun pushed as the parameter) and
+; When the noun fits more than one object and more than one of them would work, the game asks 'which key?' (#R$ACC0, with the noun pushed as the parameter) and
 ; leaves the command unfinished (#R$8765), so that the player's next words - 'the small one', 'curious' - are fitted into it (#R$7CC0).
 c$8774 LD A,($8345)  ; A = the offset of whichever frame slot holds the ambiguous noun
  $8777 LD HL,($8333) ; HL = the target's own noun word
@@ -5256,17 +5259,17 @@ c$8789 LD HL,$832F   ; {Was any noun at all given for the instrument?
 ; Called when #R$8405 did not settle on exactly one workable target, to explain why - or to make the best of it. Inside a quotation (an order to a character) it
 ; says nothing at all and returns, so characters are not given the player's excuses.
 ; .
-; If exactly one candidate target would work, the instrument is dealt with instead (#R$8789). Otherwise the target's flags at $832E decide:
+; If exactly one candidate target would work, the instrument is dealt with instead (#R$8789). Otherwise the target's flags at #R$832E decide:
 ; .
 ; #LIST
-; { No noun was given ($8821): the words of the action are pushed and, if nothing suitable could be found at all, 'i see nothing to open' is printed; if there
+; { No noun was given (#R$8821): the words of the action are pushed and, if nothing suitable could be found at all, 'i see nothing to open' is printed; if there
 ; was something, the command is left unfinished (#R$8765) and the game asks 'open what?', so that the next thing typed completes it. }
-; { A noun was given but nothing matching it was found ($87EF): the search is widened - first to the rooms leading off this one (#R$9DE9, for commands such as
+; { A noun was given but nothing matching it was found (#R$87EF): the search is widened - first to the rooms leading off this one (#R$9DE9, for commands such as
 ; GO INTO), then to every object anywhere (#R$9D2E with the filter set to 2) - so that something the player has named but cannot use is still recognised. If it
 ; is found, it is made the target and the action is reported as a failure (#R$7111, 'you cannot open the door'); if not, 'i do not see the door here'. }
 ; { Several candidates fit the words: 'which key?' (#R$8774), again leaving the command unfinished. }
-; { Exactly one candidate, or none, but the action would not work with it: the action is carried out for real anyway ($87E6), so that its own handler prints the
-; proper reason. }
+; { Exactly one candidate, or none, but the action would not work with it: the action is carried out for real anyway (#R$87E6), so that its own handler prints
+; the proper reason. }
 ; LIST#
 c$87AD LD A,($B60B)  ; {Are we inside a quotation (an order to a character)?
  $87B0 DEC A         ; }
@@ -5339,7 +5342,7 @@ c$87AD LD A,($B60B)  ; {Are we inside a quotation (an order to a character)?
 ; Report a missing or unsuitable instrument
 ;
 ; The instrument's counterpart of the end of #R$87AD. If nothing was found to match the words, 'i see nothing to unlock the door with'. Otherwise the command is
-; left unfinished (#R$8765) and the game asks 'unlock the door with what?' ($ACB4), so the player can simply answer 'the key'. The words of the question are
+; left unfinished (#R$8765) and the game asks 'unlock the door with what?' (#R$ACB4), so the player can simply answer 'the key'. The words of the question are
 ; pushed by #R$8869.
 c$883E CALL $8865    ; Push the action's own particle and preposition, for the "with what?" question
  $8841 LD A,($B5D9)  ; A = the target
@@ -5368,9 +5371,9 @@ c$8865 LD A,$28      ; The opcode for JR Z, for the self-modifying trick below
 ; Pushes the particle and the preposition of the current action (from the action table entry at $834F) on the stack, as parameters for a message such as 'take
 ; what?' or 'unlock the door with what?'. Words that should not appear are replaced by 0.
 ; .
-; This routine modifies itself: it writes A (the opcode for either JR NZ or JR Z) into the two conditional jumps at $887F and $888E before running them, so that
-; the same code can test flag bits for either the target or the instrument. It then returns by jumping to its return address, which it had to move out of the
-; way under the pushed words (the EX (SP),HL instructions).
+; This routine modifies itself: it writes A (the opcode for either JR NZ or JR Z) into the two conditional jumps at #R$887F and #R$888E before running them, so
+; that the same code can test flag bits for either the target or the instrument. It then returns by jumping to its return address, which it had to move out of
+; the way under the pushed words (the EX (SP),HL instructions).
 c$8869 LD A,$20       ; The opcode for JR NZ instead (the target version)
 ; This entry point is used by the routine at #R$8865.
 *$886B LD ($887F),A   ; Poke it into the first conditional jump below...
@@ -5393,8 +5396,8 @@ c$8869 LD A,$20       ; The opcode for JR NZ instead (the target version)
 
 ; "I do not know the verb ..."
 ;
-; Pushes the verb, particle and preposition the player used and prints 'I do not know the verb "..."' ($ACA4): the verb is known, but not with those words (for
-; example 'take through the door').
+; Pushes the verb, particle and preposition the player used and prints 'I do not know the verb "..."' (#R$ACA4): the verb is known, but not with those words
+; (for example 'take through the door').
 c$8895 LD HL,($834D) ; {Push the second collected preposition...
  $8898 PUSH HL       ; }
  $8899 LD HL,($834B) ; {...and the first...
@@ -5450,8 +5453,8 @@ c$88A7 PUSH BC         ;
 
 ; Find an order for the current actor
 ;
-; Searches the eight 25-byte slots of the orders buffer (#R$B628) for one addressed to the current actor ($B5DB). Returns with Z set and HL pointing at the slot
-; if one is found.
+; Searches the eight 25-byte slots of the orders buffer (#R$B628) for one addressed to the current actor (#R$B5DB). Returns with Z set and HL pointing at the
+; slot if one is found.
 ;
 ; Output:F Z set if found
 ;        HL Order slot
@@ -5555,8 +5558,8 @@ s$8964 DEFS $01
 
 ; Draw the picture of a room, if it has one
 ;
-; Looks the room A up in the picture index at #R$CC00. If there is a picture, it is drawn by #R$8985. The result of the search is stored at $8964, where #R$95B9
-; later looks to decide whether to wait for a key after the picture has been drawn.
+; Looks the room A up in the picture index at #R$CC00. If there is a picture, it is drawn by #R$8985. The result of the search is stored at #R$8964, where
+; #R$95B9 later looks to decide whether to wait for a key after the picture has been drawn.
 ;
 ; Input:A Room number
 c$8965 PUSH AF       ; {Save every register this uses
@@ -5727,9 +5730,9 @@ s$8A4D DEFS $02
 
 ; Flood fill
 ;
-; Fills the area around the point (D,E) with ink colour A (kept at $8C2C for #R$8B93). It is a scan-line fill: from the starting point it moves left to the edge
-; of the area, then works rightwards along the row, setting each pixel. At every pixel it looks at the pixel above and the pixel below: where an unfilled
-; stretch begins in the row above or below, that position is pushed on the stack as a 'seed' to be filled later. The flags at $8A4D (above) and $8A4E (below)
+; Fills the area around the point (D,E) with ink colour A (kept at #R$8C2C for #R$8B93). It is a scan-line fill: from the starting point it moves left to the
+; edge of the area, then works rightwards along the row, setting each pixel. At every pixel it looks at the pixel above and the pixel below: where an unfilled
+; stretch begins in the row above or below, that position is pushed on the stack as a 'seed' to be filled later. The flags at #R$8A4D (above) and $8A4E (below)
 ; stop it pushing a seed for every pixel of the same stretch. When the row is done, the next seed is popped and the process repeats, until the marker $0080
 ; pushed at the start comes back off the stack.
 ; .
@@ -5983,8 +5986,8 @@ c$8B2F BIT 0,C       ; Mostly vertical (bit 0 set)?
 
 ; Plot a pixel
 ;
-; Sets the pixel at (D,E) and gives its attribute cell the ink colour held at $8C2C, keeping the cell's paper colour. If the ink would be the same as the paper
-; (and so invisible), the ink is changed to its complement (XOR $38 before shifting).
+; Sets the pixel at (D,E) and gives its attribute cell the ink colour held at #R$8C2C, keeping the cell's paper colour. If the ink would be the same as the
+; paper (and so invisible), the ink is changed to its complement (XOR $38 before shifting).
 c$8B93 PUSH HL       ;
  $8B94 CALL $8BBC    ; {HL = the screen byte, A = the pixel's bit
  $8B97 PUSH AF       ;
@@ -6161,7 +6164,7 @@ c$8C45 CALL $8C3A      ; Is the actor carrying it? (If not, "you are not carryin
 ; TAKE OUT OF
 ;
 ; The containers' handler for TAKE X OUT OF Y (the goblins' cache, the cupboard, the chest and the boat). The target must actually be inside the container
-; (#R$9BD3 checks the holder chain), or 'the X is not in the Y.' Then it is taken like anything else (the rest of #R$8CC8, reached at $8CD1).
+; (#R$9BD3 checks the holder chain), or 'the X is not in the Y.' Then it is taken like anything else (the rest of #R$8CC8, reached at #R$8CD1).
 c$8C75 LD A,($B5D9)  ; A = the target of the current command
  $8C78 LD HL,$B5DA   ; HL = the address holding the instrument (the container we are meant to take it out of)
  $8C7B CALL $9BD3    ; Is the target actually inside that container? (reuses the tail of #R$9BCD, comparing against whatever holder number sits at HL)
@@ -6267,7 +6270,7 @@ b$8CEA DEFB $04,$19,$00
 
 ; Move variables
 ;
-; $8D15: the destination room's record. $8D17: the destination room. $8D18: the size of the actor plus its load.
+; #R$8D15: the destination room's record. #R$8D17: the destination room. #R$8D18: the size of the actor plus its load.
 b$8D15 DEFB $06,$D8  ; Room record
  $8D17 DEFB $FD      ; Destination room
  $8D18 DEFB $CB      ; Size
@@ -6277,12 +6280,12 @@ b$8D15 DEFB $06,$D8  ; Room record
 ; Moves the current actor one step in the direction given by the action number (1-10: north, south, east, west, northeast, northwest, southeast, southwest, up,
 ; down). Used for the player's movement commands and for every character that moves.
 ; .
-; IN THE DARK, Bilbo does not know which way he is going: the direction is replaced by a random one ($8D1E). And if there is no exit that way, instead of 'you
+; IN THE DARK, Bilbo does not know which way he is going: the direction is replaced by a random one (#R$8D1E). And if there is no exit that way, instead of 'you
 ; cannot go that way' he stumbles: his strength is halved, and he reads 'but fall and hit your head.', or, once his strength has dropped to nothing, 'but fall
 ; and smash your skull.' and dies.
 ; .
 ; A character being carried by another character (for example Bilbo carried by someone) is set down first. The size of the actor plus everything it carries is
-; worked out ($8D18). The exit must exist; if it has a door, the door must be open (or broken); Bilbo cannot use a door with bit 7 of its attributes set; and
+; worked out (#R$8D18). The exit must exist; if it has a door, the door must be open (or broken); Bilbo cannot use a door with bit 7 of its attributes set; and
 ; the actor must be no bigger than the door ('the window is too small for you to enter'). If the destination room has a capacity, there must be room ('the boat
 ; is too full for you to enter').
 ; .
@@ -6472,7 +6475,7 @@ c$8E9D CALL $9E6E    ; Find the exit that passes through the target, then fall i
 ;
 ; Moves the actor through the exit at IX (see the room records at #R$B97A): byte 0 the direction, byte 1 a door or other obstacle, byte 2 the destination. Exits
 ; with no destination cannot be used. If the exit has a door, the door must be open (bit 5 of its flags). The direction is then used as the action number and
-; the move is made by #R$8D19 (at $8D27). If the exit cannot be used, #R$9EBF reports it.
+; the move is made by #R$8D19 (at #R$8D27). If the exit cannot be used, #R$9EBF reports it.
 ;
 ; Input:IX Exit
 ;       A $FF if there is no exit
@@ -6783,7 +6786,7 @@ c$90B4 LD IX,($B5F8)  ; IX = the target's record
 ; Attack (HIT, KILL, ATTACK, STRIKE, SMASH ...)
 ;
 ; The fight routine. It is used both when the player attacks someone and when another character attacks (for example Thorin retaliating, or the trolls and
-; goblins attacking Bilbo). The attacker's object record is pointed to by $B5FC, the target's by $B5F8, and the weapon's (if any) by $B5FA; $B5DA holds the
+; goblins attacking Bilbo). The attacker's object record is pointed to by $B5FC, the target's by #R$B5F8, and the weapon's (if any) by $B5FA; #R$B5DA holds the
 ; weapon's object number, or $FF when there is none.
 ; .
 ; It uses two bytes of the 8-byte object header (see #R$C00B): byte 5 is STRENGTH and byte 6 is DEFENCE. Some starting values: Bilbo 64/64, Thorin 104/120,
@@ -6791,19 +6794,19 @@ c$90B4 LD IX,($B5F8)  ; IX = the target's record
 ; .
 ; Step 1: 'you attack thorin' is printed ($90FE onwards), naming the weapon if one was used.
 ; .
-; Step 2: the attack value is the attacker's strength ($90F9), plus the weapon's strength if one was used ($9102-$9116), capped at 255. A weapon is only
+; Step 2: the attack value is the attacker's strength (#R$90F9), plus the weapon's strength if one was used (#R$9102-#R$9116), capped at 255. A weapon is only
 ; accepted if byte 0 of its record is 1 (an ordinary one-place object); otherwise the message at #R$AE52 is printed.
 ; .
-; Step 3: the attack value is randomised by #R$917D (roughly -10 to +10) and so is the target's defence ($9121-$912A).
+; Step 3: the attack value is randomised by #R$917D (roughly -10 to +10) and so is the target's defence (#R$9121-$912A).
 ; .
 ; Step 4: if the randomised defence is greater than or equal to the attack, the blow does nothing: 'but the effort is wasted. his defense is too strong'
 ; (#R$AE43).
 ; .
 ; Step 5: if the attack exceeds the defence by more than 16, the blow is fatal. The message at #R$AD2D ('with one well placed blow you cleave his skull') is
-; printed and bit 3 of the target's flag byte (byte 7) is set, marking it dead ($9168).
+; printed and bit 3 of the target's flag byte (byte 7) is set, marking it dead (#R$9168).
 ; .
 ; Step 6: otherwise the target is wounded. The difference d (1-16) selects a message from the table at #R$9190 - the larger the margin the nastier the
-; description. The code then tries to reduce the target's strength by d/2+1 and its defence by d/4+1 ($914E-$9164), skipping either reduction if it would go
+; description. The code then tries to reduce the target's strength by d/2+1 and its defence by d/4+1 (#R$914E-$9164), skipping either reduction if it would go
 ; below 0. It computes d/2 and d/4 with RRCA (rotate right) rather than SRL (shift right), though.
 ; .
 ; BUG: RRCA moves the bit shifted out of the bottom back into the top, so the halving only works when the bit being shifted out is 0. With Thorin (strength 104,
@@ -6811,7 +6814,7 @@ c$90B4 LD IX,($B5F8)  ; IX = the target's record
 ; 2, 6, 10 and 14 reduce strength only; margins 3, 7, 11 and 15 do nothing at all; and margins 1, 5, 9 and 13 leave strength alone but slash his defence by
 ; about 65, to 52-55, which makes the next blow very likely to kill him.
 ; .
-; BUG: the table at #R$9190 only has useful entries for differences 1 to 15. A difference of exactly 16 reads the two bytes at $91B0 (which are code, $DD $2A)
+; BUG: the table at #R$9190 only has useful entries for differences 1 to 15. A difference of exactly 16 reads the two bytes at #R$91B0 (which are code, $DD $2A)
 ; as a message address, so the game interprets ROM at $2ADD as a message and prints garbage.
 c$90DB CALL $90B4     ; Check the target is something that can be attacked
  $90DE LD A,($B5DA)   ; Was a weapon named?
@@ -6919,7 +6922,7 @@ c$917D PUSH BC       ;
 ; 0 is never used (a margin of 0 means the blow was wasted). The small margins give the mildest messages and the larger margins the most violent ones, such as
 ; 'you hit thorin hard on the shoulder - thorin staggers and almost falls'.
 ; .
-; The table has 16 entries ($9190-$91AF), but the margin can be 16, which reads past the end into the code at $91B0 (see the bug note in #R$90DB).
+; The table has 16 entries (#R$9190-$91AF), but the margin can be 16, which reads past the end into the code at #R$91B0 (see the bug note in #R$90DB).
 w$9190 DEFW $AE2F    ; {Messages for margins 0-15
  $9192 DEFW $AE1E    ;
  $9194 DEFW $AE13    ;
@@ -7211,7 +7214,7 @@ c$9392 CALL $8CBA      ; Is the target something that can even be picked up?
 ; The target must be closed and not already locked (#R$A129). The instrument must not be broken (bit 3 of its flags) or 'the key is broken'. Then bit 0 (locked)
 ; of the target's flags is set.
 ; .
-; LOCK and UNLOCK share their last instructions: this routine writes $C6 into $93EB, turning the instruction at $93E8 into SET 0,(IX+$07); #R$93ED writes $86
+; LOCK and UNLOCK share their last instructions: this routine writes $C6 into $93EB, turning the instruction at #R$93E8 into SET 0,(IX+$07); #R$93ED writes $86
 ; there, turning it into RES 0,(IX+$07).
 c$93CD CALL $A129     ; Is the target already locked, or not even closed?
  $93D0 JP NZ,$A09C    ; If either, say why it cannot be locked
@@ -7264,8 +7267,8 @@ c$9404 CALL $8C3A      ; Is the actor holding the target?
 
 ; Could the action apply to this target?
 ;
-; Used while choosing between candidate objects (#R$86ED). Sets $B5EC to 1 if the action could possibly apply to the target: either there is a default handler
-; for the action (#R$C61F), or the target itself has a handler for it (#R$9ADC). The checks in #R$A100 are also applied. Sets $B5EC to 0 if the action is not
+; Used while choosing between candidate objects (#R$86ED). Sets #R$B5EC to 1 if the action could possibly apply to the target: either there is a default handler
+; for the action (#R$C61F), or the target itself has a handler for it (#R$9ADC). The checks in #R$A100 are also applied. Sets #R$B5EC to 0 if the action is not
 ; possible at all, for example when the target is the actor.
 c$9436 PUSH IX       ; {Save the caller's IX and HL
  $9438 PUSH HL       ; }
@@ -7295,12 +7298,12 @@ c$9436 PUSH IX       ; {Save the caller's IX and HL
 
 ; Carry out the action
 ;
-; Performs the current action ($B5D8) with the current target ($B5D9) and instrument ($B5DA). During a dry run ($B5EB = 0) nothing is printed or changed, and
-; the routines report success in $B5EC instead.
+; Performs the current action (#R$B5D8) with the current target ($B5D9) and instrument (#R$B5DA). During a dry run ($B5EB = 0) nothing is printed or changed,
+; and the routines report success in #R$B5EC instead.
 ; .
 ; First the basic checks: the action must make sense (#R$9A9F: you cannot, for instance, give something to yourself; if it fails, 'I cannot do that.'). If it is
 ; dark (#R$954D) and the action needs light, 'I see nothing.' unless the objects are being carried. The records of the target and instrument are found and saved
-; in $B5F8 and $B5FA, and each must be within reach (#R$9686).
+; in #R$B5F8 and $B5FA, and each must be within reach (#R$9686).
 ; .
 ; Then the handlers are found. If the target (or, for certain actions listed at #R$A13B, the instrument) has handlers of its own for this action (#R$9ADC), they
 ; are called one after another: the matching entry and any entries with action 0 straight after it. Otherwise the default handler for the action is looked up in
@@ -7411,7 +7414,7 @@ c$953F BIT 6,(IX+$07) ; Is the object at IX a living character?
 ; always see.
 ; .
 ; Bilbo can see if he is inside something (#R$9DC8) or if his room is lit (bit 7 of the first byte of its record). Otherwise he can only see if the short strong
-; sword (object 14, record at #R$C00B + $1E9 = $C1F4) is with him (#R$9D86) and its flags have bit 2 set, bit 3 (broken) clear and bit 4 ('on') set. In other
+; sword (object 14, record at #R$C00B + $1E9 = #R$C1F4) is with him (#R$9D86) and its flags have bit 2 set, bit 3 (broken) clear and bit 4 ('on') set. In other
 ; words, the sword is the game's only lamp: it glows, as Sting does in the book. The sword starts with these bits set, so carrying it lights up every dark
 ; place.
 ;
@@ -7455,9 +7458,9 @@ c$9589 LD HL,$AEF2   ; "you see"
 
 ; Describe a room
 ;
-; Prints the full description of room A. The message used for this is 'you are <preposition> ...' at $AEEE, and before printing it this routine writes the
-; room's preposition - OUTSIDE, INSIDE, IN, ON or AT, chosen by bits 1-3 of the room's first byte from #R$B970 - into the message itself, at $AEEF. So the text
-; of the message is changed each time a room is described. #R$95B9 then does the rest.
+; Prints the full description of room A. The message used for this is 'you are <preposition> ...' at #R$AEEE, and before printing it this routine writes the
+; room's preposition - OUTSIDE, INSIDE, IN, ON or AT, chosen by bits 1-3 of the room's first byte from #R$B970 - into the message itself, at #R$AEEF. So the
+; text of the message is changed each time a room is described. #R$95B9 then does the rest.
 ;
 ; Input:A Room number
 c$958E PUSH AF       ;
@@ -7542,7 +7545,7 @@ c$95F8 XOR A         ; {Is a key already being held down (so we should wait for 
 
 ; Describe a room briefly
 ;
-; Prints the name of room A (#R$95E7) and a new line, and then carries on with the doors, exits and contents as in #R$95B9 ($95DD), without the picture.
+; Prints the name of room A (#R$95E7) and a new line, and then carries on with the doors, exits and contents as in #R$95B9 (#R$95DD), without the picture.
 c$9606 CALL $9B0C    ; IX = room A's own record
  $9609 CALL $95E7    ; Print its name
  $960C CALL $7578    ; New line
@@ -7550,12 +7553,12 @@ c$9606 CALL $9B0C    ; IX = room A's own record
 
 ; End of turn: run the timers
 ;
-; Called once per turn after the player's command. First #R$A8CA and #R$976C (via $9618 and $961B) let the other characters take their turns, then the timer
+; Called once per turn after the player's command. First #R$A8CA and #R$976C (via #R$9618 and #R$961B) let the other characters take their turns, then the timer
 ; table at #R$C973 is processed.
 ; .
 ; Each 7-byte timer entry has: a reload value, the current count, the address of an 'expire' routine, a threshold, and the address of a 'tick' routine. A count
-; of 0 means the timer is not running. For each running timer the count is decremented ($963B). If it has just reached 0, the expire routine is called ($9657).
-; If it is still above 0 but at or below the threshold, the tick routine is called instead ($966E).
+; of 0 means the timer is not running. For each running timer the count is decremented (#R$963B). If it has just reached 0, the expire routine is called
+; (#R$9657). If it is still above 0 but at or below the threshold, the tick routine is called instead (#R$966E).
 ; .
 ; Only one timer is allowed to expire per turn: the flag at $B5E1 records that one has already fired, and any other timer that reaches 0 in the same turn is
 ; given a count of 1 so that it fires next turn instead.
@@ -7707,7 +7710,7 @@ c$96DD AND A           ; Is it Bilbo (object 0)?
 ; Called at the start of every game. It makes Bilbo the actor and then makes two random choices.
 ; .
 ; The hidden route: one of five exits listed in the table at #R$C6FD is chosen (a random number 1-5 from #R$9BF4) and blanked out in its room record, so that
-; way is closed. The address of the chosen entry is written into the instruction at $A6C3, where Elrond will need it (#R$A6B8). The candidates are the exits
+; way is closed. The address of the chosen entry is written into the instruction at #R$A6C3, where Elrond will need it (#R$A6B8). The candidates are the exits
 ; from Beorn's house to the great river, from the forest gate to the bewitched gloomy place, from the treeless opening to the goblins' outside gate, from the
 ; long lake to lake town, and from the misty mountain to the narrow place. Because of the way #R$9BF4 works, the first and last are chosen half as often as the
 ; others.
@@ -7755,7 +7758,7 @@ c$9752 CALL $72D4    ; Print the message
 
 ; Is the action really happening?
 ;
-; Returns to the caller only if both $B5EB (really do it) and $B5EC (it would work) are set. Otherwise it discards the caller's return address, so the caller
+; Returns to the caller only if both $B5EB (really do it) and #R$B5EC (it would work) are set. Otherwise it discards the caller's return address, so the caller
 ; returns at once.
 c$975D PUSH BC       ; Save BC
  $975E LD BC,($B5EB) ; {B = "it would work", C = "really happening"
@@ -7776,9 +7779,9 @@ s$9769 DEFS $03
 ; Each entry of that table is 7 bytes: the character's object number (0 if the character is dead or gone), a count used by #R$99B4, the address of the
 ; character's current place in its behaviour program, the address of its reaction table, and a 'stubbornness' value used by #R$8F9E.
 ; .
-; For each living character, the character becomes the current actor ($B5DB, $B5FC) and the room it starts the turn in is noted ($B5E7). Output is switched on
+; For each living character, the character becomes the current actor (#R$B5DB, $B5FC) and the room it starts the turn in is noted ($B5E7). Output is switched on
 ; only if Bilbo can see the character (#R$9D77), so the player sees only what happens in front of him. If Bilbo is in the dark, the first character to do
-; anything in his room produces 'you hear a noise.' instead ($AF19).
+; anything in his room produces 'you hear a noise.' instead (#R$AF19).
 ; .
 ; A character that is inside something (held by an object rather than standing in a room) tries to get out first (#R$9A71).
 ; .
@@ -7788,7 +7791,7 @@ s$9769 DEFS $03
 ; .
 ; #LIST
 ; { 0-3: do an action. The next three bytes are the action, the target and the instrument (#R$9883). If bit 0 of the flags is set, the next two bytes are
-; instead the address of a routine that does something special - most of the routines in the range $A406-$A91B are such character routines. }
+; instead the address of a routine that does something special - most of the routines in the range #R$A406-#R$A91B are such character routines. }
 ; { 4: do an action without objects, such as moving in a direction (#R$98CF). An action of $FF just jumps. }
 ; { $0C: change the character's reaction (#R$99FB). }
 ; { $0E: jump to the address that follows. }
@@ -7797,9 +7800,9 @@ s$9769 DEFS $03
 ; LIST#
 ; .
 ; Before the program, if the player has given the character an order (#R$88FD) and the current instruction allows it (bit 6 clear), the order is obeyed instead
-; (#R$8907, $9929).
+; (#R$8907, #R$9929).
 ; .
-; A character stops after 6 instructions in one turn ($9769). At the end the player becomes the actor again, with output switched on.
+; A character stops after 6 instructions in one turn (#R$9769). At the end the player becomes the actor again, with output switched on.
 c$976C CALL $9A5D    ; Note Bilbo's room and whether he is in the dark
  $976F LD IY,$C9BA   ; IY = the first entry of the character table
 *$9773 XOR A         ; {Reset the count of instructions tried by this character
@@ -7874,7 +7877,7 @@ c$976C CALL $9A5D    ; Note Bilbo's room and whether he is in the dark
  $9811 LD HL,$985C   ; {Arrange to go on to the next character afterwards
  $9814 PUSH HL       ;
  $9815 PUSH IX       ; }
- $9817 JP $9929      ; Do it (#R$9921), then return to $985C
+ $9817 JP $9929      ; Do it (#R$9921), then return to #R$985C
 *$981A LD A,(HL)     ; {Fetch the instruction type again
  $981B AND $0F       ; }
  $981D CP $04        ; {Type 4: an action without objects
@@ -7933,8 +7936,8 @@ c$9873 ADD HL,DE      ; Move past this instruction
 ; Character instruction: do an action
 ;
 ; Carries out an action instruction from a character's behaviour program. Normally the three bytes after the instruction byte give the action, the target and
-; the instruction ($B5D8-$B5DA) and #R$9921 tries it. If bit 0 of the instruction byte is set, the next two bytes are the address of a special routine, which is
-; called first as a dry run and, if it says it would work, for real.
+; the instruction (#R$B5D8-#R$B5DA) and #R$9921 tries it. If bit 0 of the instruction byte is set, the next two bytes are the address of a special routine,
+; which is called first as a dry run and, if it says it would work, for real.
 ; .
 ; If the action worked, and the instruction has a jump address (bit 4), the program jumps there. If bit 5 is set the instruction is erased so it will not be
 ; done again.
@@ -7969,8 +7972,8 @@ c$9883 CALL $9873      ; Move the program pointer past this instruction (and its
 ; Character instruction: action without objects
 ;
 ; The byte after the instruction is an action with no target or instrument (typically a movement direction, so a character's program can be a route), tried with
-; #R$9921. An action of $FF means 'jump to the address that follows' if bit 4 is set. The entry at $9905 counts the instructions done this turn and follows jump
-; addresses.
+; #R$9921. An action of $FF means 'jump to the address that follows' if bit 4 is set. The entry at #R$9905 counts the instructions done this turn and follows
+; jump addresses.
 c$98CF LD DE,$0002    ; This instruction is 2 bytes long (plus a failure address)
  $98D2 CALL $9873     ; Move the program pointer past it
  $98D5 LD A,(IX+$01)  ; A = the action
@@ -8081,7 +8084,7 @@ c$9921 PUSH IX       ;
 ; Choose a behaviour at random
 ;
 ; Picks a random entry (#R$9BF4) from the character's reaction table (the address at offset 4 of its table entry) and makes it the character's current behaviour
-; program. The range is the smaller of byte 1 of the instruction and byte 1 of the character's table entry. The entry at $99C3 selects entry E instead.
+; program. The range is the smaller of byte 1 of the instruction and byte 1 of the character's table entry. The entry at #R$99C3 selects entry E instead.
 c$99B4 LD A,(IX+$01) ; A = the range given in the instruction...
  $99B7 CP (IY+$01)   ; {...but no more than the character's own limit
  $99BA JR C,$99BF    ;
@@ -8385,7 +8388,7 @@ b$9B37 DEFB $28
 ; Move an object and everything it holds
 ;
 ; Moves everything held by object A (and everything they hold, recursively, #R$9B6C) to room B. If Bilbo was among the things moved (for example he was inside
-; the barrel when it floated away, or was carried off), the room he has arrived in is entered and described (the entry at $8DC1 in #R$8D19).
+; the barrel when it floated away, or was carried off), the room he has arrived in is entered and described (the entry at #R$8DC1 in #R$8D19).
 ;
 ; Input:A Object
 ;       B Room
@@ -8419,7 +8422,7 @@ c$9B38 LD HL,$9B37   ; {Assume, for now, that Bilbo is among the things being mo
 
 ; Move the contents of an object
 ;
-; Sets the location of every object held by object A to room B, and does the same for their contents. Clears $9B37 if Bilbo (object 0) is one of them.
+; Sets the location of every object held by object A to room B, and does the same for their contents. Clears #R$9B37 if Bilbo (object 0) is one of them.
 c$9B6C PUSH IY       ; {Save IY and IX
  $9B6E PUSH IX       ; }
  $9B70 LD IX,$BF50   ; IX = just before the start of the object index
@@ -8478,7 +8481,7 @@ c$9B96 PUSH IX       ; {Save IX, IY and BC
 
 ; Is the actor holding the target?
 ;
-; Returns with carry set if the target ($B5D9) is held by the actor, directly or inside something the actor holds. The entry at $9BD0 does the same for object
+; Returns with carry set if the target ($B5D9) is held by the actor, directly or inside something the actor holds. The entry at #R$9BD0 does the same for object
 ; A. An object of $FF counts as held.
 ;
 ; Output:F Carry set if held
@@ -8527,7 +8530,7 @@ c$9BF4 CALL $9BFD    ; Get a random number from -A to +A
 
 ; Random number in a range
 ;
-; Returns a random number in A in the range -C to +C (signed). The random byte is produced from the seed at $B5FE (set from the R register in #R$6C27), the
+; Returns a random number in A in the range -C to +C (signed). The random byte is produced from the seed at #R$B5FE (set from the R register in #R$6C27), the
 ; counter at $B602 and a byte fetched from memory.
 ; .
 ; The random bytes come from memory itself. A 16-bit counter at $B602 is increased on every call and used as an address; the byte found there (and one a little
@@ -8645,8 +8648,8 @@ c$9C8C PUSH AF       ; Save AF, so this can be used freely without upsetting the
 ; Check for a dry run
 ;
 ; The command routines are run more than once: first as a 'dry run' to find out whether a command is possible (for example while the parser is choosing between
-; two objects that fit the same noun), and then for real. The flag at $B5EB is 1 when the action should really happen. If it is not, this routine sets $B5EC to
-; record that the action would have succeeded, discards its own return address and returns to the caller's caller, so the rest of the command routine is
+; two objects that fit the same noun), and then for real. The flag at $B5EB is 1 when the action should really happen. If it is not, this routine sets #R$B5EC
+; to record that the action would have succeeded, discards its own return address and returns to the caller's caller, so the rest of the command routine is
 ; skipped. That is why the fight routine calls this after rolling the attack value but before doing anything that has a visible effect.
 c$9C99 LD A,($B5EB)  ; {Is this action really happening, or is it only being tried out to see if it would work?
  $9C9C CP $01        ; }
@@ -8911,8 +8914,8 @@ c$9E10 PUSH IY       ; {Save the caller's IY and DE
 
 ; Print a noun with its adjectives
 ;
-; IY points to a word list: noun, then up to two adjectives. The article is printed first (#R$7436, unless $B5F4 is set), then the adjectives, and then the noun
-; (with an article if $B5F4 is set). So 'curious map' comes out as 'a curious map'.
+; IY points to a word list: noun, then up to two adjectives. The article is printed first (#R$7436, unless #R$B5F4 is set), then the adjectives, and then the
+; noun (with an article if #R$B5F4 is set). So 'curious map' comes out as 'a curious map'.
 c$9E1F PUSH AF       ; {Save AF and DE
  $9E20 PUSH DE       ; }
  $9E21 LD A,($B5F4)  ; {Does the caller want an article before the whole phrase (rather than before each adjective)?
@@ -8963,7 +8966,7 @@ c$9E6E LD A,($B5D9)  ; A = the target of the current command (a door, window or 
 ; Find the exit through a given door
 ;
 ; Searches the actor's room for an exit whose door (byte 1) is object A. This routine and #R$9E76 are one routine: they write 1 or 2 into the offset of the LD
-; A,(IX+n) instruction at $9E89 to choose which byte of each exit is compared.
+; A,(IX+n) instruction at #R$9E89 to choose which byte of each exit is compared.
 c$9E71 PUSH AF       ; FIND EXIT THROUGH A DOOR: save AF
  $9E72 LD A,$01      ; 1 picks out an exit's DOOR byte for the shared code below
  $9E74 JR $9E79      ; Join it
@@ -9011,7 +9014,7 @@ c$9E93 LD DE,($B5F8) ; DE = the target's own record address
 
 ; Report failure
 ;
-; During a dry run, sets $B5EC to 0 (the action would not work). When the action is really being done, reports it instead (#R$7122), so the player sees 'you
+; During a dry run, sets #R$B5EC to 0 (the action would not work). When the action is really being done, reports it instead (#R$7122), so the player sees 'you
 ; cannot ...'.
 c$9EBF LD A,($B5EB)  ; {Is this action really happening (not just being tried out)?
  $9EC2 DEC A         ; }
@@ -9140,8 +9143,8 @@ c$9F10 PUSH HL       ; Save the caller's HL
 ;
 ; For object A: if it is closed and not dead (bits 3 and 5 of the flags clear), or holds nothing visible, a new line is printed and the routine returns with
 ; carry set. Otherwise, for a character, 'X is carrying'; for anything else a heading chosen by the low four bits of byte 4 of the object's record, from the
-; message at $AEBD: IN (0), ON (1), BEHIND (2), UNDER (3) or TIED TO (4), followed by 'there is' or 'there are' - so 'behind the heavy curtain there is a wall'
-; and 'under the trap door there is the goblins cache'.
+; message at #R$AEBD: IN (0), ON (1), BEHIND (2), UNDER (3) or TIED TO (4), followed by 'there is' or 'there are' - so 'behind the heavy curtain there is a
+; wall' and 'under the trap door there is the goblins cache'.
 c$9F89 PUSH IX        ; {Save the caller's IX, BC and DE
  $9F8B PUSH BC        ;
  $9F8C PUSH DE        ; }
@@ -9200,8 +9203,8 @@ c$9FDE CALL $9B0C    ; IX = room A's own record
 
 ; Get the word for a direction
 ;
-; Returns in DE the word for direction A, from the table at $A13E (NORTH, SOUTH, EAST, WEST, NORTHEAST ... UP, DOWN). The entry at $9FED looks up another table
-; at HL.
+; Returns in DE the word for direction A, from the table at $A13E (NORTH, SOUTH, EAST, WEST, NORTHEAST ... UP, DOWN). The entry at #R$9FED looks up another
+; table at HL.
 ;
 ;  Input:A Direction
 ; Output:DE Word
@@ -9309,8 +9312,8 @@ c$A094 LD L,(IY+$08) ; {INSTRUMENT VERSION: HL = the instrument's own words...
 ; "The X is Y"
 ;
 ; Explains why an action failed by describing the state of the object at IX: 'the door is locked.', 'the chest is closed.', 'the bottle is empty.' The low bits
-; of A choose the flag bit that was wrong, and bit 7 whether it was set or clear; the word comes from the tables at $A154 (UNLOCKED, EMPTY, OFF, CLOSED, DEAD)
-; and $A164 (LOCKED, FULL, BROKEN, ON, OPEN, ALIVE).
+; of A choose the flag bit that was wrong, and bit 7 whether it was set or clear; the word comes from the tables at #R$A154 (UNLOCKED, EMPTY, OFF, CLOSED, DEAD)
+; and #R$A164 (LOCKED, FULL, BROKEN, ON, OPEN, ALIVE).
 ;
 ; Input:A State
 ;       IX Object record
@@ -9374,7 +9377,7 @@ c$A0F8 LD A,(IX+$07) ; A = the object's own flags
 
 ; Should the instrument's handlers be used?
 ;
-; Returns with Z set if the current action is one of the five listed at $A13B: DROP IN, PUT IN, PUT ON, TAKE OUT OF and THROW THROUGH. For these it is the
+; Returns with Z set if the current action is one of the five listed at #R$A13B: DROP IN, PUT IN, PUT ON, TAKE OUT OF and THROW THROUGH. For these it is the
 ; instrument (the container, or the window) that knows what to do, so #R$946F uses its handlers.
 c$A100 PUSH HL       ; {Save the caller's HL and BC
  $A101 PUSH BC       ; }
@@ -9407,7 +9410,7 @@ c$A113 PUSH HL       ; Save the caller's HL
 ; Is the target locked or open?
 ;
 ; Tests the target's flags: returns Z reset and A=$80 if it is locked; otherwise tests bit 5 and returns A=$85, so Z reset means it is open. The codes in A are
-; for #R$A09C. The entry at $A134 does only the second test.
+; for #R$A09C. The entry at #R$A134 does only the second test.
 c$A129 LD IX,($B5F8)  ; IX = the target's own record
  $A12D BIT 0,(IX+$07) ; Is it locked?
  $A131 LD A,$80       ; A = the state code for LOCKED/UNLOCKED, in case the caller needs to report it
@@ -9420,11 +9423,11 @@ c$A129 LD IX,($B5F8)  ; IX = the target's own record
 ; Action and word tables
 ;
 ; #LIST
-; { $A13B: the five actions for which the instrument's handlers are used rather than the target's (#R$A100): DROP IN, PUT IN, PUT ON, TAKE OUT OF, THROW
+; { #R$A13B: the five actions for which the instrument's handlers are used rather than the target's (#R$A100): DROP IN, PUT IN, PUT ON, TAKE OUT OF, THROW
 ; THROUGH. }
-; { $A140: the words for the ten directions (#R$9FEA): NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, UP, DOWN. }
-; { $A154: the words for an object's flags when they are clear (#R$A09C): UNLOCKED, -, EMPTY, -, OFF, CLOSED, DEAD, -. }
-; { $A164: the same when set: LOCKED, -, FULL, BROKEN, ON, OPEN, ALIVE, -. }
+; { #R$A140: the words for the ten directions (#R$9FEA): NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST, UP, DOWN. }
+; { #R$A154: the words for an object's flags when they are clear (#R$A09C): UNLOCKED, -, EMPTY, -, OFF, CLOSED, DEAD, -. }
+; { #R$A164: the same when set: LOCKED, -, FULL, BROKEN, ON, OPEN, ALIVE, -. }
 ; LIST#
 b$A13B DEFB $0E,$11,$12,$14,$2C ; Actions
  $A140 DEFW $0484               ; {Directions 1-10
@@ -9462,8 +9465,8 @@ c$A174 CALL $9C99    ; {Dry run? Then stop here: drinking plain water always wor
 
 ; TIE TO
 ;
-; Only the rope can be tied: TIE THE ROPE TO X is turned round into TIE X TO THE ROPE ($A1DE, #R$9E93). The thing tied must not be something that pours, must be
-; empty ('the rope is already tied'), and must not be a living character (a dead one is fine). It then becomes held by the rope.
+; Only the rope can be tied: TIE THE ROPE TO X is turned round into TIE X TO THE ROPE (#R$A1DE, #R$9E93). The thing tied must not be something that pours, must
+; be empty ('the rope is already tied'), and must not be a living character (a dead one is fine). It then becomes held by the rope.
 ; .
 ; If the actor could pick the thing up, the rope stays in the actor's hands with the thing hanging from it; otherwise the rope is left lying, tied to it. Taking
 ; or dropping the rope takes or drops whatever is tied to it (#R$8CC8, #R$8C45).
@@ -9523,8 +9526,8 @@ c$A1E4 LD IX,($B5F8) ; IX = the target's own record
 ; Handler for the fast river: SWIM
 ;
 ; Swimming across the fast river: the exit through the river is found (#R$9E6E); if it leads anywhere, the river is opened for a moment and the actor goes
-; through it with an ordinary move (#R$8D19, at $8D27), then the river is closed again. The entry at $A20C is the handler used by many doors and containers for
-; their OPEN action when they are chained to a movement.
+; through it with an ordinary move (#R$8D19, at #R$8D27), then the river is closed again. The entry at $A20C is the handler used by many doors and containers
+; for their OPEN action when they are chained to a movement.
 c$A1FD CALL $9E6E     ; Find the exit that passes through the river
  $A200 LD A,(IX+$02)  ; {Does it lead anywhere?
  $A203 CP $00         ; }
@@ -9623,7 +9626,7 @@ c$A26A LD A,($B5DA)  ; A = the object being used as the key
 
 ; Handler for the side door: OPEN
 ;
-; Chained after the side door's other handlers: when it really happens, opens the door (at $9081 in #R$9078).
+; Chained after the side door's other handlers: when it really happens, opens the door (at #R$9081 in #R$9078).
 c$A28E CALL $975D    ; Only if this is really happening (not just a trial)
  $A291 LD IX,($B5F8) ; IX = the target's (the door's) own record
  $A295 JP $9081      ; Open it, as if by the ordinary OPEN handler
@@ -9731,7 +9734,7 @@ c$A316 LD IX,($B5F8)   ; IX = the captive's record
 ;
 ; Chained after the normal ATTACK handler in each goblin's object record (action 15 runs #R$90DB, then this). If the attack killed the goblin, it comes straight
 ; back: the dead flag is cleared, its number is written back into its slot in the character table (so it acts again), it is moved to another room and given a
-; new adjective, all from its 6-byte entry in the table at $A3C3. The game prints 'the goblin falls down a hole and vanishes.'
+; new adjective, all from its 6-byte entry in the table at #R$A3C3. The game prints 'the goblin falls down a hole and vanishes.'
 ; .
 ; It then means to announce '- another goblin' if the goblin's new room is Bilbo's, but compares Bilbo's room with register B, which this routine never sets; B
 ; holds whatever the attack routine left there (the attack value), so the announcement depends on chance.
@@ -9739,7 +9742,7 @@ c$A36A LD IX,($B5F8)  ; IX = the goblin's record
  $A36E BIT 3,(IX+$07) ; Did the attack kill it?
  $A372 RET Z          ; No: nothing to do
  $A373 RES 3,(IX+$07) ; Bring it back to life
- $A377 LD DE,$0006    ; {Find its entry in the table at $A3C3 (6 bytes each)
+ $A377 LD DE,$0006    ; {Find its entry in the table at #R$A3C3 (6 bytes each)
  $A37A LD IY,$A3C3    ;
  $A37E LD A,($B5D9)   ;
 *$A381 CP (IY+$00)    ;
@@ -9921,7 +9924,7 @@ c$A4C3 BIT 5,(IX+$07) ; Is it open?
 
 ; Character routine: the warg
 ;
-; If the warg (whose location is at $C341) is in Bilbo's room: 'the vicious warg runs around you and howls.'
+; If the warg (whose location is at #R$C341) is in Bilbo's room: 'the vicious warg runs around you and howls.'
 c$A4CA CALL $9C99    ; Dry run? Then stop here: it always works
  $A4CD LD HL,$C341   ; HL = the warg's own location
  $A4D0 LD A,($C01B)  ; {Is Bilbo in the same room?
@@ -9998,7 +10001,7 @@ c$A539 LD A,($B5E7)  ; A = the room the character started this turn in
 ; Thorin's idle behaviour. A random number from 0 to 8 (#R$9BF4) decides: 5 or more, nothing; 3 or 4, 'thorin waits.'; 0, 'thorin sits down and starts singing
 ; about gold.'; 1 or 2, he says 'hurry up'.
 ; .
-; A fourth line, 'get us out of this one, thief!', is set up at $A563 but can never be printed: the JP Z that would print it tests the flags from CP 3, and Z
+; A fourth line, 'get us out of this one, thief!', is set up at #R$A563 but can never be printed: the JP Z that would print it tests the flags from CP 3, and Z
 ; can only be set there if A was 3, which the JP NC before it has already taken care of.
 c$A550 CALL $9C99    ; Dry run? Then stop: this always works
  $A553 LD A,$08      ; {Pick a random number from 0 to 8
@@ -10031,7 +10034,7 @@ c$A577 LD IX,($B5FC) ; IX = the actor's own record
 
 ; Character routine: the dragon comes for Bilbo
 ;
-; If Bilbo is in room 39, 41 or 44 (the dragon's domain) and the dragon (object 60, location at $C033) is somewhere else, the dragon moves to Bilbo's room and
+; If Bilbo is in room 39, 41 or 44 (the dragon's domain) and the dragon (object 60, location at #R$C033) is somewhere else, the dragon moves to Bilbo's room and
 ; 'the dragon enters.'
 c$A591 LD A,($C01B)  ; {Is Bilbo in room 39 (the front gate)...
  $A594 CP $27        ;
@@ -10074,7 +10077,7 @@ c$A5BB LD A,($C01B)  ; {Is Bilbo in the room where the dragon started its turn?
 
 ; Character routine: the dragon wakes
 ;
-; Does nothing while the valuable treasure (location at $C4CC) is still in room 41. Once it has been moved, and if the dragon's current room is lit, a random
+; Does nothing while the valuable treasure (location at #R$C4CC) is still in room 41. Once it has been moved, and if the dragon's current room is lit, a random
 ; number from 0 to 100 (#R$9BF4) decides: below 80, 'in the distance you see the shape of a monstrous dragon flying after you.'; otherwise 'the dragon descends
 ; and in a terrific spout of flames burns you to a crisp.' and Bilbo dies. Because of the skew in the random numbers (#R$9BFD), the fatal result comes up about
 ; 16% of the time, every turn, for as long as the dragon lives.
@@ -10098,7 +10101,7 @@ c$A5D5 LD A,($C4CC)   ; {Is the treasure still in room 41?
 
 ; Unused routine
 ;
-; Finds an exit of the actor's room by way of the variant search at $9E6E and, if there is one, removes its three bytes, presumably meaning to seal up a way
+; Finds an exit of the actor's room by way of the variant search at #R$9E6E and, if there is one, removes its three bytes, presumably meaning to seal up a way
 ; through once something (perhaps the boat) is no longer there to use. But nothing in the game calls it: it is not wired into any object's handler list, any
 ; room-entry handler, or any timer, and no other routine calls or jumps to it. Like #R$A0DE, it appears to be leftover or abandoned code.
 c$A600 CALL $9E6E      ; Find the exit that passes through the target (presumably meant to be the boat)
@@ -10206,8 +10209,8 @@ c$A69E LD A,($C01B)  ; {Is Bilbo in the deep bog (room 29)?
 ;
 ; When anyone other than Elrond (object 65) examines the curious map, it is an ordinary EXAMINE (#R$9344). When Elrond does (because the player gave it to him
 ; and asked him to read it), the hidden route chosen at the start of the game (#R$970B) is revealed: the three bytes of the exit that were blanked out are
-; restored from the table at #R$C6F7 (the address of the entry was written into the LD IY instruction at $A6C3), and Elrond says 'go <direction> from <room> to
-; get to <room>'. $B5E2 records that it has been done.
+; restored from the table at #R$C6F7 (the address of the entry was written into the LD IY instruction at #R$A6C3), and Elrond says 'go <direction> from <room>
+; to get to <room>'. $B5E2 records that it has been done.
 c$A6B8 LD A,($B5DB)  ; Pick up the number of the character doing the examining
  $A6BB CP $41        ; Is it Elrond (object 65)?
  $A6BD JP NZ,$9344   ; No: treat it as an ordinary EXAMINE (you see the curious map)
@@ -10244,7 +10247,7 @@ c$A6B8 LD A,($B5DB)  ; Pick up the number of the character doing the examining
 ; Handler for the rope: THROW ACROSS (the river)
 ;
 ; Throwing the rope across a river: the exit through the river must lead somewhere. 'it sails across and ...'. Then chance takes over (#R$A762: evens). If the
-; wooden boat (object 41, location at $C51A) is moored on the far side, the rope may land in the boat, which is then tied to it ('lands in the boat'), or fall
+; wooden boat (object 41, location at #R$C51A) is moored on the far side, the rope may land in the boat, which is then tied to it ('lands in the boat'), or fall
 ; short; if the boat is not there, the rope may land on the other side (and is moved there) or fall just short of it and come back.
 c$A708 LD A,($B5DA)    ; A = the instrument (the river)
  $A70B CALL $9E71      ; {Find the exit that passes through it
@@ -10324,10 +10327,10 @@ c$A792 CALL $975D    ; Only if this is really happening
 ; Character routine: Bard remembers his orders
 ;
 ; If Bard has been given an order (#R$8907), it is checked and then written into Bard's own behaviour program: the action ($B5D7), target and instrument ($B5D9,
-; $B5DA) are stored at $C8D2-$C8D4, and the first byte at $C8D1 is set to $42 (an action instruction that cannot be interrupted by orders). From then on Bard
-; carries out that order every turn. So 'say to bard "shoot the dragon"' keeps him shooting until it works.
+; #R$B5DA) are stored at $C8D2-$C8D4, and the first byte at #R$C8D1 is set to $42 (an action instruction that cannot be interrupted by orders). From then on
+; Bard carries out that order every turn. So 'say to bard "shoot the dragon"' keeps him shooting until it works.
 ; .
-; SAVE and LOAD (#R$8284, #R$8209) preserve the three bytes at $C8D1-$C8D3, because the behaviour programs are not otherwise saved; the instrument at $C8D4 is
+; SAVE and LOAD (#R$8284, #R$8209) preserve the three bytes at #R$C8D1-$C8D3, because the behaviour programs are not otherwise saved; the instrument at $C8D4 is
 ; not included.
 c$A79F LD A,($B5E5)  ; {Has the player given Bard an order?
  $A7A2 CP $01        ; }
@@ -10340,7 +10343,7 @@ c$A79F LD A,($B5E5)  ; {Has the player given Bard an order?
  $A7AE SUB A         ; {Do not carry it out now
  $A7AF LD ($B5EC),A  ; }
  $A7B2 LD A,($B5D7)  ; Write the action...
- $A7B5 LD ($C8D2),A  ; ...into Bard's next instruction at $C8D1...
+ $A7B5 LD ($C8D2),A  ; ...into Bard's next instruction at #R$C8D1...
  $A7B8 LD BC,($B5D9) ; {...with its target and instrument...
  $A7BC LD ($C8D3),BC ; }
  $A7C0 LD A,$42      ; {...and make it an action instruction that orders cannot interrupt ($42)
@@ -10349,7 +10352,7 @@ c$A79F LD A,($B5E5)  ; {Has the player given Bard an order?
 
 ; Character routine: Gollum asks his riddle
 ;
-; If Gollum (whose location is at $C3B0) is in Bilbo's room and Bilbo is visible, he asks the riddle chosen at the start of the game (#R$970B, #R$C6EB), and
+; If Gollum (whose location is at #R$C3B0) is in Bilbo's room and Bilbo is visible, he asks the riddle chosen at the start of the game (#R$970B, #R$C6EB), and
 ; $B5EA is set to show he is waiting for an answer.
 c$A7C6 LD A,($C3B0)  ; A = Gollum's own location
  $A7C9 LD HL,$B5E6   ; {Is Bilbo in the same room?
@@ -10403,7 +10406,7 @@ c$A7EA CALL $9C99    ; Dry run? Then just record that this would work, and retur
 ; Character routine: Gollum mutters
 ;
 ; If Gollum is in Bilbo's room: usually, if Gollum still has the golden ring (object 16), 'my birthday present, how did we lose it. my precious'; otherwise
-; 'what has it got in its pocketses?'. The test at $A82A only rarely (a random 8) says the pocketses line regardless.
+; 'what has it got in its pocketses?'. The test at #R$A82A only rarely (a random 8) says the pocketses line regardless.
 c$A81A LD A,($C3B0)  ; A = Gollum's own location
  $A81D LD HL,$B5E6   ; {Is Bilbo in the same room?
  $A820 CP (HL)       ; }
@@ -10497,7 +10500,7 @@ c$A8B1 LD A,($B5E6)  ; {Is Bilbo in the trolls' clearing (room 5)?
 ;
 ; Called at the end of every turn (from #R$9611). If the valuable treasure (object 35) is in the wooden chest (object 37, back at Bilbo's home), the game is
 ; won: 'a cheering crowd of dwarves, hobbits and elves appear. led by gandalf they carry you off into the sunset, proclaiming you hero of heroes and master
-; adventurer!!!' The score is then printed and the game ends ($9049).
+; adventurer!!!' The score is then printed and the game ends (#R$9049).
 c$A8CA LD A,($C4BD)  ; A = the treasure's holder
  $A8CD CP $25        ; Is it the wooden chest (object 37)?
  $A8CF RET NZ        ; No: the game goes on
@@ -10698,8 +10701,8 @@ c$AA04 LD A,($C01B)  ; {Is Bilbo still in the spiders' place (room 26)?
 ; Called by #R$9611 on each turn that the eyes timer (entry at #R$C9AB) is counting down and at or below its threshold of 3. It prints 'you see some pale
 ; bulbous eyes staring at you' (#R$B203).
 ; .
-; It then checks whether Bilbo has moved. $C01B is Bilbo's location (the first location byte of object 0, see #R$C00B) and $B5E4 is the room he was in when the
-; timer was started. If he is still in the same room, all is well. If he has moved to the other 'eyes' room (from 2 to 3 or from 3 to 2), all is also well.
+; It then checks whether Bilbo has moved. #R$C01B is Bilbo's location (the first location byte of object 0, see #R$C00B) and #R$B5E4 is the room he was in when
+; the timer was started. If he is still in the same room, all is well. If he has moved to the other 'eyes' room (from 2 to 3 or from 3 to 2), all is also well.
 ; Otherwise he has left too early: execution falls into #R$AA3E, which prints 'some thing drops from above and stings' (#R$B211) and kills him (#R$903C).
 ; .
 ; In practice the room-2/room-3 exception is never needed, because entering either room restarts the timer anyway (see #R$C6CC).
@@ -10812,8 +10815,8 @@ b$AA47 DEFB $84,$04,$00,$00,$00,$00,$E2,$02 ; Action 1: north go
 
 ; Articles
 ;
-; #R$7436 uses these to put an article in front of a noun. The first two bytes are unused. At $AC21: THE, A, AN, SOME (chosen by flag bits in the noun's
-; reference); at $AC29: THE, THE, THE, SOME (used when a definite article is wanted).
+; #R$7436 uses these to put an article in front of a noun. The first two bytes are unused. At #R$AC21: THE, A, AN, SOME (chosen by flag bits in the noun's
+; reference); at #R$AC29: THE, THE, THE, SOME (used when a definite article is wanted).
 b$AC1F DEFB $00,$00
  $AC21 DEFW $06A3    ; {THE, A, AN, SOME
  $AC23 DEFW $0040    ;
@@ -10867,7 +10870,7 @@ w$AC31 DEFW $0040    ; {Words for codes $60-$7F
 ; printer on it in an emulator. In the labels, 'you' stands for the actor, 'the thing' for the target of the command, 'the other' for the instrument, and 'word'
 ; for a word or object passed as a parameter; the real text changes with who is acting and on what ('you cleave his skull' / 'thorin cleaves your skull').
 ; .
-; There are about 180 messages. Almost every byte of this area belongs to a message that the program uses; the one exception is at $B4EF, a fuller description
+; There are about 180 messages. Almost every byte of this area belongs to a message that the program uses; the one exception is at #R$B4EF, a fuller description
 ; of the bewitched gloomy place ('a bewitched gloomy place surrounded by thick trees') that nothing refers to - room 25 is described by its name words instead.
 b$AC71 DEFB $66,$6C,$61,$83,$4B,$8B,$EA,$20,$48,$45,$41,$44,$15             ; "but fall and hit your HEAD."
  $AC7E DEFB $66,$6C,$61,$85,$EA,$8B,$EA,$B5,$C2                             ; "but fall and smash your skull."
@@ -11186,20 +11189,20 @@ b$AC71 DEFB $66,$6C,$61,$83,$4B,$8B,$EA,$20,$48,$45,$41,$44,$15             ; "b
 ; Working variables. Those identified so far:
 ; .
 ; #LIST
-; { $B5CB - address of the current word in the input line (for error messages) }
-; { $B5DA - object number of the weapon/instrument in the current command, or $FF }
-; { $B5DB - the current actor: 0 when the player is acting, otherwise the object number of the character }
+; { #R$B5CB - address of the current word in the input line (for error messages) }
+; { #R$B5DA - object number of the weapon/instrument in the current command, or $FF }
+; { #R$B5DB - the current actor: 0 when the player is acting, otherwise the object number of the character }
 ; { $B5E1 - set when a timer has expired this turn (#R$9611) }
-; { $B5E4 - the room in which the eyes timer was started (#R$C6CC) }
+; { #R$B5E4 - the room in which the eyes timer was started (#R$C6CC) }
 ; { $B5EB - 1 when commands should really be carried out, 0 during a dry run (#R$9C99) }
 ; { $B5F3 - output enable flag }
-; { $B5F8 - address of the target's object record }
+; { #R$B5F8 - address of the target's object record }
 ; { $B5FA - address of the weapon's object record }
 ; { $B5FC - address of the actor's object record }
-; { $B5FE - random number seed (#R$9BFD) }
+; { #R$B5FE - random number seed (#R$9BFD) }
 ; LIST#
 ; .
-; The 28 bytes from $B5DC are backed up to $5F00 at start-up and restored when the game restarts.
+; The 28 bytes from #R$B5DC are backed up to $5F00 at start-up and restored when the game restarts.
 g$B5CB DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
  $B5D8 DEFB $00,$00                                             ; Movement direction and other command variables
  $B5DA DEFB $00                                                 ; Weapon object number
@@ -11239,8 +11242,8 @@ t$B60F DEFM "s"         ; S
 
 ; Orders buffer and command frames
 ;
-; $B628: the orders buffer, eight 25-byte slots holding commands given to characters in quotation marks (#R$80CD, #R$88A7), cleared at start-up. Below $B8D0 are
-; the 24-byte command frames built by the parser, the first at #R$B8B8 and the rest below it (#R$7C4F).
+; #R$B628: the orders buffer, eight 25-byte slots holding commands given to characters in quotation marks (#R$80CD, #R$88A7), cleared at start-up. Below #R$B8D0
+; are the 24-byte command frames built by the parser, the first at #R$B8B8 and the rest below it (#R$7C4F).
 b$B628 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; {Orders buffer
  $B630 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ;
  $B638 DEFB $00,$00,$00,$00,$00,$00,$00,$00 ;
@@ -11427,7 +11430,7 @@ w$B970 DEFW $84C6
 ; Room records
 ;
 ; One record per room, in no particular order (the table at #R$B8D0 points to each one). The format, using room 2 (the forest road) as an example, whose record
-; is at $BDC3 and reads $86,$FF,$53,$05,$A4,$02,$00,$00,$00,$00,$03,$00,$03,$04,$00,$2E,$FF:
+; is at #R$BDC3 and reads $86,$FF,$53,$05,$A4,$02,$00,$00,$00,$00,$03,$00,$03,$04,$00,$2E,$FF:
 ; .
 ; Byte 0: flags ($86). Bit 7 means the room is lit; bit 6 is set once Bilbo has visited it (#R$8D19); bits 1-3 choose the preposition used to describe it
 ; (#R$B970): here 3, ON. Byte 1: the room's capacity, used when something tries to move in (#R$9B96); $FF means unlimited.
@@ -11694,7 +11697,7 @@ b$BF53 DEFB $00,$0B,$C0,$01,$60,$C0,$02,$9D
 ; Object records
 ;
 ; Every object, character and door in the game has a record here. They are backed up at start-up and restored when the game restarts. As an example, the short
-; strong sword (object 14) at $C1F4 in the original game:
+; strong sword (object 14) at #R$C1F4 in the original game:
 ; .
 ; $01,$FF,$03,$04,$00,$40,$80,$94, $84,$06,$9D,$05,$68,$06,$00,$00, $07, $0B,$57,$92,$FF
 ; .
@@ -11717,15 +11720,15 @@ b$BF53 DEFB $00,$0B,$C0,$01,$60,$C0,$02,$9D
 ; Bytes 8-15: four word slots (little-endian references, offsets from #R$6000): the noun followed by adjectives. For the sword: $0684 SWORD, $059D SHORT, $0668
 ; STRONG, 0.
 ; .
-; Then one location byte per location (byte 0 says how many): here room 7, the trolls' cave. Changing this byte (at $C204) moves the sword; I changed it to 1 so
-; that the sword starts with Bilbo.
+; Then one location byte per location (byte 0 says how many): here room 7, the trolls' cave. Changing this byte (at #R$C204) moves the sword; I changed it to 1
+; so that the sword starts with Bilbo.
 ; .
 ; Then a list of the object's own action handlers, three bytes each: an action number (see #R$AA47) and the address of a routine to run when that action is done
 ; to the object. An entry with action 0 straight after a matching entry is run as well, so several routines can be chained. The list ends with $FF. The sword's
-; list has one entry: action 11 (STRIKE) runs $9257. The wine's has action 33 (DRINK) followed by action 0 running #R$A9ED, which is what makes Bilbo drunk.
+; list has one entry: action 11 (STRIKE) runs #R$9257. The wine's has action 33 (DRINK) followed by action 0 running #R$A9ED, which is what makes Bilbo drunk.
 ; Actions that an object has no handler for fall back on the default handlers at #R$C61F (see #R$946F).
 ; .
-; Offset 16 (the first location byte) is what the movement routine updates (#R$8D19). For Bilbo, this is $C01B.
+; Offset 16 (the first location byte) is what the movement routine updates (#R$8D19). For Bilbo, this is #R$C01B.
 b$C00B DEFB $01,$FF,$10,$40,$10,$40,$40,$E0 ; {Object 0: you (strength 64, defence 64)
  $C013 DEFB $AC,$87,$00,$00,$00,$00,$00,$00 ;
  $C01B DEFB $01,$1B,$1F,$92,$00,$3C,$90,$FF ; }
@@ -11949,7 +11952,7 @@ b$C00B DEFB $01,$FF,$10,$40,$10,$40,$40,$E0 ; {Object 0: you (strength 64, defen
 ; Default action handlers
 ;
 ; 3-byte entries: an action number (see #R$AA47) and the routine that carries it out when the object involved has no handler of its own (#R$946F). Terminated by
-; $FF at $C67C.
+; $FF at #R$C67C.
 ; .
 ; #TABLE(default)
 ; { =h Action | =h Handler }
@@ -11964,14 +11967,14 @@ b$C00B DEFB $01,$FF,$10,$40,$10,$40,$40,$E0 ; {Object 0: you (strength 64, defen
 ; { 31 ENTER, 32 GO INTO | #R$8F37 }
 ; { 36 RUN | #R$8F17 }
 ; { 39 FOLLOW | #R$8F40 }
-; { 42 THROW AT | $8F5F }
-; { 45 BURN | $A232 }
-; { 46 TIE TO | $A178 }
+; { 42 THROW AT | #R$8F5F }
+; { 45 BURN | #R$A232 }
+; { 46 TIE TO | #R$A178 }
 ; { 48 CAPTURE | #R$A316 }
-; { 51 UNTIE | $A1E4 }
+; { 51 UNTIE | #R$A1E4 }
 ; { 53 TALK TO | #R$8F9E }
-; { 55 CLIMB OUT OF | $A468 }
-; { 58 SHOOT | $8FE0 }
+; { 55 CLIMB OUT OF | #R$A468 }
+; { 58 SHOOT | #R$8FE0 }
 ; { 0 | #R$9A5D }
 ; TABLE#
 ; .
@@ -12015,8 +12018,8 @@ b$C67D DEFB $16,$93,$C6,$1A,$A1,$C6,$1D,$A8 ; {Room, handler address
 ; clear), and his slot in the character table at $C9D6 holds 0, so #R$976C passes him by and he does nothing at all.
 ; .
 ; The first time Bilbo walks into Beorn's house - roughly half way through the journey - this handler switches him on: his object number $42 is written into
-; that slot, which already holds the address of his behaviour program ($C83F) and reaction table ($C835), and he is made visible. From then on he goes about his
-; business in the cellar every turn (unlocking and locking the red door, drinking wine, throwing barrels through the trap door, capturing intruders; see
+; that slot, which already holds the address of his behaviour program (#R$C83F) and reaction table (#R$C835), and he is made visible. From then on he goes about
+; his business in the cellar every turn (unlocking and locking the red door, drinking wine, throwing barrels through the trap door, capturing intruders; see
 ; #R$C71C), so that by the time Bilbo arrives in the Elvenking's halls the butler is already at work.
 ; .
 ; If the butler has been killed (bit 3 of his flags), nothing happens. Because the slot is simply overwritten, entering Beorn's house again later does no harm:
@@ -12053,8 +12056,8 @@ c$C6A8 LD A,($C98F)  ; Timer 4's reload value (2)...
 ; { Timer 9 (#R$C9B2) is started with a count of 3. This is the timer that controls the side door of the Lonely Mountain (object 11), far away in room 42: it
 ; makes 'a loud crack and a hole appears about three feet from the ground' for one turn in every five (#R$A985), after which 'the hole vanishes' (#R$A968),
 ; unless it has been opened. The count of 3 means the first appearance happens two turns after Bilbo enters the cellar. }
-; { The dragon (object 60) is switched on by writing its number, $3C, into its empty slot in the character table at $C9F2 - unless it is already dead. Until now
-; the dragon has been lying inert in the lower halls; from now on its behaviour program (#R$A5D5, #R$A591, #R$A5BB) runs every turn. }
+; { The dragon (object 60) is switched on by writing its number, $3C, into its empty slot in the character table at #R$C9F2 - unless it is already dead. Until
+; now the dragon has been lying inert in the lower halls; from now on its behaviour program (#R$A5D5, #R$A591, #R$A5BB) runs every turn. }
 ; { Bard (object 70) is switched on in the same way, by writing $46 into the slot at $C9EB, unless he is dead. He starts waiting for orders (#R$A79F). }
 ; LIST#
 ; .
@@ -12076,8 +12079,8 @@ c$C6AF LD A,$03      ; Start timer 9 (the Lonely Mountain's side door)...
 
 ; Room-entry handler: the forest (rooms 2 and 3)
 ;
-; Called when Bilbo enters the forest road (room 2) or the forest (room 3). It records the room he has just entered (from $8D17, set by #R$8D19) in $B5E4, and
-; starts the 'pale bulbous eyes' timer at #R$C9AB by copying its reload value (4) into its count.
+; Called when Bilbo enters the forest road (room 2) or the forest (room 3). It records the room he has just entered (from #R$8D17, set by #R$8D19) in #R$B5E4,
+; and starts the 'pale bulbous eyes' timer at #R$C9AB by copying its reload value (4) into its count.
 ; .
 ; The rest of the mechanism is in #R$AA13 and #R$AA2E.
 c$C6CC LD A,($8D17)  ; Remember which room the timer started in
@@ -12105,8 +12108,8 @@ c$C6D9 LD A,($C00C)  ; A = whatever is holding Bilbo
 ; Gollum's riddles
 ;
 ; Four 4-byte entries, one of which is chosen at random by #R$970B: the word that answers the riddle, and the address of the riddle. There are only two riddles,
-; each stored twice, so they are equally likely. The code for the hidden routes (#R$970B) counts its entries from $C6F7, so the last riddle entry also serves as
-; that table's never-used entry 0.
+; each stored twice, so they are equally likely. The code for the hidden routes (#R$970B) counts its entries from #R$C6F7, so the last riddle entry also serves
+; as that table's never-used entry 0.
 b$C6EB DEFB $78,$04,$E0,$B0 ; NIGHT: "it cannot be seen, cannot be felt..."
  $C6EF DEFB $2D,$04,$A9,$B1 ; MAN: the riddle of the Sphinx
  $C6F3 DEFB $78,$04,$E0,$B0 ; NIGHT
@@ -12117,7 +12120,7 @@ b$C6EB DEFB $78,$04,$E0,$B0 ; NIGHT: "it cannot be seen, cannot be felt..."
 ;
 ; Six bytes per entry, one chosen at random by #R$970B: the room, the address of an exit in that room's record, and the three bytes of the exit (direction,
 ; door, destination), which are blanked out at the start of the game and restored when Elrond reads the map (#R$A6B8). Terminated by $FF. The code counts
-; entries from $C6F7, six bytes earlier, so the first entry here is number 1.
+; entries from #R$C6F7, six bytes earlier, so the first entry here is number 1.
 b$C6FD DEFB $16,$02,$BC,$01,$00,$31 ; Beorn's house: north to the great river
  $C703 DEFB $18,$16,$BC,$03,$00,$19 ; Forest gate: east to the bewitched gloomy place
  $C709 DEFB $15,$E8,$BB,$04,$00,$14 ; Treeless opening: west to the goblins' outside gate
@@ -12142,7 +12145,7 @@ b$C6FD DEFB $16,$02,$BC,$01,$00,$31 ; Beorn's house: north to the great river
 ; #TABLE(default)
 ; { =h Bytes | =h Instruction }
 ; { t, action, target, instrument | do an action with those objects ($FF = let the game choose) }
-; { t+1, address, 0 | call a special routine (the routines in $A406-$A91B) }
+; { t+1, address, 0 | call a special routine (the routines in #R$A406-#R$A91B) }
 ; { 4, action | do an action and let the game choose any objects; action $FF means 'do nothing this turn' }
 ; { $0E, address | go to }
 ; { $0C, action | switch to the reaction for that action }
@@ -12151,217 +12154,270 @@ b$C6FD DEFB $16,$02,$BC,$01,$00,$31 ; Beorn's house: north to the great river
 ; TABLE#
 ; .
 ; REACTION TABLES are lists of 3-byte entries ending with $FF: an action and a program address. When something is done to a character, the entry for that action
-; (if any) becomes its program (#R$99FB); entries with action 0 are the default behaviours, used by 'switch to a random behaviour'. Common reactions are shared:
-; $C94D is the general 'fight back' program (attack; attack again; run; repeat, or follow the attacker if it runs), $C96E the response to being given something
-; ('thank you' or 'what do you expect me to do with this?'), and $C962 the response to being captured (go through an exit or door if possible, otherwise run).
+; (if any) becomes its program (#R$99FB); entries with action 0 are the default behaviours, used by 'switch to a random behaviour'. In memory each character's
+; reaction table comes straight before its program (the goblins' three tables come first, together); the headings below mark where each table and each program
+; begins. Common reactions are shared: #R$C94D is the general 'fight back' program (attack; attack again; run; repeat, or follow the attacker if it runs),
+; #R$C96E the response to being given something ('thank you' or 'what do you expect me to do with this?'), and #R$C962 the response to being captured (go
+; through an exit or door if possible, otherwise run).
 ; .
 ; WHAT THE CHARACTERS DO:
 ; .
 ; #LIST
-; { Gandalf ($C7A9) begins by giving Bilbo the curious map and opening the round green door. After that he is a random wanderer: five little routines ($C7B1,
-; $C7BF, $C7C3, $C7C9, $C7CD) chosen at random make him run about, pick things up and ask 'what's this?', drop or give things away, open and close doors, and
-; make small talk. }
-; { Thorin ($C7DB) follows Bilbo whenever he can. When he cannot, he picks up the small curious key if he finds it (saying once 'this was thrains key'), asks
+; { Gandalf (#R$C7A9) begins by giving Bilbo the curious map and opening the round green door. After that he is a random wanderer: five little routines
+; (#R$C7B1, #R$C7BF, #R$C7C3, #R$C7C9, #R$C7CD) chosen at random make him run about, pick things up and ask 'what's this?', drop or give things away, open and
+; close doors, and make small talk. }
+; { Thorin (#R$C7DB) follows Bilbo whenever he can. When he cannot, he picks up the small curious key if he finds it (saying once 'this was thrains key'), asks
 ; 'where's the thief?' if Bilbo is invisible, or runs through his idle routine (#R$A550): wait, 'hurry up', or sit down and sing about gold. }
-; { The wood elf ($C80C) wanders at random capturing anyone it meets, who ends up in the Elvenking's dungeon (#R$A316). }
-; { The warg ($C817) attacks anyone it can; otherwise it follows its prey, or runs around Bilbo howling (#R$A4CA), or runs off. }
-; { The butler ($C83F) acts out the story from the book: he unlocks the red door with the red key, opens it, shuts it and locks it again; he opens a barrel and
-; drinks the wine, closes the barrel, opens the trap door, throws the barrel through it into the river, and closes the trap door - capturing any intruder at
+; { The wood elf (#R$C80C) wanders at random capturing anyone it meets, who ends up in the Elvenking's dungeon (#R$A316). }
+; { The warg (#R$C817) attacks anyone it can; otherwise it follows its prey, or runs around Bilbo howling (#R$A4CA), or runs off. }
+; { The butler (#R$C83F) acts out the story from the book: he unlocks the red door with the red key, opens it, shuts it and locks it again; he opens a barrel
+; and drinks the wine, closes the barrel, opens the trap door, throws the barrel through it into the river, and closes the trap door - capturing any intruder at
 ; every opportunity - and then starts again. }
-; { Elrond ($C889) greets Bilbo when he arrives and gives him lunch (#R$A8D9), and otherwise waits. }
-; { The dragon ($C8A7) sleeps on the treasure until it is taken (#R$A5D5); then, as long as the dragon itself is somewhere lit, each turn there is about a 1 in
-; 6 chance that it descends and burns Bilbo to a crisp, otherwise 'in the distance you see the shape of a monstrous dragon flying after you.' Before that, if
+; { Elrond (#R$C889) greets Bilbo when he arrives and gives him lunch (#R$A8D9), and otherwise waits. }
+; { The dragon (#R$C8A7) sleeps on the treasure until it is taken (#R$A5D5); then, as long as the dragon itself is somewhere lit, each turn there is about a 1
+; in 6 chance that it descends and burns Bilbo to a crisp, otherwise 'in the distance you see the shape of a monstrous dragon flying after you.' Before that, if
 ; Bilbo comes into one of its three rooms it flies to him (#R$A591), speaks (#R$A5BB) and burns him. }
-; { Bard ($C8CD) does nothing on his own: he waits for an order from the player (#R$A79F), and then repeats that order every turn. His reaction to being
-; attacked is to SHOOT ($C8D8). }
-; { Gollum ($C8E6) asks his riddle when he meets Bilbo (#R$A7C6), and kills him if the answer is wrong (#R$A7EA); he mutters about his precious (#R$A81A), paces
-; north and south-west, drops and picks up the golden ring, and if attacked puts the ring on, becomes invisible and runs. }
-; { The trolls ($C92A) wait until Bilbo comes into the clearing and then say their lines (#R$A8B1). After that their program is: try to eat Bilbo, wait, eat,
+; { Bard (#R$C8CD) does nothing on his own: he waits for an order from the player (#R$A79F), and then repeats that order every turn. His reaction to being
+; attacked is to SHOOT (#R$C8D8). }
+; { Gollum (#R$C8E6) asks his riddle when he meets Bilbo (#R$A7C6), and kills him if the answer is wrong (#R$A7EA); he mutters about his precious (#R$A81A),
+; paces north and south-west, drops and picks up the golden ring, and if attacked puts the ring on, becomes invisible and runs. }
+; { The trolls (#R$C92A) wait until Bilbo comes into the clearing and then say their lines (#R$A8B1). After that their program is: try to eat Bilbo, wait, eat,
 ; wait, eat, wait, eat, and then dawn (#R$A865), which turns them to stone. So after the trolls have spoken, Bilbo must be out of the clearing on the turns they
 ; try to eat him; waiting outside for the new day dawning (as the HELP message says) is the way. }
-; { The goblins patrol set routes (for example $C731: open the small insignificant crack, go up, down, close the crack, south, north), capturing anyone they
-; meet on the way, who ends up in the goblins' dungeon; the last three goblins ($C784) just run about attacking and capturing. }
+; { The goblins patrol set routes (for example #R$C731: open the small insignificant crack, go up, down, close the crack, south, north), capturing anyone they
+; meet on the way, who ends up in the goblins' dungeon; the last three goblins (#R$C784) just run about attacking and capturing. }
 ; LIST#
 ; .
-; One instruction in this area is changed during play: #R$A79F rewrites the instruction at $C8D1 to hold Bard's latest order, which is why SAVE and LOAD take
+; One instruction in this area is changed during play: #R$A79F rewrites the instruction at #R$C8D1 to hold Bard's latest order, which is why SAVE and LOAD take
 ; care to save three of its bytes (#R$8284).
-b$C71C DEFB $00,$31,$C7,$0F,$8D,$C7,$FF             ; Reaction table for the nasty and hideous goblins: default $C731; on ATTACK WITH: $C78D
- $C723 DEFB $00,$60,$C7,$0F,$8D,$C7,$FF             ; Reaction table for the vicious goblin: default $C760; on ATTACK WITH: $C78D
- $C72A DEFB $00,$84,$C7,$0F,$8D,$C7,$FF             ; Reaction table for the horrible, mean and disgusting goblins: default $C784; on ATTACK WITH: $C78D
+;
+; .
+;
+; The goblins: three reaction tables (one for each kind of goblin), followed by their three behaviour programs.
+b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default behaviour (also one of the choices for a random one): program at #R$C731
+ $C71F DEFB $0F,$8D,$C7             ; the nasty and hideous goblins: when it is attacked: switch to the program at #R$C78D
+ $C722 DEFB $FF                     ; End of the table
+ $C723 DEFB $00,$60,$C7             ; the vicious goblin: default behaviour (also one of the choices for a random one): program at #R$C760
+ $C726 DEFB $0F,$8D,$C7             ; the vicious goblin: when it is attacked: switch to the program at #R$C78D
+ $C729 DEFB $FF                     ; End of the table
+ $C72A DEFB $00,$84,$C7             ; the horrible, mean and disgusting goblins: default behaviour (also one of the choices for a random one): program at
+                                    ; #R$C784
+ $C72D DEFB $0F,$8D,$C7             ; the horrible, mean and disgusting goblins: when it is attacked: switch to the program at #R$C78D
+ $C730 DEFB $FF                     ; End of the table
 ; Behaviour program for the nasty and hideous goblins.
- $C731 DEFB $02,$10,$06,$FF                         ; action 16 [open] target small insignificant crack, with -
- $C735 DEFB $14,$30,$3C,$C7                         ; action 48 [capture]; if it fails go to $C73C
- $C739 DEFB $0E,$35,$C7                             ; go to $C735
- $C73C DEFB $04,$09                                 ; action 9 [up go]
- $C73E DEFB $14,$30,$45,$C7                         ; action 48 [capture]; if it fails go to $C745
- $C742 DEFB $0E,$3E,$C7                             ; go to $C73E
- $C745 DEFB $04,$0A                                 ; action 10 [down go]
- $C747 DEFB $14,$30,$4E,$C7                         ; action 48 [capture]; if it fails go to $C74E
- $C74B DEFB $0E,$47,$C7                             ; go to $C747
- $C74E DEFB $02,$0C,$06,$FF                         ; action 12 [close] target small insignificant crack, with -
- $C752 DEFB $04,$02                                 ; action 2 [south go]
- $C754 DEFB $14,$30,$5B,$C7                         ; action 48 [capture]; if it fails go to $C75B
- $C758 DEFB $0E,$54,$C7                             ; go to $C754
- $C75B DEFB $04,$01                                 ; action 1 [north go]
- $C75D DEFB $0E,$31,$C7                             ; go to $C731
+ $C731 DEFB $02,$10,$06,$FF         ; action 16 [open] target small insignificant crack, with -
+ $C735 DEFB $14,$30,$3C,$C7         ; action 48 [capture]; if it fails go to #R$C73C
+ $C739 DEFB $0E,$35,$C7             ; go to #R$C735
+ $C73C DEFB $04,$09                 ; action 9 [up go]
+ $C73E DEFB $14,$30,$45,$C7         ; action 48 [capture]; if it fails go to #R$C745
+ $C742 DEFB $0E,$3E,$C7             ; go to #R$C73E
+ $C745 DEFB $04,$0A                 ; action 10 [down go]
+ $C747 DEFB $14,$30,$4E,$C7         ; action 48 [capture]; if it fails go to #R$C74E
+ $C74B DEFB $0E,$47,$C7             ; go to #R$C747
+ $C74E DEFB $02,$0C,$06,$FF         ; action 12 [close] target small insignificant crack, with -
+ $C752 DEFB $04,$02                 ; action 2 [south go]
+ $C754 DEFB $14,$30,$5B,$C7         ; action 48 [capture]; if it fails go to #R$C75B
+ $C758 DEFB $0E,$54,$C7             ; go to #R$C754
+ $C75B DEFB $04,$01                 ; action 1 [north go]
+ $C75D DEFB $0E,$31,$C7             ; go to #R$C731
 ; Behaviour program for the vicious goblin.
- $C760 DEFB $04,$06                                 ; action 6 [northwest go]
- $C762 DEFB $14,$30,$69,$C7                         ; action 48 [capture]; if it fails go to $C769
- $C766 DEFB $0E,$62,$C7                             ; go to $C762
- $C769 DEFB $04,$01                                 ; action 1 [north go]
- $C76B DEFB $14,$30,$72,$C7                         ; action 48 [capture]; if it fails go to $C772
- $C76F DEFB $0E,$6B,$C7                             ; go to $C76B
- $C772 DEFB $04,$08                                 ; action 8 [southwest go]
- $C774 DEFB $14,$30,$7B,$C7                         ; action 48 [capture]; if it fails go to $C77B
- $C778 DEFB $0E,$74,$C7                             ; go to $C774
- $C77B DEFB $04,$09                                 ; action 9 [up go]
- $C77D DEFB $14,$30,$60,$C7                         ; action 48 [capture]; if it fails go to $C760
- $C781 DEFB $0E,$7D,$C7                             ; go to $C77D
+ $C760 DEFB $04,$06                 ; action 6 [northwest go]
+ $C762 DEFB $14,$30,$69,$C7         ; action 48 [capture]; if it fails go to #R$C769
+ $C766 DEFB $0E,$62,$C7             ; go to #R$C762
+ $C769 DEFB $04,$01                 ; action 1 [north go]
+ $C76B DEFB $14,$30,$72,$C7         ; action 48 [capture]; if it fails go to #R$C772
+ $C76F DEFB $0E,$6B,$C7             ; go to #R$C76B
+ $C772 DEFB $04,$08                 ; action 8 [southwest go]
+ $C774 DEFB $14,$30,$7B,$C7         ; action 48 [capture]; if it fails go to #R$C77B
+ $C778 DEFB $0E,$74,$C7             ; go to #R$C774
+ $C77B DEFB $04,$09                 ; action 9 [up go]
+ $C77D DEFB $14,$30,$60,$C7         ; action 48 [capture]; if it fails go to #R$C760
+ $C781 DEFB $0E,$7D,$C7             ; go to #R$C77D
 ; Behaviour program for the horrible, mean and disgusting goblins.
- $C784 DEFB $04,$24                                 ; action 36 [run]
- $C786 DEFB $04,$0F                                 ; action 15 [attack with]
- $C788 DEFB $04,$30                                 ; action 48 [capture]
- $C78A DEFB $0E,$84,$C7                             ; go to $C784
- $C78D DEFB $04,$30                                 ; action 48 [capture]
- $C78F DEFB $07                                     ; switch to default behaviour and end turn
- $C790 DEFB $00,$B1,$C7,$00,$BF,$C7,$00,$C3         ; {Reaction table for Gandalf: default $C7B1; default $C7BF; default $C7C3; default $C7C9; default $C7CD; on
- $C798 DEFB $C7,$00,$C9,$C7,$00,$CD,$C7,$1D         ; GIVE TO: $C96E; on CAPTURE: $C962; on ATTACK WITH: $C94D
- $C7A0 DEFB $6E,$C9,$30,$62,$C9,$0F,$4D,$C9         ;
- $C7A8 DEFB $FF                                     ; }
+ $C784 DEFB $04,$24                 ; action 36 [run]
+ $C786 DEFB $04,$0F                 ; action 15 [attack with]
+ $C788 DEFB $04,$30                 ; action 48 [capture]
+ $C78A DEFB $0E,$84,$C7             ; go to #R$C784
+; The goblins' own reaction to being attacked: capture the attacker, then go back to the normal program.
+ $C78D DEFB $04,$30                 ; action 48 [capture]
+ $C78F DEFB $07                     ; switch to default behaviour and end turn
+; Gandalf: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C790 DEFB $00,$B1,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7B1
+ $C793 DEFB $00,$BF,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7BF
+ $C796 DEFB $00,$C3,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7C3
+ $C799 DEFB $00,$C9,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7C9
+ $C79C DEFB $00,$CD,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7CD
+ $C79F DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
+ $C7A2 DEFB $30,$62,$C9             ; when it is captured: switch to the program at #R$C962
+ $C7A5 DEFB $0F,$4D,$C9             ; when it is attacked: switch to the program at #R$C94D
+ $C7A8 DEFB $FF                     ; End of the table
 ; Behaviour program for Gandalf.
- $C7A9 DEFB $02,$1D,$03,$00                         ; action 29 [give to] target curious map, with bilbo
- $C7AD DEFB $02,$10,$05,$FF                         ; action 16 [open] target round green door, with -
- $C7B1 DEFB $04,$24                                 ; action 36 [run]
- $C7B3 DEFB $14,$13,$BF,$C7                         ; action 19 [take]; if it fails go to $C7BF
- $C7B7 DEFB $03,$1C,$A4,$00                         ; call $A41C (Character routine: "what's this?")
- $C7BB DEFB $04,$0C                                 ; action 12 [close]
- $C7BD DEFB $04,$1D                                 ; action 29 [give to]
- $C7BF DEFB $04,$24                                 ; action 36 [run]
- $C7C1 DEFB $04,$0D                                 ; action 13 [drop]
- $C7C3 DEFB $04,$24                                 ; action 36 [run]
- $C7C5 DEFB $03,$25,$A4,$00                         ; call $A425 (Character routine: small talk)
- $C7C9 DEFB $04,$24                                 ; action 36 [run]
- $C7CB DEFB $04,$1D                                 ; action 29 [give to]
- $C7CD DEFB $04,$10                                 ; action 16 [open]
- $C7CF DEFB $0F,$04                                 ; switch to a random behaviour (1 of up to 4)
- $C7D1 DEFB $00,$DB,$C7,$1D,$6E,$C9,$0F,$4D,$C9,$FF ; Reaction table for Thorin: default $C7DB; on GIVE TO: $C96E; on ATTACK WITH: $C94D
+ $C7A9 DEFB $02,$1D,$03,$00         ; action 29 [give to] target curious map, with bilbo
+ $C7AD DEFB $02,$10,$05,$FF         ; action 16 [open] target round green door, with -
+ $C7B1 DEFB $04,$24                 ; action 36 [run]
+ $C7B3 DEFB $14,$13,$BF,$C7         ; action 19 [take]; if it fails go to #R$C7BF
+ $C7B7 DEFB $03,$1C,$A4,$00         ; call #R$A41C (Character routine: "what's this?")
+ $C7BB DEFB $04,$0C                 ; action 12 [close]
+ $C7BD DEFB $04,$1D                 ; action 29 [give to]
+ $C7BF DEFB $04,$24                 ; action 36 [run]
+ $C7C1 DEFB $04,$0D                 ; action 13 [drop]
+ $C7C3 DEFB $04,$24                 ; action 36 [run]
+ $C7C5 DEFB $03,$25,$A4,$00         ; call #R$A425 (Character routine: small talk)
+ $C7C9 DEFB $04,$24                 ; action 36 [run]
+ $C7CB DEFB $04,$1D                 ; action 29 [give to]
+ $C7CD DEFB $04,$10                 ; action 16 [open]
+ $C7CF DEFB $0F,$04                 ; switch to a random behaviour (1 of up to 4)
+; Thorin: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C7D1 DEFB $00,$DB,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7DB
+ $C7D4 DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
+ $C7D7 DEFB $0F,$4D,$C9             ; when it is attacked: switch to the program at #R$C94D
+ $C7DA DEFB $FF                     ; End of the table
 ; Behaviour program for Thorin.
- $C7DB DEFB $12,$27,$00,$FF,$E4,$C7                 ; action 39 [follow] target bilbo, with -; if it fails go to $C7E4
- $C7E1 DEFB $0E,$DB,$C7                             ; go to $C7DB
- $C7E4 DEFB $12,$13,$02,$FF,$EE,$C7                 ; action 19 [take] target small curious key, with -; if it fails go to $C7EE
- $C7EA DEFB $23,$43,$A4,$00                         ; call $A443 (Character routine: "this was thrains key") (once)
- $C7EE DEFB $13,$39,$A5,$00,$FB,$C7                 ; call $A539 (Character routine: "where's the thief?"); if it fails go to $C7FB
- $C7F4 DEFB $04,$FF                                 ; do nothing this turn
- $C7F6 DEFB $04,$24                                 ; action 36 [run]
- $C7F8 DEFB $0E,$DB,$C7                             ; go to $C7DB
- $C7FB DEFB $03,$50,$A5,$00                         ; call $A550 (Character routine: Thorin)
- $C7FF DEFB $0E,$DB,$C7                             ; go to $C7DB
- $C802 DEFB $00,$0C,$C8,$0F,$0C,$C8,$1D,$6E,$C9,$FF ; Reaction table for the wood elf: default $C80C; on ATTACK WITH: $C80C; on GIVE TO: $C96E
+ $C7DB DEFB $12,$27,$00,$FF,$E4,$C7 ; action 39 [follow] target bilbo, with -; if it fails go to #R$C7E4
+ $C7E1 DEFB $0E,$DB,$C7             ; go to #R$C7DB
+ $C7E4 DEFB $12,$13,$02,$FF,$EE,$C7 ; action 19 [take] target small curious key, with -; if it fails go to #R$C7EE
+ $C7EA DEFB $23,$43,$A4,$00         ; call #R$A443 (Character routine: "this was thrains key") (once)
+ $C7EE DEFB $13,$39,$A5,$00,$FB,$C7 ; call #R$A539 (Character routine: "where's the thief?"); if it fails go to #R$C7FB
+ $C7F4 DEFB $04,$FF                 ; do nothing this turn
+ $C7F6 DEFB $04,$24                 ; action 36 [run]
+ $C7F8 DEFB $0E,$DB,$C7             ; go to #R$C7DB
+ $C7FB DEFB $03,$50,$A5,$00         ; call #R$A550 (Character routine: Thorin)
+ $C7FF DEFB $0E,$DB,$C7             ; go to #R$C7DB
+; The wood elf: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C802 DEFB $00,$0C,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C80C
+ $C805 DEFB $0F,$0C,$C8             ; when it is attacked: switch to the program at #R$C80C
+ $C808 DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
+ $C80B DEFB $FF                     ; End of the table
 ; Behaviour program for the wood elf.
- $C80C DEFB $04,$30                                 ; action 48 [capture]
- $C80E DEFB $04,$24                                 ; action 36 [run]
- $C810 DEFB $0E,$0C,$C8                             ; go to $C80C
- $C813 DEFB $00,$17,$C8,$FF                         ; Reaction table for the warg: default $C817
+ $C80C DEFB $04,$30                 ; action 48 [capture]
+ $C80E DEFB $04,$24                 ; action 36 [run]
+ $C810 DEFB $0E,$0C,$C8             ; go to #R$C80C
+; The warg: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C813 DEFB $00,$17,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C817
+ $C816 DEFB $FF                     ; End of the table
 ; Behaviour program for the warg.
- $C817 DEFB $14,$0F,$1E,$C8                         ; action 15 [attack with]; if it fails go to $C81E
- $C81B DEFB $0E,$17,$C8                             ; go to $C817
- $C81E DEFB $14,$27,$29,$C8                         ; action 39 [follow]; if it fails go to $C829
- $C822 DEFB $03,$CA,$A4,$00                         ; call $A4CA (Character routine: the warg)
- $C826 DEFB $0E,$17,$C8                             ; go to $C817
- $C829 DEFB $14,$24,$30,$C8                         ; action 36 [run]; if it fails go to $C830
- $C82D DEFB $0E,$17,$C8                             ; go to $C817
- $C830 DEFB $04,$FF                                 ; do nothing this turn
- $C832 DEFB $0E,$17,$C8                             ; go to $C817
- $C835 DEFB $00,$3F,$C8,$0F,$4F,$C8,$1D,$6E,$C9,$FF ; Reaction table for the butler: default $C83F; on ATTACK WITH: $C84F; on GIVE TO: $C96E
+ $C817 DEFB $14,$0F,$1E,$C8         ; action 15 [attack with]; if it fails go to #R$C81E
+ $C81B DEFB $0E,$17,$C8             ; go to #R$C817
+ $C81E DEFB $14,$27,$29,$C8         ; action 39 [follow]; if it fails go to #R$C829
+ $C822 DEFB $03,$CA,$A4,$00         ; call #R$A4CA (Character routine: the warg)
+ $C826 DEFB $0E,$17,$C8             ; go to #R$C817
+ $C829 DEFB $14,$24,$30,$C8         ; action 36 [run]; if it fails go to #R$C830
+ $C82D DEFB $0E,$17,$C8             ; go to #R$C817
+ $C830 DEFB $04,$FF                 ; do nothing this turn
+ $C832 DEFB $0E,$17,$C8             ; go to #R$C817
+; The butler: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C835 DEFB $00,$3F,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C83F
+ $C838 DEFB $0F,$4F,$C8             ; when it is attacked: switch to the program at #R$C84F
+ $C83B DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
+ $C83E DEFB $FF                     ; End of the table
 ; Behaviour program for the butler.
- $C83F DEFB $02,$26,$08,$0F                         ; action 38 [unlock with] target red door, with red key
- $C843 DEFB $02,$10,$08,$FF                         ; action 16 [open] target red door, with -
- $C847 DEFB $02,$0C,$08,$FF                         ; action 12 [close] target red door, with -
- $C84B DEFB $02,$25,$08,$0F                         ; action 37 [lock with] target red door, with red key
- $C84F DEFB $14,$30,$56,$C8                         ; action 48 [capture]; if it fails go to $C856
- $C853 DEFB $0E,$4F,$C8                             ; go to $C84F
- $C856 DEFB $02,$10,$13,$FF                         ; action 16 [open] target barrel, with -
- $C85A DEFB $02,$21,$14,$FF                         ; action 33 [drink] target wine, with -
- $C85E DEFB $04,$30                                 ; action 48 [capture]
- $C860 DEFB $02,$0C,$13,$FF                         ; action 12 [close] target barrel, with -
- $C864 DEFB $02,$10,$0C,$FF                         ; action 16 [open] target large trap door, with -
- $C868 DEFB $04,$30                                 ; action 48 [capture]
- $C86A DEFB $02,$13,$13,$FF                         ; action 19 [take] target barrel, with -
- $C86E DEFB $02,$2C,$13,$0C                         ; action 44 [throw through] target barrel, with large trap door
- $C872 DEFB $04,$30                                 ; action 48 [capture]
- $C874 DEFB $02,$0C,$0C,$FF                         ; action 12 [close] target large trap door, with -
- $C878 DEFB $14,$30,$3F,$C8                         ; action 48 [capture]; if it fails go to $C83F
- $C87C DEFB $0E,$3F,$C8                             ; go to $C83F
- $C87F DEFB $00,$8F,$C8,$0F,$99,$C8,$1D,$6E,$C9,$FF ; Reaction table for Elrond: default $C88F; on ATTACK WITH: $C899; on GIVE TO: $C96E
+ $C83F DEFB $02,$26,$08,$0F         ; action 38 [unlock with] target red door, with red key
+ $C843 DEFB $02,$10,$08,$FF         ; action 16 [open] target red door, with -
+ $C847 DEFB $02,$0C,$08,$FF         ; action 12 [close] target red door, with -
+ $C84B DEFB $02,$25,$08,$0F         ; action 37 [lock with] target red door, with red key
+ $C84F DEFB $14,$30,$56,$C8         ; action 48 [capture]; if it fails go to #R$C856
+ $C853 DEFB $0E,$4F,$C8             ; go to #R$C84F
+ $C856 DEFB $02,$10,$13,$FF         ; action 16 [open] target barrel, with -
+ $C85A DEFB $02,$21,$14,$FF         ; action 33 [drink] target wine, with -
+ $C85E DEFB $04,$30                 ; action 48 [capture]
+ $C860 DEFB $02,$0C,$13,$FF         ; action 12 [close] target barrel, with -
+ $C864 DEFB $02,$10,$0C,$FF         ; action 16 [open] target large trap door, with -
+ $C868 DEFB $04,$30                 ; action 48 [capture]
+ $C86A DEFB $02,$13,$13,$FF         ; action 19 [take] target barrel, with -
+ $C86E DEFB $02,$2C,$13,$0C         ; action 44 [throw through] target barrel, with large trap door
+ $C872 DEFB $04,$30                 ; action 48 [capture]
+ $C874 DEFB $02,$0C,$0C,$FF         ; action 12 [close] target large trap door, with -
+ $C878 DEFB $14,$30,$3F,$C8         ; action 48 [capture]; if it fails go to #R$C83F
+ $C87C DEFB $0E,$3F,$C8             ; go to #R$C83F
+; Elrond: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C87F DEFB $00,$8F,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C88F
+ $C882 DEFB $0F,$99,$C8             ; when it is attacked: switch to the program at #R$C899
+ $C885 DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
+ $C888 DEFB $FF                     ; End of the table
 ; Behaviour program for Elrond.
- $C889 DEFB $13,$4C,$A4,$00,$93,$C8                 ; call $A44C (Character routine: greet Bilbo); if it fails go to $C893
- $C88F DEFB $03,$D9,$A8,$00                         ; call $A8D9 (Character routine: Elrond gives Bilbo lunch)
- $C893 DEFB $04,$FF                                 ; do nothing this turn
- $C895 DEFB $14,$FF,$89,$C8                         ; end turn and go to $C889
- $C899 DEFB $14,$0F,$89,$C8                         ; action 15 [attack with]; if it fails go to $C889
- $C89D DEFB $0E,$99,$C8                             ; go to $C899
- $C8A0 DEFB $00,$A7,$C8,$0F,$BC,$C8,$FF             ; Reaction table for the dragon: default $C8A7; on ATTACK WITH: $C8BC
+ $C889 DEFB $13,$4C,$A4,$00,$93,$C8 ; call #R$A44C (Character routine: greet Bilbo); if it fails go to #R$C893
+ $C88F DEFB $03,$D9,$A8,$00         ; call #R$A8D9 (Character routine: Elrond gives Bilbo lunch)
+ $C893 DEFB $04,$FF                 ; do nothing this turn
+ $C895 DEFB $14,$FF,$89,$C8         ; end turn and go to #R$C889
+ $C899 DEFB $14,$0F,$89,$C8         ; action 15 [attack with]; if it fails go to #R$C889
+ $C89D DEFB $0E,$99,$C8             ; go to #R$C899
+; The dragon: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C8A0 DEFB $00,$A7,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8A7
+ $C8A3 DEFB $0F,$BC,$C8             ; when it is attacked: switch to the program at #R$C8BC
+ $C8A6 DEFB $FF                     ; End of the table
 ; Behaviour program for the dragon.
- $C8A7 DEFB $13,$D5,$A5,$00,$B0,$C8                 ; call $A5D5 (Character routine: the dragon wakes); if it fails go to $C8B0
- $C8AD DEFB $0E,$A7,$C8                             ; go to $C8A7
- $C8B0 DEFB $13,$91,$A5,$00,$C1,$C8                 ; call $A591 (Character routine: the dragon comes for Bilbo); if it fails go to $C8C1
- $C8B6 DEFB $13,$BB,$A5,$00,$C1,$C8                 ; call $A5BB (Character routine: the dragon speaks); if it fails go to $C8C1
- $C8BC DEFB $04,$2D                                 ; action 45 [burn]
- $C8BE DEFB $0E,$A7,$C8                             ; go to $C8A7
- $C8C1 DEFB $04,$24                                 ; action 36 [run]
- $C8C3 DEFB $0E,$A7,$C8                             ; go to $C8A7
- $C8C6 DEFB $00,$CD,$C8,$0F,$D8,$C8,$FF             ; Reaction table for Bard: default $C8CD; on ATTACK WITH: $C8D8
+ $C8A7 DEFB $13,$D5,$A5,$00,$B0,$C8 ; call #R$A5D5 (Character routine: the dragon wakes); if it fails go to #R$C8B0
+ $C8AD DEFB $0E,$A7,$C8             ; go to #R$C8A7
+ $C8B0 DEFB $13,$91,$A5,$00,$C1,$C8 ; call #R$A591 (Character routine: the dragon comes for Bilbo); if it fails go to #R$C8C1
+ $C8B6 DEFB $13,$BB,$A5,$00,$C1,$C8 ; call #R$A5BB (Character routine: the dragon speaks); if it fails go to #R$C8C1
+ $C8BC DEFB $04,$2D                 ; action 45 [burn]
+ $C8BE DEFB $0E,$A7,$C8             ; go to #R$C8A7
+ $C8C1 DEFB $04,$24                 ; action 36 [run]
+ $C8C3 DEFB $0E,$A7,$C8             ; go to #R$C8A7
+; Bard: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C8C6 DEFB $00,$CD,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8CD
+ $C8C9 DEFB $0F,$D8,$C8             ; when it is attacked: switch to the program at #R$C8D8
+ $C8CC DEFB $FF                     ; End of the table
 ; Behaviour program for Bard.
- $C8CD DEFB $43,$9F,$A7,$00                         ; call $A79F (Character routine: Bard remembers his orders) (no orders)
- $C8D1 DEFB $42,$13,$25,$FF                         ; action 19 [take] target wooden chest, with - (no orders)
- $C8D5 DEFB $0E,$CD,$C8                             ; go to $C8CD
- $C8D8 DEFB $54,$3A,$4D,$C9                         ; action 58 [shoot]; if it fails go to $C94D (no orders)
- $C8DC DEFB $0E,$D8,$C8                             ; go to $C8D8
- $C8DF DEFB $00,$E6,$C8,$0F,$1A,$C9,$FF             ; Reaction table for Gollum: default $C8E6; on ATTACK WITH: $C91A
+ $C8CD DEFB $43,$9F,$A7,$00         ; call #R$A79F (Character routine: Bard remembers his orders) (no orders)
+ $C8D1 DEFB $42,$13,$25,$FF         ; action 19 [take] target wooden chest, with - (no orders)
+ $C8D5 DEFB $0E,$CD,$C8             ; go to #R$C8CD
+ $C8D8 DEFB $54,$3A,$4D,$C9         ; action 58 [shoot]; if it fails go to #R$C94D (no orders)
+ $C8DC DEFB $0E,$D8,$C8             ; go to #R$C8D8
+; Gollum: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C8DF DEFB $00,$E6,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8E6
+ $C8E2 DEFB $0F,$1A,$C9             ; when it is attacked: switch to the program at #R$C91A
+ $C8E5 DEFB $FF                     ; End of the table
 ; Behaviour program for Gollum.
- $C8E6 DEFB $13,$C6,$A7,$00,$FF,$C8                 ; call $A7C6 (Character routine: Gollum asks his riddle); if it fails go to $C8FF
- $C8EC DEFB $43,$EA,$A7,$00                         ; call $A7EA (Character routine: Gollum waits for the answer) (no orders)
- $C8F0 DEFB $02,$0D,$10,$FF                         ; action 13 [drop] target valuable golden ring, with -
- $C8F4 DEFB $14,$01,$10,$C9                         ; action 1 [north go]; if it fails go to $C910
- $C8F8 DEFB $02,$13,$10,$FF                         ; action 19 [take] target valuable golden ring, with -
- $C8FC DEFB $0E,$E6,$C8                             ; go to $C8E6
- $C8FF DEFB $14,$01,$15,$C9                         ; action 1 [north go]; if it fails go to $C915
- $C903 DEFB $13,$1A,$A8,$00,$E6,$C8                 ; call $A81A (Character routine: Gollum mutters); if it fails go to $C8E6
- $C909 DEFB $02,$13,$10,$FF                         ; action 19 [take] target valuable golden ring, with -
- $C90D DEFB $0E,$E6,$C8                             ; go to $C8E6
- $C910 DEFB $04,$08                                 ; action 8 [southwest go]
- $C912 DEFB $0E,$F8,$C8                             ; go to $C8F8
- $C915 DEFB $04,$08                                 ; action 8 [southwest go]
- $C917 DEFB $0E,$03,$C9                             ; go to $C903
- $C91A DEFB $02,$28,$10,$FF                         ; action 40 [wear] target valuable golden ring, with -
- $C91E DEFB $04,$24                                 ; action 36 [run]
- $C920 DEFB $0E,$E6,$C8                             ; go to $C8E6
- $C923 DEFB $00,$30,$C9,$0F,$4D,$C9,$FF             ; Reaction table for the trolls: default $C930; on ATTACK WITH: $C94D
+ $C8E6 DEFB $13,$C6,$A7,$00,$FF,$C8 ; call #R$A7C6 (Character routine: Gollum asks his riddle); if it fails go to #R$C8FF
+ $C8EC DEFB $43,$EA,$A7,$00         ; call #R$A7EA (Character routine: Gollum waits for the answer) (no orders)
+ $C8F0 DEFB $02,$0D,$10,$FF         ; action 13 [drop] target valuable golden ring, with -
+ $C8F4 DEFB $14,$01,$10,$C9         ; action 1 [north go]; if it fails go to #R$C910
+ $C8F8 DEFB $02,$13,$10,$FF         ; action 19 [take] target valuable golden ring, with -
+ $C8FC DEFB $0E,$E6,$C8             ; go to #R$C8E6
+ $C8FF DEFB $14,$01,$15,$C9         ; action 1 [north go]; if it fails go to #R$C915
+ $C903 DEFB $13,$1A,$A8,$00,$E6,$C8 ; call #R$A81A (Character routine: Gollum mutters); if it fails go to #R$C8E6
+ $C909 DEFB $02,$13,$10,$FF         ; action 19 [take] target valuable golden ring, with -
+ $C90D DEFB $0E,$E6,$C8             ; go to #R$C8E6
+ $C910 DEFB $04,$08                 ; action 8 [southwest go]
+ $C912 DEFB $0E,$F8,$C8             ; go to #R$C8F8
+ $C915 DEFB $04,$08                 ; action 8 [southwest go]
+ $C917 DEFB $0E,$03,$C9             ; go to #R$C903
+ $C91A DEFB $02,$28,$10,$FF         ; action 40 [wear] target valuable golden ring, with -
+ $C91E DEFB $04,$24                 ; action 36 [run]
+ $C920 DEFB $0E,$E6,$C8             ; go to #R$C8E6
+; The trolls: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+ $C923 DEFB $00,$30,$C9             ; default behaviour (also one of the choices for a random one): program at #R$C930
+ $C926 DEFB $0F,$4D,$C9             ; when it is attacked: switch to the program at #R$C94D
+ $C929 DEFB $FF                     ; End of the table
 ; Behaviour program for the trolls.
- $C92A DEFB $13,$B1,$A8,$00,$2A,$C9                 ; call $A8B1 (Character routine: the trolls talk); if it fails go to $C92A
- $C930 DEFB $03,$42,$A8,$00                         ; call $A842 (Character routine: a character eats Bilbo)
- $C934 DEFB $04,$FF                                 ; do nothing this turn
- $C936 DEFB $03,$42,$A8,$00                         ; call $A842 (Character routine: a character eats Bilbo)
- $C93A DEFB $04,$FF                                 ; do nothing this turn
- $C93C DEFB $03,$42,$A8,$00                         ; call $A842 (Character routine: a character eats Bilbo)
- $C940 DEFB $04,$FF                                 ; do nothing this turn
- $C942 DEFB $03,$42,$A8,$00                         ; call $A842 (Character routine: a character eats Bilbo)
- $C946 DEFB $03,$65,$A8,$00                         ; call $A865 (Character routine: dawn in the trolls' clearing)
- $C94A DEFB $0E,$30,$C9                             ; go to $C930
- $C94D DEFB $54,$0F,$5A,$C9                         ; action 15 [attack with]; if it fails go to $C95A (no orders)
- $C951 DEFB $54,$0F,$61,$C9                         ; action 15 [attack with]; if it fails go to $C961 (no orders)
- $C955 DEFB $44,$24                                 ; action 36 [run] (no orders)
- $C957 DEFB $0E,$4D,$C9                             ; go to $C94D
- $C95A DEFB $54,$27,$61,$C9                         ; action 39 [follow]; if it fails go to $C961 (no orders)
- $C95E DEFB $0E,$4D,$C9                             ; go to $C94D
- $C961 DEFB $07                                     ; switch to default behaviour and end turn
- $C962 DEFB $14,$1E,$69,$C9                         ; action 30 [go through]; if it fails go to $C969
- $C966 DEFB $04,$24                                 ; action 36 [run]
- $C968 DEFB $07                                     ; switch to default behaviour and end turn
- $C969 DEFB $04,$FF                                 ; do nothing this turn
- $C96B DEFB $0E,$62,$C9                             ; go to $C962
- $C96E DEFB $03,$06,$A4,$00                         ; call $A406 (Character routine: react to being given something)
- $C972 DEFB $07                                     ; switch to default behaviour and end turn
+ $C92A DEFB $13,$B1,$A8,$00,$2A,$C9 ; call #R$A8B1 (Character routine: the trolls talk); if it fails go to #R$C92A
+ $C930 DEFB $03,$42,$A8,$00         ; call #R$A842 (Character routine: a character eats Bilbo)
+ $C934 DEFB $04,$FF                 ; do nothing this turn
+ $C936 DEFB $03,$42,$A8,$00         ; call #R$A842 (Character routine: a character eats Bilbo)
+ $C93A DEFB $04,$FF                 ; do nothing this turn
+ $C93C DEFB $03,$42,$A8,$00         ; call #R$A842 (Character routine: a character eats Bilbo)
+ $C940 DEFB $04,$FF                 ; do nothing this turn
+ $C942 DEFB $03,$42,$A8,$00         ; call #R$A842 (Character routine: a character eats Bilbo)
+ $C946 DEFB $03,$65,$A8,$00         ; call #R$A865 (Character routine: dawn in the trolls' clearing)
+ $C94A DEFB $0E,$30,$C9             ; go to #R$C930
+; Shared reaction program: fight back. Used by Gandalf, Thorin, the trolls, and by Bard when he cannot shoot.
+ $C94D DEFB $54,$0F,$5A,$C9         ; action 15 [attack with]; if it fails go to #R$C95A (no orders)
+ $C951 DEFB $54,$0F,$61,$C9         ; action 15 [attack with]; if it fails go to #R$C961 (no orders)
+ $C955 DEFB $44,$24                 ; action 36 [run] (no orders)
+ $C957 DEFB $0E,$4D,$C9             ; go to #R$C94D
+ $C95A DEFB $54,$27,$61,$C9         ; action 39 [follow]; if it fails go to #R$C961 (no orders)
+ $C95E DEFB $0E,$4D,$C9             ; go to #R$C94D
+ $C961 DEFB $07                     ; switch to default behaviour and end turn
+; Shared reaction program: what to do when captured. Used by Gandalf.
+ $C962 DEFB $14,$1E,$69,$C9         ; action 30 [go through]; if it fails go to #R$C969
+ $C966 DEFB $04,$24                 ; action 36 [run]
+ $C968 DEFB $07                     ; switch to default behaviour and end turn
+ $C969 DEFB $04,$FF                 ; do nothing this turn
+ $C96B DEFB $0E,$62,$C9             ; go to #R$C962
+; Shared reaction program: being given something. Used by Elrond, Gandalf, Thorin, the butler, the wood elf.
+ $C96E DEFB $03,$06,$A4,$00         ; call #R$A406 (Character routine: react to being given something)
+ $C972 DEFB $07                     ; switch to default behaviour and end turn
 
 ; Turn timers
 ;
@@ -12406,7 +12462,7 @@ b$C973 DEFB $02,$00,$F4,$A4,$00,$00,$00 ; Timer 0: the barrel floats away
 ; character's current position in its behaviour program, the address of its reaction table (#R$C71C), and a stubbornness value (#R$8F9E).
 ; .
 ; #LIST
-; { $C9BA: $3E Gandalf }
+; { #R$C9BA: $3E Gandalf }
 ; { $C9C1: $3F Thorin }
 ; { $C9C8: $40 the wood elf }
 ; { $C9CF: $43 the warg }
@@ -12414,9 +12470,9 @@ b$C973 DEFB $02,$00,$F4,$A4,$00,$00,$00 ; Timer 0: the barrel floats away
 ; { $C9DD: $41 Elrond }
 ; { $C9E4: $44 Gollum }
 ; { $C9EB: empty until Bilbo enters the Elvenking's cellar, then $46 Bard (#R$C6AF) }
-; { $C9F2: empty until then, then $3C the dragon }
+; { #R$C9F2: empty until then, then $3C the dragon }
 ; { $C9F9, $CA00: $47 and $48 the trolls }
-; { $CA07-$CA2A: $3D, $45, $4B, $49, $4A and $4C, the goblins }
+; { $CA07-#R$CA2A: $3D, $45, $4B, $49, $4A and $4C, the goblins }
 ; LIST#
 ; Byte 6 of each entry decides how often the character refuses an order given with SAY TO (#R$8F9E); despite what one might expect, higher values mean fewer
 ; refusals, and 0 means it never refuses. The values are: Gandalf 5, Thorin 6, Elrond 5, Bard and Gollum 3, the wood elf, the butler and the trolls 1, and the

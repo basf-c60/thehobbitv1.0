@@ -29,16 +29,16 @@ Next: <a href="29132.html">71CC</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Prints the sentence that describes what an actor has just done, for example 'you go east.', 'thorin attacks you.', 'gandalf opens the round green door.' or 'you attack thorin with the short strong sword.'. It is built from the entry for the current action (number in $B5D8) in the action table <a href="43591.html">AA47</a>, whose four word slots hold the verb, a particle, a preposition and (for movement) GO.
+Prints the sentence that describes what an actor has just done, for example 'you go east.', 'thorin attacks you.', 'gandalf opens the round green door.' or 'you attack thorin with the short strong sword.'. It is built from the entry for the current action (number in <a href="46539.html#46552">B5D8</a>) in the action table <a href="43591.html">AA47</a>, whose four word slots hold the verb, a particle, a preposition and (for movement) GO.
 </div>
 <div class="paragraph">
 The flags collected by <a href="28906.html">70EA</a> decide what is printed. If bit 4 of them is set the action is silent and nothing is printed at all.
 </div>
 <div class="paragraph">
-Otherwise the actor's name is printed (<a href="29594.html#29598">739E</a>: 'you', 'thorin', 'gandalf'...). If the action was only being tried and would have failed ($B5EC is 0) the word CANNOT is inserted, so the report reads 'you cannot open the door'. The verb follows (<a href="29873.html">74B1</a>). For the ten movement actions a special case applies when the actor is a character and the move is not possible: the word SOMEWHERE is printed instead of the direction. Then, as the flags require, the particle, the target object (<a href="29606.html#29611">73AB</a>, with its article) and the preposition plus instrument (<a href="29630.html">73BE</a>) are added. The sentence ends with a full stop and a new line.
+Otherwise the actor's name is printed (<a href="29594.html#29598">739E</a>: 'you', 'thorin', 'gandalf'...). If the action was only being tried and would have failed (<a href="46539.html#46572">B5EC</a> is 0) the word CANNOT is inserted, so the report reads 'you cannot open the door'. The verb follows (<a href="29873.html">74B1</a>). For the ten movement actions a special case applies when the actor is a character and the move is not possible: the word SOMEWHERE is printed instead of the direction. Then, as the flags require, the particle, the target object (<a href="29606.html#29611">73AB</a>, with its article) and the preposition plus instrument (<a href="29630.html">73BE</a>) are added. The sentence ends with a full stop and a new line.
 </div>
 <div class="paragraph">
-The printing is done with $70D6 set to 1, which makes <a href="29750.html">7436</a> use 'the' rather than 'a' for articles. $B5F2 is set when the action is only being tried, which sends the text to the lower window instead (see <a href="30080.html">7580</a>).
+The printing is done with <a href="28883.html#28886">70D6</a> set to 1, which makes <a href="29750.html">7436</a> use 'the' rather than 'a' for articles. $B5F2 is set when the action is only being tried, which sends the text to the lower window instead (see <a href="30080.html">7580</a>).
 </div>
 </div>
 </td>

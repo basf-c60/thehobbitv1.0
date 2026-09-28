@@ -29,13 +29,13 @@ Next: <a href="30548.html">7754</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Prints one character in the story window, which fills the upper part of the screen and uses the game's own 6-pixel font (<a href="30652.html">77BC</a>). The screen address is kept at $768F, the pixel offset within the byte at $7691, and the number of characters left on the line at $768E (42 per line).
+Prints one character in the story window, which fills the upper part of the screen and uses the game's own 6-pixel font (<a href="30652.html">77BC</a>). The screen address is kept at $768F, the pixel offset within the byte at $7691, and the number of characters left on the line at <a href="30350.html">768E</a> (42 per line).
 </div>
 <div class="paragraph">
 Letters are converted to lower case, except that the first letter after a full stop or a new line is capitalised: the flag at $B5F5 is set by those, and cleared once a capital has been printed. This is why the game's text needs no capital letters in the dictionary.
 </div>
 <div class="paragraph">
-A carriage return sends the finished line to the ZX Printer if it is switched on (<a href="31509.html">7B15</a>), then scrolls the story window up (<a href="30558.html">775E</a>) and starts a new line. Before scrolling, the game checks the line counter at $B606, which is set to 9 each time the player enters a command: after that many lines, each further line waits (for about half a second, or until a key is pressed) so that long bursts of text do not rush past unread. A key held down at that point has to be released before the text continues.
+A carriage return sends the finished line to the ZX Printer if it is switched on (<a href="31509.html">7B15</a>), then scrolls the story window up (<a href="30558.html">775E</a>) and starts a new line. Before scrolling, the game checks the line counter at <a href="46539.html#46598">B606</a>, which is set to 9 each time the player enters a command: after that many lines, each further line waits (for about half a second, or until a key is pressed) so that long bursts of text do not rush past unread. A key held down at that point has to be released before the text continues.
 </div>
 <div class="paragraph">
 A backspace moves back 6 pixels (<a href="30548.html">7754</a>) and rubs out the character there. A full line wraps automatically.

@@ -32,7 +32,7 @@ Next: <a href="34965.html">8895</a>
 Pushes the particle and the preposition of the current action (from the action table entry at $834F) on the stack, as parameters for a message such as 'take what?' or 'unlock the door with what?'. Words that should not appear are replaced by 0.
 </div>
 <div class="paragraph">
-This routine modifies itself: it writes A (the opcode for either JR NZ or JR Z) into the two conditional jumps at $887F and $888E before running them, so that the same code can test flag bits for either the target or the instrument. It then returns by jumping to its return address, which it had to move out of the way under the pushed words (the EX (SP),HL instructions).
+This routine modifies itself: it writes A (the opcode for either JR NZ or JR Z) into the two conditional jumps at <a href="34921.html#34943">887F</a> and <a href="34921.html#34958">888E</a> before running them, so that the same code can test flag bits for either the target or the instrument. It then returns by jumping to its return address, which it had to move out of the way under the pushed words (the EX (SP),HL instructions).
 </div>
 </div>
 </td>

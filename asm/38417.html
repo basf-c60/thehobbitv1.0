@@ -29,10 +29,10 @@ Next: <a href="38534.html">9686</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Called once per turn after the player's command. First <a href="43210.html">A8CA</a> and <a href="38764.html">976C</a> (via $9618 and $961B) let the other characters take their turns, then the timer table at <a href="51571.html">C973</a> is processed.
+Called once per turn after the player's command. First <a href="43210.html">A8CA</a> and <a href="38764.html">976C</a> (via <a href="38417.html#38424">9618</a> and <a href="38417.html#38427">961B</a>) let the other characters take their turns, then the timer table at <a href="51571.html">C973</a> is processed.
 </div>
 <div class="paragraph">
-Each 7-byte timer entry has: a reload value, the current count, the address of an 'expire' routine, a threshold, and the address of a 'tick' routine. A count of 0 means the timer is not running. For each running timer the count is decremented ($963B). If it has just reached 0, the expire routine is called ($9657). If it is still above 0 but at or below the threshold, the tick routine is called instead ($966E).
+Each 7-byte timer entry has: a reload value, the current count, the address of an 'expire' routine, a threshold, and the address of a 'tick' routine. A count of 0 means the timer is not running. For each running timer the count is decremented (<a href="38417.html#38459">963B</a>). If it has just reached 0, the expire routine is called (<a href="38417.html#38487">9657</a>). If it is still above 0 but at or below the threshold, the tick routine is called instead (<a href="38417.html#38510">966E</a>).
 </div>
 <div class="paragraph">
 Only one timer is allowed to expire per turn: the flag at $B5E1 records that one has already fired, and any other timer that reaches 0 in the same turn is given a count of 1 so that it fires next turn instead.

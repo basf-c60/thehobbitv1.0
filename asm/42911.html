@@ -29,10 +29,10 @@ Next: <a href="42950.html">A7C6</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-If Bard has been given an order (<a href="35079.html">8907</a>), it is checked and then written into Bard's own behaviour program: the action ($B5D7), target and instrument ($B5D9, $B5DA) are stored at $C8D2-$C8D4, and the first byte at $C8D1 is set to $42 (an action instruction that cannot be interrupted by orders). From then on Bard carries out that order every turn. So 'say to bard "shoot the dragon"' keeps him shooting until it works.
+If Bard has been given an order (<a href="35079.html">8907</a>), it is checked and then written into Bard's own behaviour program: the action ($B5D7), target and instrument ($B5D9, <a href="46539.html#46554">B5DA</a>) are stored at $C8D2-$C8D4, and the first byte at <a href="50972.html#51409">C8D1</a> is set to $42 (an action instruction that cannot be interrupted by orders). From then on Bard carries out that order every turn. So 'say to bard "shoot the dragon"' keeps him shooting until it works.
 </div>
 <div class="paragraph">
-SAVE and LOAD (<a href="33412.html">8284</a>, <a href="33289.html">8209</a>) preserve the three bytes at $C8D1-$C8D3, because the behaviour programs are not otherwise saved; the instrument at $C8D4 is not included.
+SAVE and LOAD (<a href="33412.html">8284</a>, <a href="33289.html">8209</a>) preserve the three bytes at <a href="50972.html#51409">C8D1</a>-$C8D3, because the behaviour programs are not otherwise saved; the instrument at $C8D4 is not included.
 </div>
 </div>
 </td>
@@ -91,7 +91,7 @@ SAVE and LOAD (<a href="33412.html">8284</a>, <a href="33289.html">8209</a>) pre
 <tr>
 <td class="address-1"><span id="42933"></span>A7B5</td>
 <td class="instruction">LD ($C8D2),A</td>
-<td class="comment-1" rowspan="1">...into Bard's next instruction at $C8D1...</td>
+<td class="comment-1" rowspan="1">...into Bard's next instruction at <a href="50972.html#51409">C8D1</a>...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="42936"></span>A7B8</td>

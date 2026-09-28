@@ -32,7 +32,7 @@ Next: <a href="38281.html">9589</a>
 Returns with the carry flag set (and HL pointing at the message 'it is dark.') if the player is acting and cannot see. Characters are never affected: they can always see.
 </div>
 <div class="paragraph">
-Bilbo can see if he is inside something (<a href="40392.html">9DC8</a>) or if his room is lit (bit 7 of the first byte of its record). Otherwise he can only see if the short strong sword (object 14, record at <a href="49163.html">C00B</a> + $1E9 = $C1F4) is with him (<a href="40326.html">9D86</a>) and its flags have bit 2 set, bit 3 (broken) clear and bit 4 ('on') set. In other words, the sword is the game's only lamp: it glows, as Sting does in the book. The sword starts with these bits set, so carrying it lights up every dark place.
+Bilbo can see if he is inside something (<a href="40392.html">9DC8</a>) or if his room is lit (bit 7 of the first byte of its record). Otherwise he can only see if the short strong sword (object 14, record at <a href="49163.html">C00B</a> + $1E9 = <a href="49163.html#49652">C1F4</a>) is with him (<a href="40326.html">9D86</a>) and its flags have bit 2 set, bit 3 (broken) clear and bit 4 ('on') set. In other words, the sword is the game's only lamp: it glows, as Sting does in the book. The sword starts with these bits set, so carrying it lights up every dark place.
 </div>
 </div>
 <table class="output">

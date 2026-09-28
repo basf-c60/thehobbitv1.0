@@ -29,7 +29,7 @@ Next: <a href="34461.html">869D</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of $832E and $832F is set if the phrase actually has a noun.
+Decides which of the command's two noun phrases is the target and which the instrument, from the preposition the action expects and bit 5 of the action's flags. The target's words are copied to $8333 and also to $B5D1 (for IT), and the instrument's to $8339. Bit 0 of <a href="33582.html">832E</a> and $832F is set if the phrase actually has a noun.
 </div>
 <div class="paragraph">
 I originally described this as also making 'with the sword hit thorin' work alongside 'hit thorin with the sword'. Testing it in the emulator shows that is not so: putting the prepositional phrase before the plain noun - 'with sword hit thorin', 'hit with sword thorin', 'with large key unlock heavy door' - always fails, usually with a nonsensical result such as 'you cannot attack the short strong sword.' (the sword having been read as the target). Only the ordinary phrasing works reliably. What the crossing test in <a href="34324.html">8614</a> is actually for is not fully confirmed; it may cover cases within the two fixed phrase slots that ordinary play does not exercise, such as an action whose own table entry could match the two collected prepositions either way round.

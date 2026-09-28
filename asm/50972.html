@@ -49,7 +49,7 @@ Instruction formats (the low nibble of the first byte is the type; bit 4 means a
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">t+1, address, 0</td>
-<td class="" colspan="1" rowspan="1">call a special routine (the routines in $A406-$A91B)</td>
+<td class="" colspan="1" rowspan="1">call a special routine (the routines in <a href="41990.html">A406</a>-<a href="43291.html">A91B</a>)</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">4, action</td>
@@ -74,46 +74,86 @@ Instruction formats (the low nibble of the first byte is the type; bit 4 means a
 </table>
 </div>
 <div class="paragraph">
-REACTION TABLES are lists of 3-byte entries ending with $FF: an action and a program address. When something is done to a character, the entry for that action (if any) becomes its program (<a href="39419.html">99FB</a>); entries with action 0 are the default behaviours, used by 'switch to a random behaviour'. Common reactions are shared: $C94D is the general 'fight back' program (attack; attack again; run; repeat, or follow the attacker if it runs), $C96E the response to being given something ('thank you' or 'what do you expect me to do with this?'), and $C962 the response to being captured (go through an exit or door if possible, otherwise run).
+REACTION TABLES are lists of 3-byte entries ending with $FF: an action and a program address. When something is done to a character, the entry for that action (if any) becomes its program (<a href="39419.html">99FB</a>); entries with action 0 are the default behaviours, used by 'switch to a random behaviour'. In memory each character's reaction table comes straight before its program (the goblins' three tables come first, together); the headings below mark where each table and each program begins. Common reactions are shared: <a href="50972.html#51533">C94D</a> is the general 'fight back' program (attack; attack again; run; repeat, or follow the attacker if it runs), <a href="50972.html#51566">C96E</a> the response to being given something ('thank you' or 'what do you expect me to do with this?'), and <a href="50972.html#51554">C962</a> the response to being captured (go through an exit or door if possible, otherwise run).
 </div>
 <div class="paragraph">
 WHAT THE CHARACTERS DO:
 </div>
 <div class="paragraph">
 <ul class="">
-<li>Gandalf ($C7A9) begins by giving Bilbo the curious map and opening the round green door. After that he is a random wanderer: five little routines ($C7B1, $C7BF, $C7C3, $C7C9, $C7CD) chosen at random make him run about, pick things up and ask 'what's this?', drop or give things away, open and close doors, and make small talk.</li>
-<li>Thorin ($C7DB) follows Bilbo whenever he can. When he cannot, he picks up the small curious key if he finds it (saying once 'this was thrains key'), asks 'where's the thief?' if Bilbo is invisible, or runs through his idle routine (<a href="42320.html">A550</a>): wait, 'hurry up', or sit down and sing about gold.</li>
-<li>The wood elf ($C80C) wanders at random capturing anyone it meets, who ends up in the Elvenking's dungeon (<a href="41750.html">A316</a>).</li>
-<li>The warg ($C817) attacks anyone it can; otherwise it follows its prey, or runs around Bilbo howling (<a href="42186.html">A4CA</a>), or runs off.</li>
-<li>The butler ($C83F) acts out the story from the book: he unlocks the red door with the red key, opens it, shuts it and locks it again; he opens a barrel and drinks the wine, closes the barrel, opens the trap door, throws the barrel through it into the river, and closes the trap door - capturing any intruder at every opportunity - and then starts again.</li>
-<li>Elrond ($C889) greets Bilbo when he arrives and gives him lunch (<a href="43225.html">A8D9</a>), and otherwise waits.</li>
-<li>The dragon ($C8A7) sleeps on the treasure until it is taken (<a href="42453.html">A5D5</a>); then, as long as the dragon itself is somewhere lit, each turn there is about a 1 in 6 chance that it descends and burns Bilbo to a crisp, otherwise 'in the distance you see the shape of a monstrous dragon flying after you.' Before that, if Bilbo comes into one of its three rooms it flies to him (<a href="42385.html">A591</a>), speaks (<a href="42427.html">A5BB</a>) and burns him.</li>
-<li>Bard ($C8CD) does nothing on his own: he waits for an order from the player (<a href="42911.html">A79F</a>), and then repeats that order every turn. His reaction to being attacked is to SHOOT ($C8D8).</li>
-<li>Gollum ($C8E6) asks his riddle when he meets Bilbo (<a href="42950.html">A7C6</a>), and kills him if the answer is wrong (<a href="42986.html">A7EA</a>); he mutters about his precious (<a href="43034.html">A81A</a>), paces north and south-west, drops and picks up the golden ring, and if attacked puts the ring on, becomes invisible and runs.</li>
-<li>The trolls ($C92A) wait until Bilbo comes into the clearing and then say their lines (<a href="43185.html">A8B1</a>). After that their program is: try to eat Bilbo, wait, eat, wait, eat, wait, eat, and then dawn (<a href="43109.html">A865</a>), which turns them to stone. So after the trolls have spoken, Bilbo must be out of the clearing on the turns they try to eat him; waiting outside for the new day dawning (as the HELP message says) is the way.</li>
-<li>The goblins patrol set routes (for example $C731: open the small insignificant crack, go up, down, close the crack, south, north), capturing anyone they meet on the way, who ends up in the goblins' dungeon; the last three goblins ($C784) just run about attacking and capturing.</li>
+<li>Gandalf (<a href="50972.html#51113">C7A9</a>) begins by giving Bilbo the curious map and opening the round green door. After that he is a random wanderer: five little routines (<a href="50972.html#51121">C7B1</a>, <a href="50972.html#51135">C7BF</a>, <a href="50972.html#51139">C7C3</a>, <a href="50972.html#51145">C7C9</a>, <a href="50972.html#51149">C7CD</a>) chosen at random make him run about, pick things up and ask 'what's this?', drop or give things away, open and close doors, and make small talk.</li>
+<li>Thorin (<a href="50972.html#51163">C7DB</a>) follows Bilbo whenever he can. When he cannot, he picks up the small curious key if he finds it (saying once 'this was thrains key'), asks 'where's the thief?' if Bilbo is invisible, or runs through his idle routine (<a href="42320.html">A550</a>): wait, 'hurry up', or sit down and sing about gold.</li>
+<li>The wood elf (<a href="50972.html#51212">C80C</a>) wanders at random capturing anyone it meets, who ends up in the Elvenking's dungeon (<a href="41750.html">A316</a>).</li>
+<li>The warg (<a href="50972.html#51223">C817</a>) attacks anyone it can; otherwise it follows its prey, or runs around Bilbo howling (<a href="42186.html">A4CA</a>), or runs off.</li>
+<li>The butler (<a href="50972.html#51263">C83F</a>) acts out the story from the book: he unlocks the red door with the red key, opens it, shuts it and locks it again; he opens a barrel and drinks the wine, closes the barrel, opens the trap door, throws the barrel through it into the river, and closes the trap door - capturing any intruder at every opportunity - and then starts again.</li>
+<li>Elrond (<a href="50972.html#51337">C889</a>) greets Bilbo when he arrives and gives him lunch (<a href="43225.html">A8D9</a>), and otherwise waits.</li>
+<li>The dragon (<a href="50972.html#51367">C8A7</a>) sleeps on the treasure until it is taken (<a href="42453.html">A5D5</a>); then, as long as the dragon itself is somewhere lit, each turn there is about a 1 in 6 chance that it descends and burns Bilbo to a crisp, otherwise 'in the distance you see the shape of a monstrous dragon flying after you.' Before that, if Bilbo comes into one of its three rooms it flies to him (<a href="42385.html">A591</a>), speaks (<a href="42427.html">A5BB</a>) and burns him.</li>
+<li>Bard (<a href="50972.html#51405">C8CD</a>) does nothing on his own: he waits for an order from the player (<a href="42911.html">A79F</a>), and then repeats that order every turn. His reaction to being attacked is to SHOOT (<a href="50972.html#51416">C8D8</a>).</li>
+<li>Gollum (<a href="50972.html#51430">C8E6</a>) asks his riddle when he meets Bilbo (<a href="42950.html">A7C6</a>), and kills him if the answer is wrong (<a href="42986.html">A7EA</a>); he mutters about his precious (<a href="43034.html">A81A</a>), paces north and south-west, drops and picks up the golden ring, and if attacked puts the ring on, becomes invisible and runs.</li>
+<li>The trolls (<a href="50972.html#51498">C92A</a>) wait until Bilbo comes into the clearing and then say their lines (<a href="43185.html">A8B1</a>). After that their program is: try to eat Bilbo, wait, eat, wait, eat, wait, eat, and then dawn (<a href="43109.html">A865</a>), which turns them to stone. So after the trolls have spoken, Bilbo must be out of the clearing on the turns they try to eat him; waiting outside for the new day dawning (as the HELP message says) is the way.</li>
+<li>The goblins patrol set routes (for example <a href="50972.html#50993">C731</a>: open the small insignificant crack, go up, down, close the crack, south, north), capturing anyone they meet on the way, who ends up in the goblins' dungeon; the last three goblins (<a href="50972.html#51076">C784</a>) just run about attacking and capturing.</li>
 </ul>
 </div>
 <div class="paragraph">
-One instruction in this area is changed during play: <a href="42911.html">A79F</a> rewrites the instruction at $C8D1 to hold Bard's latest order, which is why SAVE and LOAD take care to save three of its bytes (<a href="33412.html">8284</a>).
+One instruction in this area is changed during play: <a href="42911.html">A79F</a> rewrites the instruction at <a href="50972.html#51409">C8D1</a> to hold Bard's latest order, which is why SAVE and LOAD take care to save three of its bytes (<a href="33412.html">8284</a>).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="50972"></span>
+<div class="comments">
+<div class="paragraph">
+The goblins: three reaction tables (one for each kind of goblin), followed by their three behaviour programs.
 </div>
 </div>
 </td>
 </tr>
 <tr>
 <td class="address-1"><span id="50972"></span>C71C</td>
-<td class="instruction">DEFB $00,$31,$C7,$0F,$8D,$C7,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the nasty and hideous goblins: default $C731; on ATTACK WITH: $C78D</td>
+<td class="instruction">DEFB $00,$31,$C7</td>
+<td class="comment-1" rowspan="1">the nasty and hideous goblins: default behaviour (also one of the choices for a random one): program at <a href="50972.html#50993">C731</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50975"></span>C71F</td>
+<td class="instruction">DEFB $0F,$8D,$C7</td>
+<td class="comment-1" rowspan="1">the nasty and hideous goblins: when it is attacked: switch to the program at <a href="50972.html#51085">C78D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50978"></span>C722</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50979"></span>C723</td>
-<td class="instruction">DEFB $00,$60,$C7,$0F,$8D,$C7,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the vicious goblin: default $C760; on ATTACK WITH: $C78D</td>
+<td class="instruction">DEFB $00,$60,$C7</td>
+<td class="comment-1" rowspan="1">the vicious goblin: default behaviour (also one of the choices for a random one): program at <a href="50972.html#51040">C760</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50982"></span>C726</td>
+<td class="instruction">DEFB $0F,$8D,$C7</td>
+<td class="comment-1" rowspan="1">the vicious goblin: when it is attacked: switch to the program at <a href="50972.html#51085">C78D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50985"></span>C729</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="address-1"><span id="50986"></span>C72A</td>
-<td class="instruction">DEFB $00,$84,$C7,$0F,$8D,$C7,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the horrible, mean and disgusting goblins: default $C784; on ATTACK WITH: $C78D</td>
+<td class="instruction">DEFB $00,$84,$C7</td>
+<td class="comment-1" rowspan="1">the horrible, mean and disgusting goblins: default behaviour (also one of the choices for a random one): program at <a href="50972.html#51076">C784</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50989"></span>C72D</td>
+<td class="instruction">DEFB $0F,$8D,$C7</td>
+<td class="comment-1" rowspan="1">the horrible, mean and disgusting goblins: when it is attacked: switch to the program at <a href="50972.html#51085">C78D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="50992"></span>C730</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -133,12 +173,12 @@ Behaviour program for the nasty and hideous goblins.
 <tr>
 <td class="address-1"><span id="50997"></span>C735</td>
 <td class="instruction">DEFB $14,$30,$3C,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C73C</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51004">C73C</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51001"></span>C739</td>
 <td class="instruction">DEFB $0E,$35,$C7</td>
-<td class="comment-1" rowspan="1">go to $C735</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#50997">C735</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51004"></span>C73C</td>
@@ -148,12 +188,12 @@ Behaviour program for the nasty and hideous goblins.
 <tr>
 <td class="address-1"><span id="51006"></span>C73E</td>
 <td class="instruction">DEFB $14,$30,$45,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C745</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51013">C745</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51010"></span>C742</td>
 <td class="instruction">DEFB $0E,$3E,$C7</td>
-<td class="comment-1" rowspan="1">go to $C73E</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51006">C73E</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51013"></span>C745</td>
@@ -163,12 +203,12 @@ Behaviour program for the nasty and hideous goblins.
 <tr>
 <td class="address-1"><span id="51015"></span>C747</td>
 <td class="instruction">DEFB $14,$30,$4E,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C74E</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51022">C74E</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51019"></span>C74B</td>
 <td class="instruction">DEFB $0E,$47,$C7</td>
-<td class="comment-1" rowspan="1">go to $C747</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51015">C747</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51022"></span>C74E</td>
@@ -183,12 +223,12 @@ Behaviour program for the nasty and hideous goblins.
 <tr>
 <td class="address-1"><span id="51028"></span>C754</td>
 <td class="instruction">DEFB $14,$30,$5B,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C75B</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51035">C75B</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51032"></span>C758</td>
 <td class="instruction">DEFB $0E,$54,$C7</td>
-<td class="comment-1" rowspan="1">go to $C754</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51028">C754</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51035"></span>C75B</td>
@@ -198,7 +238,7 @@ Behaviour program for the nasty and hideous goblins.
 <tr>
 <td class="address-1"><span id="51037"></span>C75D</td>
 <td class="instruction">DEFB $0E,$31,$C7</td>
-<td class="comment-1" rowspan="1">go to $C731</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#50993">C731</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -218,12 +258,12 @@ Behaviour program for the vicious goblin.
 <tr>
 <td class="address-1"><span id="51042"></span>C762</td>
 <td class="instruction">DEFB $14,$30,$69,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C769</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51049">C769</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51046"></span>C766</td>
 <td class="instruction">DEFB $0E,$62,$C7</td>
-<td class="comment-1" rowspan="1">go to $C762</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51042">C762</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51049"></span>C769</td>
@@ -233,12 +273,12 @@ Behaviour program for the vicious goblin.
 <tr>
 <td class="address-1"><span id="51051"></span>C76B</td>
 <td class="instruction">DEFB $14,$30,$72,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C772</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51058">C772</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51055"></span>C76F</td>
 <td class="instruction">DEFB $0E,$6B,$C7</td>
-<td class="comment-1" rowspan="1">go to $C76B</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51051">C76B</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51058"></span>C772</td>
@@ -248,12 +288,12 @@ Behaviour program for the vicious goblin.
 <tr>
 <td class="address-1"><span id="51060"></span>C774</td>
 <td class="instruction">DEFB $14,$30,$7B,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C77B</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51067">C77B</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51064"></span>C778</td>
 <td class="instruction">DEFB $0E,$74,$C7</td>
-<td class="comment-1" rowspan="1">go to $C774</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51060">C774</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51067"></span>C77B</td>
@@ -263,12 +303,12 @@ Behaviour program for the vicious goblin.
 <tr>
 <td class="address-1"><span id="51069"></span>C77D</td>
 <td class="instruction">DEFB $14,$30,$60,$C7</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C760</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51040">C760</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51073"></span>C781</td>
 <td class="instruction">DEFB $0E,$7D,$C7</td>
-<td class="comment-1" rowspan="1">go to $C77D</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51069">C77D</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -298,7 +338,17 @@ Behaviour program for the horrible, mean and disgusting goblins.
 <tr>
 <td class="address-1"><span id="51082"></span>C78A</td>
 <td class="instruction">DEFB $0E,$84,$C7</td>
-<td class="comment-1" rowspan="1">go to $C784</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51076">C784</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51085"></span>
+<div class="comments">
+<div class="paragraph">
+The goblins' own reaction to being attacked: capture the attacker, then go back to the normal program.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51085"></span>C78D</td>
@@ -311,21 +361,59 @@ Behaviour program for the horrible, mean and disgusting goblins.
 <td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="51088"></span>
+<div class="comments">
+<div class="paragraph">
+Gandalf: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="51088"></span>C790</td>
-<td class="instruction">DEFB $00,$B1,$C7,$00,$BF,$C7,$00,$C3</td>
-<td class="comment-1" rowspan="4">Reaction table for Gandalf: default $C7B1; default $C7BF; default $C7C3; default $C7C9; default $C7CD; on GIVE TO: $C96E; on CAPTURE: $C962; on ATTACK WITH: $C94D</td>
+<td class="instruction">DEFB $00,$B1,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51121">C7B1</a></td>
 </tr>
 <tr>
-<td class="address-1"><span id="51096"></span>C798</td>
-<td class="instruction">DEFB $C7,$00,$C9,$C7,$00,$CD,$C7,$1D</td>
+<td class="address-1"><span id="51091"></span>C793</td>
+<td class="instruction">DEFB $00,$BF,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51135">C7BF</a></td>
 </tr>
 <tr>
-<td class="address-1"><span id="51104"></span>C7A0</td>
-<td class="instruction">DEFB $6E,$C9,$30,$62,$C9,$0F,$4D,$C9</td>
+<td class="address-1"><span id="51094"></span>C796</td>
+<td class="instruction">DEFB $00,$C3,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51139">C7C3</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51097"></span>C799</td>
+<td class="instruction">DEFB $00,$C9,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51145">C7C9</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51100"></span>C79C</td>
+<td class="instruction">DEFB $00,$CD,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51149">C7CD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51103"></span>C79F</td>
+<td class="instruction">DEFB $1D,$6E,$C9</td>
+<td class="comment-1" rowspan="1">when it is given something: switch to the program at <a href="50972.html#51566">C96E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51106"></span>C7A2</td>
+<td class="instruction">DEFB $30,$62,$C9</td>
+<td class="comment-1" rowspan="1">when it is captured: switch to the program at <a href="50972.html#51554">C962</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51109"></span>C7A5</td>
+<td class="instruction">DEFB $0F,$4D,$C9</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51533">C94D</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51112"></span>C7A8</td>
 <td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -355,12 +443,12 @@ Behaviour program for Gandalf.
 <tr>
 <td class="address-1"><span id="51123"></span>C7B3</td>
 <td class="instruction">DEFB $14,$13,$BF,$C7</td>
-<td class="comment-1" rowspan="1">action 19 [take]; if it fails go to $C7BF</td>
+<td class="comment-1" rowspan="1">action 19 [take]; if it fails go to <a href="50972.html#51135">C7BF</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51127"></span>C7B7</td>
 <td class="instruction">DEFB $03,$1C,$A4,$00</td>
-<td class="comment-1" rowspan="1">call $A41C (Character routine: "what's this?")</td>
+<td class="comment-1" rowspan="1">call <a href="42012.html">A41C</a> (Character routine: "what's this?")</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51131"></span>C7BB</td>
@@ -390,7 +478,7 @@ Behaviour program for Gandalf.
 <tr>
 <td class="address-1"><span id="51141"></span>C7C5</td>
 <td class="instruction">DEFB $03,$25,$A4,$00</td>
-<td class="comment-1" rowspan="1">call $A425 (Character routine: small talk)</td>
+<td class="comment-1" rowspan="1">call <a href="42021.html">A425</a> (Character routine: small talk)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51145"></span>C7C9</td>
@@ -413,9 +501,34 @@ Behaviour program for Gandalf.
 <td class="comment-1" rowspan="1">switch to a random behaviour (1 of up to 4)</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="51153"></span>
+<div class="comments">
+<div class="paragraph">
+Thorin: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="51153"></span>C7D1</td>
-<td class="instruction">DEFB $00,$DB,$C7,$1D,$6E,$C9,$0F,$4D,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for Thorin: default $C7DB; on GIVE TO: $C96E; on ATTACK WITH: $C94D</td>
+<td class="instruction">DEFB $00,$DB,$C7</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51163">C7DB</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51156"></span>C7D4</td>
+<td class="instruction">DEFB $1D,$6E,$C9</td>
+<td class="comment-1" rowspan="1">when it is given something: switch to the program at <a href="50972.html#51566">C96E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51159"></span>C7D7</td>
+<td class="instruction">DEFB $0F,$4D,$C9</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51533">C94D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51162"></span>C7DA</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -430,27 +543,27 @@ Behaviour program for Thorin.
 <tr>
 <td class="address-1"><span id="51163"></span>C7DB</td>
 <td class="instruction">DEFB $12,$27,$00,$FF,$E4,$C7</td>
-<td class="comment-1" rowspan="1">action 39 [follow] target bilbo, with -; if it fails go to $C7E4</td>
+<td class="comment-1" rowspan="1">action 39 [follow] target bilbo, with -; if it fails go to <a href="50972.html#51172">C7E4</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51169"></span>C7E1</td>
 <td class="instruction">DEFB $0E,$DB,$C7</td>
-<td class="comment-1" rowspan="1">go to $C7DB</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51163">C7DB</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51172"></span>C7E4</td>
 <td class="instruction">DEFB $12,$13,$02,$FF,$EE,$C7</td>
-<td class="comment-1" rowspan="1">action 19 [take] target small curious key, with -; if it fails go to $C7EE</td>
+<td class="comment-1" rowspan="1">action 19 [take] target small curious key, with -; if it fails go to <a href="50972.html#51182">C7EE</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51178"></span>C7EA</td>
 <td class="instruction">DEFB $23,$43,$A4,$00</td>
-<td class="comment-1" rowspan="1">call $A443 (Character routine: "this was thrains key") (once)</td>
+<td class="comment-1" rowspan="1">call <a href="42051.html">A443</a> (Character routine: "this was thrains key") (once)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51182"></span>C7EE</td>
 <td class="instruction">DEFB $13,$39,$A5,$00,$FB,$C7</td>
-<td class="comment-1" rowspan="1">call $A539 (Character routine: "where's the thief?"); if it fails go to $C7FB</td>
+<td class="comment-1" rowspan="1">call <a href="42297.html">A539</a> (Character routine: "where's the thief?"); if it fails go to <a href="50972.html#51195">C7FB</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51188"></span>C7F4</td>
@@ -465,22 +578,47 @@ Behaviour program for Thorin.
 <tr>
 <td class="address-1"><span id="51192"></span>C7F8</td>
 <td class="instruction">DEFB $0E,$DB,$C7</td>
-<td class="comment-1" rowspan="1">go to $C7DB</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51163">C7DB</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51195"></span>C7FB</td>
 <td class="instruction">DEFB $03,$50,$A5,$00</td>
-<td class="comment-1" rowspan="1">call $A550 (Character routine: Thorin)</td>
+<td class="comment-1" rowspan="1">call <a href="42320.html">A550</a> (Character routine: Thorin)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51199"></span>C7FF</td>
 <td class="instruction">DEFB $0E,$DB,$C7</td>
-<td class="comment-1" rowspan="1">go to $C7DB</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51163">C7DB</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51202"></span>
+<div class="comments">
+<div class="paragraph">
+The wood elf: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51202"></span>C802</td>
-<td class="instruction">DEFB $00,$0C,$C8,$0F,$0C,$C8,$1D,$6E,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the wood elf: default $C80C; on ATTACK WITH: $C80C; on GIVE TO: $C96E</td>
+<td class="instruction">DEFB $00,$0C,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51212">C80C</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51205"></span>C805</td>
+<td class="instruction">DEFB $0F,$0C,$C8</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51212">C80C</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51208"></span>C808</td>
+<td class="instruction">DEFB $1D,$6E,$C9</td>
+<td class="comment-1" rowspan="1">when it is given something: switch to the program at <a href="50972.html#51566">C96E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51211"></span>C80B</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -505,12 +643,27 @@ Behaviour program for the wood elf.
 <tr>
 <td class="address-1"><span id="51216"></span>C810</td>
 <td class="instruction">DEFB $0E,$0C,$C8</td>
-<td class="comment-1" rowspan="1">go to $C80C</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51212">C80C</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51219"></span>
+<div class="comments">
+<div class="paragraph">
+The warg: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51219"></span>C813</td>
-<td class="instruction">DEFB $00,$17,$C8,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the warg: default $C817</td>
+<td class="instruction">DEFB $00,$17,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51223">C817</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51222"></span>C816</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -525,37 +678,37 @@ Behaviour program for the warg.
 <tr>
 <td class="address-1"><span id="51223"></span>C817</td>
 <td class="instruction">DEFB $14,$0F,$1E,$C8</td>
-<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C81E</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to <a href="50972.html#51230">C81E</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51227"></span>C81B</td>
 <td class="instruction">DEFB $0E,$17,$C8</td>
-<td class="comment-1" rowspan="1">go to $C817</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51223">C817</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51230"></span>C81E</td>
 <td class="instruction">DEFB $14,$27,$29,$C8</td>
-<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to $C829</td>
+<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to <a href="50972.html#51241">C829</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51234"></span>C822</td>
 <td class="instruction">DEFB $03,$CA,$A4,$00</td>
-<td class="comment-1" rowspan="1">call $A4CA (Character routine: the warg)</td>
+<td class="comment-1" rowspan="1">call <a href="42186.html">A4CA</a> (Character routine: the warg)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51238"></span>C826</td>
 <td class="instruction">DEFB $0E,$17,$C8</td>
-<td class="comment-1" rowspan="1">go to $C817</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51223">C817</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51241"></span>C829</td>
 <td class="instruction">DEFB $14,$24,$30,$C8</td>
-<td class="comment-1" rowspan="1">action 36 [run]; if it fails go to $C830</td>
+<td class="comment-1" rowspan="1">action 36 [run]; if it fails go to <a href="50972.html#51248">C830</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51245"></span>C82D</td>
 <td class="instruction">DEFB $0E,$17,$C8</td>
-<td class="comment-1" rowspan="1">go to $C817</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51223">C817</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51248"></span>C830</td>
@@ -565,12 +718,37 @@ Behaviour program for the warg.
 <tr>
 <td class="address-1"><span id="51250"></span>C832</td>
 <td class="instruction">DEFB $0E,$17,$C8</td>
-<td class="comment-1" rowspan="1">go to $C817</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51223">C817</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51253"></span>
+<div class="comments">
+<div class="paragraph">
+The butler: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51253"></span>C835</td>
-<td class="instruction">DEFB $00,$3F,$C8,$0F,$4F,$C8,$1D,$6E,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the butler: default $C83F; on ATTACK WITH: $C84F; on GIVE TO: $C96E</td>
+<td class="instruction">DEFB $00,$3F,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51263">C83F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51256"></span>C838</td>
+<td class="instruction">DEFB $0F,$4F,$C8</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51279">C84F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51259"></span>C83B</td>
+<td class="instruction">DEFB $1D,$6E,$C9</td>
+<td class="comment-1" rowspan="1">when it is given something: switch to the program at <a href="50972.html#51566">C96E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51262"></span>C83E</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -605,12 +783,12 @@ Behaviour program for the butler.
 <tr>
 <td class="address-1"><span id="51279"></span>C84F</td>
 <td class="instruction">DEFB $14,$30,$56,$C8</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C856</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51286">C856</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51283"></span>C853</td>
 <td class="instruction">DEFB $0E,$4F,$C8</td>
-<td class="comment-1" rowspan="1">go to $C84F</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51279">C84F</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51286"></span>C856</td>
@@ -665,17 +843,42 @@ Behaviour program for the butler.
 <tr>
 <td class="address-1"><span id="51320"></span>C878</td>
 <td class="instruction">DEFB $14,$30,$3F,$C8</td>
-<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to $C83F</td>
+<td class="comment-1" rowspan="1">action 48 [capture]; if it fails go to <a href="50972.html#51263">C83F</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51324"></span>C87C</td>
 <td class="instruction">DEFB $0E,$3F,$C8</td>
-<td class="comment-1" rowspan="1">go to $C83F</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51263">C83F</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51327"></span>
+<div class="comments">
+<div class="paragraph">
+Elrond: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51327"></span>C87F</td>
-<td class="instruction">DEFB $00,$8F,$C8,$0F,$99,$C8,$1D,$6E,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for Elrond: default $C88F; on ATTACK WITH: $C899; on GIVE TO: $C96E</td>
+<td class="instruction">DEFB $00,$8F,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51343">C88F</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51330"></span>C882</td>
+<td class="instruction">DEFB $0F,$99,$C8</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51353">C899</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51333"></span>C885</td>
+<td class="instruction">DEFB $1D,$6E,$C9</td>
+<td class="comment-1" rowspan="1">when it is given something: switch to the program at <a href="50972.html#51566">C96E</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51336"></span>C888</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -690,12 +893,12 @@ Behaviour program for Elrond.
 <tr>
 <td class="address-1"><span id="51337"></span>C889</td>
 <td class="instruction">DEFB $13,$4C,$A4,$00,$93,$C8</td>
-<td class="comment-1" rowspan="1">call $A44C (Character routine: greet Bilbo); if it fails go to $C893</td>
+<td class="comment-1" rowspan="1">call <a href="42060.html">A44C</a> (Character routine: greet Bilbo); if it fails go to <a href="50972.html#51347">C893</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51343"></span>C88F</td>
 <td class="instruction">DEFB $03,$D9,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A8D9 (Character routine: Elrond gives Bilbo lunch)</td>
+<td class="comment-1" rowspan="1">call <a href="43225.html">A8D9</a> (Character routine: Elrond gives Bilbo lunch)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51347"></span>C893</td>
@@ -705,22 +908,42 @@ Behaviour program for Elrond.
 <tr>
 <td class="address-1"><span id="51349"></span>C895</td>
 <td class="instruction">DEFB $14,$FF,$89,$C8</td>
-<td class="comment-1" rowspan="1">end turn and go to $C889</td>
+<td class="comment-1" rowspan="1">end turn and go to <a href="50972.html#51337">C889</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51353"></span>C899</td>
 <td class="instruction">DEFB $14,$0F,$89,$C8</td>
-<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C889</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to <a href="50972.html#51337">C889</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51357"></span>C89D</td>
 <td class="instruction">DEFB $0E,$99,$C8</td>
-<td class="comment-1" rowspan="1">go to $C899</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51353">C899</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51360"></span>
+<div class="comments">
+<div class="paragraph">
+The dragon: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51360"></span>C8A0</td>
-<td class="instruction">DEFB $00,$A7,$C8,$0F,$BC,$C8,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the dragon: default $C8A7; on ATTACK WITH: $C8BC</td>
+<td class="instruction">DEFB $00,$A7,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51367">C8A7</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51363"></span>C8A3</td>
+<td class="instruction">DEFB $0F,$BC,$C8</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51388">C8BC</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51366"></span>C8A6</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -735,22 +958,22 @@ Behaviour program for the dragon.
 <tr>
 <td class="address-1"><span id="51367"></span>C8A7</td>
 <td class="instruction">DEFB $13,$D5,$A5,$00,$B0,$C8</td>
-<td class="comment-1" rowspan="1">call $A5D5 (Character routine: the dragon wakes); if it fails go to $C8B0</td>
+<td class="comment-1" rowspan="1">call <a href="42453.html">A5D5</a> (Character routine: the dragon wakes); if it fails go to <a href="50972.html#51376">C8B0</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51373"></span>C8AD</td>
 <td class="instruction">DEFB $0E,$A7,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8A7</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51367">C8A7</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51376"></span>C8B0</td>
 <td class="instruction">DEFB $13,$91,$A5,$00,$C1,$C8</td>
-<td class="comment-1" rowspan="1">call $A591 (Character routine: the dragon comes for Bilbo); if it fails go to $C8C1</td>
+<td class="comment-1" rowspan="1">call <a href="42385.html">A591</a> (Character routine: the dragon comes for Bilbo); if it fails go to <a href="50972.html#51393">C8C1</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51382"></span>C8B6</td>
 <td class="instruction">DEFB $13,$BB,$A5,$00,$C1,$C8</td>
-<td class="comment-1" rowspan="1">call $A5BB (Character routine: the dragon speaks); if it fails go to $C8C1</td>
+<td class="comment-1" rowspan="1">call <a href="42427.html">A5BB</a> (Character routine: the dragon speaks); if it fails go to <a href="50972.html#51393">C8C1</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51388"></span>C8BC</td>
@@ -760,7 +983,7 @@ Behaviour program for the dragon.
 <tr>
 <td class="address-1"><span id="51390"></span>C8BE</td>
 <td class="instruction">DEFB $0E,$A7,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8A7</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51367">C8A7</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51393"></span>C8C1</td>
@@ -770,12 +993,32 @@ Behaviour program for the dragon.
 <tr>
 <td class="address-1"><span id="51395"></span>C8C3</td>
 <td class="instruction">DEFB $0E,$A7,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8A7</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51367">C8A7</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51398"></span>
+<div class="comments">
+<div class="paragraph">
+Bard: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51398"></span>C8C6</td>
-<td class="instruction">DEFB $00,$CD,$C8,$0F,$D8,$C8,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for Bard: default $C8CD; on ATTACK WITH: $C8D8</td>
+<td class="instruction">DEFB $00,$CD,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51405">C8CD</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51401"></span>C8C9</td>
+<td class="instruction">DEFB $0F,$D8,$C8</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51416">C8D8</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51404"></span>C8CC</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -790,7 +1033,7 @@ Behaviour program for Bard.
 <tr>
 <td class="address-1"><span id="51405"></span>C8CD</td>
 <td class="instruction">DEFB $43,$9F,$A7,$00</td>
-<td class="comment-1" rowspan="1">call $A79F (Character routine: Bard remembers his orders) (no orders)</td>
+<td class="comment-1" rowspan="1">call <a href="42911.html">A79F</a> (Character routine: Bard remembers his orders) (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51409"></span>C8D1</td>
@@ -800,22 +1043,42 @@ Behaviour program for Bard.
 <tr>
 <td class="address-1"><span id="51413"></span>C8D5</td>
 <td class="instruction">DEFB $0E,$CD,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8CD</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51405">C8CD</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51416"></span>C8D8</td>
 <td class="instruction">DEFB $54,$3A,$4D,$C9</td>
-<td class="comment-1" rowspan="1">action 58 [shoot]; if it fails go to $C94D (no orders)</td>
+<td class="comment-1" rowspan="1">action 58 [shoot]; if it fails go to <a href="50972.html#51533">C94D</a> (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51420"></span>C8DC</td>
 <td class="instruction">DEFB $0E,$D8,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8D8</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51416">C8D8</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51423"></span>
+<div class="comments">
+<div class="paragraph">
+Gollum: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51423"></span>C8DF</td>
-<td class="instruction">DEFB $00,$E6,$C8,$0F,$1A,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for Gollum: default $C8E6; on ATTACK WITH: $C91A</td>
+<td class="instruction">DEFB $00,$E6,$C8</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51430">C8E6</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51426"></span>C8E2</td>
+<td class="instruction">DEFB $0F,$1A,$C9</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51482">C91A</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51429"></span>C8E5</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -830,12 +1093,12 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51430"></span>C8E6</td>
 <td class="instruction">DEFB $13,$C6,$A7,$00,$FF,$C8</td>
-<td class="comment-1" rowspan="1">call $A7C6 (Character routine: Gollum asks his riddle); if it fails go to $C8FF</td>
+<td class="comment-1" rowspan="1">call <a href="42950.html">A7C6</a> (Character routine: Gollum asks his riddle); if it fails go to <a href="50972.html#51455">C8FF</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51436"></span>C8EC</td>
 <td class="instruction">DEFB $43,$EA,$A7,$00</td>
-<td class="comment-1" rowspan="1">call $A7EA (Character routine: Gollum waits for the answer) (no orders)</td>
+<td class="comment-1" rowspan="1">call <a href="42986.html">A7EA</a> (Character routine: Gollum waits for the answer) (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51440"></span>C8F0</td>
@@ -845,7 +1108,7 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51444"></span>C8F4</td>
 <td class="instruction">DEFB $14,$01,$10,$C9</td>
-<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to $C910</td>
+<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to <a href="50972.html#51472">C910</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51448"></span>C8F8</td>
@@ -855,17 +1118,17 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51452"></span>C8FC</td>
 <td class="instruction">DEFB $0E,$E6,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8E6</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51430">C8E6</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51455"></span>C8FF</td>
 <td class="instruction">DEFB $14,$01,$15,$C9</td>
-<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to $C915</td>
+<td class="comment-1" rowspan="1">action 1 [north go]; if it fails go to <a href="50972.html#51477">C915</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51459"></span>C903</td>
 <td class="instruction">DEFB $13,$1A,$A8,$00,$E6,$C8</td>
-<td class="comment-1" rowspan="1">call $A81A (Character routine: Gollum mutters); if it fails go to $C8E6</td>
+<td class="comment-1" rowspan="1">call <a href="43034.html">A81A</a> (Character routine: Gollum mutters); if it fails go to <a href="50972.html#51430">C8E6</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51465"></span>C909</td>
@@ -875,7 +1138,7 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51469"></span>C90D</td>
 <td class="instruction">DEFB $0E,$E6,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8E6</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51430">C8E6</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51472"></span>C910</td>
@@ -885,7 +1148,7 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51474"></span>C912</td>
 <td class="instruction">DEFB $0E,$F8,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8F8</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51448">C8F8</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51477"></span>C915</td>
@@ -895,7 +1158,7 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51479"></span>C917</td>
 <td class="instruction">DEFB $0E,$03,$C9</td>
-<td class="comment-1" rowspan="1">go to $C903</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51459">C903</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51482"></span>C91A</td>
@@ -910,12 +1173,32 @@ Behaviour program for Gollum.
 <tr>
 <td class="address-1"><span id="51488"></span>C920</td>
 <td class="instruction">DEFB $0E,$E6,$C8</td>
-<td class="comment-1" rowspan="1">go to $C8E6</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51430">C8E6</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51491"></span>
+<div class="comments">
+<div class="paragraph">
+The trolls: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51491"></span>C923</td>
-<td class="instruction">DEFB $00,$30,$C9,$0F,$4D,$C9,$FF</td>
-<td class="comment-1" rowspan="1">Reaction table for the trolls: default $C930; on ATTACK WITH: $C94D</td>
+<td class="instruction">DEFB $00,$30,$C9</td>
+<td class="comment-1" rowspan="1">default behaviour (also one of the choices for a random one): program at <a href="50972.html#51504">C930</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51494"></span>C926</td>
+<td class="instruction">DEFB $0F,$4D,$C9</td>
+<td class="comment-1" rowspan="1">when it is attacked: switch to the program at <a href="50972.html#51533">C94D</a></td>
+</tr>
+<tr>
+<td class="address-1"><span id="51497"></span>C929</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">End of the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -930,12 +1213,12 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51498"></span>C92A</td>
 <td class="instruction">DEFB $13,$B1,$A8,$00,$2A,$C9</td>
-<td class="comment-1" rowspan="1">call $A8B1 (Character routine: the trolls talk); if it fails go to $C92A</td>
+<td class="comment-1" rowspan="1">call <a href="43185.html">A8B1</a> (Character routine: the trolls talk); if it fails go to <a href="50972.html#51498">C92A</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51504"></span>C930</td>
 <td class="instruction">DEFB $03,$42,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+<td class="comment-1" rowspan="1">call <a href="43074.html">A842</a> (Character routine: a character eats Bilbo)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51508"></span>C934</td>
@@ -945,7 +1228,7 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51510"></span>C936</td>
 <td class="instruction">DEFB $03,$42,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+<td class="comment-1" rowspan="1">call <a href="43074.html">A842</a> (Character routine: a character eats Bilbo)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51514"></span>C93A</td>
@@ -955,7 +1238,7 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51516"></span>C93C</td>
 <td class="instruction">DEFB $03,$42,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+<td class="comment-1" rowspan="1">call <a href="43074.html">A842</a> (Character routine: a character eats Bilbo)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51520"></span>C940</td>
@@ -965,27 +1248,37 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51522"></span>C942</td>
 <td class="instruction">DEFB $03,$42,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A842 (Character routine: a character eats Bilbo)</td>
+<td class="comment-1" rowspan="1">call <a href="43074.html">A842</a> (Character routine: a character eats Bilbo)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51526"></span>C946</td>
 <td class="instruction">DEFB $03,$65,$A8,$00</td>
-<td class="comment-1" rowspan="1">call $A865 (Character routine: dawn in the trolls' clearing)</td>
+<td class="comment-1" rowspan="1">call <a href="43109.html">A865</a> (Character routine: dawn in the trolls' clearing)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51530"></span>C94A</td>
 <td class="instruction">DEFB $0E,$30,$C9</td>
-<td class="comment-1" rowspan="1">go to $C930</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51504">C930</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51533"></span>
+<div class="comments">
+<div class="paragraph">
+Shared reaction program: fight back. Used by Gandalf, Thorin, the trolls, and by Bard when he cannot shoot.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51533"></span>C94D</td>
 <td class="instruction">DEFB $54,$0F,$5A,$C9</td>
-<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C95A (no orders)</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to <a href="50972.html#51546">C95A</a> (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51537"></span>C951</td>
 <td class="instruction">DEFB $54,$0F,$61,$C9</td>
-<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to $C961 (no orders)</td>
+<td class="comment-1" rowspan="1">action 15 [attack with]; if it fails go to <a href="50972.html#51553">C961</a> (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51541"></span>C955</td>
@@ -995,17 +1288,17 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51543"></span>C957</td>
 <td class="instruction">DEFB $0E,$4D,$C9</td>
-<td class="comment-1" rowspan="1">go to $C94D</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51533">C94D</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51546"></span>C95A</td>
 <td class="instruction">DEFB $54,$27,$61,$C9</td>
-<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to $C961 (no orders)</td>
+<td class="comment-1" rowspan="1">action 39 [follow]; if it fails go to <a href="50972.html#51553">C961</a> (no orders)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51550"></span>C95E</td>
 <td class="instruction">DEFB $0E,$4D,$C9</td>
-<td class="comment-1" rowspan="1">go to $C94D</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51533">C94D</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51553"></span>C961</td>
@@ -1013,9 +1306,19 @@ Behaviour program for the trolls.
 <td class="comment-1" rowspan="1">switch to default behaviour and end turn</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="51554"></span>
+<div class="comments">
+<div class="paragraph">
+Shared reaction program: what to do when captured. Used by Gandalf.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="address-1"><span id="51554"></span>C962</td>
 <td class="instruction">DEFB $14,$1E,$69,$C9</td>
-<td class="comment-1" rowspan="1">action 30 [go through]; if it fails go to $C969</td>
+<td class="comment-1" rowspan="1">action 30 [go through]; if it fails go to <a href="50972.html#51561">C969</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="51558"></span>C966</td>
@@ -1035,12 +1338,22 @@ Behaviour program for the trolls.
 <tr>
 <td class="address-1"><span id="51563"></span>C96B</td>
 <td class="instruction">DEFB $0E,$62,$C9</td>
-<td class="comment-1" rowspan="1">go to $C962</td>
+<td class="comment-1" rowspan="1">go to <a href="50972.html#51554">C962</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="51566"></span>
+<div class="comments">
+<div class="paragraph">
+Shared reaction program: being given something. Used by Elrond, Gandalf, Thorin, the butler, the wood elf.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51566"></span>C96E</td>
 <td class="instruction">DEFB $03,$06,$A4,$00</td>
-<td class="comment-1" rowspan="1">call $A406 (Character routine: react to being given something)</td>
+<td class="comment-1" rowspan="1">call <a href="41990.html">A406</a> (Character routine: react to being given something)</td>
 </tr>
 <tr>
 <td class="address-1"><span id="51570"></span>C972</td>

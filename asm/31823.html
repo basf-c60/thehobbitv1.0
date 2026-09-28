@@ -29,7 +29,7 @@ Next: <a href="31900.html">7C9C</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The parser. It works through the tokens in <a href="28819.html">7093</a> (the pointer to the next token is kept at $B5CD) and turns them into one or more 24-byte command frames, starting at <a href="46632.html#47288">B8B8</a> and growing downwards in memory ($B8A0, $B888...). The number of frames built is counted in $B5F7.
+The parser. It works through the tokens in <a href="28819.html">7093</a> (the pointer to the next token is kept at $B5CD) and turns them into one or more 24-byte command frames, starting at <a href="46632.html#47288">B8B8</a> and growing downwards in memory (<a href="46632.html#47264">B8A0</a>, <a href="46632.html#47240">B888</a>...). The number of frames built is counted in $B5F7.
 </div>
 <div class="paragraph">
 A frame holds: the verb (offset 0; bit 7 of byte 1 marks a command with ALL, and bit 6 marks an extra frame that only holds an exception for ALL EXCEPT), an adverb, direction or particle (offset 2), and two noun phrases of 10 bytes each (offsets 4 and 14). A noun phrase is two prepositions, a noun and two adjectives, so 'put the small curious key in the wooden chest' becomes PUT, (KEY, SMALL, CURIOUS), (IN, CHEST, WOODEN).
@@ -38,13 +38,13 @@ A frame holds: the verb (offset 0; bit 7 of byte 1 marks a command with ALL, and
 The parser is a state machine. Register E holds a set of flags saying what may come next: bit 1 'a verb may start here', bit 2 'an adverb is allowed', bit 3 'we have just had AND', bit 4 'an article is allowed', bit 6 'the first noun phrase is still empty', bit 7 'the second noun phrase is still empty', bit 0 'the verb has been followed by a direction'. Register D holds the class of the token being processed.
 </div>
 <div class="paragraph">
-For each token, <a href="32573.html">7F3D</a> fetches it and the class (top nibble, divided by 8) indexes the jump table at <a href="31900.html">7C9C</a>, which sends it to a handler: adverbs to $7DBC, IN/INTO to <a href="32351.html">7E5F</a>, directions to <a href="32182.html">7DB6</a>, verbs to $7DFD, GO/RUN to <a href="32249.html">7DF9</a>, nouns to $7E9B, adjectives to $7E93, prepositions to <a href="32364.html">7E6C</a>, articles to <a href="32346.html">7E5A</a>, special words to <a href="32777.html">8009</a>, AND to <a href="32213.html">7DD5</a>, THEN (and full stop) to $7CC4 and the end of the line to <a href="31936.html">7CC0</a>.
+For each token, <a href="32573.html">7F3D</a> fetches it and the class (top nibble, divided by 8) indexes the jump table at <a href="31900.html">7C9C</a>, which sends it to a handler: adverbs to <a href="32182.html#32188">7DBC</a>, IN/INTO to <a href="32351.html">7E5F</a>, directions to <a href="32182.html">7DB6</a>, verbs to <a href="32251.html#32253">7DFD</a>, GO/RUN to <a href="32249.html">7DF9</a>, nouns to <a href="32364.html#32411">7E9B</a>, adjectives to <a href="32364.html#32403">7E93</a>, prepositions to <a href="32364.html">7E6C</a>, articles to <a href="32346.html">7E5A</a>, special words to <a href="32777.html">8009</a>, AND to <a href="32213.html">7DD5</a>, THEN (and full stop) to <a href="31936.html#31940">7CC4</a> and the end of the line to <a href="31936.html">7CC0</a>.
 </div>
 <div class="paragraph">
 A word that is not allowed where it appears goes to <a href="32750.html">7FEE</a>, which prints 'what?' (inside a quotation it is ignored instead, so that orders to other characters are more forgiving).
 </div>
 <div class="paragraph">
-If a previous command was left unfinished ($B60A set, for example after the game asked 'which key?'), the parser starts in a different state so that the words just typed are fitted into the old frame (see $7CFC).
+If a previous command was left unfinished ($B60A set, for example after the game asked 'which key?'), the parser starts in a different state so that the words just typed are fitted into the old frame (see <a href="31936.html#31996">7CFC</a>).
 </div>
 </div>
 </td>

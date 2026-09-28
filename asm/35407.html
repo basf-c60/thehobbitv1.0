@@ -29,7 +29,7 @@ Next: <a href="35532.html">8ACC</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Fills the area around the point (D,E) with ink colour A (kept at $8C2C for <a href="35731.html">8B93</a>). It is a scan-line fill: from the starting point it moves left to the edge of the area, then works rightwards along the row, setting each pixel. At every pixel it looks at the pixel above and the pixel below: where an unfilled stretch begins in the row above or below, that position is pushed on the stack as a 'seed' to be filled later. The flags at $8A4D (above) and $8A4E (below) stop it pushing a seed for every pixel of the same stretch. When the row is done, the next seed is popped and the process repeats, until the marker $0080 pushed at the start comes back off the stack.
+Fills the area around the point (D,E) with ink colour A (kept at <a href="35884.html">8C2C</a> for <a href="35731.html">8B93</a>). It is a scan-line fill: from the starting point it moves left to the edge of the area, then works rightwards along the row, setting each pixel. At every pixel it looks at the pixel above and the pixel below: where an unfilled stretch begins in the row above or below, that position is pushed on the stack as a 'seed' to be filled later. The flags at <a href="35405.html">8A4D</a> (above) and $8A4E (below) stop it pushing a seed for every pixel of the same stretch. When the row is done, the next seed is popped and the process repeats, until the marker $0080 pushed at the start comes back off the stack.
 </div>
 <div class="paragraph">
 Because each row is filled from its left-hand end, and seeds are only pushed at the starts of stretches, the fill needs very little stack even for large areas.

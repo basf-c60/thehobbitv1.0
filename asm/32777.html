@@ -29,10 +29,10 @@ Next: <a href="32809.html">8029</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Looks the special word up in the table at <a href="32809.html">8029</a> and jumps to its handler. DE (the word's class and the parser's state) is saved on the stack at $800C and restored at $8027 before the jump.
+Looks the special word up in the table at <a href="32809.html">8029</a> and jumps to its handler. DE (the word's class and the parser's state) is saved on the stack at <a href="32777.html#32780">800C</a> and restored at <a href="32777.html#32807">8027</a> before the jump.
 </div>
 <div class="paragraph">
-If the word is not in the table, the jump at $801C goes back into the parser WITHOUT restoring DE, leaving two bytes on the stack. Every special word except DO is in the table, so in practice this happens only when the player types DO - and then the game loses control completely (see the bug note).
+If the word is not in the table, the jump at <a href="32777.html#32796">801C</a> goes back into the parser WITHOUT restoring DE, leaving two bytes on the stack. Every special word except DO is in the table, so in practice this happens only when the player types DO - and then the game loses control completely (see the bug note).
 </div>
 <div class="paragraph">
 The special words are ALL, EXCEPT, IT, ONE, the game commands PRINT, NOPRINT, LOAD, SAVE, QUIT, HELP, SCORE and PAUSE, and a quotation mark (which has class $90 and a word of 0, and matches the first entry, <a href="32973.html">80CD</a>).

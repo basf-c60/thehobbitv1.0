@@ -29,7 +29,7 @@ Next: <a href="27687.html">6C27</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The BASIC loader 'hobbit' loads the loading screen to 40000, copies it onto the display, loads this 37,888-byte block at 24576 ($6000) and then does RANDOMIZE USR 27648, which arrives here.
+The BASIC loader 'hobbit' loads the loading screen to 40000, copies it onto the display, loads this 37,888-byte block at 24576 (<a href="24576.html">6000</a>) and then does RANDOMIZE USR 27648, which arrives here.
 </div>
 <div class="paragraph">
 The first job is to make pristine copies of everything that changes during play, so the game can be restarted after Bilbo dies without reloading the tape: the object table (<a href="49163.html">C00B</a>, $614 bytes) and the room table (<a href="47482.html">B97A</a>, $5D9 bytes) are copied up to $F400 onwards, the 28 bytes of game variables at <a href="46539.html#46556">B5DC</a> are copied to $5F00, and the timer and character tables at <a href="51571.html">C973</a> ($BF bytes) follow the room copy.

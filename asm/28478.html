@@ -29,7 +29,7 @@ Next: <a href="28593.html">6FB1</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Copies the letters of the word at HL into the buffer at <a href="28785.html">7071</a>, keeping only the low five bits of each (so 'a' and 'A' are both 1). Characters below $40 (space, punctuation, ENTER) end the word. The number of letters is stored at $7081.
+Copies the letters of the word at HL into the buffer at <a href="28785.html">7071</a>, keeping only the low five bits of each (so 'a' and 'A' are both 1). Characters below $40 (space, punctuation, ENTER) end the word. The number of letters is stored at <a href="28785.html#28801">7081</a>.
 </div>
 <div class="paragraph">
 The first letter (1-26) is then used to index the letter table at <a href="24576.html">6000</a>, and IX is set to the first dictionary word starting with that letter. Execution continues into <a href="28478.html#28521">6F69</a> to unpack it.
@@ -193,7 +193,7 @@ The first letter (1-26) is then used to index the letter table at <a href="24576
 <span id="28521"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by <a href="28302.html">6E8E</a> to move on to the next dictionary word. It saves IX in $B607 as the current candidate and then unpacks it. Another entry point at $6F6D does the same without updating $B607; the tokeniser uses that one to peek at the following word.
+This entry point is used by <a href="28302.html">6E8E</a> to move on to the next dictionary word. It saves IX in $B607 as the current candidate and then unpacks it. Another entry point at <a href="28478.html#28525">6F6D</a> does the same without updating $B607; the tokeniser uses that one to peek at the following word.
 </div>
 </div>
 </td>
@@ -231,7 +231,7 @@ Check that the dictionary word at IX starts with the same letter as the typed wo
 <tr>
 <td class="address-1"><span id="28531"></span>6F73</td>
 <td class="instruction">LD A,($7071)</td>
-<td class="comment-1" rowspan="1">A = the contents of $7071</td>
+<td class="comment-1" rowspan="1">A = the contents of <a href="28785.html">7071</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="28534"></span>6F76</td>
@@ -261,7 +261,7 @@ Unpack the dictionary word into <a href="28785.html#28802">7082</a>. The same en
 <tr>
 <td class="address-1"><span id="28537"></span>6F79</td>
 <td class="instruction">LD HL,$7082</td>
-<td class="comment-1" rowspan="1">HL = $7082</td>
+<td class="comment-1" rowspan="1">HL = <a href="28785.html#28802">7082</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="28540"></span>6F7C</td>

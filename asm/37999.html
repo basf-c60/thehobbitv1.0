@@ -29,10 +29,10 @@ Next: <a href="38207.html">953F</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Performs the current action ($B5D8) with the current target ($B5D9) and instrument ($B5DA). During a dry run ($B5EB = 0) nothing is printed or changed, and the routines report success in $B5EC instead.
+Performs the current action (<a href="46539.html#46552">B5D8</a>) with the current target ($B5D9) and instrument (<a href="46539.html#46554">B5DA</a>). During a dry run ($B5EB = 0) nothing is printed or changed, and the routines report success in <a href="46539.html#46572">B5EC</a> instead.
 </div>
 <div class="paragraph">
-First the basic checks: the action must make sense (<a href="39583.html">9A9F</a>: you cannot, for instance, give something to yourself; if it fails, 'I cannot do that.'). If it is dark (<a href="38221.html">954D</a>) and the action needs light, 'I see nothing.' unless the objects are being carried. The records of the target and instrument are found and saved in $B5F8 and $B5FA, and each must be within reach (<a href="38534.html">9686</a>).
+First the basic checks: the action must make sense (<a href="39583.html">9A9F</a>: you cannot, for instance, give something to yourself; if it fails, 'I cannot do that.'). If it is dark (<a href="38221.html">954D</a>) and the action needs light, 'I see nothing.' unless the objects are being carried. The records of the target and instrument are found and saved in <a href="46539.html#46584">B5F8</a> and $B5FA, and each must be within reach (<a href="38534.html">9686</a>).
 </div>
 <div class="paragraph">
 Then the handlers are found. If the target (or, for certain actions listed at <a href="41275.html">A13B</a>, the instrument) has handlers of its own for this action (<a href="39644.html">9ADC</a>), they are called one after another: the matching entry and any entries with action 0 straight after it. Otherwise the default handler for the action is looked up in <a href="50719.html">C61F</a>. If there is none, 'I cannot do that.'

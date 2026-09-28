@@ -32,10 +32,10 @@ Next: <a href="31726.html">7BEE</a>
 Scans the keyboard directly through port $FE (the game does not use the ROM keyboard routine or interrupts) and returns the ASCII code of a key that has just been pressed, or 0 if no new key has been pressed. Holding a key down does not repeat it.
 </div>
 <div class="paragraph">
-The routine first waits a few milliseconds (<a href="31595.html">7B6B</a>), then reads each of the eight half-rows in turn, starting with port $FEFE (CAPS SHIFT to V) and rotating the high byte of the port address to reach the next row. Each reading is ORed with that row's mask from <a href="31604.html">7B74</a>. A key counts as newly pressed if its bit is 0 now but was 1 in the previous reading kept at $7B7E; the row and bits of such a key are saved at $7B7C.
+The routine first waits a few milliseconds (<a href="31595.html">7B6B</a>), then reads each of the eight half-rows in turn, starting with port $FEFE (CAPS SHIFT to V) and rotating the high byte of the port address to reach the next row. Each reading is ORed with that row's mask from <a href="31604.html">7B74</a>. A key counts as newly pressed if its bit is 0 now but was 1 in the previous reading kept at <a href="31604.html#31614">7B7E</a>; the row and bits of such a key are saved at <a href="31604.html#31612">7B7C</a>.
 </div>
 <div class="paragraph">
-If a new key was found, its row and bit are turned into a number from 0 to 39 (row x 5 + bit, $7BC0-$7BCE). Then the shift keys are checked directly: if CAPS SHIFT is held, or SYMBOL SHIFT is not, the normal table at <a href="31726.html">7BEE</a> is used; if SYMBOL SHIFT is held (and CAPS SHIFT is not), the symbol table at <a href="31766.html">7C16</a> is used. The table entry is returned in A.
+If a new key was found, its row and bit are turned into a number from 0 to 39 (row x 5 + bit, <a href="31622.html#31680">7BC0</a>-<a href="31622.html#31694">7BCE</a>). Then the shift keys are checked directly: if CAPS SHIFT is held, or SYMBOL SHIFT is not, the normal table at <a href="31726.html">7BEE</a> is used; if SYMBOL SHIFT is held (and CAPS SHIFT is not), the symbol table at <a href="31766.html">7C16</a> is used. The table entry is returned in A.
 </div>
 <div class="paragraph">
 In my emulator I replaced this routine with one that fed typed commands to the game.
@@ -80,7 +80,7 @@ In my emulator I replaced this routine with one that fed typed commands to the g
 <tr>
 <td class="address-1"><span id="31633"></span>7B91</td>
 <td class="instruction">LD HL,$7B7E</td>
-<td class="comment-1" rowspan="1">HL = $7B7E</td>
+<td class="comment-1" rowspan="1">HL = <a href="31604.html#31614">7B7E</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="31636"></span>7B94</td>

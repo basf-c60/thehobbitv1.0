@@ -35,10 +35,10 @@ Called by the main loop (<a href="27914.html">6D0A</a>) after parsing. It works 
 For each frame, <a href="33703.html">83A7</a> finds the action and the objects it applies to. If that fails, the frame is dropped. Otherwise the action is carried out for real: $B5EB is set to 1, <a href="28962.html">7122</a> reports it ('you take the sword.'), <a href="37999.html">946F</a> performs it, and <a href="38417.html">9611</a> ends the turn, letting the characters act and the timers run. So every command the player types costs one turn, and a line with three commands costs three turns.
 </div>
 <div class="paragraph">
-A command with ALL is repeated ($837F) for each object it applies to, one turn each. When a frame is finished, the next frame (24 bytes lower) is taken, skipping the exception frames of ALL EXCEPT, until the frame count $B5F7 reaches 0.
+A command with ALL is repeated (<a href="33617.html#33663">837F</a>) for each object it applies to, one turn each. When a frame is finished, the next frame (24 bytes lower) is taken, skipping the exception frames of ALL EXCEPT, until the frame count $B5F7 reaches 0.
 </div>
 <div class="paragraph">
-If the previous command was left unfinished ($B60A), it is picked up again at $8385 instead.
+If the previous command was left unfinished ($B60A), it is picked up again at <a href="33617.html#33669">8385</a> instead.
 </div>
 </div>
 </td>

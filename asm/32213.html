@@ -29,7 +29,7 @@ Next: <a href="32249.html">7DF9</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-AND (or a comma) is ambiguous: it may join two objects ('take the key and the sword') or two commands ('take the key and go east'). The parser cannot tell until it sees what follows, so it records where it is: the token pointer (in $7C3E and $B5CD, pointing back at the AND), the state flags E ($7C40), the frame pointer IY ($7C41) and the frame count ($7C43). It then carries on as though a new command had begun ($7CC4). If a verb turns up next, the new command stands. If not, the verb handler at $7DFD is never reached and the next frame inherits the verb of this one (<a href="32641.html">7F81</a>).
+AND (or a comma) is ambiguous: it may join two objects ('take the key and the sword') or two commands ('take the key and go east'). The parser cannot tell until it sees what follows, so it records where it is: the token pointer (in <a href="31806.html">7C3E</a> and $B5CD, pointing back at the AND), the state flags E ($7C40), the frame pointer IY ($7C41) and the frame count ($7C43). It then carries on as though a new command had begun (<a href="31936.html#31940">7CC4</a>). If a verb turns up next, the new command stands. If not, the verb handler at <a href="32251.html#32253">7DFD</a> is never reached and the next frame inherits the verb of this one (<a href="32641.html">7F81</a>).
 </div>
 <div class="paragraph">
 Bit 3 of E is reset to show that an AND has just been seen.

@@ -32,10 +32,10 @@ Next: <a href="29495.html">7337</a>
 Almost everything the game says is printed by this routine, which interprets a compact message 'bytecode' starting at the address in HL. Messages are not stored as ASCII; they are sequences of dictionary references and control codes, which is how The Hobbit fits so much text into 48K.
 </div>
 <div class="paragraph">
-The entry at $72D4 saves DE, IX and A (restored at the end, $7352) so callers do not lose them. If the command is only being tried ($B5EB is 0) the flag $B5EC is cleared.
+The entry at <a href="29396.html">72D4</a> saves DE, IX and A (restored at the end, <a href="29503.html#29522">7352</a>) so callers do not lose them. If the command is only being tried ($B5EB is 0) the flag <a href="46539.html#46572">B5EC</a> is cleared.
 </div>
 <div class="paragraph">
-The loop at $72EB fetches a byte and decides what it is:
+The loop at <a href="29396.html#29419">72EB</a> fetches a byte and decides what it is:
 </div>
 <div class="paragraph">
 <ul class="">
@@ -69,17 +69,17 @@ The same interpreter runs the little scripts attached to rooms and objects, whic
 <tr>
 <td class="address-2"><span id="29396"></span>72D4</td>
 <td class="instruction">LD ($70D4),DE</td>
-<td class="comment-1" rowspan="1">Store DE at $70D4</td>
+<td class="comment-1" rowspan="1">Store DE at <a href="28883.html#28884">70D4</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="29400"></span>72D8</td>
 <td class="instruction">LD ($70D7),IX</td>
-<td class="comment-1" rowspan="1">Store IX at $70D7</td>
+<td class="comment-1" rowspan="1">Store IX at <a href="28883.html#28887">70D7</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="29404"></span>72DC</td>
 <td class="instruction">LD ($70D3),A</td>
-<td class="comment-1" rowspan="1">Store A at $70D3</td>
+<td class="comment-1" rowspan="1">Store A at <a href="28883.html">70D3</a></td>
 </tr>
 <tr>
 <td class="address-1"><span id="29407"></span>72DF</td>

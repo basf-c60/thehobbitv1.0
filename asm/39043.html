@@ -29,7 +29,7 @@ Next: <a href="39119.html">98CF</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Carries out an action instruction from a character's behaviour program. Normally the three bytes after the instruction byte give the action, the target and the instruction ($B5D8-$B5DA) and <a href="39201.html">9921</a> tries it. If bit 0 of the instruction byte is set, the next two bytes are the address of a special routine, which is called first as a dry run and, if it says it would work, for real.
+Carries out an action instruction from a character's behaviour program. Normally the three bytes after the instruction byte give the action, the target and the instruction (<a href="46539.html#46552">B5D8</a>-<a href="46539.html#46554">B5DA</a>) and <a href="39201.html">9921</a> tries it. If bit 0 of the instruction byte is set, the next two bytes are the address of a special routine, which is called first as a dry run and, if it says it would work, for real.
 </div>
 <div class="paragraph">
 If the action worked, and the instruction has a jump address (bit 4), the program jumps there. If bit 5 is set the instruction is erased so it will not be done again.

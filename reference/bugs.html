@@ -39,7 +39,7 @@ In <a href="../asm/37245.html">917D</a> a random adjustment of -1 to -10 is adde
 <div class="box box-2">
 <div class="box-title">Missing wound message</div>
 <div class="paragraph">
-The wound message table at <a href="../asm/37264.html">9190</a> has no valid entry for a margin of exactly 16. The two bytes read instead are code at $91B0, giving a message address of $2ADD in the ROM, so the game prints garbage.
+The wound message table at <a href="../asm/37264.html">9190</a> has no valid entry for a margin of exactly 16. The two bytes read instead are code at <a href="../asm/37296.html">91B0</a>, giving a message address of $2ADD in the ROM, so the game prints garbage.
 </div>
 </div>
 <div><span id="rrca"></span></div>
@@ -60,14 +60,14 @@ In <a href="../asm/32861.html">805D</a>, if no ZX Printer is attached, a relativ
 <div class="box box-1">
 <div class="box-title">Thorin never says "get us out of this one, thief!"</div>
 <div class="paragraph">
-In <a href="../asm/42320.html">A550</a> the message 'get us out of this one, thief!' ($AFC7) is guarded by a JP Z that follows a JP NC on the same comparison (CP 3). A value of 3 has already been sent elsewhere by the JP NC, so the JP Z is never taken and the line is never said. Presumably a different comparison was intended.
+In <a href="../asm/42320.html">A550</a> the message 'get us out of this one, thief!' (<a href="../asm/44145.html#44999">AFC7</a>) is guarded by a JP Z that follows a JP NC on the same comparison (CP 3). A value of 3 has already been sent elsewhere by the JP NC, so the JP Z is never taken and the line is never said. Presumably a different comparison was intended.
 </div>
 </div>
 <div><span id="bardsave"></span></div>
 <div class="box box-2">
 <div class="box-title">Bard's remembered order is only partly saved</div>
 <div class="paragraph">
-<a href="../asm/42911.html">A79F</a> stores Bard's current order in four bytes of his behaviour program ($C8D1-$C8D4: instruction, action, target, instrument). SAVE and LOAD copy only the first three of them (<a href="../asm/33412.html">8284</a>, <a href="../asm/33289.html">8209</a>), so the instrument of the order (for example the arrow he should shoot with) is not saved; after a LOAD it is whatever it was in the game being played before.
+<a href="../asm/42911.html">A79F</a> stores Bard's current order in four bytes of his behaviour program (<a href="../asm/50972.html#51409">C8D1</a>-$C8D4: instruction, action, target, instrument). SAVE and LOAD copy only the first three of them (<a href="../asm/33412.html">8284</a>, <a href="../asm/33289.html">8209</a>), so the instrument of the order (for example the arrow he should shoot with) is not saved; after a LOAD it is whatever it was in the game being played before.
 </div>
 </div>
 <div><span id="goblinB"></span></div>
@@ -109,7 +109,7 @@ When the trolls turn to stone (<a href="../asm/43109.html">A865</a>), the trolls
 <div class="box box-2">
 <div class="box-title">A loaded game can lose its hidden route</div>
 <div class="paragraph">
-The hidden route closed at the start of a game (<a href="../asm/38667.html">970B</a>) is recorded in two places: the blanked-out exit in the room table, which SAVE and LOAD preserve, and the address of the route's entry, which is written into the instruction at $A6C3 in Elrond's map routine (<a href="../asm/42680.html">A6B8</a>) and is not saved. If a game is loaded in a later session, the room table closes the old route but Elrond's routine points at the route chosen for the new session. When he reads the map he reopens (and names) the wrong exit, and the loaded game's closed route stays closed. (This follows from the code; it was not tried in the emulator.)
+The hidden route closed at the start of a game (<a href="../asm/38667.html">970B</a>) is recorded in two places: the blanked-out exit in the room table, which SAVE and LOAD preserve, and the address of the route's entry, which is written into the instruction at <a href="../asm/42680.html#42691">A6C3</a> in Elrond's map routine (<a href="../asm/42680.html">A6B8</a>) and is not saved. If a game is loaded in a later session, the room table closes the old route but Elrond's routine points at the route chosen for the new session. When he reads the map he reopens (and names) the wrong exit, and the loaded game's closed route stays closed. (This follows from the code; it was not tried in the emulator.)
 </div>
 </div>
 <div><span id="doword"></span></div>

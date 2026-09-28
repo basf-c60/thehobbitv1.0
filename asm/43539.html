@@ -32,7 +32,7 @@ Next: <a href="43566.html">AA2E</a>
 Called by <a href="38417.html">9611</a> on each turn that the eyes timer (entry at <a href="51571.html#51627">C9AB</a>) is counting down and at or below its threshold of 3. It prints 'you see some pale bulbous eyes staring at you' (<a href="44145.html#45571">B203</a>).
 </div>
 <div class="paragraph">
-It then checks whether Bilbo has moved. $C01B is Bilbo's location (the first location byte of object 0, see <a href="49163.html">C00B</a>) and $B5E4 is the room he was in when the timer was started. If he is still in the same room, all is well. If he has moved to the other 'eyes' room (from 2 to 3 or from 3 to 2), all is also well. Otherwise he has left too early: execution falls into <a href="43566.html#43582">AA3E</a>, which prints 'some thing drops from above and stings' (<a href="44145.html#45585">B211</a>) and kills him (<a href="36924.html">903C</a>).
+It then checks whether Bilbo has moved. <a href="49163.html#49179">C01B</a> is Bilbo's location (the first location byte of object 0, see <a href="49163.html">C00B</a>) and <a href="46539.html#46564">B5E4</a> is the room he was in when the timer was started. If he is still in the same room, all is well. If he has moved to the other 'eyes' room (from 2 to 3 or from 3 to 2), all is also well. Otherwise he has left too early: execution falls into <a href="43566.html#43582">AA3E</a>, which prints 'some thing drops from above and stings' (<a href="44145.html#45585">B211</a>) and kills him (<a href="36924.html">903C</a>).
 </div>
 <div class="paragraph">
 In practice the room-2/room-3 exception is never needed, because entering either room restarts the timer anyway (see <a href="50892.html">C6CC</a>).

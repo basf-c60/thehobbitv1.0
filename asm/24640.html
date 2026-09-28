@@ -35,7 +35,7 @@ This is the vocabulary: every verb, noun, adjective, adverb and direction the pa
 Each word is stored with one byte per letter. The low five bits of each byte hold the letter (1=A, 2=B ... 26=Z, 0=no letter). From the third byte onwards, bit 7 set means 'this is the last letter of the word'. Words shorter than three letters are padded with a byte whose letter bits are 0 and whose bit 7 is set (so TO is stored as T, O, $80).
 </div>
 <div class="paragraph">
-Bits 5 and 6 of the FIRST TWO bytes are not part of the letters: together they give the word's class, which the tokeniser (<a href="28302.html">6E8E</a>, at $6F12) assembles into a single byte: bit 6 of byte 0 becomes bit 7, bit 5 of byte 0 becomes bit 6, bit 6 of byte 1 becomes bit 5, and bit 5 of byte 1 becomes bit 4. The classes are:
+Bits 5 and 6 of the FIRST TWO bytes are not part of the letters: together they give the word's class, which the tokeniser (<a href="28302.html">6E8E</a>, at <a href="28302.html#28434">6F12</a>) assembles into a single byte: bit 6 of byte 0 becomes bit 7, bit 5 of byte 0 becomes bit 6, bit 6 of byte 1 becomes bit 5, and bit 5 of byte 1 becomes bit 4. The classes are:
 </div>
 <div class="paragraph">
 <table class="default">
@@ -110,10 +110,10 @@ Bits 5 and 6 of the FIRST TWO bytes are not part of the letters: together they g
 SYNONYMS: if bit 6 of a word's LAST byte is set, the word is a synonym and is followed by two extra bytes: the offset from <a href="24576.html">6000</a> of the word it stands for. The tokeniser silently replaces the synonym with that word, so the rest of the game never sees it. There are 29 synonyms, and they explain a lot about how the game behaves: HIT, KILL, CAPTURE, SLASH and SLICE all become ATTACK; BREAK and SMASH become STRIKE; GET, LIFT and STEAL become TAKE; PICK becomes CARRY; READ becomes EXAMINE; SAY becomes TALK; EVERYTHING becomes ALL; BUT becomes EXCEPT; ME becomes YOU; I becomes INVENTORY; L and LO become LOOK; and N, S, E, W, NE, NW, SE, SW, U and D become the full direction words. So 'hit thorin' and 'kill thorin' are literally the same command as 'attack thorin'.
 </div>
 <div class="paragraph">
-Everything else in the game refers to a word by its offset from <a href="24576.html">6000</a>, as a 12-bit number. So SWORD, which starts at $6684, is referred to as $684; THORIN at $66B8 is $6B8; CAVE at $6112 is $112. The spare top four bits of those 16-bit references are used for the class or for printing flags.
+Everything else in the game refers to a word by its offset from <a href="24576.html">6000</a>, as a 12-bit number. So SWORD, which starts at <a href="24640.html#26244">6684</a>, is referred to as $684; THORIN at <a href="24640.html#26296">66B8</a> is $6B8; CAVE at <a href="24640.html#24850">6112</a> is $112. The spare top four bits of those 16-bit references are used for the class or for printing flags.
 </div>
 <div class="paragraph">
-The dictionary ends at $67AE with YOU; the byte at $67AF is a separator, and the second dictionary (<a href="26544.html">67B0</a>) follows.
+The dictionary ends at $67AE with YOU; the byte at <a href="24640.html#26543">67AF</a> is a separator, and the second dictionary (<a href="26544.html">67B0</a>) follows.
 </div>
 </div>
 </td>

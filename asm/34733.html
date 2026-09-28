@@ -32,14 +32,14 @@ Next: <a href="34878.html">883E</a>
 Called when <a href="33797.html">8405</a> did not settle on exactly one workable target, to explain why - or to make the best of it. Inside a quotation (an order to a character) it says nothing at all and returns, so characters are not given the player's excuses.
 </div>
 <div class="paragraph">
-If exactly one candidate target would work, the instrument is dealt with instead (<a href="34697.html">8789</a>). Otherwise the target's flags at $832E decide:
+If exactly one candidate target would work, the instrument is dealt with instead (<a href="34697.html">8789</a>). Otherwise the target's flags at <a href="33582.html">832E</a> decide:
 </div>
 <div class="paragraph">
 <ul class="">
-<li>No noun was given ($8821): the words of the action are pushed and, if nothing suitable could be found at all, 'i see nothing to open' is printed; if there was something, the command is left unfinished (<a href="34661.html">8765</a>) and the game asks 'open what?', so that the next thing typed completes it.</li>
-<li>A noun was given but nothing matching it was found ($87EF): the search is widened - first to the rooms leading off this one (<a href="40425.html">9DE9</a>, for commands such as GO INTO), then to every object anywhere (<a href="40238.html">9D2E</a> with the filter set to 2) - so that something the player has named but cannot use is still recognised. If it is found, it is made the target and the action is reported as a failure (<a href="28945.html">7111</a>, 'you cannot open the door'); if not, 'i do not see the door here'.</li>
+<li>No noun was given (<a href="34733.html#34849">8821</a>): the words of the action are pushed and, if nothing suitable could be found at all, 'i see nothing to open' is printed; if there was something, the command is left unfinished (<a href="34661.html">8765</a>) and the game asks 'open what?', so that the next thing typed completes it.</li>
+<li>A noun was given but nothing matching it was found (<a href="34733.html#34799">87EF</a>): the search is widened - first to the rooms leading off this one (<a href="40425.html">9DE9</a>, for commands such as GO INTO), then to every object anywhere (<a href="40238.html">9D2E</a> with the filter set to 2) - so that something the player has named but cannot use is still recognised. If it is found, it is made the target and the action is reported as a failure (<a href="28945.html">7111</a>, 'you cannot open the door'); if not, 'i do not see the door here'.</li>
 <li>Several candidates fit the words: 'which key?' (<a href="34676.html">8774</a>), again leaving the command unfinished.</li>
-<li>Exactly one candidate, or none, but the action would not work with it: the action is carried out for real anyway ($87E6), so that its own handler prints the proper reason.</li>
+<li>Exactly one candidate, or none, but the action would not work with it: the action is carried out for real anyway (<a href="34733.html#34790">87E6</a>), so that its own handler prints the proper reason.</li>
 </ul>
 </div>
 </div>

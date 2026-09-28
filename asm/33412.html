@@ -29,7 +29,7 @@ Next: <a href="33554.html">8312</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Saves the game to tape. Three bytes at $C8D1 (part of the data after the room-entry handlers) are first copied over the start of the saved variables at $B5DC so that they are saved too. The player is asked to start the tape and press a key, and the four blocks listed under <a href="33289.html">8209</a> are saved with the ROM routine SA-BYTES ($04C2).
+Saves the game to tape. Three bytes at <a href="50972.html#51409">C8D1</a> (part of the data after the room-entry handlers) are first copied over the start of the saved variables at <a href="46539.html#46556">B5DC</a> so that they are saved too. The player is asked to start the tape and press a key, and the four blocks listed under <a href="33289.html">8209</a> are saved with the ROM routine SA-BYTES ($04C2).
 </div>
 <div class="paragraph">
 Then, unusually for a 1982 game, it offers to VERIFY the save: 'rewind and prepare tape for verification - then hit any key', and reads the four blocks back with the ROM routine in verify mode (<a href="33554.html">8312</a>).
@@ -49,7 +49,7 @@ Then, unusually for a 1982 game, it offers to VERIFY the save: 'rewind and prepa
 <tr>
 <td class="address-1"><span id="33415"></span>8287</td>
 <td class="instruction">LD DE,$B5DC</td>
-<td class="comment-1" rowspan="3">Tuck Bard's own remembered order (from $C8D1) in among the saved variables for a moment...</td>
+<td class="comment-1" rowspan="3">Tuck Bard's own remembered order (from <a href="50972.html#51409">C8D1</a>) in among the saved variables for a moment...</td>
 </tr>
 <tr>
 <td class="address-1"><span id="33418"></span>828A</td>

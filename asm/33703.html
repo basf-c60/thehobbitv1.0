@@ -29,10 +29,10 @@ Next: <a href="33797.html">8405</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The target ($B5D9) and instrument ($B5DA) are set to $FF (none) and the work area is cleared. <a href="34191.html">858F</a> then finds the action table entry that matches the frame's verb, particle and preposition; if none does, the routine returns with Z set.
+The target ($B5D9) and instrument (<a href="46539.html#46554">B5DA</a>) are set to $FF (none) and the work area is cleared. <a href="34191.html">858F</a> then finds the action table entry that matches the frame's verb, particle and preposition; if none does, the routine returns with Z set.
 </div>
 <div class="paragraph">
-The action number (1-59) is worked out from the entry's address and stored in $B5D8. The flags of the entry (<a href="34153.html">8569</a>) say whether the action needs a target and an instrument (bits 3 and 2 of $B60D). If it needs neither, the routine is done. Otherwise <a href="33797.html">8405</a> searches for suitable objects, trying each candidate with a dry run. If the objects cannot be decided, <a href="34733.html">87AD</a> deals with it (asking 'which key?', saying 'I do not see the key', and so on). With ALL, <a href="33892.html">8464</a> moves on to the next object.
+The action number (1-59) is worked out from the entry's address and stored in <a href="46539.html#46552">B5D8</a>. The flags of the entry (<a href="34153.html">8569</a>) say whether the action needs a target and an instrument (bits 3 and 2 of $B60D). If it needs neither, the routine is done. Otherwise <a href="33797.html">8405</a> searches for suitable objects, trying each candidate with a dry run. If the objects cannot be decided, <a href="34733.html">87AD</a> deals with it (asking 'which key?', saying 'I do not see the key', and so on). With ALL, <a href="33892.html">8464</a> moves on to the next object.
 </div>
 </div>
 <table class="output">
