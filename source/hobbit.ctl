@@ -6913,38 +6913,38 @@ B $C729,1,1 End of the table
 B $C72A,3,3 the horrible, mean and disgusting goblins: default behaviour (also one of the choices for a random one): program at #R$C784
 B $C72D,3,3 the horrible, mean and disgusting goblins: when it is attacked: switch to the program at #R$C78D
 B $C730,1,1 End of the table
-B $C731,4,4 action 16 [open] target small insignificant crack, with -
-B $C735,4,4 action 48 [capture]; if it fails go to #R$C73C
+B $C731,4,4 action 16 [open] (#R$A298) target small insignificant crack, with -
+B $C735,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C73C
 B $C739,3,3 go to #R$C735
-B $C73C,2,2 action 9 [up go]
-B $C73E,4,4 action 48 [capture]; if it fails go to #R$C745
+B $C73C,2,2 action 9 [up go] (#R$8D19)
+B $C73E,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C745
 B $C742,3,3 go to #R$C73E
-B $C745,2,2 action 10 [down go]
-B $C747,4,4 action 48 [capture]; if it fails go to #R$C74E
+B $C745,2,2 action 10 [down go] (#R$8D19)
+B $C747,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C74E
 B $C74B,3,3 go to #R$C747
-B $C74E,4,4 action 12 [close] target small insignificant crack, with -
-B $C752,2,2 action 2 [south go]
-B $C754,4,4 action 48 [capture]; if it fails go to #R$C75B
+B $C74E,4,4 action 12 [close] (#R$90A2) target small insignificant crack, with -
+B $C752,2,2 action 2 [south go] (#R$8D19)
+B $C754,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C75B
 B $C758,3,3 go to #R$C754
-B $C75B,2,2 action 1 [north go]
+B $C75B,2,2 action 1 [north go] (#R$8D19)
 B $C75D,3,3 go to #R$C731
-B $C760,2,2 action 6 [northwest go]
-B $C762,4,4 action 48 [capture]; if it fails go to #R$C769
+B $C760,2,2 action 6 [northwest go] (#R$8D19)
+B $C762,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C769
 B $C766,3,3 go to #R$C762
-B $C769,2,2 action 1 [north go]
-B $C76B,4,4 action 48 [capture]; if it fails go to #R$C772
+B $C769,2,2 action 1 [north go] (#R$8D19)
+B $C76B,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C772
 B $C76F,3,3 go to #R$C76B
-B $C772,2,2 action 8 [southwest go]
-B $C774,4,4 action 48 [capture]; if it fails go to #R$C77B
+B $C772,2,2 action 8 [southwest go] (#R$8D19)
+B $C774,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C77B
 B $C778,3,3 go to #R$C774
-B $C77B,2,2 action 9 [up go]
-B $C77D,4,4 action 48 [capture]; if it fails go to #R$C760
+B $C77B,2,2 action 9 [up go] (#R$8D19)
+B $C77D,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C760
 B $C781,3,3 go to #R$C77D
-B $C784,2,2 action 36 [run]
-B $C786,2,2 action 15 [attack with]
-B $C788,2,2 action 48 [capture]
+B $C784,2,2 action 36 [run] (#R$8F17)
+B $C786,2,2 action 15 [attack with] (#R$90DB)
+B $C788,2,2 action 48 [capture] (#R$A316)
 B $C78A,3,3 go to #R$C784
-B $C78D,2,2 action 48 [capture]
+B $C78D,2,2 action 48 [capture] (#R$A316)
 B $C78F,1,1 switch to default behaviour and end turn
 B $C790,3,3 default behaviour (also one of the choices for a random one): program at #R$C7B1
 B $C793,3,3 default behaviour (also one of the choices for a random one): program at #R$C7BF
@@ -6955,32 +6955,32 @@ B $C79F,3,3 when it is given something: switch to the program at #R$C96E
 B $C7A2,3,3 when it is captured: switch to the program at #R$C962
 B $C7A5,3,3 when it is attacked: switch to the program at #R$C94D
 B $C7A8,1,1 End of the table
-B $C7A9,4,4 action 29 [give to] target curious map, with bilbo
-B $C7AD,4,4 action 16 [open] target round green door, with -
-B $C7B1,2,2 action 36 [run]
-B $C7B3,4,4 action 19 [take]; if it fails go to #R$C7BF
+B $C7A9,4,4 action 29 [give to] (#R$9308) target curious map, with bilbo
+B $C7AD,4,4 action 16 [open] (#R$9078) target round green door, with -
+B $C7B1,2,2 action 36 [run] (#R$8F17)
+B $C7B3,4,4 action 19 [take] (#R$8CC8); if it fails go to #R$C7BF
 B $C7B7,4,4 call #R$A41C (Character routine: "what's this?")
 B $C7BB,2,2 action 12 [close]
-B $C7BD,2,2 action 29 [give to]
-B $C7BF,2,2 action 36 [run]
-B $C7C1,2,2 action 13 [drop]
-B $C7C3,2,2 action 36 [run]
+B $C7BD,2,2 action 29 [give to] (#R$9308)
+B $C7BF,2,2 action 36 [run] (#R$8F17)
+B $C7C1,2,2 action 13 [drop] (#R$8C45)
+B $C7C3,2,2 action 36 [run] (#R$8F17)
 B $C7C5,4,4 call #R$A425 (Character routine: small talk)
-B $C7C9,2,2 action 36 [run]
-B $C7CB,2,2 action 29 [give to]
+B $C7C9,2,2 action 36 [run] (#R$8F17)
+B $C7CB,2,2 action 29 [give to] (#R$9308)
 B $C7CD,2,2 action 16 [open]
 B $C7CF,2,2 switch to a random behaviour (1 of up to 4)
 B $C7D1,3,3 default behaviour (also one of the choices for a random one): program at #R$C7DB
 B $C7D4,3,3 when it is given something: switch to the program at #R$C96E
 B $C7D7,3,3 when it is attacked: switch to the program at #R$C94D
 B $C7DA,1,1 End of the table
-B $C7DB,6,6 action 39 [follow] target bilbo, with -; if it fails go to #R$C7E4
+B $C7DB,6,6 action 39 [follow] (#R$8F40) target bilbo, with -; if it fails go to #R$C7E4
 B $C7E1,3,3 go to #R$C7DB
-B $C7E4,6,6 action 19 [take] target small curious key, with -; if it fails go to #R$C7EE
+B $C7E4,6,6 action 19 [take] (#R$8CC8) target small curious key, with -; if it fails go to #R$C7EE
 B $C7EA,4,4 call #R$A443 (Character routine: "this was thrains key") (once)
 B $C7EE,6,6 call #R$A539 (Character routine: "where's the thief?"); if it fails go to #R$C7FB
 B $C7F4,2,2 do nothing this turn
-B $C7F6,2,2 action 36 [run]
+B $C7F6,2,2 action 36 [run] (#R$8F17)
 B $C7F8,3,3 go to #R$C7DB
 B $C7FB,4,4 call #R$A550 (Character routine: Thorin)
 B $C7FF,3,3 go to #R$C7DB
@@ -6988,17 +6988,17 @@ B $C802,3,3 default behaviour (also one of the choices for a random one): progra
 B $C805,3,3 when it is attacked: switch to the program at #R$C80C
 B $C808,3,3 when it is given something: switch to the program at #R$C96E
 B $C80B,1,1 End of the table
-B $C80C,2,2 action 48 [capture]
-B $C80E,2,2 action 36 [run]
+B $C80C,2,2 action 48 [capture] (#R$A316)
+B $C80E,2,2 action 36 [run] (#R$8F17)
 B $C810,3,3 go to #R$C80C
 B $C813,3,3 default behaviour (also one of the choices for a random one): program at #R$C817
 B $C816,1,1 End of the table
-B $C817,4,4 action 15 [attack with]; if it fails go to #R$C81E
+B $C817,4,4 action 15 [attack with] (#R$90DB); if it fails go to #R$C81E
 B $C81B,3,3 go to #R$C817
-B $C81E,4,4 action 39 [follow]; if it fails go to #R$C829
+B $C81E,4,4 action 39 [follow] (#R$8F40); if it fails go to #R$C829
 B $C822,4,4 call #R$A4CA (Character routine: the warg)
 B $C826,3,3 go to #R$C817
-B $C829,4,4 action 36 [run]; if it fails go to #R$C830
+B $C829,4,4 action 36 [run] (#R$8F17); if it fails go to #R$C830
 B $C82D,3,3 go to #R$C817
 B $C830,2,2 do nothing this turn
 B $C832,3,3 go to #R$C817
@@ -7006,23 +7006,23 @@ B $C835,3,3 default behaviour (also one of the choices for a random one): progra
 B $C838,3,3 when it is attacked: switch to the program at #R$C84F
 B $C83B,3,3 when it is given something: switch to the program at #R$C96E
 B $C83E,1,1 End of the table
-B $C83F,4,4 action 38 [unlock with] target red door, with red key
-B $C843,4,4 action 16 [open] target red door, with -
-B $C847,4,4 action 12 [close] target red door, with -
-B $C84B,4,4 action 37 [lock with] target red door, with red key
-B $C84F,4,4 action 48 [capture]; if it fails go to #R$C856
+B $C83F,4,4 action 38 [unlock with] (#R$A264) target red door, with red key
+B $C843,4,4 action 16 [open] (#R$9078) target red door, with -
+B $C847,4,4 action 12 [close] (#R$90A2) target red door, with -
+B $C84B,4,4 action 37 [lock with] (#R$A264) target red door, with red key
+B $C84F,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C856
 B $C853,3,3 go to #R$C84F
-B $C856,4,4 action 16 [open] target barrel, with -
-B $C85A,4,4 action 33 [drink] target wine, with -
-B $C85E,2,2 action 48 [capture]
-B $C860,4,4 action 12 [close] target barrel, with -
-B $C864,4,4 action 16 [open] target large trap door, with -
-B $C868,2,2 action 48 [capture]
-B $C86A,4,4 action 19 [take] target barrel, with -
-B $C86E,4,4 action 44 [throw through] target barrel, with large trap door
-B $C872,2,2 action 48 [capture]
-B $C874,4,4 action 12 [close] target large trap door, with -
-B $C878,4,4 action 48 [capture]; if it fails go to #R$C83F
+B $C856,4,4 action 16 [open] (#R$9078) target barrel, with -
+B $C85A,4,4 action 33 [drink] (#R$9206) target wine, with -
+B $C85E,2,2 action 48 [capture] (#R$A316)
+B $C860,4,4 action 12 [close] (#R$90A2) target barrel, with -
+B $C864,4,4 action 16 [open] (#R$A577) target large trap door, with -
+B $C868,2,2 action 48 [capture] (#R$A316)
+B $C86A,4,4 action 19 [take] (#R$8CC8) target barrel, with -
+B $C86E,4,4 action 44 [throw through] (#R$9404) target barrel, with large trap door
+B $C872,2,2 action 48 [capture] (#R$A316)
+B $C874,4,4 action 12 [close] (#R$A577) target large trap door, with -
+B $C878,4,4 action 48 [capture] (#R$A316); if it fails go to #R$C83F
 B $C87C,3,3 go to #R$C83F
 B $C87F,3,3 default behaviour (also one of the choices for a random one): program at #R$C88F
 B $C882,3,3 when it is attacked: switch to the program at #R$C899
@@ -7032,7 +7032,7 @@ B $C889,6,6 call #R$A44C (Character routine: greet Bilbo); if it fails go to #R$
 B $C88F,4,4 call #R$A8D9 (Character routine: Elrond gives Bilbo lunch)
 B $C893,2,2 do nothing this turn
 B $C895,4,4 end turn and go to #R$C889
-B $C899,4,4 action 15 [attack with]; if it fails go to #R$C889
+B $C899,4,4 action 15 [attack with] (#R$90DB); if it fails go to #R$C889
 B $C89D,3,3 go to #R$C899
 B $C8A0,3,3 default behaviour (also one of the choices for a random one): program at #R$C8A7
 B $C8A3,3,3 when it is attacked: switch to the program at #R$C8BC
@@ -7041,37 +7041,37 @@ B $C8A7,6,6 call #R$A5D5 (Character routine: the dragon wakes); if it fails go t
 B $C8AD,3,3 go to #R$C8A7
 B $C8B0,6,6 call #R$A591 (Character routine: the dragon comes for Bilbo); if it fails go to #R$C8C1
 B $C8B6,6,6 call #R$A5BB (Character routine: the dragon speaks); if it fails go to #R$C8C1
-B $C8BC,2,2 action 45 [burn]
+B $C8BC,2,2 action 45 [burn] (#R$A232)
 B $C8BE,3,3 go to #R$C8A7
-B $C8C1,2,2 action 36 [run]
+B $C8C1,2,2 action 36 [run] (#R$8F17)
 B $C8C3,3,3 go to #R$C8A7
 B $C8C6,3,3 default behaviour (also one of the choices for a random one): program at #R$C8CD
 B $C8C9,3,3 when it is attacked: switch to the program at #R$C8D8
 B $C8CC,1,1 End of the table
 B $C8CD,4,4 call #R$A79F (Character routine: Bard remembers his orders) (no orders)
-B $C8D1,4,4 action 19 [take] target wooden chest, with - (no orders)
+B $C8D1,4,4 action 19 [take] (#R$8CC8) target wooden chest, with - (no orders)
 B $C8D5,3,3 go to #R$C8CD
-B $C8D8,4,4 action 58 [shoot]; if it fails go to #R$C94D (no orders)
+B $C8D8,4,4 action 58 [shoot] (#R$8FE0); if it fails go to #R$C94D (no orders)
 B $C8DC,3,3 go to #R$C8D8
 B $C8DF,3,3 default behaviour (also one of the choices for a random one): program at #R$C8E6
 B $C8E2,3,3 when it is attacked: switch to the program at #R$C91A
 B $C8E5,1,1 End of the table
 B $C8E6,6,6 call #R$A7C6 (Character routine: Gollum asks his riddle); if it fails go to #R$C8FF
 B $C8EC,4,4 call #R$A7EA (Character routine: Gollum waits for the answer) (no orders)
-B $C8F0,4,4 action 13 [drop] target valuable golden ring, with -
-B $C8F4,4,4 action 1 [north go]; if it fails go to #R$C910
-B $C8F8,4,4 action 19 [take] target valuable golden ring, with -
+B $C8F0,4,4 action 13 [drop] (#R$8C45) target valuable golden ring, with -
+B $C8F4,4,4 action 1 [north go] (#R$8D19); if it fails go to #R$C910
+B $C8F8,4,4 action 19 [take] (#R$8CC8) target valuable golden ring, with -
 B $C8FC,3,3 go to #R$C8E6
-B $C8FF,4,4 action 1 [north go]; if it fails go to #R$C915
+B $C8FF,4,4 action 1 [north go] (#R$8D19); if it fails go to #R$C915
 B $C903,6,6 call #R$A81A (Character routine: Gollum mutters); if it fails go to #R$C8E6
-B $C909,4,4 action 19 [take] target valuable golden ring, with -
+B $C909,4,4 action 19 [take] (#R$8CC8) target valuable golden ring, with -
 B $C90D,3,3 go to #R$C8E6
-B $C910,2,2 action 8 [southwest go]
+B $C910,2,2 action 8 [southwest go] (#R$8D19)
 B $C912,3,3 go to #R$C8F8
-B $C915,2,2 action 8 [southwest go]
+B $C915,2,2 action 8 [southwest go] (#R$8D19)
 B $C917,3,3 go to #R$C903
-B $C91A,4,4 action 40 [wear] target valuable golden ring, with -
-B $C91E,2,2 action 36 [run]
+B $C91A,4,4 action 40 [wear] (#R$A2C0) target valuable golden ring, with -
+B $C91E,2,2 action 36 [run] (#R$8F17)
 B $C920,3,3 go to #R$C8E6
 B $C923,3,3 default behaviour (also one of the choices for a random one): program at #R$C930
 B $C926,3,3 when it is attacked: switch to the program at #R$C94D
@@ -7086,15 +7086,15 @@ B $C940,2,2 do nothing this turn
 B $C942,4,4 call #R$A842 (Character routine: a character eats Bilbo)
 B $C946,4,4 call #R$A865 (Character routine: dawn in the trolls' clearing)
 B $C94A,3,3 go to #R$C930
-B $C94D,4,4 action 15 [attack with]; if it fails go to #R$C95A (no orders)
-B $C951,4,4 action 15 [attack with]; if it fails go to #R$C961 (no orders)
-B $C955,2,2 action 36 [run] (no orders)
+B $C94D,4,4 action 15 [attack with] (#R$90DB); if it fails go to #R$C95A (no orders)
+B $C951,4,4 action 15 [attack with] (#R$90DB); if it fails go to #R$C961 (no orders)
+B $C955,2,2 action 36 [run] (#R$8F17) (no orders)
 B $C957,3,3 go to #R$C94D
-B $C95A,4,4 action 39 [follow]; if it fails go to #R$C961 (no orders)
+B $C95A,4,4 action 39 [follow] (#R$8F40); if it fails go to #R$C961 (no orders)
 B $C95E,3,3 go to #R$C94D
 B $C961,1,1 switch to default behaviour and end turn
 B $C962,4,4 action 30 [go through]; if it fails go to #R$C969
-B $C966,2,2 action 36 [run]
+B $C966,2,2 action 36 [run] (#R$8F17)
 B $C968,1,1 switch to default behaviour and end turn
 B $C969,2,2 do nothing this turn
 B $C96B,3,3 go to #R$C962

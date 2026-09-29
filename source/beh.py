@@ -25,6 +25,40 @@ for ln in sk:
         cur=None
     elif ln.strip()=='': cur=None
 def o(n): return OBJ.get(n,'obj %d'%n)
+
+DEFAULT_HANDLER={}
+_i=0xC61F
+while rb(_i)!=0xFF:
+    DEFAULT_HANDLER[rb(_i)]=rw(_i+1); _i+=3
+
+def _object_own_handler(obj_no, act):
+    """Address of obj_no's own handler for action act, if it has one."""
+    if obj_no in (0xFF,None): return None
+    i=0xBF53
+    while rb(i)!=0xFF:
+        if rb(i)==obj_no:
+            rec=rw(i+1); k=rec+16+rb(rec)  # past the header, words and location byte(s)
+            while rb(k)!=0xFF:
+                if rb(k)==act: return rw(k+1)
+                k+=3
+            return None
+        i+=3
+    return None
+
+INSTRUMENT_ROUTED={14,17,18,20,44}  # DROP IN, PUT IN, PUT ON, TAKE OUT OF, THROW THROUGH: the
+                                     # instrument's own handler is used instead of the target's (#R$A100)
+
+def handler_for(act, target=None, instrument=None):
+    """The routine that actually runs for this action: normally the target
+    object's own handler if it has one, but for the five actions above,
+    the instrument's; falls back to the default handler, else None."""
+    if act in INSTRUMENT_ROUTED:
+        h=_object_own_handler(instrument, act)
+    else:
+        h=_object_own_handler(target, act)
+    if h is not None: return h
+    return DEFAULT_HANDLER.get(act)
+
 def dis(a):
     f=rb(a); t=f&0x0f; fl=[]
     if f&0x40: fl.append('no orders')
@@ -33,7 +67,10 @@ def dis(a):
         if f&1:
             r=rw(a+1); txt='call $%04X (%s)'%(r,titles.get(r,'?')); ln=4
         else:
-            txt='%s [%s] target %s, with %s'%('action %d'%rb(a+1),ACT.get(rb(a+1),'?'),o(rb(a+2)),o(rb(a+3))); ln=4
+            act=rb(a+1); tgt=rb(a+2); ins=rb(a+3)
+            h=handler_for(act, tgt if tgt!=0xFF else None, ins if ins!=0xFF else None)
+            hp=' ($%04X)'%h if h is not None else ''
+            txt='%s [%s]%s target %s, with %s'%('action %d'%act,ACT.get(act,'?'),hp,o(tgt),o(rb(a+3))); ln=4
         if f&0x10: txt+='; if it fails go to $%04X'%rw(a+ln); nxt=[rw(a+ln)]; ln+=2
         else: nxt=[]
         return ln,txt,fl,nxt,True
@@ -42,7 +79,9 @@ def dis(a):
         if act==0xff:
             if f&0x10: return 4,'end turn and go to $%04X'%rw(a+2),fl,[rw(a+2)],False
             return 2,'do nothing this turn',fl,[],True
-        txt='action %d [%s]'%(act,ACT.get(act,'?')); ln=2; nxt=[]
+        h=handler_for(act, None)
+        hp=' ($%04X)'%h if h is not None else ''
+        txt='action %d [%s]%s'%(act,ACT.get(act,'?'),hp); ln=2; nxt=[]
         if f&0x10: txt+='; if it fails go to $%04X'%rw(a+2); nxt=[rw(a+2)]; ln=4
         return ln,txt,fl,nxt,True
     if t==0xE: return 3,'go to $%04X'%rw(a+1),fl,[rw(a+1)],False

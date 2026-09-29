@@ -12205,41 +12205,41 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C72D DEFB $0F,$8D,$C7             ; the horrible, mean and disgusting goblins: when it is attacked: switch to the program at #R$C78D
  $C730 DEFB $FF                     ; End of the table
 ; Behaviour program for the nasty and hideous goblins.
- $C731 DEFB $02,$10,$06,$FF         ; action 16 [open] target small insignificant crack, with -
- $C735 DEFB $14,$30,$3C,$C7         ; action 48 [capture]; if it fails go to #R$C73C
+ $C731 DEFB $02,$10,$06,$FF         ; action 16 [open] (#R$A298) target small insignificant crack, with -
+ $C735 DEFB $14,$30,$3C,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C73C
  $C739 DEFB $0E,$35,$C7             ; go to #R$C735
- $C73C DEFB $04,$09                 ; action 9 [up go]
- $C73E DEFB $14,$30,$45,$C7         ; action 48 [capture]; if it fails go to #R$C745
+ $C73C DEFB $04,$09                 ; action 9 [up go] (#R$8D19)
+ $C73E DEFB $14,$30,$45,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C745
  $C742 DEFB $0E,$3E,$C7             ; go to #R$C73E
- $C745 DEFB $04,$0A                 ; action 10 [down go]
- $C747 DEFB $14,$30,$4E,$C7         ; action 48 [capture]; if it fails go to #R$C74E
+ $C745 DEFB $04,$0A                 ; action 10 [down go] (#R$8D19)
+ $C747 DEFB $14,$30,$4E,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C74E
  $C74B DEFB $0E,$47,$C7             ; go to #R$C747
- $C74E DEFB $02,$0C,$06,$FF         ; action 12 [close] target small insignificant crack, with -
- $C752 DEFB $04,$02                 ; action 2 [south go]
- $C754 DEFB $14,$30,$5B,$C7         ; action 48 [capture]; if it fails go to #R$C75B
+ $C74E DEFB $02,$0C,$06,$FF         ; action 12 [close] (#R$90A2) target small insignificant crack, with -
+ $C752 DEFB $04,$02                 ; action 2 [south go] (#R$8D19)
+ $C754 DEFB $14,$30,$5B,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C75B
  $C758 DEFB $0E,$54,$C7             ; go to #R$C754
- $C75B DEFB $04,$01                 ; action 1 [north go]
+ $C75B DEFB $04,$01                 ; action 1 [north go] (#R$8D19)
  $C75D DEFB $0E,$31,$C7             ; go to #R$C731
 ; Behaviour program for the vicious goblin.
- $C760 DEFB $04,$06                 ; action 6 [northwest go]
- $C762 DEFB $14,$30,$69,$C7         ; action 48 [capture]; if it fails go to #R$C769
+ $C760 DEFB $04,$06                 ; action 6 [northwest go] (#R$8D19)
+ $C762 DEFB $14,$30,$69,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C769
  $C766 DEFB $0E,$62,$C7             ; go to #R$C762
- $C769 DEFB $04,$01                 ; action 1 [north go]
- $C76B DEFB $14,$30,$72,$C7         ; action 48 [capture]; if it fails go to #R$C772
+ $C769 DEFB $04,$01                 ; action 1 [north go] (#R$8D19)
+ $C76B DEFB $14,$30,$72,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C772
  $C76F DEFB $0E,$6B,$C7             ; go to #R$C76B
- $C772 DEFB $04,$08                 ; action 8 [southwest go]
- $C774 DEFB $14,$30,$7B,$C7         ; action 48 [capture]; if it fails go to #R$C77B
+ $C772 DEFB $04,$08                 ; action 8 [southwest go] (#R$8D19)
+ $C774 DEFB $14,$30,$7B,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C77B
  $C778 DEFB $0E,$74,$C7             ; go to #R$C774
- $C77B DEFB $04,$09                 ; action 9 [up go]
- $C77D DEFB $14,$30,$60,$C7         ; action 48 [capture]; if it fails go to #R$C760
+ $C77B DEFB $04,$09                 ; action 9 [up go] (#R$8D19)
+ $C77D DEFB $14,$30,$60,$C7         ; action 48 [capture] (#R$A316); if it fails go to #R$C760
  $C781 DEFB $0E,$7D,$C7             ; go to #R$C77D
 ; Behaviour program for the horrible, mean and disgusting goblins.
- $C784 DEFB $04,$24                 ; action 36 [run]
- $C786 DEFB $04,$0F                 ; action 15 [attack with]
- $C788 DEFB $04,$30                 ; action 48 [capture]
+ $C784 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
+ $C786 DEFB $04,$0F                 ; action 15 [attack with] (#R$90DB)
+ $C788 DEFB $04,$30                 ; action 48 [capture] (#R$A316)
  $C78A DEFB $0E,$84,$C7             ; go to #R$C784
 ; The goblins' own reaction to being attacked: capture the attacker, then go back to the normal program.
- $C78D DEFB $04,$30                 ; action 48 [capture]
+ $C78D DEFB $04,$30                 ; action 48 [capture] (#R$A316)
  $C78F DEFB $07                     ; switch to default behaviour and end turn
 ; Gandalf: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C790 DEFB $00,$B1,$C7             ; default behaviour (also one of the choices for a random one): program at #R$C7B1
@@ -12252,19 +12252,19 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C7A5 DEFB $0F,$4D,$C9             ; when it is attacked: switch to the program at #R$C94D
  $C7A8 DEFB $FF                     ; End of the table
 ; Behaviour program for Gandalf.
- $C7A9 DEFB $02,$1D,$03,$00         ; action 29 [give to] target curious map, with bilbo
- $C7AD DEFB $02,$10,$05,$FF         ; action 16 [open] target round green door, with -
- $C7B1 DEFB $04,$24                 ; action 36 [run]
- $C7B3 DEFB $14,$13,$BF,$C7         ; action 19 [take]; if it fails go to #R$C7BF
+ $C7A9 DEFB $02,$1D,$03,$00         ; action 29 [give to] (#R$9308) target curious map, with bilbo
+ $C7AD DEFB $02,$10,$05,$FF         ; action 16 [open] (#R$9078) target round green door, with -
+ $C7B1 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
+ $C7B3 DEFB $14,$13,$BF,$C7         ; action 19 [take] (#R$8CC8); if it fails go to #R$C7BF
  $C7B7 DEFB $03,$1C,$A4,$00         ; call #R$A41C (Character routine: "what's this?")
  $C7BB DEFB $04,$0C                 ; action 12 [close]
- $C7BD DEFB $04,$1D                 ; action 29 [give to]
- $C7BF DEFB $04,$24                 ; action 36 [run]
- $C7C1 DEFB $04,$0D                 ; action 13 [drop]
- $C7C3 DEFB $04,$24                 ; action 36 [run]
+ $C7BD DEFB $04,$1D                 ; action 29 [give to] (#R$9308)
+ $C7BF DEFB $04,$24                 ; action 36 [run] (#R$8F17)
+ $C7C1 DEFB $04,$0D                 ; action 13 [drop] (#R$8C45)
+ $C7C3 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C7C5 DEFB $03,$25,$A4,$00         ; call #R$A425 (Character routine: small talk)
- $C7C9 DEFB $04,$24                 ; action 36 [run]
- $C7CB DEFB $04,$1D                 ; action 29 [give to]
+ $C7C9 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
+ $C7CB DEFB $04,$1D                 ; action 29 [give to] (#R$9308)
  $C7CD DEFB $04,$10                 ; action 16 [open]
  $C7CF DEFB $0F,$04                 ; switch to a random behaviour (1 of up to 4)
 ; Thorin: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
@@ -12273,13 +12273,13 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C7D7 DEFB $0F,$4D,$C9             ; when it is attacked: switch to the program at #R$C94D
  $C7DA DEFB $FF                     ; End of the table
 ; Behaviour program for Thorin.
- $C7DB DEFB $12,$27,$00,$FF,$E4,$C7 ; action 39 [follow] target bilbo, with -; if it fails go to #R$C7E4
+ $C7DB DEFB $12,$27,$00,$FF,$E4,$C7 ; action 39 [follow] (#R$8F40) target bilbo, with -; if it fails go to #R$C7E4
  $C7E1 DEFB $0E,$DB,$C7             ; go to #R$C7DB
- $C7E4 DEFB $12,$13,$02,$FF,$EE,$C7 ; action 19 [take] target small curious key, with -; if it fails go to #R$C7EE
+ $C7E4 DEFB $12,$13,$02,$FF,$EE,$C7 ; action 19 [take] (#R$8CC8) target small curious key, with -; if it fails go to #R$C7EE
  $C7EA DEFB $23,$43,$A4,$00         ; call #R$A443 (Character routine: "this was thrains key") (once)
  $C7EE DEFB $13,$39,$A5,$00,$FB,$C7 ; call #R$A539 (Character routine: "where's the thief?"); if it fails go to #R$C7FB
  $C7F4 DEFB $04,$FF                 ; do nothing this turn
- $C7F6 DEFB $04,$24                 ; action 36 [run]
+ $C7F6 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C7F8 DEFB $0E,$DB,$C7             ; go to #R$C7DB
  $C7FB DEFB $03,$50,$A5,$00         ; call #R$A550 (Character routine: Thorin)
  $C7FF DEFB $0E,$DB,$C7             ; go to #R$C7DB
@@ -12289,19 +12289,19 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C808 DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
  $C80B DEFB $FF                     ; End of the table
 ; Behaviour program for the wood elf.
- $C80C DEFB $04,$30                 ; action 48 [capture]
- $C80E DEFB $04,$24                 ; action 36 [run]
+ $C80C DEFB $04,$30                 ; action 48 [capture] (#R$A316)
+ $C80E DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C810 DEFB $0E,$0C,$C8             ; go to #R$C80C
 ; The warg: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C813 DEFB $00,$17,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C817
  $C816 DEFB $FF                     ; End of the table
 ; Behaviour program for the warg.
- $C817 DEFB $14,$0F,$1E,$C8         ; action 15 [attack with]; if it fails go to #R$C81E
+ $C817 DEFB $14,$0F,$1E,$C8         ; action 15 [attack with] (#R$90DB); if it fails go to #R$C81E
  $C81B DEFB $0E,$17,$C8             ; go to #R$C817
- $C81E DEFB $14,$27,$29,$C8         ; action 39 [follow]; if it fails go to #R$C829
+ $C81E DEFB $14,$27,$29,$C8         ; action 39 [follow] (#R$8F40); if it fails go to #R$C829
  $C822 DEFB $03,$CA,$A4,$00         ; call #R$A4CA (Character routine: the warg)
  $C826 DEFB $0E,$17,$C8             ; go to #R$C817
- $C829 DEFB $14,$24,$30,$C8         ; action 36 [run]; if it fails go to #R$C830
+ $C829 DEFB $14,$24,$30,$C8         ; action 36 [run] (#R$8F17); if it fails go to #R$C830
  $C82D DEFB $0E,$17,$C8             ; go to #R$C817
  $C830 DEFB $04,$FF                 ; do nothing this turn
  $C832 DEFB $0E,$17,$C8             ; go to #R$C817
@@ -12311,23 +12311,23 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C83B DEFB $1D,$6E,$C9             ; when it is given something: switch to the program at #R$C96E
  $C83E DEFB $FF                     ; End of the table
 ; Behaviour program for the butler.
- $C83F DEFB $02,$26,$08,$0F         ; action 38 [unlock with] target red door, with red key
- $C843 DEFB $02,$10,$08,$FF         ; action 16 [open] target red door, with -
- $C847 DEFB $02,$0C,$08,$FF         ; action 12 [close] target red door, with -
- $C84B DEFB $02,$25,$08,$0F         ; action 37 [lock with] target red door, with red key
- $C84F DEFB $14,$30,$56,$C8         ; action 48 [capture]; if it fails go to #R$C856
+ $C83F DEFB $02,$26,$08,$0F         ; action 38 [unlock with] (#R$A264) target red door, with red key
+ $C843 DEFB $02,$10,$08,$FF         ; action 16 [open] (#R$9078) target red door, with -
+ $C847 DEFB $02,$0C,$08,$FF         ; action 12 [close] (#R$90A2) target red door, with -
+ $C84B DEFB $02,$25,$08,$0F         ; action 37 [lock with] (#R$A264) target red door, with red key
+ $C84F DEFB $14,$30,$56,$C8         ; action 48 [capture] (#R$A316); if it fails go to #R$C856
  $C853 DEFB $0E,$4F,$C8             ; go to #R$C84F
- $C856 DEFB $02,$10,$13,$FF         ; action 16 [open] target barrel, with -
- $C85A DEFB $02,$21,$14,$FF         ; action 33 [drink] target wine, with -
- $C85E DEFB $04,$30                 ; action 48 [capture]
- $C860 DEFB $02,$0C,$13,$FF         ; action 12 [close] target barrel, with -
- $C864 DEFB $02,$10,$0C,$FF         ; action 16 [open] target large trap door, with -
- $C868 DEFB $04,$30                 ; action 48 [capture]
- $C86A DEFB $02,$13,$13,$FF         ; action 19 [take] target barrel, with -
- $C86E DEFB $02,$2C,$13,$0C         ; action 44 [throw through] target barrel, with large trap door
- $C872 DEFB $04,$30                 ; action 48 [capture]
- $C874 DEFB $02,$0C,$0C,$FF         ; action 12 [close] target large trap door, with -
- $C878 DEFB $14,$30,$3F,$C8         ; action 48 [capture]; if it fails go to #R$C83F
+ $C856 DEFB $02,$10,$13,$FF         ; action 16 [open] (#R$9078) target barrel, with -
+ $C85A DEFB $02,$21,$14,$FF         ; action 33 [drink] (#R$9206) target wine, with -
+ $C85E DEFB $04,$30                 ; action 48 [capture] (#R$A316)
+ $C860 DEFB $02,$0C,$13,$FF         ; action 12 [close] (#R$90A2) target barrel, with -
+ $C864 DEFB $02,$10,$0C,$FF         ; action 16 [open] (#R$A577) target large trap door, with -
+ $C868 DEFB $04,$30                 ; action 48 [capture] (#R$A316)
+ $C86A DEFB $02,$13,$13,$FF         ; action 19 [take] (#R$8CC8) target barrel, with -
+ $C86E DEFB $02,$2C,$13,$0C         ; action 44 [throw through] (#R$9404) target barrel, with large trap door
+ $C872 DEFB $04,$30                 ; action 48 [capture] (#R$A316)
+ $C874 DEFB $02,$0C,$0C,$FF         ; action 12 [close] (#R$A577) target large trap door, with -
+ $C878 DEFB $14,$30,$3F,$C8         ; action 48 [capture] (#R$A316); if it fails go to #R$C83F
  $C87C DEFB $0E,$3F,$C8             ; go to #R$C83F
 ; Elrond: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C87F DEFB $00,$8F,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C88F
@@ -12339,7 +12339,7 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C88F DEFB $03,$D9,$A8,$00         ; call #R$A8D9 (Character routine: Elrond gives Bilbo lunch)
  $C893 DEFB $04,$FF                 ; do nothing this turn
  $C895 DEFB $14,$FF,$89,$C8         ; end turn and go to #R$C889
- $C899 DEFB $14,$0F,$89,$C8         ; action 15 [attack with]; if it fails go to #R$C889
+ $C899 DEFB $14,$0F,$89,$C8         ; action 15 [attack with] (#R$90DB); if it fails go to #R$C889
  $C89D DEFB $0E,$99,$C8             ; go to #R$C899
 ; The dragon: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C8A0 DEFB $00,$A7,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8A7
@@ -12350,9 +12350,9 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C8AD DEFB $0E,$A7,$C8             ; go to #R$C8A7
  $C8B0 DEFB $13,$91,$A5,$00,$C1,$C8 ; call #R$A591 (Character routine: the dragon comes for Bilbo); if it fails go to #R$C8C1
  $C8B6 DEFB $13,$BB,$A5,$00,$C1,$C8 ; call #R$A5BB (Character routine: the dragon speaks); if it fails go to #R$C8C1
- $C8BC DEFB $04,$2D                 ; action 45 [burn]
+ $C8BC DEFB $04,$2D                 ; action 45 [burn] (#R$A232)
  $C8BE DEFB $0E,$A7,$C8             ; go to #R$C8A7
- $C8C1 DEFB $04,$24                 ; action 36 [run]
+ $C8C1 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C8C3 DEFB $0E,$A7,$C8             ; go to #R$C8A7
 ; Bard: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C8C6 DEFB $00,$CD,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8CD
@@ -12360,9 +12360,9 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C8CC DEFB $FF                     ; End of the table
 ; Behaviour program for Bard.
  $C8CD DEFB $43,$9F,$A7,$00         ; call #R$A79F (Character routine: Bard remembers his orders) (no orders)
- $C8D1 DEFB $42,$13,$25,$FF         ; action 19 [take] target wooden chest, with - (no orders)
+ $C8D1 DEFB $42,$13,$25,$FF         ; action 19 [take] (#R$8CC8) target wooden chest, with - (no orders)
  $C8D5 DEFB $0E,$CD,$C8             ; go to #R$C8CD
- $C8D8 DEFB $54,$3A,$4D,$C9         ; action 58 [shoot]; if it fails go to #R$C94D (no orders)
+ $C8D8 DEFB $54,$3A,$4D,$C9         ; action 58 [shoot] (#R$8FE0); if it fails go to #R$C94D (no orders)
  $C8DC DEFB $0E,$D8,$C8             ; go to #R$C8D8
 ; Gollum: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C8DF DEFB $00,$E6,$C8             ; default behaviour (also one of the choices for a random one): program at #R$C8E6
@@ -12371,20 +12371,20 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
 ; Behaviour program for Gollum.
  $C8E6 DEFB $13,$C6,$A7,$00,$FF,$C8 ; call #R$A7C6 (Character routine: Gollum asks his riddle); if it fails go to #R$C8FF
  $C8EC DEFB $43,$EA,$A7,$00         ; call #R$A7EA (Character routine: Gollum waits for the answer) (no orders)
- $C8F0 DEFB $02,$0D,$10,$FF         ; action 13 [drop] target valuable golden ring, with -
- $C8F4 DEFB $14,$01,$10,$C9         ; action 1 [north go]; if it fails go to #R$C910
- $C8F8 DEFB $02,$13,$10,$FF         ; action 19 [take] target valuable golden ring, with -
+ $C8F0 DEFB $02,$0D,$10,$FF         ; action 13 [drop] (#R$8C45) target valuable golden ring, with -
+ $C8F4 DEFB $14,$01,$10,$C9         ; action 1 [north go] (#R$8D19); if it fails go to #R$C910
+ $C8F8 DEFB $02,$13,$10,$FF         ; action 19 [take] (#R$8CC8) target valuable golden ring, with -
  $C8FC DEFB $0E,$E6,$C8             ; go to #R$C8E6
- $C8FF DEFB $14,$01,$15,$C9         ; action 1 [north go]; if it fails go to #R$C915
+ $C8FF DEFB $14,$01,$15,$C9         ; action 1 [north go] (#R$8D19); if it fails go to #R$C915
  $C903 DEFB $13,$1A,$A8,$00,$E6,$C8 ; call #R$A81A (Character routine: Gollum mutters); if it fails go to #R$C8E6
- $C909 DEFB $02,$13,$10,$FF         ; action 19 [take] target valuable golden ring, with -
+ $C909 DEFB $02,$13,$10,$FF         ; action 19 [take] (#R$8CC8) target valuable golden ring, with -
  $C90D DEFB $0E,$E6,$C8             ; go to #R$C8E6
- $C910 DEFB $04,$08                 ; action 8 [southwest go]
+ $C910 DEFB $04,$08                 ; action 8 [southwest go] (#R$8D19)
  $C912 DEFB $0E,$F8,$C8             ; go to #R$C8F8
- $C915 DEFB $04,$08                 ; action 8 [southwest go]
+ $C915 DEFB $04,$08                 ; action 8 [southwest go] (#R$8D19)
  $C917 DEFB $0E,$03,$C9             ; go to #R$C903
- $C91A DEFB $02,$28,$10,$FF         ; action 40 [wear] target valuable golden ring, with -
- $C91E DEFB $04,$24                 ; action 36 [run]
+ $C91A DEFB $02,$28,$10,$FF         ; action 40 [wear] (#R$A2C0) target valuable golden ring, with -
+ $C91E DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C920 DEFB $0E,$E6,$C8             ; go to #R$C8E6
 ; The trolls: reaction table (how the character reacts when something is done to them), then behaviour program (what they do on their own turns).
  $C923 DEFB $00,$30,$C9             ; default behaviour (also one of the choices for a random one): program at #R$C930
@@ -12402,16 +12402,16 @@ b$C71C DEFB $00,$31,$C7             ; the nasty and hideous goblins: default beh
  $C946 DEFB $03,$65,$A8,$00         ; call #R$A865 (Character routine: dawn in the trolls' clearing)
  $C94A DEFB $0E,$30,$C9             ; go to #R$C930
 ; Shared reaction program: fight back. Used by Gandalf, Thorin, the trolls, and by Bard when he cannot shoot.
- $C94D DEFB $54,$0F,$5A,$C9         ; action 15 [attack with]; if it fails go to #R$C95A (no orders)
- $C951 DEFB $54,$0F,$61,$C9         ; action 15 [attack with]; if it fails go to #R$C961 (no orders)
- $C955 DEFB $44,$24                 ; action 36 [run] (no orders)
+ $C94D DEFB $54,$0F,$5A,$C9         ; action 15 [attack with] (#R$90DB); if it fails go to #R$C95A (no orders)
+ $C951 DEFB $54,$0F,$61,$C9         ; action 15 [attack with] (#R$90DB); if it fails go to #R$C961 (no orders)
+ $C955 DEFB $44,$24                 ; action 36 [run] (#R$8F17) (no orders)
  $C957 DEFB $0E,$4D,$C9             ; go to #R$C94D
- $C95A DEFB $54,$27,$61,$C9         ; action 39 [follow]; if it fails go to #R$C961 (no orders)
+ $C95A DEFB $54,$27,$61,$C9         ; action 39 [follow] (#R$8F40); if it fails go to #R$C961 (no orders)
  $C95E DEFB $0E,$4D,$C9             ; go to #R$C94D
  $C961 DEFB $07                     ; switch to default behaviour and end turn
 ; Shared reaction program: what to do when captured. Used by Gandalf.
  $C962 DEFB $14,$1E,$69,$C9         ; action 30 [go through]; if it fails go to #R$C969
- $C966 DEFB $04,$24                 ; action 36 [run]
+ $C966 DEFB $04,$24                 ; action 36 [run] (#R$8F17)
  $C968 DEFB $07                     ; switch to default behaviour and end turn
  $C969 DEFB $04,$FF                 ; do nothing this turn
  $C96B DEFB $0E,$62,$C9             ; go to #R$C962
